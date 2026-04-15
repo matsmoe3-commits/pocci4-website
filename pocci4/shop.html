@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>pocci⁴ – Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --color-primary:#C03A2B;--color-primary-light:#E8501E;--color-primary-hover:#A83225;
+            --color-bg:#F5F0EB;--color-bg-warm:#EDE5DB;--color-white:#FFFFFF;
+            --color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;
+            --color-sand:#C4A882;--color-border:#E0D6CC;
+            --font-main:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            --nav-height:80px;--section-padding:100px;--container-width:1240px;
+            --transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);
+            --transition-smooth:0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+        body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden}
+        a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
+        img{max-width:100%;height:auto;display:block}
+
+        /* BG */
+        .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
+        .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
+        .bg-shape-1{width:700px;height:500px;background:#E0CEBB;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
+        .bg-shape-2{width:550px;height:650px;background:#D4C0AD;bottom:-20%;right:-10%;animation:m2 25s ease-in-out infinite}
+        .bg-shape-3{width:450px;height:400px;background:#C9B8A5;top:35%;left:45%;animation:m3 22s ease-in-out infinite}
+        @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
+        @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
+        @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
+
+        /* NAV */
+        .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
+        .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
+        .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
+        .nav-logo{display:flex;align-items:center;z-index:1001}
+        .nav-logo img{height:56px}
+        .nav-right{display:flex;align-items:center;gap:1rem}
+        .nav-links{display:flex;align-items:center;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+        .nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}
+        .nav-link:hover{color:var(--color-text);background:var(--color-bg)}
+        .nav-link.active{background:var(--color-text);color:var(--color-white)}
+        .nav-link-dropdown{position:relative}
+        .nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-5px);background:var(--color-white);border-radius:16px;padding:8px;box-shadow:0 10px 40px rgba(0,0,0,.1);border:1px solid var(--color-border);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;min-width:180px;z-index:100}
+        .nav-link-dropdown.dropdown-visible .nav-dropdown{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+        .nav-dropdown-item{display:flex;align-items:center;gap:.6rem;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);white-space:nowrap}
+        .nav-dropdown-item:hover{background:var(--color-bg);color:var(--color-primary)}
+        .nav-dropdown-item span{font-size:1rem}
+
+        /* Cart Badge */
+        .nav-cart-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--color-border);background:var(--color-white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:var(--transition-fast);position:relative}
+        .nav-cart-btn:hover{border-color:var(--color-text);background:var(--color-text);color:white}
+        .cart-badge{position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--color-primary);color:#fff;font-size:.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid var(--color-bg);display:none}
+        .cart-badge.show{display:flex}
+
+        .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
+        .hamburger-line{width:24px;height:2px;background:var(--color-text);border-radius:2px;transition:var(--transition-smooth);transform-origin:center}
+        .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+        .hamburger.active .hamburger-line:nth-child(2){opacity:0}
+        .hamburger.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+        .mobile-menu{position:fixed;inset:0;background:rgba(245,240,235,.98);z-index:999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth)}
+        .mobile-menu.active{opacity:1;pointer-events:all}
+        .mobile-menu-content{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+        .mobile-link{font-size:2rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);transform:translateY(20px);opacity:0}
+        .mobile-menu.active .mobile-link{transform:translateY(0);opacity:1}
+        .mobile-menu.active .mobile-link:nth-child(1){transition-delay:.1s}.mobile-menu.active .mobile-link:nth-child(2){transition-delay:.15s}.mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s}.mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}.mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}
+        .mobile-link:hover,.mobile-link.active{color:var(--color-primary)}
+        .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
+
+        /* BUTTONS */
+        .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;border-radius:50px;font-family:var(--font-main);font-size:.9rem;font-weight:600;cursor:pointer;transition:var(--transition-smooth);border:2px solid transparent;gap:.5rem}
+        .btn-primary{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
+        .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
+        .btn-outline{background:transparent;color:var(--color-text);border-color:var(--color-text)}
+        .btn-outline:hover{background:var(--color-text);color:#fff;transform:translateY(-2px)}
+        .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
+        .section-title{font-size:clamp(1.8rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
+
+        /* PAGE HERO */
+        .page-hero{padding:calc(var(--nav-height) + 4rem) 1.25rem 2rem;max-width:var(--container-width);margin:0 auto;text-align:center}
+        .page-hero-title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem}
+        .page-hero-subtitle{font-size:clamp(1rem,2vw,1.2rem);color:var(--color-text-light);max-width:550px;margin:0 auto}
+
+        /* DISCLAIMER */
+        .disclaimer{max-width:600px;margin:1.5rem auto 0;padding:1rem 1.5rem;background:rgba(255,255,255,.7);border-radius:14px;border:1px solid var(--color-border);font-size:.8rem;color:var(--color-gray);text-align:center;line-height:1.5}
+
+        /* FILTER */
+        .filter-section{padding:2rem 1.25rem;max-width:var(--container-width);margin:0 auto;display:flex;justify-content:center}
+        .filter-tabs{display:flex;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 2px 10px rgba(0,0,0,.04);flex-wrap:wrap;justify-content:center}
+        .filter-tab{padding:8px 18px;border-radius:50px;font-size:.8rem;font-weight:600;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:none;background:none;font-family:var(--font-main);display:flex;align-items:center;gap:.4rem}
+        .filter-tab:hover{color:var(--color-text);background:var(--color-bg)}
+        .filter-tab.active{background:var(--color-text);color:#fff}
+
+        /* PRODUCT GRID */
+        .products-section{padding:0 1.25rem var(--section-padding);overflow:hidden}
+        .products-grid{max-width:var(--container-width);margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+
+        /* PRODUCT CARD */
+        .product-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth);display:flex;flex-direction:column}
+        .product-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.08)}
+        .product-image{height:220px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+        .product-emoji{font-size:5rem;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+        .product-card:hover .product-emoji{transform:scale(1.15) rotate(-3deg)}
+        .product-badge{position:absolute;top:1rem;left:1rem;padding:5px 12px;border-radius:50px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#fff}
+        .badge-hot{background:var(--color-primary)}
+        .badge-new{background:#2D6A4F}
+        .badge-limited{background:var(--color-text)}
+        .badge-exclusive{background:linear-gradient(135deg,#C4A882,#8B7355)}
+        .product-provider{position:absolute;bottom:1rem;right:1rem;padding:4px 10px;border-radius:8px;font-size:.65rem;font-weight:600;background:rgba(255,255,255,.9);color:var(--color-text-light);backdrop-filter:blur(5px)}
+        .product-body{padding:1.5rem;flex:1;display:flex;flex-direction:column}
+        .product-category{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.5rem}
+        .product-title{font-size:1.15rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.4rem}
+        .product-desc{font-size:.85rem;color:var(--color-text-light);line-height:1.5;margin-bottom:1.25rem;flex:1}
+        .product-footer{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+        .product-price{font-size:1.3rem;font-weight:900;letter-spacing:-.03em}
+        .product-price-sub{font-size:.7rem;color:var(--color-gray);font-weight:500}
+        .product-add-btn{padding:10px 20px;border-radius:50px;border:2px solid var(--color-primary);background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:.8rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth);white-space:nowrap}
+        .product-add-btn:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,58,43,.2)}
+        .product-add-btn.added{background:transparent;color:var(--color-primary);pointer-events:none}
+
+        /* CART SLIDE */
+        .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(5px);z-index:2000;opacity:0;pointer-events:none;transition:var(--transition-smooth)}
+        .cart-overlay.active{opacity:1;pointer-events:all}
+        .cart-panel{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:90vw;background:var(--color-white);z-index:2001;transform:translateX(100%);transition:transform .5s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+        .cart-panel.active{transform:translateX(0)}
+        .cart-header{padding:2rem 1.5rem 1.5rem;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between}
+        .cart-title{font-size:1.2rem;font-weight:800}
+        .cart-close{width:36px;height:36px;border-radius:50%;border:none;background:var(--color-bg);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:var(--transition-fast)}
+        .cart-close:hover{background:var(--color-text);color:#fff}
+        .cart-items{flex:1;overflow-y:auto;padding:1.5rem}
+        .cart-empty{text-align:center;color:var(--color-gray);padding:3rem 1rem}
+        .cart-empty-icon{font-size:3rem;margin-bottom:1rem}
+        .cart-item{display:flex;align-items:center;gap:1rem;padding:1rem;border-radius:16px;background:var(--color-bg);margin-bottom:.75rem}
+        .cart-item-emoji{font-size:2rem;flex-shrink:0}
+        .cart-item-info{flex:1}
+        .cart-item-name{font-size:.9rem;font-weight:700}
+        .cart-item-price{font-size:.8rem;color:var(--color-gray)}
+        .cart-item-qty{display:flex;align-items:center;gap:.5rem}
+        .cart-qty-btn{width:28px;height:28px;border-radius:8px;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:var(--transition-fast);font-family:var(--font-main)}
+        .cart-qty-btn:hover{background:var(--color-text);color:#fff;border-color:var(--color-text)}
+        .cart-qty-num{font-weight:700;min-width:20px;text-align:center;font-size:.9rem}
+        .cart-item-remove{background:none;border:none;color:var(--color-gray);cursor:pointer;font-size:.8rem;transition:var(--transition-fast);font-family:var(--font-main);padding:4px}
+        .cart-item-remove:hover{color:var(--color-primary)}
+        .cart-footer{padding:1.5rem;border-top:1px solid var(--color-border)}
+        .cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+        .cart-total-label{font-size:.9rem;color:var(--color-text-light)}
+        .cart-total-price{font-size:1.5rem;font-weight:900;letter-spacing:-.03em}
+        .cart-payment{margin-bottom:1rem}
+        .cart-payment-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.5rem}
+        .cart-payment-options{display:flex;gap:.5rem}
+        .cart-payment-opt{flex:1;padding:10px;border-radius:12px;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;text-align:center;font-family:var(--font-main);font-size:.75rem;font-weight:600;transition:var(--transition-fast);color:var(--color-text-light)}
+        .cart-payment-opt:hover,.cart-payment-opt.selected{border-color:var(--color-primary);color:var(--color-primary);background:rgba(192,58,43,.05)}
+        .cart-checkout-btn{width:100%;padding:16px;border-radius:50px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:1rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth)}
+        .cart-checkout-btn:hover{background:var(--color-primary-hover);box-shadow:0 8px 25px rgba(192,58,43,.3)}
+        .cart-checkout-btn:disabled{background:var(--color-gray);cursor:not-allowed;box-shadow:none}
+
+        /* ORDER SUCCESS */
+        .order-success{display:none;text-align:center;padding:3rem 1.5rem;flex:1;align-items:center;justify-content:center;flex-direction:column}
+        .order-success.show{display:flex}
+        .order-success-icon{font-size:4rem;margin-bottom:1rem}
+        .order-success-title{font-size:1.4rem;font-weight:800;margin-bottom:.5rem}
+        .order-success-text{color:var(--color-text-light);font-size:.9rem;line-height:1.6;margin-bottom:1.5rem}
+
+        /* CONFETTI */
+        .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
+
+        /* FOOTER */
+        .footer{background:var(--color-text);color:#fff;padding:4rem 1.25rem 2rem}
+        .footer-container{max-width:var(--container-width);margin:0 auto}
+        .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
+        .footer-logo{height:44px;filter:brightness(0) invert(1);margin-bottom:.75rem}
+        .footer-tagline{font-size:.85rem;color:var(--color-gray)}
+        .footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+        .footer-col h4{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--color-gray);margin-bottom:1rem}
+        .footer-col a{display:block;font-size:.9rem;color:rgba(255,255,255,.7);padding:.3rem 0}
+        .footer-col a:hover{color:#fff}
+        .footer-bottom{padding-top:2rem;text-align:center}
+        .footer-bottom p{font-size:.8rem;color:var(--color-gray)}
+
+        .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+
+        @media(max-width:1024px){:root{--section-padding:80px}.footer-top{grid-template-columns:1fr;gap:3rem}}
+        @media(max-width:768px){
+            :root{--section-padding:60px;--nav-height:68px}
+            .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
+            .products-grid{grid-template-columns:1fr}
+            .footer-links-grid{grid-template-columns:1fr 1fr}
+            .nav-dropdown{display:none!important}
+            .cart-panel{max-width:100vw;width:100%}
+        }
+        @media(max-width:480px){
+            .nav-logo img{height:38px}.page-hero-title{font-size:2rem}
+            .footer-links-grid{grid-template-columns:1fr}
+            .product-image{height:180px}
+            .product-emoji{font-size:4rem}
+            .nav-cart-btn{width:36px;height:36px;font-size:.85rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div></div>
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- NAV -->
+    <nav class="navbar" id="navbar"><div class="nav-container">
+        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci⁴"></a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
+                <a href="shop.html" class="nav-link active">Shop</a>
+                <a href="kontakt.html" class="nav-link">Kontakt</a>
+            </div>
+            <button class="nav-cart-btn" id="cartBtn" title="Warenkorb">🛒<span class="cart-badge" id="cartBadge">0</span></button>
+            <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+        </div>
+    </div></nav>
+
+    <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="events.html" class="mobile-link">Events</a>
+        <a href="stats.html" class="mobile-link mobile-link-sub">🏆 Game Statistik</a>
+        <a href="shop.html" class="mobile-link active">Shop</a>
+        <a href="kontakt.html" class="mobile-link">Kontakt</a>
+    </div></div>
+
+    <!-- CART OVERLAY -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header"><h3 class="cart-title">🛒 Warenkorb</h3><button class="cart-close" id="cartClose">✕</button></div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer" id="cartFooter">
+            <div class="cart-total"><span class="cart-total-label">Gesamt</span><span class="cart-total-price" id="cartTotal">0,00 €</span></div>
+            <div class="cart-payment"><div class="cart-payment-label">Bezahlmethode</div><div class="cart-payment-options"><button class="cart-payment-opt selected" data-method="paypal">💳 PayPal</button><button class="cart-payment-opt" data-method="vor-ort">🤝 Vor Ort</button></div></div>
+            <button class="cart-checkout-btn" id="checkoutBtn">Jetzt bestellen 🎉</button>
+        </div>
+        <div class="order-success" id="orderSuccess">
+            <div class="order-success-icon">🎉</div>
+            <div class="order-success-title">Bestellung aufgegeben!</div>
+            <div class="order-success-text" id="orderSuccessText"></div>
+            <button class="btn btn-outline" onclick="closeCart(); document.getElementById('orderSuccess').classList.remove('show'); document.getElementById('cartFooter').style.display='block'; renderCart();">Weiter shoppen</button>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="page-hero reveal">
+        <p class="section-overline">DER POCCI-SHOP</p>
+        <h1 class="page-hero-title">Unnötiges, aber geil. 🛍️</h1>
+        <p class="page-hero-subtitle">Services, Trophäen und personalisierter Quatsch direkt aus der WG.</p>
+        <div class="disclaimer">⚠️ Disclaimer: Das hier ist zu 100% nicht ernst gemeint. Oder doch? Wir wissen es selbst nicht.</div>
+    </section>
+
+    <!-- FILTER -->
+    <section class="filter-section reveal">
+        <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab active" data-filter="all">Alles</button>
+            <button class="filter-tab" data-filter="services">🧑‍💼 Services</button>
+            <button class="filter-tab" data-filter="trophies">🏆 Trophäen</button>
+            <button class="filter-tab" data-filter="experiences">✨ Erlebnisse</button>
+            <button class="filter-tab" data-filter="merch">👕 Merch</button>
+        </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="products-section">
+        <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci⁴" class="footer-logo"><p class="footer-tagline">Poccistraße, München</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a></div><div class="footer-col"><h4>Connect</h4><a href="https://wa.me/4915XXXXXXXXX" target="_blank">WhatsApp</a><a href="https://instagram.com/mats.lm" target="_blank">Instagram</a></div></div></div><div class="footer-bottom"><p>© 2025 pocci⁴ – Mit Liebe aus der Poccistraße.</p></div></div></footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const products = [
+            // SERVICES
+            {id:1,title:'Immobilienbewertung by Mats',emoji:'🏠',desc:'Lass den Real Estate BWLer ran. Mats bewertet deine Immobilie – inklusive Quadratmeterpreis-Flexen und mindestens 3x "Naturally" pro Gespräch.',price:49.99,priceSub:'pro Bewertung',category:'services',badge:'🔥 Bestseller',badgeClass:'badge-hot',provider:'by Mats 💼'},
+            {id:2,title:'Persönlicher Trainingsplan by Andrei',emoji:'💪',desc:'Der Tank erstellt dir einen individuellen Gym-Plan. Inklusive Motivations-WhatsApp jeden Morgen um 6 Uhr. Gainz guaranteed.',price:29.99,priceSub:'pro Plan',category:'services',badge:'NEU',badgeClass:'badge-new',provider:'by Andrei 🏋️'},
+            {id:3,title:'Medizinische Zweitmeinung by Georgie',emoji:'🩺',desc:'"Ist das schlimm, Georgie?" – Ab jetzt bekommst du eine professionelle Nicht-Diagnose von unserer angehenden Medizinerin. WebMD Level 9000.',price:14.99,priceSub:'pro Meinung',category:'services',badge:null,badgeClass:null,provider:'by Georgie 🧠'},
+            {id:4,title:'Excel-Spreadsheet deines Lebens',emoji:'📊',desc:'Mats erstellt dir ein übertrieben detailliertes Excel-Spreadsheet über dein Leben. ROI deiner Hobbys? Break-even deiner Beziehung? Er findet es raus.',price:19.99,priceSub:'pro Spreadsheet',category:'services',badge:'EXCLUSIVE',badgeClass:'badge-exclusive',provider:'by Mats 💼'},
+            // TROPHIES
+            {id:5,title:'🏆 Flunkyball-Pokal',emoji:'🏆',desc:'DER Pokal. Der heilige Gral der Poccistraße. Der Flunkyball-Pokal geht an den Champion des nächsten Turniers. Legende werden.',price:0,priceSub:'Unbezahlbar',category:'trophies',badge:'LIMITED',badgeClass:'badge-limited',provider:'pocci⁴ Official'},
+            {id:6,title:'Goldener Bierpong-Ball',emoji:'🥇',desc:'Vergoldeter (okay, goldlackierter) Tischtennisball. Für den unbestrittenen Bierpong-Champion. Kommt mit Samtkissen.',price:9.99,priceSub:'pro Ball',category:'trophies',badge:null,badgeClass:null,provider:'pocci⁴ Official'},
+            {id:7,title:'Catan-Dominanz-Plakette',emoji:'🏝️',desc:'Gewinne 5x Catan in Folge und diese gravierte Holzplakette ist dein. Bisher hat es noch keiner geschafft. Trau dich.',price:0,priceSub:'Nur für Legenden',category:'trophies',badge:'EXCLUSIVE',badgeClass:'badge-exclusive',provider:'pocci⁴ Official'},
+            // EXPERIENCES
+            {id:8,title:'Abend mit dem Tank',emoji:'🍗',desc:'Ein Abend Meal-Prep mit Andrei. Du lernst seine geheimen Rezepte, hörst Gym-Storys und gehst mit 5 Tupperdosen nach Hause.',price:24.99,priceSub:'pro Person',category:'experiences',badge:'🔥 Bestseller',badgeClass:'badge-hot',provider:'by Andrei 💪'},
+            {id:9,title:'Strategie-Coaching mit Georgie',emoji:'♟️',desc:'Georgie bringt dir bei, wie du bei jedem Brettspiel gewinnst. 2 Stunden pure Taktik. Deine Freunde werden dich hassen.',price:19.99,priceSub:'pro Session',category:'experiences',badge:'NEU',badgeClass:'badge-new',provider:'by Georgie 🧠'},
+            {id:10,title:'Justus-for-a-Day',emoji:'🎩',desc:'Lebe einen Tag wie Mats. Poloshirt-Kragen hochgestellt, BWL-Vokabular, Café-Hopping und mindestens 2 LinkedIn-Posts. Naturally.',price:34.99,priceSub:'pro Tag',category:'experiences',badge:null,badgeClass:null,provider:'by Mats 💼'},
+            {id:11,title:'VIP Hausparty-Experience',emoji:'🎉',desc:'Du und 3 Freunde: VIP-Einlass, reserved Couch, eigene Getränke-Flatrate und ein Foto mit der WG. Das Ultimative.',price:59.99,priceSub:'für 4 Personen',category:'experiences',badge:'LIMITED',badgeClass:'badge-limited',provider:'pocci⁴ Official'},
+            // MERCH
+            {id:12,title:'pocci⁴ Bierglas',emoji:'🍺',desc:'Das offizielle pocci⁴ Bierglas. 0,5L. Spülmaschinenfest (meistens). Perfekt für den nächsten Trinkabend.',price:12.99,priceSub:'pro Glas',category:'merch',badge:'NEU',badgeClass:'badge-new',provider:'pocci⁴ Official'},
+            {id:13,title:'"Naturally" T-Shirt',emoji:'👕',desc:'Weißes Shirt mit "Naturally." in eleganter Schrift. Inspiriert von Mats\' Lieblingswort. Aus 100% Premium-BWL-Baumwolle.',price:24.99,priceSub:'S / M / L / XL',category:'merch',badge:'🔥 Bestseller',badgeClass:'badge-hot',provider:'by Mats 💼'},
+            {id:14,title:'Andreis Protein-Shaker',emoji:'🥤',desc:'750ml Shaker mit "NO EXCUSES" Gravur. Wenn Andrei damit schüttelt, vibriert das ganze Haus.',price:14.99,priceSub:'pro Shaker',category:'merch',badge:null,badgeClass:null,provider:'by Andrei 💪'},
+            {id:15,title:'Georgies Notfallkit',emoji:'🧳',desc:'Ein kleines Erste-Hilfe-Kit für den Morgen danach. Enthält: Ibuprofen, Elektrolyte, Augenmaske und einen aufmunternden Zettel von Georgie.',price:9.99,priceSub:'pro Kit',category:'merch',badge:null,badgeClass:null,provider:'by Georgie 🩺'},
+        ];
+
+        const gradients = {
+            services: 'linear-gradient(135deg, #F5E6D3 0%, #E8D5B7 100%)',
+            trophies: 'linear-gradient(135deg, #FFE082 0%, #FFC107 30%, #FFD54F 100%)',
+            experiences: 'linear-gradient(135deg, #E8501E15 0%, #FF8A5C15 100%)',
+            merch: 'linear-gradient(135deg, #E0D6CC 0%, #F5F0EB 100%)'
+        };
+
+        let cart = JSON.parse(localStorage.getItem('pocci4_cart') || '[]');
+        let activeFilter = 'all';
+        let paymentMethod = 'paypal';
+
+        // NAV
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
+        const hamburger = document.getElementById('hamburger'), mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileMenu.classList.toggle('active'); document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : ''; });
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => { hamburger.classList.remove('active'); mobileMenu.classList.remove('active'); document.body.style.overflow = ''; }));
+
+        // DROPDOWN
+        const dd = document.getElementById('eventsDropdown'); let ddTimer = null;
+        if(dd){dd.addEventListener('mouseenter',()=>{ddTimer=setTimeout(()=>dd.classList.add('dropdown-visible'),2000);});dd.addEventListener('mouseleave',()=>{clearTimeout(ddTimer);setTimeout(()=>dd.classList.remove('dropdown-visible'),300);});}
+
+        // FILTER
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active'); activeFilter = tab.dataset.filter; renderProducts();
+            });
+        });
+
+        // PRODUCTS
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid'); grid.innerHTML = '';
+            const filtered = activeFilter === 'all' ? products : products.filter(p => p.category === activeFilter);
+            filtered.forEach(p => {
+                const badge = p.badge ? `<span class="product-badge ${p.badgeClass}">${p.badge}</span>` : '';
+                const priceText = p.price === 0 ? '🏆' : `${p.price.toFixed(2).replace('.', ',')} €`;
+                const btnText = p.price === 0 ? 'Verdienen!' : '🛒 In den Warenkorb';
+                const btnDisabled = p.price === 0 ? 'onclick="alert(\'Diesen Preis kann man nicht kaufen – nur verdienen! 🏆\');"' : `onclick="addToCart(${p.id})"`;
+
+                const card = document.createElement('div'); card.className = 'product-card'; card.setAttribute('data-category', p.category);
+                card.innerHTML = `
+                    <div class="product-image" style="background:${gradients[p.category]}">
+                        ${badge}
+                        <div class="product-emoji">${p.emoji}</div>
+                        <span class="product-provider">${p.provider}</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-category">${p.category === 'services' ? '🧑‍💼 Service' : p.category === 'trophies' ? '🏆 Trophäe' : p.category === 'experiences' ? '✨ Erlebnis' : '👕 Merch'}</div>
+                        <h3 class="product-title">${p.title}</h3>
+                        <p class="product-desc">${p.desc}</p>
+                        <div class="product-footer">
+                            <div><div class="product-price">${priceText}</div><div class="product-price-sub">${p.priceSub}</div></div>
+                            <button class="product-add-btn" id="addBtn${p.id}" ${btnDisabled}>${btnText}</button>
+                        </div>
+                    </div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        // CART
+        window.addToCart = function(id) {
+            const existing = cart.find(c => c.id === id);
+            if (existing) { existing.qty++; } else { cart.push({ id, qty: 1 }); }
+            saveCart(); updateCartBadge();
+            const btn = document.getElementById('addBtn' + id);
+            btn.classList.add('added'); btn.textContent = '✅ Hinzugefügt!';
+            setTimeout(() => { btn.classList.remove('added'); btn.textContent = '🛒 In den Warenkorb'; }, 1500);
+        };
+
+        function saveCart() { localStorage.setItem('pocci4_cart', JSON.stringify(cart)); }
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            const total = cart.reduce((a, c) => a + c.qty, 0);
+            badge.textContent = total; badge.classList.toggle('show', total > 0);
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+            if (!cart.length) {
+                container.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛒</div><p>Dein Warenkorb ist leer.</p><p style="font-size:.8rem;margin-top:.5rem;">Gönn dir was!</p></div>';
+                document.getElementById('cartFooter').style.display = 'none'; return;
+            }
+            document.getElementById('cartFooter').style.display = 'block';
+            container.innerHTML = cart.map(c => {
+                const p = products.find(pr => pr.id === c.id); if (!p) return '';
+                return `<div class="cart-item"><span class="cart-item-emoji">${p.emoji}</span><div class="cart-item-info"><div class="cart-item-name">${p.title}</div><div class="cart-item-price">${p.price.toFixed(2).replace('.',',')} €</div></div><div class="cart-item-qty"><button class="cart-qty-btn" onclick="changeQty(${p.id},-1)">−</button><span class="cart-qty-num">${c.qty}</span><button class="cart-qty-btn" onclick="changeQty(${p.id},1)">+</button></div><button class="cart-item-remove" onclick="removeFromCart(${p.id})">✕</button></div>`;
+            }).join('');
+            const total = cart.reduce((a, c) => { const p = products.find(pr => pr.id === c.id); return a + (p ? p.price * c.qty : 0); }, 0);
+            document.getElementById('cartTotal').textContent = total.toFixed(2).replace('.', ',') + ' €';
+        }
+
+        window.changeQty = function(id, delta) {
+            const item = cart.find(c => c.id === id);
+            if (item) { item.qty += delta; if (item.qty <= 0) cart = cart.filter(c => c.id !== id); }
+            saveCart(); updateCartBadge(); renderCart();
+        };
+        window.removeFromCart = function(id) { cart = cart.filter(c => c.id !== id); saveCart(); updateCartBadge(); renderCart(); };
+
+        // CART PANEL
+        document.getElementById('cartBtn').addEventListener('click', openCart);
+        document.getElementById('cartClose').addEventListener('click', closeCart);
+        document.getElementById('cartOverlay').addEventListener('click', closeCart);
+
+        function openCart() { document.getElementById('cartPanel').classList.add('active'); document.getElementById('cartOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; renderCart(); }
+        window.closeCart = function() { document.getElementById('cartPanel').classList.remove('active'); document.getElementById('cartOverlay').classList.remove('active'); document.body.style.overflow = ''; };
+
+        // PAYMENT
+        document.querySelectorAll('.cart-payment-opt').forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('.cart-payment-opt').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected'); paymentMethod = opt.dataset.method;
+            });
+        });
+
+        // CHECKOUT
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            if (!cart.length) return;
+            const total = cart.reduce((a, c) => { const p = products.find(pr => pr.id === c.id); return a + (p ? p.price * c.qty : 0); }, 0);
+            const items = cart.map(c => { const p = products.find(pr => pr.id === c.id); return `${c.qty}x ${p.title}`; }).join(', ');
+
+            let successText = '';
+            if (paymentMethod === 'paypal') {
+                successText = `Überweise <strong>${total.toFixed(2).replace('.',',')} €</strong> via PayPal an unseren Account.<br><br>Bestellung: ${items}<br><br>Schreib uns auf WhatsApp mit deiner Bestellbestätigung! 📱`;
+            } else {
+                successText = `Bezahle <strong>${total.toFixed(2).replace('.',',')} €</strong> beim nächsten Event vor Ort.<br><br>Bestellung: ${items}<br><br>Wir merken uns das! 😄`;
+            }
+
+            document.getElementById('orderSuccessText').innerHTML = successText;
+            document.getElementById('cartFooter').style.display = 'none';
+            document.getElementById('cartItems').innerHTML = '';
+            document.getElementById('orderSuccess').classList.add('show');
+            cart = []; saveCart(); updateCartBadge(); launchConfetti();
+        });
+
+        // CONFETTI
+        function launchConfetti() {
+            const c = document.getElementById('confettiContainer');
+            const colors = ['#C03A2B','#E8501E','#C4A882','#457B9D','#FF6B6B','#FFD93D','#6BCB77'];
+            for (let i = 0; i < 60; i++) {
+                const p = document.createElement('div'); const sz = Math.random() * 8 + 5;
+                p.style.cssText = `position:absolute;left:${Math.random()*100}%;top:-20px;width:${sz}px;height:${Math.random()>.5?sz:sz*2.5}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'3px'};opacity:1;animation:cFall ${Math.random()*2+2}s ease-out forwards;animation-delay:${Math.random()*.3}s;pointer-events:none;`;
+                c.appendChild(p); setTimeout(() => p.remove(), 4000);
+            }
+        }
+        const cs = document.createElement('style');
+        cs.textContent = '@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}';
+        document.head.appendChild(cs);
+
+        // INIT
+        renderProducts(); updateCartBadge();
+
+        // REVEAL
+        const ro = new IntersectionObserver(entries => { entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); ro.unobserve(e.target); } }); }, { threshold: .1 });
+        document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+        // PARALLAX
+        window.addEventListener('scroll', () => { document.querySelectorAll('.bg-shape').forEach((s, i) => { s.style.transform = `translateY(${window.scrollY*(i+1)*.015}px) rotate(${window.scrollY*.01*(i%2===0?1:-1)}deg)`; }); });
+    });
+    </script>
+</body>
+</html>
