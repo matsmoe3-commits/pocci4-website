@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>pocci⁴ – Events</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --color-primary: #C03A2B;
+            --color-primary-light: #E8501E;
+            --color-primary-hover: #A83225;
+            --color-bg: #F5F0EB;
+            --color-bg-warm: #EDE5DB;
+            --color-white: #FFFFFF;
+            --color-text: #1A1A1A;
+            --color-text-light: #6B6B6B;
+            --color-gray: #9C9C9C;
+            --color-sand: #C4A882;
+            --color-border: #E0D6CC;
+            --cat-party: #C03A2B;
+            --cat-games: #1A1A1A;
+            --cat-drinks: #C4A882;
+            --cat-film: #457B9D;
+            --cat-other: #6B6B6B;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --nav-height: 80px;
+            --section-padding: 100px;
+            --container-width: 1240px;
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        body { font-family: var(--font-main); background-color: var(--color-bg); color: var(--color-text); line-height: 1.6; overflow-x: hidden; width: 100%; }
+        a { text-decoration: none; color: inherit; transition: var(--transition-fast); }
+        img { max-width: 100%; height: auto; display: block; }
+
+        /* ===== ANIMATED BACKGROUND ===== */
+        .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
+        .bg-shape { position: absolute; filter: blur(100px); opacity: 0.45; }
+        .bg-shape-1 { width: 700px; height: 500px; background: #E0CEBB; top: -15%; left: -10%; border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; animation: morphFloat1 20s ease-in-out infinite; }
+        .bg-shape-2 { width: 550px; height: 650px; background: #D4C0AD; bottom: -20%; right: -10%; border-radius: 40% 60% 30% 70% / 60% 30% 70% 40%; animation: morphFloat2 25s ease-in-out infinite; }
+        .bg-shape-3 { width: 450px; height: 400px; background: #C9B8A5; top: 35%; left: 45%; border-radius: 50% 50% 30% 70% / 40% 60% 40% 60%; animation: morphFloat3 22s ease-in-out infinite; }
+        @keyframes morphFloat1 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+            25% { transform: translate(40px, -50px) rotate(5deg) scale(1.05); border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; }
+            50% { transform: translate(-30px, 30px) rotate(-3deg) scale(0.95); border-radius: 50% 50% 50% 50%; }
+            75% { transform: translate(50px, 40px) rotate(7deg) scale(1.03); border-radius: 70% 30% 60% 40% / 40% 70% 30% 60%; }
+        }
+        @keyframes morphFloat2 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate(-50px, -40px) rotate(-8deg) scale(1.08); }
+            66% { transform: translate(40px, 50px) rotate(5deg) scale(0.92); }
+        }
+        @keyframes morphFloat3 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-40px, 40px) rotate(-5deg); }
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height); background: rgba(245, 240, 235, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 1000; transition: var(--transition-smooth); border-bottom: 1px solid transparent; }
+        .navbar.scrolled { border-bottom: 1px solid var(--color-border); background: rgba(245, 240, 235, 0.9); }
+        .nav-container { max-width: var(--container-width); margin: 0 auto; padding: 0 2rem; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { display: flex; align-items: center; z-index: 1001; }
+        .nav-logo img { height: 56px; width: auto; }
+        .nav-links { display: flex; align-items: center; gap: 0.5rem; background: var(--color-white); padding: 6px; border-radius: 50px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+        .nav-link { padding: 8px 20px; border-radius: 50px; font-size: 0.875rem; font-weight: 500; color: var(--color-text-light); transition: var(--transition-fast); }
+        .nav-link:hover { color: var(--color-text); background: var(--color-bg); }
+        .nav-link.active { background: var(--color-text); color: var(--color-white); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001; }
+        .hamburger-line { width: 24px; height: 2px; background: var(--color-text); border-radius: 2px; transition: var(--transition-smooth); transform-origin: center; }
+        .hamburger.active .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active .hamburger-line:nth-child(2) { opacity: 0; }
+        .hamburger.active .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .mobile-menu { position: fixed; inset: 0; background: rgba(245, 240, 235, 0.98); z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition-smooth); }
+        .mobile-menu.active { opacity: 1; pointer-events: all; }
+        .mobile-menu-content { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+        .mobile-link { font-size: 2rem; font-weight: 600; color: var(--color-text); transition: var(--transition-fast); transform: translateY(20px); opacity: 0; }
+        .mobile-menu.active .mobile-link { transform: translateY(0); opacity: 1; }
+        .mobile-menu.active .mobile-link:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active .mobile-link:nth-child(2) { transition-delay: 0.15s; }
+        .mobile-menu.active .mobile-link:nth-child(3) { transition-delay: 0.2s; }
+        .mobile-menu.active .mobile-link:nth-child(4) { transition-delay: 0.25s; }
+        .mobile-link:hover, .mobile-link.active { color: var(--color-primary); }
+
+        /* ===== BUTTONS ===== */
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 32px; border-radius: 50px; font-family: var(--font-main); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: var(--transition-smooth); border: 2px solid transparent; }
+        .btn-primary { background: var(--color-primary); color: var(--color-white); border-color: var(--color-primary); }
+        .btn-primary:hover { background: var(--color-primary-hover); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(192,58,43,0.25); }
+        .btn-secondary { background: var(--color-text); color: var(--color-white); border-color: var(--color-text); }
+        .btn-secondary:hover { background: transparent; color: var(--color-text); transform: translateY(-2px); }
+        .btn-outline { background: transparent; color: var(--color-text); border-color: var(--color-text); }
+        .btn-outline:hover { background: var(--color-text); color: var(--color-white); transform: translateY(-2px); }
+        .btn-small { padding: 10px 20px; font-size: 0.8rem; }
+        .btn-icon { gap: 0.5rem; }
+
+        /* ===== SECTION HEADERS ===== */
+        .section-overline { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; color: var(--color-primary); text-transform: uppercase; margin-bottom: 1rem; }
+        .section-title { font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; }
+
+        /* ===== PAGE HERO ===== */
+        .page-hero {
+            padding: calc(var(--nav-height) + 4rem) 1.25rem 3rem;
+            max-width: var(--container-width); margin: 0 auto;
+            text-align: center;
+        }
+        .page-hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900;
+            letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 1rem;
+        }
+        .page-hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem); color: var(--color-text-light);
+            max-width: 500px; margin: 0 auto;
+        }
+
+        /* ===== FILTER TABS ===== */
+        .filter-section {
+            padding: 0 1.25rem 2rem; max-width: var(--container-width); margin: 0 auto;
+            display: flex; justify-content: center;
+        }
+        .filter-tabs {
+            display: flex; gap: 0.5rem; background: var(--color-white);
+            padding: 6px; border-radius: 50px; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            flex-wrap: wrap; justify-content: center;
+        }
+        .filter-tab {
+            padding: 8px 18px; border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+            color: var(--color-text-light); cursor: pointer; transition: var(--transition-fast);
+            border: none; background: none; font-family: var(--font-main);
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .filter-tab:hover { color: var(--color-text); background: var(--color-bg); }
+        .filter-tab.active { background: var(--color-text); color: var(--color-white); }
+        .filter-dot {
+            width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+        }
+
+        /* ===== NEXT EVENT HIGHLIGHT ===== */
+        .highlight-section { padding: 0 1.25rem 3rem; }
+        .highlight-card {
+            max-width: 800px; margin: 0 auto;
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(20px);
+            border-radius: 24px; padding: 3rem 2.5rem;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.04);
+            position: relative; overflow: hidden;
+        }
+        .highlight-badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 6px 14px; border-radius: 50px; font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
+            background: rgba(192,58,43,0.1); color: var(--color-primary);
+        }
+        .highlight-badge .pulse-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: var(--color-primary);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+        .highlight-emoji { font-size: 3rem; margin-bottom: 1rem; }
+        .highlight-title {
+            font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 900;
+            letter-spacing: -0.03em; margin-bottom: 0.5rem;
+        }
+        .highlight-meta {
+            display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;
+            color: var(--color-text-light); font-size: 0.9rem;
+        }
+        .highlight-meta-item { display: flex; align-items: center; gap: 0.4rem; }
+
+        /* Capacity Bar */
+        .capacity-bar-container { margin-bottom: 1.5rem; }
+        .capacity-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 0.5rem; font-size: 0.8rem;
+        }
+        .capacity-count { font-weight: 700; color: var(--color-text); }
+        .capacity-label { color: var(--color-gray); }
+        .capacity-bar {
+            width: 100%; height: 8px; background: var(--color-bg);
+            border-radius: 10px; overflow: hidden;
+        }
+        .capacity-fill {
+            height: 100%; border-radius: 10px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0;
+        }
+        .capacity-fill.animated { width: var(--fill-width); }
+
+        /* Attendees */
+        .attendees { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
+        .attendee-avatars { display: flex; }
+        .attendee-avatar {
+            width: 36px; height: 36px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 0.7rem;
+            font-weight: 700; color: white; margin-left: -8px;
+            border: 2.5px solid white; position: relative;
+        }
+        .attendee-avatar:first-child { margin-left: 0; }
+        .attendee-count { font-size: 0.85rem; color: var(--color-text-light); }
+        .highlight-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        /* ===== CALENDAR ===== */
+        .calendar-section { padding: var(--section-padding) 1.25rem; overflow: hidden; }
+        .calendar-container {
+            max-width: 900px; margin: 0 auto;
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(20px);
+            border-radius: 24px; padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.04);
+        }
+        .calendar-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        .calendar-month {
+            font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em;
+        }
+        .calendar-nav { display: flex; gap: 0.5rem; }
+        .calendar-nav-btn {
+            width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--color-border);
+            background: transparent; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; font-size: 1.1rem; color: var(--color-text);
+            transition: var(--transition-fast); font-family: var(--font-main);
+        }
+        .calendar-nav-btn:hover { background: var(--color-text); color: white; border-color: var(--color-text); }
+        .calendar-weekdays {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+            margin-bottom: 0.5rem;
+        }
+        .calendar-weekday {
+            text-align: center; font-size: 0.7rem; font-weight: 700;
+            color: var(--color-gray); text-transform: uppercase; letter-spacing: 0.08em;
+            padding: 0.5rem 0;
+        }
+        .calendar-days {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+        }
+        .calendar-day {
+            aspect-ratio: 1; border-radius: 14px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 500;
+            cursor: default; transition: var(--transition-fast); position: relative;
+            gap: 2px;
+        }
+        .calendar-day.current-month { color: var(--color-text); }
+        .calendar-day.other-month { color: var(--color-border); }
+        .calendar-day.today {
+            background: var(--color-bg-warm); font-weight: 700;
+            box-shadow: inset 0 0 0 2px var(--color-sand);
+        }
+        .calendar-day.has-event {
+            cursor: pointer; font-weight: 700;
+        }
+        .calendar-day.has-event:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .calendar-day-number { z-index: 1; line-height: 1; }
+        .calendar-event-dots {
+            display: flex; gap: 3px; margin-top: 2px;
+        }
+        .calendar-event-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+        }
+        .calendar-day.has-event.cat-party { background: rgba(192,58,43,0.12); }
+        .calendar-day.has-event.cat-party:hover { background: rgba(192,58,43,0.2); }
+        .calendar-day.has-event.cat-games { background: rgba(26,26,26,0.08); }
+        .calendar-day.has-event.cat-games:hover { background: rgba(26,26,26,0.15); }
+        .calendar-day.has-event.cat-drinks { background: rgba(196,168,130,0.2); }
+        .calendar-day.has-event.cat-drinks:hover { background: rgba(196,168,130,0.35); }
+        .calendar-day.has-event.cat-film { background: rgba(69,123,157,0.12); }
+        .calendar-day.has-event.cat-film:hover { background: rgba(69,123,157,0.2); }
+
+        .calendar-legend {
+            display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap;
+            justify-content: center; padding-top: 1.5rem;
+            border-top: 1px solid var(--color-border);
+        }
+        .legend-item {
+            display: flex; align-items: center; gap: 0.4rem;
+            font-size: 0.75rem; color: var(--color-text-light);
+        }
+        .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+        /* ===== EVENT CARDS GRID ===== */
+        .events-grid-section { padding: 0 1.25rem var(--section-padding); overflow: hidden; }
+        .events-grid-header {
+            max-width: var(--container-width); margin: 0 auto 3rem;
+            text-align: center;
+        }
+        .events-grid {
+            max-width: var(--container-width); margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .event-card {
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(15px);
+            border-radius: 20px; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+            transition: var(--transition-smooth);
+        }
+        .event-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+        .event-card-header {
+            padding: 1.5rem 1.5rem 1rem; display: flex;
+            align-items: flex-start; justify-content: space-between;
+        }
+        .event-card-date {
+            display: flex; flex-direction: column; align-items: center;
+            background: var(--color-bg); border-radius: 14px; padding: 0.75rem 1rem;
+            min-width: 60px;
+        }
+        .event-card-date-day { font-size: 1.5rem; font-weight: 900; line-height: 1; letter-spacing: -0.03em; }
+        .event-card-date-month { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-light); }
+        .event-card-category {
+            padding: 4px 12px; border-radius: 50px; font-size: 0.65rem;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: white;
+        }
+        .event-card-body { padding: 0 1.5rem 1.5rem; }
+        .event-card-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+        .event-card-title { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.35rem; }
+        .event-card-desc { font-size: 0.85rem; color: var(--color-text-light); line-height: 1.5; margin-bottom: 1rem; }
+        .event-card-meta {
+            display: flex; gap: 1rem; font-size: 0.8rem; color: var(--color-gray);
+            margin-bottom: 1rem; flex-wrap: wrap;
+        }
+        .event-card-meta-item { display: flex; align-items: center; gap: 0.3rem; }
+        .event-card-capacity { margin-bottom: 1rem; }
+        .event-card-capacity-bar {
+            width: 100%; height: 6px; background: var(--color-bg);
+            border-radius: 10px; overflow: hidden;
+        }
+        .event-card-capacity-fill {
+            height: 100%; border-radius: 10px; transition: width 1s ease;
+        }
+        .event-card-capacity-text {
+            display: flex; justify-content: space-between; font-size: 0.7rem;
+            color: var(--color-gray); margin-top: 0.35rem;
+        }
+        .event-card-footer { padding: 0 1.5rem 1.5rem; display: flex; gap: 0.75rem; }
+        .btn-join {
+            flex: 1; padding: 12px; border-radius: 14px; font-family: var(--font-main);
+            font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: var(--transition-smooth);
+            border: 2px solid var(--color-primary); background: var(--color-primary);
+            color: white; text-align: center;
+        }
+        .btn-join:hover { background: var(--color-primary-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(192,58,43,0.2); }
+        .btn-join.joined { background: transparent; color: var(--color-primary); }
+        .btn-calendar-add {
+            width: 44px; height: 44px; border-radius: 14px; border: 2px solid var(--color-border);
+            background: transparent; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; font-size: 1.1rem; transition: var(--transition-fast);
+        }
+        .btn-calendar-add:hover { background: var(--color-text); color: white; border-color: var(--color-text); }
+
+        /* ===== EVENT PROPOSAL FORM ===== */
+        .proposal-section { padding: 0 1.25rem var(--section-padding); overflow: hidden; }
+        .proposal-container {
+            max-width: 700px; margin: 0 auto;
+            background: var(--color-text); color: var(--color-white);
+            border-radius: 24px; padding: 3.5rem 2.5rem;
+        }
+        .proposal-header { text-align: center; margin-bottom: 2.5rem; }
+        .proposal-header .section-overline { color: var(--color-sand); }
+        .proposal-header .section-title { color: white; }
+        .proposal-subtitle { color: var(--color-gray); font-size: 0.95rem; margin-top: 0.75rem; }
+        .form-grid { display: grid; gap: 1.25rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-label {
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.08em; color: var(--color-gray);
+        }
+        .form-input, .form-select, .form-textarea {
+            padding: 14px 18px; border-radius: 14px; border: 1.5px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.08); color: white; font-family: var(--font-main);
+            font-size: 0.9rem; transition: var(--transition-fast); width: 100%;
+        }
+        .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.35); }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none; border-color: var(--color-primary);
+            background: rgba(255,255,255,0.12);
+        }
+        .form-select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239C9C9C' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+        .form-select option { background: var(--color-text); color: white; }
+        .form-textarea { min-height: 100px; resize: vertical; }
+        .form-submit-row { display: flex; justify-content: center; margin-top: 1rem; }
+        .btn-submit {
+            padding: 16px 40px; border-radius: 50px; border: none;
+            background: var(--color-primary); color: white; font-family: var(--font-main);
+            font-size: 0.95rem; font-weight: 700; cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .btn-submit:hover { background: var(--color-primary-hover); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(192,58,43,0.3); }
+
+        /* Success Message */
+        .form-success {
+            display: none; text-align: center; padding: 2rem;
+        }
+        .form-success.show { display: block; }
+        .form-success-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .form-success-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .form-success-text { color: var(--color-gray); }
+
+        /* ===== FUN STATS ===== */
+        .stats-section { padding: 0 1.25rem var(--section-padding); overflow: hidden; }
+        .stats-grid {
+            max-width: 800px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.8); backdrop-filter: blur(15px);
+            border-radius: 20px; padding: 2rem 1.5rem; text-align: center;
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: var(--transition-smooth);
+        }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+        .stat-number {
+            font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;
+            letter-spacing: -0.04em; color: var(--color-primary); line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.8rem; color: var(--color-text-light); margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* ===== MODAL / POPUP ===== */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px); z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: var(--transition-smooth);
+            padding: 1.25rem;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal {
+            background: var(--color-white); border-radius: 24px; padding: 2.5rem;
+            max-width: 500px; width: 100%; max-height: 85vh; overflow-y: auto;
+            transform: translateY(20px) scale(0.95);
+            transition: var(--transition-smooth);
+        }
+        .modal-overlay.active .modal { transform: translateY(0) scale(1); }
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px;
+            border-radius: 50%; border: none; background: var(--color-bg);
+            cursor: pointer; font-size: 1.1rem; display: flex; align-items: center;
+            justify-content: center; transition: var(--transition-fast);
+        }
+        .modal-close:hover { background: var(--color-text); color: white; }
+        .modal-emoji { font-size: 3rem; margin-bottom: 1rem; }
+        .modal-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+        .modal-meta { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .modal-meta-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-text-light); }
+        .modal-desc { font-size: 0.95rem; color: var(--color-text-light); line-height: 1.6; margin-bottom: 1.5rem; }
+        .modal-actions { display: flex; gap: 0.75rem; }
+        .modal-actions .btn { flex: 1; }
+
+        /* ===== CONFETTI ===== */
+        .confetti-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 3000; overflow: hidden;
+        }
+        .confetti-piece {
+            position: absolute; width: 10px; height: 10px;
+            top: -20px; opacity: 0;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer { background: var(--color-text); color: var(--color-white); padding: 4rem 1.25rem 2rem; }
+        .footer-container { max-width: var(--container-width); margin: 0 auto; }
+        .footer-top { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .footer-logo { height: 44px; width: auto; filter: brightness(0) invert(1); margin-bottom: 0.75rem; }
+        .footer-tagline { font-size: 0.85rem; color: var(--color-gray); }
+        .footer-links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .footer-col h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-gray); margin-bottom: 1rem; }
+        .footer-col a { display: block; font-size: 0.9rem; color: rgba(255,255,255,0.7); padding: 0.3rem 0; transition: var(--transition-fast); }
+        .footer-col a:hover { color: var(--color-white); }
+        .footer-bottom { padding-top: 2rem; text-align: center; }
+        .footer-bottom p { font-size: 0.8rem; color: var(--color-gray); }
+
+        /* ===== REVEAL ===== */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            :root { --section-padding: 80px; }
+            .footer-top { grid-template-columns: 1fr; gap: 3rem; }
+        }
+        @media (max-width: 768px) {
+            :root { --section-padding: 60px; --nav-height: 68px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .nav-logo img { height: 44px; }
+            .form-row { grid-template-columns: 1fr; }
+            .events-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+            .stat-card { padding: 1.5rem 0.75rem; }
+            .highlight-card { padding: 2rem 1.5rem; }
+            .calendar-container { padding: 1.5rem; }
+            .calendar-day { font-size: 0.8rem; border-radius: 10px; }
+            .proposal-container { padding: 2.5rem 1.5rem; }
+            .footer-links-grid { grid-template-columns: 1fr 1fr; }
+            .modal { padding: 2rem 1.5rem; margin: 1rem; }
+        }
+        @media (max-width: 480px) {
+            .nav-logo img { height: 38px; }
+            .page-hero-title { font-size: 2rem; }
+            .highlight-title { font-size: 1.3rem; }
+            .filter-tab { padding: 6px 12px; font-size: 0.7rem; }
+            .calendar-day { font-size: 0.75rem; border-radius: 8px; }
+            .calendar-event-dot { width: 4px; height: 4px; }
+            .calendar-month { font-size: 1.2rem; }
+            .stat-number { font-size: 1.8rem; }
+            .stat-label { font-size: 0.7rem; }
+            .stats-grid { gap: 0.5rem; }
+            .footer-links-grid { grid-template-columns: 1fr; }
+            .btn { width: 100%; }
+            .event-card-footer { flex-direction: column; }
+            .btn-calendar-add { width: 100%; height: auto; padding: 12px; border-radius: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ANIMATED BACKGROUND -->
+    <div class="animated-bg">
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+        <div class="bg-shape bg-shape-3"></div>
+    </div>
+
+    <!-- CONFETTI CONTAINER -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci⁴"></a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="events.html" class="nav-link active">Events</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="kontakt.html" class="nav-link">Kontakt</a>
+            </div>
+            <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="events.html" class="mobile-link active">Events</a>
+            <a href="shop.html" class="mobile-link">Shop</a>
+            <a href="kontakt.html" class="mobile-link">Kontakt</a>
+        </div>
+    </div>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero reveal">
+        <p class="section-overline">EVENTS</p>
+        <h1 class="page-hero-title">Was steht an?</h1>
+        <p class="page-hero-subtitle">Alle kommenden Events, Partys und Abende in der Poccistraße auf einen Blick.</p>
+    </section>
+
+    <!-- FILTER TABS -->
+    <section class="filter-section reveal">
+        <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab active" data-filter="all">Alle</button>
+            <button class="filter-tab" data-filter="party"><span class="filter-dot" style="background:var(--cat-party)"></span> Partys</button>
+            <button class="filter-tab" data-filter="games"><span class="filter-dot" style="background:var(--cat-games)"></span> Spieleabende</button>
+            <button class="filter-tab" data-filter="drinks"><span class="filter-dot" style="background:var(--cat-drinks)"></span> Trinkabende</button>
+            <button class="filter-tab" data-filter="film"><span class="filter-dot" style="background:var(--cat-film)"></span> Filmabende</button>
+        </div>
+    </section>
+
+    <!-- NEXT EVENT HIGHLIGHT -->
+    <section class="highlight-section reveal">
+        <div class="highlight-card">
+            <div class="highlight-badge"><span class="pulse-dot"></span> Nächstes Event</div>
+            <div class="highlight-emoji">🎂</div>
+            <h2 class="highlight-title">1 Jahr Pocci – Einzugsparty!</h2>
+            <div class="highlight-meta">
+                <div class="highlight-meta-item">📅 15. Mai 2026</div>
+                <div class="highlight-meta-item">🕐 20:00 Uhr</div>
+                <div class="highlight-meta-item">📍 Poccistraße</div>
+                <div class="highlight-meta-item">🎉 Party</div>
+            </div>
+            <div class="capacity-bar-container">
+                <div class="capacity-header">
+                    <span class="capacity-count">12 / 30 Plätze</span>
+                    <span class="capacity-label">40% belegt</span>
+                </div>
+                <div class="capacity-bar">
+                    <div class="capacity-fill" style="--fill-width: 40%;"></div>
+                </div>
+            </div>
+            <div class="attendees">
+                <div class="attendee-avatars">
+                    <div class="attendee-avatar" style="background: var(--cat-party);">M</div>
+                    <div class="attendee-avatar" style="background: var(--cat-games);">L</div>
+                    <div class="attendee-avatar" style="background: var(--cat-drinks);">J</div>
+                    <div class="attendee-avatar" style="background: var(--cat-film);">S</div>
+                    <div class="attendee-avatar" style="background: var(--color-gray);">A</div>
+                </div>
+                <span class="attendee-count">+7 weitere sind dabei</span>
+            </div>
+            <div class="highlight-actions">
+                <button class="btn btn-primary btn-icon" onclick="joinEvent(this, '1 Jahr Pocci')">🎉 Ich bin dabei!</button>
+                <button class="btn btn-outline btn-icon" onclick="downloadICS('1 Jahr Pocci – Einzugsparty', '2026-05-15', '20:00')">📅 Zum Kalender</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALENDAR -->
+    <section class="calendar-section">
+        <div class="calendar-container reveal">
+            <div class="calendar-header">
+                <h3 class="calendar-month" id="calendarMonth"></h3>
+                <div class="calendar-nav">
+                    <button class="calendar-nav-btn" id="prevMonth">‹</button>
+                    <button class="calendar-nav-btn" id="nextMonth">›</button>
+                </div>
+            </div>
+            <div class="calendar-weekdays">
+                <div class="calendar-weekday">Mo</div>
+                <div class="calendar-weekday">Di</div>
+                <div class="calendar-weekday">Mi</div>
+                <div class="calendar-weekday">Do</div>
+                <div class="calendar-weekday">Fr</div>
+                <div class="calendar-weekday">Sa</div>
+                <div class="calendar-weekday">So</div>
+            </div>
+            <div class="calendar-days" id="calendarDays"></div>
+            <div class="calendar-legend">
+                <div class="legend-item"><span class="legend-dot" style="background:var(--cat-party)"></span> Party</div>
+                <div class="legend-item"><span class="legend-dot" style="background:var(--cat-games)"></span> Spieleabend</div>
+                <div class="legend-item"><span class="legend-dot" style="background:var(--cat-drinks)"></span> Trinkabend</div>
+                <div class="legend-item"><span class="legend-dot" style="background:var(--cat-film)"></span> Filmabend</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVENT CARDS -->
+    <section class="events-grid-section">
+        <div class="events-grid-header reveal">
+            <p class="section-overline">ALLE EVENTS</p>
+            <h2 class="section-title">Kommende Abende.</h2>
+        </div>
+        <div class="events-grid" id="eventsGrid"></div>
+    </section>
+
+    <!-- EVENT PROPOSAL FORM -->
+    <section class="proposal-section" id="vorschlag">
+        <div class="proposal-container reveal">
+            <div class="proposal-header">
+                <p class="section-overline">DEINE IDEE</p>
+                <h2 class="section-title">Event vorschlagen.</h2>
+                <p class="proposal-subtitle">Du hast eine Idee für den nächsten Abend? Schlag es vor – wir prüfen es und machen es möglich!</p>
+            </div>
+            <form id="proposalForm" class="form-grid">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Dein Name</label>
+                        <input type="text" class="form-input" placeholder="Max Mustermann" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">E-Mail</label>
+                        <input type="email" class="form-input" placeholder="max@email.de" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Event-Typ</label>
+                        <select class="form-select" required>
+                            <option value="" disabled selected>Wähle einen Typ...</option>
+                            <option value="party">🎉 Hausparty</option>
+                            <option value="games">🎲 Spieleabend</option>
+                            <option value="drinks">🍻 Trinkabend</option>
+                            <option value="film">🎬 Filmabend</option>
+                            <option value="other">💡 Sonstiges</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Wunschdatum</label>
+                        <input type="date" class="form-input" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Deine Nachricht / Idee</label>
+                    <textarea class="form-textarea" placeholder="Beschreib dein Event... Was schwebt dir vor?"></textarea>
+                </div>
+                <div class="form-submit-row">
+                    <button type="submit" class="btn-submit">Vorschlag senden →</button>
+                </div>
+            </form>
+            <div class="form-success" id="formSuccess">
+                <div class="form-success-icon">🎉</div>
+                <div class="form-success-title">Vorschlag gesendet!</div>
+                <div class="form-success-text">Wir schauen uns deine Idee an und melden uns. Danke!</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FUN STATS -->
+    <section class="stats-section reveal">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" data-target="1">0</div>
+                <div class="stat-label">Geplante Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="12">0</div>
+                <div class="stat-label">Anmeldungen</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="365">0</div>
+                <div class="stat-label">Tage Pocci</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="assets/logo.svg" alt="pocci⁴" class="footer-logo">
+                    <p class="footer-tagline">Poccistraße, München</p>
+                </div>
+                <div class="footer-links-grid">
+                    <div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div>
+                    <div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="#vorschlag">Event vorschlagen</a><a href="shop.html">Tickets</a></div>
+                    <div class="footer-col"><h4>Connect</h4><a href="#">Instagram</a><a href="kontakt.html">Kontaktformular</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>© 2025 pocci⁴ – Mit Liebe aus der Poccistraße.</p></div>
+        </div>
+    </footer>
+
+    <!-- EVENT DETAIL MODAL -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal" style="position:relative;">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-emoji" id="modalEmoji"></div>
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <div class="modal-meta" id="modalMeta"></div>
+            <p class="modal-desc" id="modalDesc"></p>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="modalJoinBtn">🎉 Ich bin dabei!</button>
+                <button class="btn btn-outline" id="modalCalBtn">📅 Kalender</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // ===== EVENT DATA =====
+        const events = [
+            {
+                id: 1, title: '1 Jahr Pocci – Einzugsparty!', emoji: '🎂',
+                date: '2026-05-15', time: '20:00', category: 'party',
+                desc: 'Ein Jahr in der Poccistraße – das muss gefeiert werden! Drinks, Musik & die besten Leute. Dress to impress! 🍾',
+                capacity: 30, attending: 12, location: 'Poccistraße'
+            },
+            {
+                id: 2, title: 'Siedler-Turnier', emoji: '🎲',
+                date: '2026-05-22', time: '19:00', category: 'games',
+                desc: 'Das ultimative Siedler von Catan Turnier. Bringt eure Strategien mit – Verlierer zahlt die Pizza! 🍕',
+                capacity: 10, attending: 6, location: 'Poccistraße'
+            },
+            {
+                id: 3, title: 'Feierabend-Drinks', emoji: '🍻',
+                date: '2026-06-05', time: '18:30', category: 'drinks',
+                desc: 'Einfach zusammen sitzen, was trinken und den Abend genießen. Kein Plan, kein Stress. Bring mit was du willst.',
+                capacity: 15, attending: 4, location: 'Poccistraße'
+            },
+            {
+                id: 4, title: 'Movie Marathon', emoji: '🎬',
+                date: '2026-06-12', time: '20:00', category: 'film',
+                desc: 'Trilogie-Abend! Welche Trilogie? Wird demokratisch abgestimmt. Popcorn ist da. Beamer läuft.',
+                capacity: 8, attending: 3, location: 'Poccistraße'
+            },
+            {
+                id: 5, title: 'Sommerparty', emoji: '☀️',
+                date: '2026-06-28', time: '21:00', category: 'party',
+                desc: 'Die große Sommerparty in der Poccistraße. DJ, Drinks, Dancefloor. DAS Event des Sommers!',
+                capacity: 40, attending: 18, location: 'Poccistraße'
+            },
+            {
+                id: 6, title: 'Poker Night', emoji: '🃏',
+                date: '2026-07-03', time: '20:00', category: 'games',
+                desc: 'Texas Hold\'em Poker Night. Buy-in: 5€. Winner takes all. Pokerface aufsetzen!',
+                capacity: 8, attending: 5, location: 'Poccistraße'
+            }
+        ];
+
+        const catColors = { party: '#C03A2B', games: '#1A1A1A', drinks: '#C4A882', film: '#457B9D', other: '#6B6B6B' };
+        const catNames = { party: 'Party', games: 'Spieleabend', drinks: 'Trinkabend', film: 'Filmabend', other: 'Sonstiges' };
+        const monthNames = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+
+        let currentMonth = 4; // Mai (0-indexed)
+        let currentYear = 2026;
+        let activeFilter = 'all';
+
+        // ===== NAVBAR =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
+
+        // ===== MOBILE MENU =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => {
+            hamburger.classList.remove('active'); mobileMenu.classList.remove('active'); document.body.style.overflow = '';
+        }));
+
+        // ===== FILTER TABS =====
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                activeFilter = tab.dataset.filter;
+                renderEventCards();
+            });
+        });
+
+        // ===== CALENDAR =====
+        function renderCalendar() {
+            document.getElementById('calendarMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            const daysContainer = document.getElementById('calendarDays');
+            daysContainer.innerHTML = '';
+
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            let startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+
+            const prevMonthLast = new Date(currentYear, currentMonth, 0).getDate();
+            const today = new Date();
+
+            // Previous month days
+            for (let i = startDay - 1; i >= 0; i--) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.innerHTML = `<span class="calendar-day-number">${prevMonthLast - i}</span>`;
+                daysContainer.appendChild(day);
+            }
+
+            // Current month days
+            for (let d = 1; d <= lastDay.getDate(); d++) {
+                const day = document.createElement('div');
+                const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const dayEvents = events.filter(e => e.date === dateStr);
+                const isToday = today.getDate() === d && today.getMonth() === currentMonth && today.getFullYear() === currentYear;
+
+                let classes = 'calendar-day current-month';
+                if (isToday) classes += ' today';
+                if (dayEvents.length > 0) {
+                    classes += ' has-event';
+                    classes += ` cat-${dayEvents[0].category}`;
+                }
+                day.className = classes;
+
+                let dotsHTML = '';
+                if (dayEvents.length > 0) {
+                    dotsHTML = '<div class="calendar-event-dots">';
+                    dayEvents.forEach(e => {
+                        dotsHTML += `<span class="calendar-event-dot" style="background:${catColors[e.category]}"></span>`;
+                    });
+                    dotsHTML += '</div>';
+                }
+
+                day.innerHTML = `<span class="calendar-day-number">${d}</span>${dotsHTML}`;
+
+                if (dayEvents.length > 0) {
+                    day.addEventListener('click', () => openModal(dayEvents[0]));
+                }
+
+                daysContainer.appendChild(day);
+            }
+
+            // Next month days
+            const totalCells = daysContainer.children.length;
+            const remaining = 42 - totalCells;
+            for (let i = 1; i <= remaining; i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.innerHTML = `<span class="calendar-day-number">${i}</span>`;
+                daysContainer.appendChild(day);
+            }
+        }
+
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+            renderCalendar();
+        });
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+            renderCalendar();
+        });
+
+        renderCalendar();
+
+        // ===== EVENT CARDS =====
+        function renderEventCards() {
+            const grid = document.getElementById('eventsGrid');
+            grid.innerHTML = '';
+            const filtered = activeFilter === 'all' ? events : events.filter(e => e.category === activeFilter);
+
+            filtered.forEach(e => {
+                const d = new Date(e.date);
+                const dayNum = d.getDate();
+                const monthShort = monthNames[d.getMonth()].substring(0, 3).toUpperCase();
+                const pct = Math.round((e.attending / e.capacity) * 100);
+
+                const card = document.createElement('div');
+                card.className = 'event-card';
+                card.setAttribute('data-category', e.category);
+                card.innerHTML = `
+                    <div class="event-card-header">
+                        <div class="event-card-date">
+                            <span class="event-card-date-day">${dayNum}</span>
+                            <span class="event-card-date-month">${monthShort}</span>
+                        </div>
+                        <span class="event-card-category" style="background:${catColors[e.category]}">${catNames[e.category]}</span>
+                    </div>
+                    <div class="event-card-body">
+                        <div class="event-card-emoji">${e.emoji}</div>
+                        <h3 class="event-card-title">${e.title}</h3>
+                        <p class="event-card-desc">${e.desc}</p>
+                        <div class="event-card-meta">
+                            <span class="event-card-meta-item">🕐 ${e.time} Uhr</span>
+                            <span class="event-card-meta-item">📍 ${e.location}</span>
+                        </div>
+                        <div class="event-card-capacity">
+                            <div class="event-card-capacity-bar">
+                                <div class="event-card-capacity-fill" style="width:${pct}%; background:${catColors[e.category]}"></div>
+                            </div>
+                            <div class="event-card-capacity-text">
+                                <span>${e.attending} / ${e.capacity} Plätze</span>
+                                <span>${pct}%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event-card-footer">
+                        <button class="btn-join" onclick="joinEvent(this, '${e.title}')">🎉 Ich bin dabei!</button>
+                        <button class="btn-calendar-add" onclick="downloadICS('${e.title}', '${e.date}', '${e.time}')" title="Zum Kalender hinzufügen">📅</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        renderEventCards();
+
+        // ===== MODAL =====
+        window.openModal = function(event) {
+            const modal = document.getElementById('eventModal');
+            document.getElementById('modalEmoji').textContent = event.emoji;
+            document.getElementById('modalTitle').textContent = event.title;
+            document.getElementById('modalDesc').textContent = event.desc;
+
+            const d = new Date(event.date);
+            document.getElementById('modalMeta').innerHTML = `
+                <div class="modal-meta-item">📅 ${d.getDate()}. ${monthNames[d.getMonth()]} ${d.getFullYear()}</div>
+                <div class="modal-meta-item">🕐 ${event.time} Uhr</div>
+                <div class="modal-meta-item">📍 ${event.location}</div>
+                <div class="modal-meta-item">👥 ${event.attending} / ${event.capacity} Plätze</div>
+                <div class="modal-meta-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${catColors[event.category]}"></span> ${catNames[event.category]}</div>
+            `;
+
+            document.getElementById('modalJoinBtn').onclick = function() { joinEvent(this, event.title); closeModal(); };
+            document.getElementById('modalCalBtn').onclick = function() { downloadICS(event.title, event.date, event.time); };
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeModal = function() {
+            document.getElementById('eventModal').classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        document.getElementById('eventModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // ===== JOIN EVENT + CONFETTI =====
+        window.joinEvent = function(btn, eventName) {
+            if (btn.classList.contains('joined')) {
+                btn.classList.remove('joined');
+                btn.innerHTML = '🎉 Ich bin dabei!';
+                return;
+            }
+            btn.classList.add('joined');
+            btn.innerHTML = '✅ Du bist dabei!';
+            launchConfetti();
+
+            // WhatsApp notification (CallMeBot placeholder)
+            console.log(`[WhatsApp] Neue Anmeldung für: ${eventName}`);
+        };
+
+        // ===== CONFETTI =====
+        function launchConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#C03A2B','#E8501E','#C4A882','#457B9D','#FF6B6B','#FFD93D','#6BCB77'];
+
+            for (let i = 0; i < 60; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                const size = Math.random() * 8 + 6;
+                const isCircle = Math.random() > 0.5;
+                piece.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    width: ${size}px; height: ${isCircle ? size : size * 2.5}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    border-radius: ${isCircle ? '50%' : '3px'};
+                    opacity: 1;
+                    animation: confettiFall ${Math.random() * 2 + 2}s ease-out forwards;
+                    animation-delay: ${Math.random() * 0.3}s;
+                `;
+                container.appendChild(piece);
+                setTimeout(() => piece.remove(), 4000);
+            }
+        }
+
+        // Add confetti animation
+        const confettiStyle = document.createElement('style');
+        confettiStyle.textContent = `
+            @keyframes confettiFall {
+                0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(${Math.random() * 720}deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(confettiStyle);
+
+        // ===== ICS DOWNLOAD =====
+        window.downloadICS = function(title, date, time) {
+            const [h, m] = time.split(':');
+            const start = date.replace(/-/g, '') + 'T' + h + m + '00';
+            const endH = String(parseInt(h) + 4).padStart(2, '0');
+            const end = date.replace(/-/g, '') + 'T' + endH + m + '00';
+
+            const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//pocci4//DE
+BEGIN:VEVENT
+DTSTART:${start}
+DTEND:${end}
+SUMMARY:${title}
+LOCATION:Poccistraße, München
+DESCRIPTION:Event bei pocci⁴
+END:VEVENT
+END:VCALENDAR`;
+
+            const blob = new Blob([ics], { type: 'text/calendar' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${title.replace(/[^a-zA-Z0-9]/g, '_')}.ics`;
+            a.click();
+        };
+
+        // ===== PROPOSAL FORM =====
+        document.getElementById('proposalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            document.getElementById('formSuccess').classList.add('show');
+            launchConfetti();
+        });
+
+        // ===== CAPACITY BAR ANIMATION =====
+        const capObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    capObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.capacity-fill').forEach(el => capObserver.observe(el));
+
+        // ===== STAT COUNTER ANIMATION =====
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.target);
+                    let current = 0;
+                    const increment = target / 40;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) { current = target; clearInterval(timer); }
+                        el.textContent = Math.round(current);
+                    }, 40);
+                    statObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.stat-number').forEach(el => statObserver.observe(el));
+
+        // ===== SCROLL REVEAL =====
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ===== PARALLAX =====
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.bg-shape').forEach((s, i) => {
+                s.style.transform = `translateY(${window.scrollY * (i + 1) * 0.015}px) rotate(${window.scrollY * 0.01 * (i % 2 === 0 ? 1 : -1)}deg)`;
+            });
+        });
+
+    });
+    </script>
+
+</body>
+</html>
