@@ -36,36 +36,74 @@
         a { text-decoration: none; color: inherit; transition: var(--transition-fast); }
         img { max-width: 100%; height: auto; display: block; }
 
-        /* ===== ANIMATED BACKGROUND ===== */
+        /* ===== ANIMATED BACKGROUND - RANDOM SHAPES ===== */
         .animated-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; overflow: hidden;
         }
-        .bg-orb {
-            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3;
-            animation: orbFloat 20s ease-in-out infinite;
+        .bg-shape {
+            position: absolute; filter: blur(100px); opacity: 0.45;
         }
-        .bg-orb-1 {
-            width: 600px; height: 600px; background: #E8D5B7; top: -10%; left: -10%;
-            animation-duration: 25s;
+        .bg-shape-1 {
+            width: 700px; height: 500px; background: #E0CEBB;
+            top: -15%; left: -10%; border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+            animation: morphFloat1 20s ease-in-out infinite;
         }
-        .bg-orb-2 {
-            width: 500px; height: 500px; background: #D4C4B0; bottom: -10%; right: -10%;
-            animation-duration: 30s; animation-delay: -5s;
+        .bg-shape-2 {
+            width: 550px; height: 650px; background: #D4C0AD;
+            bottom: -20%; right: -10%; border-radius: 40% 60% 30% 70% / 60% 30% 70% 40%;
+            animation: morphFloat2 25s ease-in-out infinite;
         }
-        .bg-orb-3 {
-            width: 400px; height: 400px; background: #E0D2C2; top: 40%; left: 50%;
-            animation-duration: 22s; animation-delay: -10s;
+        .bg-shape-3 {
+            width: 450px; height: 400px; background: #C9B8A5;
+            top: 35%; left: 45%; border-radius: 50% 50% 30% 70% / 40% 60% 40% 60%;
+            animation: morphFloat3 22s ease-in-out infinite;
         }
-        .bg-orb-4 {
-            width: 350px; height: 350px; background: #C4A882; top: 10%; right: 20%;
-            animation-duration: 28s; animation-delay: -15s; opacity: 0.15;
+        .bg-shape-4 {
+            width: 380px; height: 480px; background: #D8C9B8;
+            top: 5%; right: 15%; border-radius: 30% 70% 50% 50% / 50% 40% 60% 50%;
+            animation: morphFloat4 28s ease-in-out infinite;
         }
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -40px) scale(1.05); }
-            50% { transform: translate(-20px, 20px) scale(0.95); }
-            75% { transform: translate(40px, 30px) scale(1.02); }
+        .bg-shape-5 {
+            width: 500px; height: 350px; background: #E5D8CA;
+            bottom: 10%; left: 20%; border-radius: 70% 30% 50% 50% / 30% 50% 50% 70%;
+            animation: morphFloat5 24s ease-in-out infinite;
+        }
+        .bg-shape-6 {
+            width: 300px; height: 300px; background: #C4A882;
+            top: 60%; right: 30%; border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+            animation: morphFloat6 18s ease-in-out infinite; opacity: 0.3;
+        }
+
+        @keyframes morphFloat1 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+            25% { transform: translate(40px, -50px) rotate(5deg) scale(1.05); border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; }
+            50% { transform: translate(-30px, 30px) rotate(-3deg) scale(0.95); border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%; }
+            75% { transform: translate(50px, 40px) rotate(7deg) scale(1.03); border-radius: 70% 30% 60% 40% / 40% 70% 30% 60%; }
+        }
+        @keyframes morphFloat2 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); border-radius: 40% 60% 30% 70% / 60% 30% 70% 40%; }
+            33% { transform: translate(-50px, -40px) rotate(-8deg) scale(1.08); border-radius: 60% 40% 50% 50% / 40% 60% 40% 60%; }
+            66% { transform: translate(40px, 50px) rotate(5deg) scale(0.92); border-radius: 30% 70% 60% 40% / 50% 50% 50% 50%; }
+        }
+        @keyframes morphFloat3 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); border-radius: 50% 50% 30% 70% / 40% 60% 40% 60%; }
+            25% { transform: translate(60px, -30px) rotate(10deg); border-radius: 70% 30% 50% 50% / 60% 40% 60% 40%; }
+            50% { transform: translate(-40px, 40px) rotate(-5deg); border-radius: 40% 60% 70% 30% / 50% 50% 50% 50%; }
+            75% { transform: translate(30px, 60px) rotate(8deg); border-radius: 60% 40% 40% 60% / 30% 70% 30% 70%; }
+        }
+        @keyframes morphFloat4 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); border-radius: 30% 70% 50% 50% / 50% 40% 60% 50%; }
+            50% { transform: translate(-60px, 50px) rotate(-10deg) scale(1.1); border-radius: 60% 40% 30% 70% / 40% 60% 40% 60%; }
+        }
+        @keyframes morphFloat5 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); border-radius: 70% 30% 50% 50% / 30% 50% 50% 70%; }
+            33% { transform: translate(50px, -60px) rotate(12deg); border-radius: 40% 60% 60% 40% / 50% 50% 50% 50%; }
+            66% { transform: translate(-30px, 30px) rotate(-7deg); border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%; }
+        }
+        @keyframes morphFloat6 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            50% { transform: translate(70px, -40px) rotate(15deg) scale(1.15); border-radius: 30% 70% 70% 30% / 70% 30% 70% 30%; }
         }
 
         /* ===== NAVIGATION ===== */
@@ -81,7 +119,7 @@
             height: 100%; display: flex; align-items: center; justify-content: space-between;
         }
         .nav-logo { display: flex; align-items: center; z-index: 1001; }
-        .nav-logo img { height: 28px; width: auto; }
+        .nav-logo img { height: 44px; width: auto; }
         .nav-links {
             display: flex; align-items: center; gap: 0.5rem; background: var(--color-white);
             padding: 6px; border-radius: 50px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -189,18 +227,15 @@
             line-height: 1.1; letter-spacing: -0.03em; color: var(--color-text);
         }
 
-        /* ===== INTERACTIVE CARDS SECTION ===== */
+        /* ===== INTERACTIVE EXPAND CARDS ===== */
         .cards-section { padding: var(--section-padding) 2rem; }
         .cards-header {
-            max-width: var(--container-width); margin: 0 auto 4rem;
-            text-align: center;
+            max-width: var(--container-width); margin: 0 auto 4rem; text-align: center;
         }
         .cards-subtitle {
             font-size: 1.1rem; color: var(--color-text-light); margin-top: 1rem;
             max-width: 500px; margin-left: auto; margin-right: auto;
         }
-
-        /* Interactive Expand Cards */
         .expand-cards {
             max-width: var(--container-width); margin: 0 auto;
             display: flex; gap: 1rem; height: 500px;
@@ -208,32 +243,26 @@
         .expand-card {
             flex: 1; min-width: 80px; border-radius: 24px; position: relative;
             overflow: hidden; cursor: pointer;
-            transition: flex 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-                        border-radius 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: flex 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .expand-card:hover {
-            flex: 5;
-        }
+        .expand-card:hover { flex: 5; }
         .expand-card-bg {
-            position: absolute; inset: 0; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute; inset: 0;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .expand-card:hover .expand-card-bg { transform: scale(1.05); }
-
         .expand-card-1 .expand-card-bg { background: linear-gradient(135deg, #E8501E 0%, #FF8A5C 100%); }
         .expand-card-2 .expand-card-bg { background: linear-gradient(135deg, #1A1A1A 0%, #555 100%); }
         .expand-card-3 .expand-card-bg { background: linear-gradient(135deg, #C4A882 0%, #E8D5B7 100%); }
         .expand-card-4 .expand-card-bg { background: linear-gradient(135deg, #457B9D 0%, #A8DADC 100%); }
         .expand-card-5 .expand-card-bg { background: linear-gradient(135deg, #E63946 0%, #FF6B6B 100%); }
 
-        /* Card collapsed state */
         .expand-card-collapsed {
             position: absolute; inset: 0; display: flex; flex-direction: column;
             align-items: center; justify-content: center; gap: 1rem;
-            transition: opacity 0.4s ease;
-            z-index: 2;
+            transition: opacity 0.4s ease; z-index: 2;
         }
         .expand-card:hover .expand-card-collapsed { opacity: 0; pointer-events: none; }
-
         .expand-card-number {
             font-size: 1.5rem; font-weight: 800; color: rgba(255,255,255,0.9);
             width: 50px; height: 50px; border-radius: 50%;
@@ -242,41 +271,26 @@
             border: 1.5px solid rgba(255,255,255,0.3);
         }
         .expand-card-emoji-small {
-            font-size: 2.5rem;
-            animation: emojiPulse 3s ease-in-out infinite;
+            font-size: 2.5rem; animation: emojiPulse 3s ease-in-out infinite;
         }
-        @keyframes emojiPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
+        @keyframes emojiPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
-        /* Card expanded state */
         .expand-card-expanded {
             position: absolute; inset: 0; display: flex; flex-direction: column;
             align-items: center; justify-content: center; gap: 0.75rem;
             padding: 2rem; text-align: center;
             opacity: 0; transform: translateY(20px);
-            transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
-            z-index: 2;
+            transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s; z-index: 2;
         }
-        .expand-card:hover .expand-card-expanded {
-            opacity: 1; transform: translateY(0);
-        }
+        .expand-card:hover .expand-card-expanded { opacity: 1; transform: translateY(0); }
         .expand-card-emoji-big { font-size: 4rem; margin-bottom: 0.5rem; }
-        .expand-card-title {
-            font-size: 1.8rem; font-weight: 800; color: white;
-            letter-spacing: -0.03em;
-        }
-        .expand-card-desc {
-            font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.5;
-            max-width: 300px;
-        }
+        .expand-card-title { font-size: 1.8rem; font-weight: 800; color: white; letter-spacing: -0.03em; }
+        .expand-card-desc { font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.5; max-width: 300px; }
         .expand-card-link {
             margin-top: 0.5rem; padding: 10px 24px; border-radius: 50px;
             background: rgba(255,255,255,0.2); color: white; font-weight: 600;
             font-size: 0.85rem; backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
-            transition: var(--transition-fast);
+            border: 1px solid rgba(255,255,255,0.3); transition: var(--transition-fast);
         }
         .expand-card-link:hover { background: rgba(255,255,255,0.35); }
 
@@ -288,6 +302,15 @@
             border-radius: 24px; padding: 4rem 3rem;
             box-shadow: 0 4px 30px rgba(0,0,0,0.04);
             border: 1px solid rgba(255,255,255,0.5);
+        }
+        .countdown-emoji {
+            font-size: 3rem; margin-bottom: 1rem;
+            animation: partyPulse 2s ease-in-out infinite;
+        }
+        @keyframes partyPulse {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-10deg) scale(1.1); }
+            75% { transform: rotate(10deg) scale(1.1); }
         }
         .countdown-event-name {
             font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 900;
@@ -302,27 +325,12 @@
             transition: var(--transition-fast);
         }
         .countdown-number.tick { animation: tickPop 0.3s ease; }
-        @keyframes tickPop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
-        }
+        @keyframes tickPop { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
         .countdown-label {
             font-size: 0.75rem; color: var(--color-gray); text-transform: uppercase;
             letter-spacing: 0.1em; margin-top: 0.25rem;
         }
-        .countdown-separator {
-            font-size: 2.5rem; font-weight: 300; color: var(--color-border); margin-bottom: 1rem;
-        }
-        .countdown-emoji {
-            font-size: 3rem; margin-bottom: 1rem;
-            animation: partyPulse 2s ease-in-out infinite;
-        }
-        @keyframes partyPulse {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-10deg) scale(1.1); }
-            75% { transform: rotate(10deg) scale(1.1); }
-        }
+        .countdown-separator { font-size: 2.5rem; font-weight: 300; color: var(--color-border); margin-bottom: 1rem; }
 
         /* ===== MARQUEE ===== */
         .marquee-section {
@@ -336,31 +344,25 @@
         }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* ===== ABOUT / ÜBER UNS ===== */
+        /* ===== ABOUT + PHOTO GRID ===== */
         .about-section { padding: var(--section-padding) 2rem; }
         .about-container {
             max-width: var(--container-width); margin: 0 auto;
             display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
         }
         .about-description {
-            font-size: 1.1rem; line-height: 1.7; color: var(--color-text-light);
-            margin: 1.5rem 0 2rem;
+            font-size: 1.1rem; line-height: 1.7; color: var(--color-text-light); margin: 1.5rem 0 2rem;
         }
-
-        /* Photo Grid */
         .photo-grid {
             display: grid; grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(3, 130px); gap: 0.75rem;
         }
         .photo-item {
             border-radius: 16px; overflow: hidden; position: relative;
-            background: var(--color-bg-warm);
-            transition: var(--transition-smooth);
+            background: var(--color-bg-warm); transition: var(--transition-smooth);
         }
         .photo-item:hover { transform: scale(1.03); z-index: 2; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .photo-item img {
-            width: 100%; height: 100%; object-fit: cover;
-        }
+        .photo-item img { width: 100%; height: 100%; object-fit: cover; }
         .photo-placeholder {
             width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
             font-size: 2rem; background: linear-gradient(135deg, var(--color-bg-warm), var(--color-white));
@@ -375,10 +377,7 @@
             background: var(--color-text); color: var(--color-white);
             border-radius: 24px; padding: 4rem 3rem;
         }
-        .cta-title {
-            font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800;
-            letter-spacing: -0.03em; margin-bottom: 1rem;
-        }
+        .cta-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; }
         .cta-text { font-size: 1.05rem; color: var(--color-gray); margin-bottom: 2rem; }
         .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         .cta-section .btn-outline { color: var(--color-white); border-color: rgba(255,255,255,0.3); }
@@ -391,7 +390,7 @@
             display: grid; grid-template-columns: 1fr 2fr; gap: 4rem;
             padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .footer-logo { height: 24px; width: auto; filter: brightness(0) invert(1); margin-bottom: 0.75rem; }
+        .footer-logo { height: 36px; width: auto; filter: brightness(0) invert(1); margin-bottom: 0.75rem; }
         .footer-tagline { font-size: 0.85rem; color: var(--color-gray); }
         .footer-links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
         .footer-col h4 {
@@ -409,8 +408,7 @@
         /* ===== SCROLL REVEAL ===== */
         .reveal {
             opacity: 0; transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1),
-                        transform 0.8s cubic-bezier(0.4,0,0.2,1);
+            transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1);
         }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
@@ -421,29 +419,19 @@
             .about-container { grid-template-columns: 1fr; gap: 3rem; }
             .footer-top { grid-template-columns: 1fr; gap: 3rem; }
         }
-
         @media (max-width: 768px) {
             :root { --section-padding: 60px; --nav-height: 64px; }
             .nav-links { display: none; }
             .hamburger { display: flex; }
+            .nav-logo img { height: 36px; }
             .hero { text-align: left; align-items: flex-end; padding-bottom: 6rem; }
             .hero-buttons { justify-content: flex-start; }
-
-            /* Cards become horizontal scroll on mobile */
-            .expand-cards {
-                height: auto; flex-direction: column; gap: 0.75rem;
-            }
-            .expand-card {
-                min-width: 100%; height: 80px; flex: none;
-                transition: height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            .expand-card:hover, .expand-card.mobile-active {
-                height: 300px; flex: none;
-            }
+            .expand-cards { height: auto; flex-direction: column; gap: 0.75rem; }
+            .expand-card { min-width: 100%; height: 80px; flex: none; transition: height 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+            .expand-card:hover, .expand-card.mobile-active { height: 300px; flex: none; }
             .expand-card-collapsed { flex-direction: row; gap: 1rem; }
             .expand-card-number { width: 40px; height: 40px; font-size: 1.1rem; }
             .expand-card-emoji-small { font-size: 2rem; }
-
             .countdown-container { padding: 3rem 1.5rem; }
             .countdown-grid { gap: 0.5rem; }
             .countdown-separator { font-size: 1.5rem; }
@@ -452,7 +440,6 @@
             .hero-scroll-indicator { display: none; }
             .photo-grid { grid-template-rows: repeat(3, 100px); }
         }
-
         @media (max-width: 480px) {
             .hero-title { font-size: 2.2rem; }
             .section-title { font-size: 1.8rem; }
@@ -467,12 +454,14 @@
 </head>
 <body>
 
-    <!-- ============ ANIMATED BACKGROUND ============ -->
+    <!-- ============ ANIMATED BACKGROUND - MORPHING SHAPES ============ -->
     <div class="animated-bg">
-        <div class="bg-orb bg-orb-1"></div>
-        <div class="bg-orb bg-orb-2"></div>
-        <div class="bg-orb bg-orb-3"></div>
-        <div class="bg-orb bg-orb-4"></div>
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+        <div class="bg-shape bg-shape-3"></div>
+        <div class="bg-shape bg-shape-4"></div>
+        <div class="bg-shape bg-shape-5"></div>
+        <div class="bg-shape bg-shape-6"></div>
     </div>
 
     <!-- ============ NAVIGATION ============ -->
@@ -526,16 +515,14 @@
         </div>
     </section>
 
-    <!-- ============ INTERACTIVE CARDS (expand on hover) ============ -->
+    <!-- ============ INTERACTIVE EXPAND CARDS ============ -->
     <section class="cards-section">
         <div class="cards-header reveal">
             <p class="section-overline">WAS BEI UNS SO GEHT</p>
             <h2 class="section-title">Fünf Gründe vorbeizuschauen.</h2>
             <p class="cards-subtitle">Hover über eine Karte – oder tipp drauf auf dem Handy.</p>
         </div>
-
         <div class="expand-cards">
-
             <div class="expand-card expand-card-1">
                 <div class="expand-card-bg"></div>
                 <div class="expand-card-collapsed">
@@ -548,7 +535,6 @@
                     <div class="expand-card-desc">Legendäre Nächte in der Poccistraße. Musik, Drinks und gute Vibes bis zum Morgengrauen.</div>
                 </div>
             </div>
-
             <div class="expand-card expand-card-2">
                 <div class="expand-card-bg"></div>
                 <div class="expand-card-collapsed">
@@ -561,7 +547,6 @@
                     <div class="expand-card-desc">Von Siedler bis Codenames – bei uns wird gezockt bis einer weint. Verlierer zahlt die nächste Runde.</div>
                 </div>
             </div>
-
             <div class="expand-card expand-card-3">
                 <div class="expand-card-bg"></div>
                 <div class="expand-card-collapsed">
@@ -574,7 +559,6 @@
                     <div class="expand-card-desc">Kein Anlass nötig. Einfach zusammen sitzen, einen heben und die Welt vergessen.</div>
                 </div>
             </div>
-
             <div class="expand-card expand-card-4">
                 <div class="expand-card-bg"></div>
                 <div class="expand-card-collapsed">
@@ -587,7 +571,6 @@
                     <div class="expand-card-desc">Beamer an, Lichter aus, Popcorn raus. Kino-Feeling mitten in der WG.</div>
                 </div>
             </div>
-
             <div class="expand-card expand-card-5">
                 <div class="expand-card-bg"></div>
                 <div class="expand-card-collapsed">
@@ -601,7 +584,6 @@
                     <a href="events.html#vorschlag" class="expand-card-link">Event vorschlagen →</a>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -611,7 +593,7 @@
             <div class="countdown-emoji">🥳</div>
             <p class="section-overline">NÄCHSTES EVENT</p>
             <h2 class="countdown-event-name">1 Jahr Pocci – Einzugsparty! 🎂</h2>
-            <p class="countdown-date">15. Mai 2025 – 20:00 Uhr</p>
+            <p class="countdown-date">15. Mai 2026 – 20:00 Uhr</p>
             <div class="countdown-grid">
                 <div class="countdown-item">
                     <span class="countdown-number" id="days">00</span>
@@ -649,7 +631,7 @@
         </div>
     </section>
 
-    <!-- ============ ABOUT / ÜBER UNS mit FOTOS ============ -->
+    <!-- ============ ABOUT + PHOTOS ============ -->
     <section class="about-section">
         <div class="about-container">
             <div class="about-text reveal">
@@ -664,28 +646,26 @@
                 <a href="kontakt.html" class="btn btn-secondary">Schreib uns</a>
             </div>
             <div class="photo-grid reveal">
-                <!-- BENENNE DEINE BILDER SO: gallery-1.jpg bis gallery-10.jpg -->
-                <!-- Lege sie in den assets/ Ordner auf GitHub -->
                 <div class="photo-item photo-item-large">
-                    <img src="assets/gallery-1.jpg" alt="pocci⁴ Galerie" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>📸</div>';">
+                    <img src="assets/gallery-1.jpg" alt="pocci⁴" onerror="this.outerHTML='<div class=photo-placeholder>📸</div>';">
                 </div>
                 <div class="photo-item">
-                    <img src="assets/gallery-2.jpg" alt="pocci⁴ Galerie" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>🎉</div>';">
+                    <img src="assets/gallery-2.jpg" alt="pocci⁴" onerror="this.outerHTML='<div class=photo-placeholder>🎉</div>';">
                 </div>
                 <div class="photo-item">
-                    <img src="assets/gallery-3.jpg" alt="pocci⁴ Galerie" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>🍻</div>';">
+                    <img src="assets/gallery-3.jpg" alt="pocci⁴" onerror="this.outerHTML='<div class=photo-placeholder>🍻</div>';">
                 </div>
                 <div class="photo-item">
-                    <img src="assets/gallery-4.jpg" alt="pocci⁴ Galerie" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>🎲</div>';">
+                    <img src="assets/gallery-4.jpg" alt="pocci⁴" onerror="this.outerHTML='<div class=photo-placeholder>🎲</div>';">
                 </div>
                 <div class="photo-item">
-                    <img src="assets/gallery-5.jpg" alt="pocci⁴ Galerie" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>🏠</div>';">
+                    <img src="assets/gallery-5.jpg" alt="pocci⁴" onerror="this.outerHTML='<div class=photo-placeholder>🏠</div>';">
                 </div>
                 <div class="photo-item">
-                    <img src="assets/gallery-6.jpg" alt="pocci⁴ Galerie" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>🎬</div>';">
+                    <img src="assets/gallery-6.jpg" alt="pocci⁴" onerror="this.outerHTML='<div class=photo-placeholder>🎬</div>';">
                 </div>
                 <div class="photo-item">
-                    <img src="assets/gallery-7.jpg" alt="pocci⁴ Galerie" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>✨</div>';">
+                    <img src="assets/gallery-7.jpg" alt="pocci⁴" onerror="this.outerHTML='<div class=photo-placeholder>✨</div>';">
                 </div>
             </div>
         </div>
@@ -777,10 +757,10 @@
                 });
             }
 
-            // ===== COUNTDOWN (15. Mai 2025, 20:00 Uhr) =====
+            // ===== COUNTDOWN – 15. Mai 2026, 20:00 Uhr =====
             let prevSeconds = null;
             function updateCountdown() {
-                const eventDate = new Date('2025-05-15T20:00:00');
+                const eventDate = new Date('2026-05-15T20:00:00');
                 const diff = eventDate - new Date();
 
                 const daysEl = document.getElementById('days');
@@ -793,7 +773,7 @@
                 if (diff <= 0) {
                     daysEl.textContent = '🎉';
                     hoursEl.textContent = 'Jetzt';
-                    minutesEl.textContent = 'geht\'s';
+                    minutesEl.textContent = "geht's";
                     secondsEl.textContent = 'los!';
                     return;
                 }
@@ -808,10 +788,9 @@
                 minutesEl.textContent = String(m).padStart(2, '0');
                 secondsEl.textContent = String(s).padStart(2, '0');
 
-                // Tick animation on seconds
                 if (prevSeconds !== s) {
                     secondsEl.classList.remove('tick');
-                    void secondsEl.offsetWidth; // trigger reflow
+                    void secondsEl.offsetWidth;
                     secondsEl.classList.add('tick');
                     prevSeconds = s;
                 }
@@ -830,18 +809,15 @@
             }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-            // ===== PARALLAX BACKGROUND ORBS =====
+            // ===== PARALLAX BACKGROUND SHAPES =====
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
-                document.querySelectorAll('.bg-orb').forEach((orb, i) => {
-                    const speed = (i + 1) * 0.02;
-                    orb.style.transform = `translateY(${scrollY * speed}px)`;
+                document.querySelectorAll('.bg-shape').forEach((shape, i) => {
+                    const speed = (i + 1) * 0.015;
+                    const rotation = scrollY * 0.01 * (i % 2 === 0 ? 1 : -1);
+                    shape.style.transform = `translateY(${scrollY * speed}px) rotate(${rotation}deg)`;
                 });
             });
-
-            // ===== CONSOLE =====
-            console.log('%c pocci⁴ ', 'background: #C03A2B; color: white; font-size: 20px; font-weight: bold; padding: 10px 20px; border-radius: 8px;');
-            console.log('🏠 Poccistraße, München – 1 Jahr!');
 
         });
     </script>
