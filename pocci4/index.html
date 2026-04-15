@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pocci⁴ – Partys. Spiele. Drinks. Repeat.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ============ NAVIGATION ============ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="pocci⁴" class="logo-img">
+            </a>
+
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="events.html" class="nav-link">Events</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="kontakt.html" class="nav-link">Kontakt</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============ MOBILE MENU OVERLAY ============ -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="index.html" class="mobile-link active">Home</a>
+            <a href="events.html" class="mobile-link">Events</a>
+            <a href="shop.html" class="mobile-link">Shop</a>
+            <a href="kontakt.html" class="mobile-link">Kontakt</a>
+        </div>
+    </div>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-overline reveal">POCCISTRASSE, MÜNCHEN</p>
+            <h1 class="hero-title reveal">
+                Drei Freunde,<br>
+                eine Bude,<br>
+                <span class="hero-highlight">endlose Abende.</span>
+            </h1>
+            <p class="hero-subtitle reveal">Partys. Spieleabende. Trinkabende. Und alles dazwischen.</p>
+            <div class="hero-buttons reveal">
+                <a href="events.html" class="btn btn-primary">Events entdecken</a>
+                <a href="shop.html" class="btn btn-secondary">Tickets kaufen</a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- ============ EVENT SLIDER (tylko-style) ============ -->
+    <section class="slider-section">
+        <div class="section-header reveal">
+            <p class="section-overline">WAS BEI UNS SO GEHT</p>
+            <h2 class="section-title">Einmal kommen,<br>immer wiederkommen.</h2>
+        </div>
+
+        <div class="slider-container" id="sliderContainer">
+            <div class="slider-track" id="sliderTrack">
+
+                <div class="slider-card">
+                    <div class="card-badge">01</div>
+                    <div class="card-image" style="background: linear-gradient(135deg, #E8501E 0%, #FF8A5C 100%);">
+                        <div class="card-icon">🎉</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Hauspartys</h3>
+                        <p>Legendäre Nächte in der Poccistraße. Musik, Drinks und gute Vibes.</p>
+                    </div>
+                </div>
+
+                <div class="slider-card">
+                    <div class="card-badge">02</div>
+                    <div class="card-image" style="background: linear-gradient(135deg, #1A1A1A 0%, #444 100%);">
+                        <div class="card-icon">🎲</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Spieleabende</h3>
+                        <p>Von Siedler bis Codenames – bei uns wird gezockt bis einer weint.</p>
+                    </div>
+                </div>
+
+                <div class="slider-card">
+                    <div class="card-badge">03</div>
+                    <div class="card-image" style="background: linear-gradient(135deg, #C4A882 0%, #E8D5B7 100%);">
+                        <div class="card-icon">🍻</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Trinkabende</h3>
+                        <p>Kein Anlass nötig. Einfach zusammen sitzen und einen heben.</p>
+                    </div>
+                </div>
+
+                <div class="slider-card">
+                    <div class="card-badge">04</div>
+                    <div class="card-image" style="background: linear-gradient(135deg, #457B9D 0%, #A8DADC 100%);">
+                        <div class="card-icon">🎬</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Filmabende</h3>
+                        <p>Beamer an, Lichter aus, Popcorn raus. Kino-Feeling in der WG.</p>
+                    </div>
+                </div>
+
+                <div class="slider-card">
+                    <div class="card-badge">05</div>
+                    <div class="card-image" style="background: linear-gradient(135deg, #E63946 0%, #FF6B6B 100%);">
+                        <div class="card-icon">❓</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Dein Event?</h3>
+                        <p>Schlag uns ein Event vor – wir sind für alles offen!</p>
+                        <a href="events.html#vorschlag" class="card-link">Event vorschlagen →</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="slider-hint">
+                <span>← Drag & Scroll →</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ NEXT EVENT COUNTDOWN ============ -->
+    <section class="countdown-section">
+        <div class="countdown-container reveal">
+            <p class="section-overline">NÄCHSTES EVENT</p>
+            <h2 class="countdown-event-name">Sommerparty 🎉</h2>
+            <p class="countdown-date">28. Juni 2025 – 20:00 Uhr</p>
+
+            <div class="countdown-grid">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Tage</span>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Stunden</span>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minuten</span>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Sekunden</span>
+                </div>
+            </div>
+
+            <a href="events.html" class="btn btn-primary" style="margin-top: 2rem;">Jetzt anmelden</a>
+        </div>
+    </section>
+
+    <!-- ============ MARQUEE / LAUFTEXT ============ -->
+    <section class="marquee-section">
+        <div class="marquee-track">
+            <span class="marquee-text">PARTYS ✦ SPIELEABENDE ✦ TRINKABENDE ✦ FILMABENDE ✦ GUTE VIBES ✦ POCCISTRASSE ✦ MÜNCHEN ✦ PARTYS ✦ SPIELEABENDE ✦ TRINKABENDE ✦ FILMABENDE ✦ GUTE VIBES ✦ POCCISTRASSE ✦ MÜNCHEN ✦ </span>
+            <span class="marquee-text">PARTYS ✦ SPIELEABENDE ✦ TRINKABENDE ✦ FILMABENDE ✦ GUTE VIBES ✦ POCCISTRASSE ✦ MÜNCHEN ✦ PARTYS ✦ SPIELEABENDE ✦ TRINKABENDE ✦ FILMABENDE ✦ GUTE VIBES ✦ POCCISTRASSE ✦ MÜNCHEN ✦ </span>
+        </div>
+    </section>
+
+    <!-- ============ ABOUT / WG SECTION ============ -->
+    <section class="about-section">
+        <div class="about-container">
+            <div class="about-text reveal">
+                <p class="section-overline">ÜBER UNS</p>
+                <h2 class="section-title">Drei Schulfreunde.<br>Ein Zuhause.</h2>
+                <p class="about-description">
+                    Wir sind drei alte Schulfreunde, die zusammen in der Poccistraße in München wohnen. 
+                    Was als WG anfing, wurde schnell zum Treffpunkt für Freunde, Freunde von Freunden 
+                    und alle, die Bock auf gute Abende haben. Ob Hausparty, Spieleabend oder einfach 
+                    nur zusammen abhängen – bei uns ist jeder willkommen.
+                </p>
+                <a href="kontakt.html" class="btn btn-secondary">Schreib uns</a>
+            </div>
+            <div class="about-visual reveal">
+                <div class="about-card about-card-1">🏠</div>
+                <div class="about-card about-card-2">🎉</div>
+                <div class="about-card about-card-3">🤝</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA SECTION ============ -->
+    <section class="cta-section">
+        <div class="cta-container reveal">
+            <h2 class="cta-title">Bock auf den nächsten Abend?</h2>
+            <p class="cta-text">Schlag ein Event vor oder sichere dir Tickets für die nächste Party.</p>
+            <div class="cta-buttons">
+                <a href="events.html#vorschlag" class="btn btn-primary">Event vorschlagen</a>
+                <a href="shop.html" class="btn btn-outline">Tickets sichern</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="assets/logo.png" alt="pocci⁴" class="footer-logo">
+                    <p class="footer-tagline">Poccistraße, München</p>
+                </div>
+                <div class="footer-links-grid">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <a href="index.html">Home</a>
+                        <a href="events.html">Events</a>
+                        <a href="shop.html">Shop</a>
+                        <a href="kontakt.html">Kontakt</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Events</h4>
+                        <a href="events.html">Kommende Events</a>
+                        <a href="events.html#vorschlag">Event vorschlagen</a>
+                        <a href="shop.html">Tickets</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <a href="#">Instagram</a>
+                        <a href="kontakt.html">Kontaktformular</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 pocci⁴ – Mit Liebe aus der Poccistraße.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
