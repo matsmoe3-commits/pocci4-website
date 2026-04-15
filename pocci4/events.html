@@ -24,37 +24,40 @@
         a { text-decoration: none; color: inherit; transition: var(--transition-fast); }
         img { max-width: 100%; height: auto; display: block; }
 
-        /* ANIMATED BG */
+        /* BG */
         .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        .bg-shape { position: absolute; filter: blur(100px); opacity: 0.45; }
-        .bg-shape-1 { width: 700px; height: 500px; background: #E0CEBB; top: -15%; left: -10%; border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; animation: m1 20s ease-in-out infinite; }
-        .bg-shape-2 { width: 550px; height: 650px; background: #D4C0AD; bottom: -20%; right: -10%; border-radius: 40% 60% 30% 70% / 60% 30% 70% 40%; animation: m2 25s ease-in-out infinite; }
-        .bg-shape-3 { width: 450px; height: 400px; background: #C9B8A5; top: 35%; left: 45%; border-radius: 50% 50% 30% 70% / 40% 60% 40% 60%; animation: m3 22s ease-in-out infinite; }
-        @keyframes m1 { 0%,100%{transform:translate(0,0) rotate(0) scale(1)} 50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)} }
-        @keyframes m2 { 0%,100%{transform:translate(0,0) rotate(0)} 50%{transform:translate(40px,50px) rotate(5deg) scale(.92)} }
-        @keyframes m3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,40px) rotate(-5deg)} }
+        .bg-shape { position: absolute; filter: blur(100px); opacity: .45; }
+        .bg-shape-1 { width: 700px; height: 500px; background: #E0CEBB; top: -15%; left: -10%; border-radius: 60% 40% 70% 30%/50% 60% 40% 50%; animation: m1 20s ease-in-out infinite; }
+        .bg-shape-2 { width: 550px; height: 650px; background: #D4C0AD; bottom: -20%; right: -10%; border-radius: 40% 60% 30% 70%/60% 30% 70% 40%; animation: m2 25s ease-in-out infinite; }
+        .bg-shape-3 { width: 450px; height: 400px; background: #C9B8A5; top: 35%; left: 45%; animation: m3 22s ease-in-out infinite; }
+        @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
+        @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
+        @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
 
         /* NAV */
-        .navbar { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height); background: rgba(245,240,235,0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 1000; transition: var(--transition-smooth); border-bottom: 1px solid transparent; }
-        .navbar.scrolled { border-bottom: 1px solid var(--color-border); background: rgba(245,240,235,0.9); }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height); background: rgba(245,240,235,.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 1000; border-bottom: 1px solid transparent; transition: var(--transition-smooth); }
+        .navbar.scrolled { border-bottom: 1px solid var(--color-border); background: rgba(245,240,235,.9); }
         .nav-container { max-width: var(--container-width); margin: 0 auto; padding: 0 2rem; height: 100%; display: flex; align-items: center; justify-content: space-between; }
         .nav-logo { display: flex; align-items: center; z-index: 1001; }
-        .nav-logo img { height: 56px; width: auto; }
+        .nav-logo img { height: 56px; }
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
         .nav-links { display: flex; align-items: center; gap: .5rem; background: var(--color-white); padding: 6px; border-radius: 50px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
         .nav-link { padding: 8px 20px; border-radius: 50px; font-size: .875rem; font-weight: 500; color: var(--color-text-light); transition: var(--transition-fast); }
         .nav-link:hover { color: var(--color-text); background: var(--color-bg); }
         .nav-link.active { background: var(--color-text); color: var(--color-white); }
+        .nav-admin-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--color-border); background: var(--color-white); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: var(--transition-fast); position: relative; }
+        .nav-admin-btn:hover { border-color: var(--color-text); background: var(--color-text); color: white; }
+        .nav-admin-btn.logged-in { border-color: var(--color-primary); background: rgba(192,58,43,.1); }
+        .nav-admin-btn.logged-in::after { content: ''; position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; border-radius: 50%; background: #2D6A4F; border: 2px solid white; }
         .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001; }
         .hamburger-line { width: 24px; height: 2px; background: var(--color-text); border-radius: 2px; transition: var(--transition-smooth); transform-origin: center; }
-        .hamburger.active .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-        .hamburger.active .hamburger-line:nth-child(2) { opacity: 0; }
-        .hamburger.active .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
-        .mobile-menu { position: fixed; inset: 0; background: rgba(245,240,235,0.98); z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition-smooth); }
+        .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)} .hamburger.active .hamburger-line:nth-child(2){opacity:0} .hamburger.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+        .mobile-menu { position: fixed; inset: 0; background: rgba(245,240,235,.98); z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition-smooth); }
         .mobile-menu.active { opacity: 1; pointer-events: all; }
         .mobile-menu-content { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
         .mobile-link { font-size: 2rem; font-weight: 600; color: var(--color-text); transition: var(--transition-fast); transform: translateY(20px); opacity: 0; }
         .mobile-menu.active .mobile-link { transform: translateY(0); opacity: 1; }
-        .mobile-menu.active .mobile-link:nth-child(1){transition-delay:.1s} .mobile-menu.active .mobile-link:nth-child(2){transition-delay:.15s} .mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s} .mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}
+        .mobile-menu.active .mobile-link:nth-child(1){transition-delay:.1s}.mobile-menu.active .mobile-link:nth-child(2){transition-delay:.15s}.mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s}.mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}.mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}
         .mobile-link:hover,.mobile-link.active { color: var(--color-primary); }
 
         /* BUTTONS */
@@ -63,6 +66,8 @@
         .btn-primary:hover { background: var(--color-primary-hover); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(192,58,43,.25); }
         .btn-outline { background: transparent; color: var(--color-text); border-color: var(--color-text); }
         .btn-outline:hover { background: var(--color-text); color: #fff; transform: translateY(-2px); }
+        .btn-danger { background: transparent; color: var(--color-primary); border: 1.5px solid var(--color-primary); padding: 6px 14px; border-radius: 10px; font-size: .7rem; font-weight: 700; cursor: pointer; transition: var(--transition-fast); font-family: var(--font-main); }
+        .btn-danger:hover { background: var(--color-primary); color: #fff; }
         .section-overline { font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--color-primary); text-transform: uppercase; margin-bottom: 1rem; }
         .section-title { font-size: clamp(1.8rem,5vw,3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -.03em; }
 
@@ -71,43 +76,38 @@
         .page-hero-title { font-size: clamp(2.5rem,6vw,4.5rem); font-weight: 900; letter-spacing: -.04em; line-height: 1.05; margin-bottom: 1rem; }
         .page-hero-subtitle { font-size: clamp(1rem,2vw,1.2rem); color: var(--color-text-light); max-width: 500px; margin: 0 auto; }
 
-        /* FILTER */
+        /* FILTERS */
         .filter-section { padding: 0 1.25rem 2rem; max-width: var(--container-width); margin: 0 auto; display: flex; justify-content: center; }
         .filter-tabs { display: flex; gap: .5rem; background: var(--color-white); padding: 6px; border-radius: 50px; box-shadow: 0 2px 10px rgba(0,0,0,.04); flex-wrap: wrap; justify-content: center; }
         .filter-tab { padding: 8px 18px; border-radius: 50px; font-size: .8rem; font-weight: 600; color: var(--color-text-light); cursor: pointer; transition: var(--transition-fast); border: none; background: none; font-family: var(--font-main); display: flex; align-items: center; gap: .4rem; }
         .filter-tab:hover { color: var(--color-text); background: var(--color-bg); }
         .filter-tab.active { background: var(--color-text); color: #fff; }
-        .filter-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .filter-dot { width: 8px; height: 8px; border-radius: 50%; }
 
-        /* HIGHLIGHT CARD */
+        /* HIGHLIGHT */
         .highlight-section { padding: 0 1.25rem 3rem; }
-        .highlight-card { max-width: 800px; margin: 0 auto; background: rgba(255,255,255,.85); backdrop-filter: blur(20px); border-radius: 24px; padding: 3rem 2.5rem; border: 1px solid rgba(255,255,255,.5); box-shadow: 0 4px 30px rgba(0,0,0,.04); position: relative; overflow: hidden; }
+        .highlight-card { max-width: 800px; margin: 0 auto; background: rgba(255,255,255,.85); backdrop-filter: blur(20px); border-radius: 24px; padding: 3rem 2.5rem; border: 1px solid rgba(255,255,255,.5); box-shadow: 0 4px 30px rgba(0,0,0,.04); position: relative; }
         .highlight-badge { display: inline-flex; align-items: center; gap: .4rem; padding: 6px 14px; border-radius: 50px; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1.25rem; background: rgba(192,58,43,.1); color: var(--color-primary); }
         .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-primary); animation: pulse 2s ease-in-out infinite; }
-        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
+        @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
         .highlight-emoji { font-size: 3rem; margin-bottom: 1rem; }
         .highlight-title { font-size: clamp(1.6rem,4vw,2.2rem); font-weight: 900; letter-spacing: -.03em; margin-bottom: .5rem; }
         .highlight-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem; color: var(--color-text-light); font-size: .9rem; }
         .highlight-meta-item { display: flex; align-items: center; gap: .4rem; }
         .capacity-bar-container { margin-bottom: 1.5rem; }
         .capacity-header { display: flex; justify-content: space-between; margin-bottom: .5rem; font-size: .8rem; }
-        .capacity-count { font-weight: 700; }
-        .capacity-label { color: var(--color-gray); }
+        .capacity-count { font-weight: 700; } .capacity-label { color: var(--color-gray); }
         .capacity-bar { width: 100%; height: 8px; background: var(--color-bg); border-radius: 10px; overflow: hidden; }
         .capacity-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg,var(--color-primary),var(--color-primary-light)); transition: width 1.5s cubic-bezier(.4,0,.2,1); width: 0; }
         .capacity-fill.animated { width: var(--fill-width); }
-        .attendees { display: flex; align-items: center; gap: .75rem; margin-bottom: 2rem; }
-        .attendee-avatars { display: flex; }
-        .attendee-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 700; color: #fff; margin-left: -8px; border: 2.5px solid #fff; }
-        .attendee-avatar:first-child { margin-left: 0; }
-        .attendee-count { font-size: .85rem; color: var(--color-text-light); }
         .highlight-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .highlight-delete { position: absolute; top: 1.5rem; right: 1.5rem; }
 
         /* CALENDAR */
         .calendar-section { padding: var(--section-padding) 1.25rem; overflow: hidden; }
         .calendar-container { max-width: 900px; margin: 0 auto; background: rgba(255,255,255,.85); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; border: 1px solid rgba(255,255,255,.5); box-shadow: 0 4px 30px rgba(0,0,0,.04); }
         .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
-        .calendar-month { font-size: 1.5rem; font-weight: 800; letter-spacing: -.03em; }
+        .calendar-month { font-size: 1.5rem; font-weight: 800; }
         .calendar-nav { display: flex; gap: .5rem; }
         .calendar-nav-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--color-border); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--color-text); transition: var(--transition-fast); font-family: var(--font-main); }
         .calendar-nav-btn:hover { background: var(--color-text); color: #fff; border-color: var(--color-text); }
@@ -117,22 +117,18 @@
         .calendar-day { min-height: 70px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; padding: .5rem .25rem; font-size: .9rem; font-weight: 500; cursor: default; transition: var(--transition-fast); position: relative; gap: 2px; }
         .calendar-day.current-month { color: var(--color-text); }
         .calendar-day.other-month { color: var(--color-border); }
-        .calendar-day.today { background: var(--color-primary); color: #fff !important; font-weight: 800; box-shadow: 0 4px 15px rgba(192,58,43,.3); }
+        .calendar-day.today { background: var(--color-primary); color: #fff !important; font-weight: 800; box-shadow: 0 4px 15px rgba(192,58,43,.3); border-radius: 14px; }
         .calendar-day.today .calendar-event-title { color: rgba(255,255,255,.9); }
         .calendar-day.has-event { cursor: pointer; font-weight: 700; }
         .calendar-day.has-event:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(0,0,0,.1); }
         .calendar-day-number { z-index: 1; line-height: 1; font-size: .85rem; }
         .calendar-event-indicator { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-top: 2px; width: 100%; }
         .calendar-event-dot { width: 6px; height: 6px; border-radius: 50%; }
-        .calendar-event-title { font-size: .55rem; font-weight: 700; text-align: center; line-height: 1.2; color: var(--color-text); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 2px; }
-        .calendar-day.has-event.cat-party:not(.today) { background: rgba(192,58,43,.1); }
-        .calendar-day.has-event.cat-party:not(.today):hover { background: rgba(192,58,43,.18); }
-        .calendar-day.has-event.cat-games:not(.today) { background: rgba(26,26,26,.07); }
-        .calendar-day.has-event.cat-games:not(.today):hover { background: rgba(26,26,26,.13); }
-        .calendar-day.has-event.cat-drinks:not(.today) { background: rgba(196,168,130,.18); }
-        .calendar-day.has-event.cat-drinks:not(.today):hover { background: rgba(196,168,130,.3); }
-        .calendar-day.has-event.cat-film:not(.today) { background: rgba(69,123,157,.1); }
-        .calendar-day.has-event.cat-film:not(.today):hover { background: rgba(69,123,157,.18); }
+        .calendar-event-title { font-size: .55rem; font-weight: 700; text-align: center; line-height: 1.2; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 2px; }
+        .calendar-day.has-event.cat-party:not(.today){background:rgba(192,58,43,.1)}.calendar-day.has-event.cat-party:not(.today):hover{background:rgba(192,58,43,.18)}
+        .calendar-day.has-event.cat-games:not(.today){background:rgba(26,26,26,.07)}.calendar-day.has-event.cat-games:not(.today):hover{background:rgba(26,26,26,.13)}
+        .calendar-day.has-event.cat-drinks:not(.today){background:rgba(196,168,130,.18)}.calendar-day.has-event.cat-drinks:not(.today):hover{background:rgba(196,168,130,.3)}
+        .calendar-day.has-event.cat-film:not(.today){background:rgba(69,123,157,.1)}.calendar-day.has-event.cat-film:not(.today):hover{background:rgba(69,123,157,.18)}
         .calendar-legend { display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
         .legend-item { display: flex; align-items: center; gap: .4rem; font-size: .75rem; color: var(--color-text-light); }
         .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -141,16 +137,17 @@
         .events-grid-section { padding: 0 1.25rem var(--section-padding); overflow: hidden; }
         .events-grid-header { max-width: var(--container-width); margin: 0 auto 3rem; text-align: center; }
         .events-grid { max-width: var(--container-width); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill,minmax(320px,1fr)); gap: 1.5rem; }
-        .event-card { background: rgba(255,255,255,.85); backdrop-filter: blur(15px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,.5); box-shadow: 0 2px 15px rgba(0,0,0,.03); transition: var(--transition-smooth); }
+        .event-card { background: rgba(255,255,255,.85); backdrop-filter: blur(15px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,.5); box-shadow: 0 2px 15px rgba(0,0,0,.03); transition: var(--transition-smooth); position: relative; }
         .event-card:hover { transform: translateY(-6px); box-shadow: 0 15px 40px rgba(0,0,0,.08); }
+        .event-card-delete { position: absolute; top: 1rem; right: 1rem; z-index: 5; }
         .event-card-header { padding: 1.5rem 1.5rem 1rem; display: flex; align-items: flex-start; justify-content: space-between; }
         .event-card-date { display: flex; flex-direction: column; align-items: center; background: var(--color-bg); border-radius: 14px; padding: .75rem 1rem; min-width: 60px; }
         .event-card-date-day { font-size: 1.5rem; font-weight: 900; line-height: 1; }
-        .event-card-date-month { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--color-text-light); }
-        .event-card-category { padding: 4px 12px; border-radius: 50px; font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #fff; }
+        .event-card-date-month { font-size: .65rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-light); }
+        .event-card-category { padding: 4px 12px; border-radius: 50px; font-size: .65rem; font-weight: 700; text-transform: uppercase; color: #fff; }
         .event-card-body { padding: 0 1.5rem 1.5rem; }
         .event-card-emoji { font-size: 2rem; margin-bottom: .5rem; }
-        .event-card-title { font-size: 1.2rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: .35rem; }
+        .event-card-title { font-size: 1.2rem; font-weight: 800; margin-bottom: .35rem; }
         .event-card-desc { font-size: .85rem; color: var(--color-text-light); line-height: 1.5; margin-bottom: 1rem; }
         .event-card-meta { display: flex; gap: 1rem; font-size: .8rem; color: var(--color-gray); margin-bottom: 1rem; flex-wrap: wrap; }
         .event-card-meta-item { display: flex; align-items: center; gap: .3rem; }
@@ -166,7 +163,7 @@
         .btn-cal:hover { background: var(--color-text); color: #fff; border-color: var(--color-text); }
         .no-events { text-align: center; padding: 3rem; color: var(--color-gray); font-size: 1.1rem; }
 
-        /* PROPOSAL FORM */
+        /* PROPOSAL */
         .proposal-section { padding: 0 1.25rem var(--section-padding); overflow: hidden; }
         .proposal-container { max-width: 700px; margin: 0 auto; background: var(--color-text); color: #fff; border-radius: 24px; padding: 3.5rem 2.5rem; }
         .proposal-header { text-align: center; margin-bottom: 2.5rem; }
@@ -180,12 +177,12 @@
         .form-input,.form-select,.form-textarea { padding: 14px 18px; border-radius: 14px; border: 1.5px solid rgba(255,255,255,.15); background: rgba(255,255,255,.08); color: #fff; font-family: var(--font-main); font-size: .9rem; transition: var(--transition-fast); width: 100%; }
         .form-input::placeholder,.form-textarea::placeholder { color: rgba(255,255,255,.35); }
         .form-input:focus,.form-select:focus,.form-textarea:focus { outline: none; border-color: var(--color-primary); background: rgba(255,255,255,.12); }
-        .form-select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%239C9C9C' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+        .form-select { appearance: none; cursor: pointer; padding-right: 40px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%239C9C9C' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
         .form-select option { background: var(--color-text); color: #fff; }
         .form-textarea { min-height: 100px; resize: vertical; }
         .form-submit-row { display: flex; justify-content: center; margin-top: 1rem; }
         .btn-submit { padding: 16px 40px; border-radius: 50px; border: none; background: var(--color-primary); color: #fff; font-family: var(--font-main); font-size: .95rem; font-weight: 700; cursor: pointer; transition: var(--transition-smooth); }
-        .btn-submit:hover { background: var(--color-primary-hover); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(192,58,43,.3); }
+        .btn-submit:hover { background: var(--color-primary-hover); transform: translateY(-2px); }
         .form-success { display: none; text-align: center; padding: 2rem; }
         .form-success.show { display: block; }
         .form-success-icon { font-size: 3rem; margin-bottom: 1rem; }
@@ -197,51 +194,63 @@
         .stats-container { max-width: 900px; margin: 0 auto; }
         .stats-header { text-align: center; margin-bottom: 3rem; }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 1.25rem; }
-        .stat-game-card { background: rgba(255,255,255,.85); backdrop-filter: blur(15px); border-radius: 20px; padding: 1.75rem; border: 1px solid rgba(255,255,255,.5); transition: var(--transition-smooth); }
+        .stat-game-card { background: rgba(255,255,255,.85); backdrop-filter: blur(15px); border-radius: 20px; padding: 1.75rem; border: 1px solid rgba(255,255,255,.5); transition: var(--transition-smooth); position: relative; }
         .stat-game-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+        .stat-delete-btn { position: absolute; top: 1rem; right: 1rem; }
         .stat-game-header { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; }
         .stat-game-emoji { font-size: 2rem; }
-        .stat-game-name { font-size: 1.1rem; font-weight: 800; letter-spacing: -.02em; }
+        .stat-game-name { font-size: 1.1rem; font-weight: 800; }
         .stat-game-plays { font-size: .75rem; color: var(--color-gray); }
         .stat-game-leaderboard { display: flex; flex-direction: column; gap: .5rem; }
         .stat-player { display: flex; align-items: center; justify-content: space-between; padding: .5rem .75rem; border-radius: 10px; font-size: .85rem; }
-        .stat-player:nth-child(1) { background: rgba(255,215,0,.12); }
-        .stat-player:nth-child(2) { background: rgba(192,192,192,.12); }
-        .stat-player:nth-child(3) { background: rgba(205,127,50,.1); }
+        .stat-player:nth-child(1){background:rgba(255,215,0,.12)}.stat-player:nth-child(2){background:rgba(192,192,192,.12)}.stat-player:nth-child(3){background:rgba(205,127,50,.1)}
         .stat-player-name { display: flex; align-items: center; gap: .5rem; font-weight: 600; }
-        .stat-player-rank { font-size: .75rem; }
         .stat-player-wins { font-weight: 800; color: var(--color-primary); }
         .no-stats { text-align: center; color: var(--color-gray); padding: 2rem; font-size: .95rem; }
 
-        /* ADMIN PANEL */
-        .admin-section { padding: 0 1.25rem var(--section-padding); overflow: hidden; }
-        .admin-toggle { max-width: 900px; margin: 0 auto; text-align: center; }
-        .admin-toggle-btn { padding: 10px 24px; border-radius: 50px; border: 1.5px solid var(--color-border); background: transparent; color: var(--color-gray); font-family: var(--font-main); font-size: .8rem; font-weight: 600; cursor: pointer; transition: var(--transition-fast); }
-        .admin-toggle-btn:hover { border-color: var(--color-text); color: var(--color-text); }
-        .admin-login { max-width: 400px; margin: 1.5rem auto 0; display: none; }
-        .admin-login.show { display: block; }
-        .admin-login-row { display: flex; gap: .75rem; }
-        .admin-input { flex: 1; padding: 12px 18px; border-radius: 14px; border: 1.5px solid var(--color-border); background: var(--color-white); font-family: var(--font-main); font-size: .9rem; }
-        .admin-input:focus { outline: none; border-color: var(--color-primary); }
-        .admin-login-btn { padding: 12px 24px; border-radius: 14px; border: none; background: var(--color-primary); color: #fff; font-family: var(--font-main); font-weight: 700; cursor: pointer; transition: var(--transition-fast); }
-        .admin-login-btn:hover { background: var(--color-primary-hover); }
-        .admin-error { color: var(--color-primary); font-size: .8rem; margin-top: .5rem; display: none; }
-        .admin-panel { max-width: 900px; margin: 2rem auto 0; display: none; }
-        .admin-panel.show { display: block; }
-        .admin-card { background: rgba(255,255,255,.9); border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,.5); }
-        .admin-card-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; }
-        .admin-form-grid { display: grid; gap: 1rem; }
-        .admin-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .admin-label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--color-gray); margin-bottom: .35rem; display: block; }
-        .admin-field-input { padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--color-border); background: var(--color-white); font-family: var(--font-main); font-size: .85rem; width: 100%; }
-        .admin-field-input:focus { outline: none; border-color: var(--color-primary); }
-        .admin-field-select { padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--color-border); background: var(--color-white); font-family: var(--font-main); font-size: .85rem; width: 100%; appearance: none; cursor: pointer; }
-        .admin-btn { padding: 12px 28px; border-radius: 50px; border: none; background: var(--color-primary); color: #fff; font-family: var(--font-main); font-weight: 700; font-size: .85rem; cursor: pointer; transition: var(--transition-fast); margin-top: .5rem; }
-        .admin-btn:hover { background: var(--color-primary-hover); }
-        .admin-success { color: #2D6A4F; font-size: .85rem; font-weight: 600; margin-top: .75rem; display: none; }
+        /* ADMIN MODAL */
+        .admin-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition-smooth); padding: 1.25rem; }
+        .admin-overlay.active { opacity: 1; pointer-events: all; }
+        .admin-modal { background: var(--color-white); border-radius: 24px; padding: 2.5rem; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; transform: translateY(20px) scale(.95); transition: var(--transition-smooth); position: relative; }
+        .admin-overlay.active .admin-modal { transform: translateY(0) scale(1); }
+        .admin-close { position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--color-bg); cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-fast); }
+        .admin-close:hover { background: var(--color-text); color: #fff; }
+        .admin-modal-title { font-size: 1.4rem; font-weight: 800; margin-bottom: .5rem; }
+        .admin-modal-subtitle { color: var(--color-text-light); font-size: .9rem; margin-bottom: 2rem; }
 
-        /* MODAL */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition-smooth); padding: 1.25rem; }
+        /* Login State */
+        .admin-login-view { text-align: center; }
+        .admin-login-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .admin-login-title { font-size: 1.3rem; font-weight: 800; margin-bottom: .5rem; }
+        .admin-login-text { color: var(--color-text-light); font-size: .9rem; margin-bottom: 1.5rem; }
+        .admin-pw-row { display: flex; gap: .75rem; max-width: 300px; margin: 0 auto; }
+        .admin-pw-input { flex: 1; padding: 12px 18px; border-radius: 14px; border: 1.5px solid var(--color-border); font-family: var(--font-main); font-size: .9rem; }
+        .admin-pw-input:focus { outline: none; border-color: var(--color-primary); }
+        .admin-pw-btn { padding: 12px 20px; border-radius: 14px; border: none; background: var(--color-primary); color: #fff; font-family: var(--font-main); font-weight: 700; cursor: pointer; transition: var(--transition-fast); }
+        .admin-pw-btn:hover { background: var(--color-primary-hover); }
+        .admin-error { color: var(--color-primary); font-size: .8rem; margin-top: .75rem; display: none; }
+
+        /* Admin Panel Tabs */
+        .admin-tabs { display: flex; gap: .5rem; margin-bottom: 2rem; background: var(--color-bg); padding: 4px; border-radius: 14px; }
+        .admin-tab { flex: 1; padding: 10px; border-radius: 10px; border: none; background: transparent; font-family: var(--font-main); font-size: .8rem; font-weight: 600; cursor: pointer; transition: var(--transition-fast); color: var(--color-text-light); text-align: center; }
+        .admin-tab.active { background: var(--color-white); color: var(--color-text); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+        .admin-tab-content { display: none; }
+        .admin-tab-content.active { display: block; }
+        .admin-field { margin-bottom: 1rem; }
+        .admin-label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--color-gray); margin-bottom: .4rem; display: block; }
+        .admin-input { padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--color-border); font-family: var(--font-main); font-size: .85rem; width: 100%; background: var(--color-white); }
+        .admin-input:focus { outline: none; border-color: var(--color-primary); }
+        .admin-select { padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--color-border); font-family: var(--font-main); font-size: .85rem; width: 100%; appearance: none; cursor: pointer; background: var(--color-white); }
+        .admin-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .admin-action-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; background: var(--color-primary); color: #fff; font-family: var(--font-main); font-size: .9rem; font-weight: 700; cursor: pointer; transition: var(--transition-fast); margin-top: .5rem; }
+        .admin-action-btn:hover { background: var(--color-primary-hover); }
+        .admin-feedback { text-align: center; padding: 1rem; font-weight: 600; font-size: .9rem; color: #2D6A4F; display: none; }
+        .admin-feedback.show { display: block; }
+        .admin-logout-btn { width: 100%; padding: 12px; border-radius: 14px; border: 1.5px solid var(--color-border); background: transparent; color: var(--color-text-light); font-family: var(--font-main); font-size: .8rem; font-weight: 600; cursor: pointer; margin-top: 1.5rem; transition: var(--transition-fast); }
+        .admin-logout-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+        /* EVENT MODAL */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(8px); z-index: 1500; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition-smooth); padding: 1.25rem; }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
         .modal { background: var(--color-white); border-radius: 24px; padding: 2.5rem; max-width: 500px; width: 100%; max-height: 85vh; overflow-y: auto; transform: translateY(20px) scale(.95); transition: var(--transition-smooth); position: relative; }
         .modal-overlay.active .modal { transform: translateY(0) scale(1); }
@@ -262,7 +271,7 @@
         .footer { background: var(--color-text); color: #fff; padding: 4rem 1.25rem 2rem; }
         .footer-container { max-width: var(--container-width); margin: 0 auto; }
         .footer-top { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.1); }
-        .footer-logo { height: 44px; width: auto; filter: brightness(0) invert(1); margin-bottom: .75rem; }
+        .footer-logo { height: 44px; filter: brightness(0) invert(1); margin-bottom: .75rem; }
         .footer-tagline { font-size: .85rem; color: var(--color-gray); }
         .footer-links-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
         .footer-col h4 { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--color-gray); margin-bottom: 1rem; }
@@ -271,16 +280,14 @@
         .footer-bottom { padding-top: 2rem; text-align: center; }
         .footer-bottom p { font-size: .8rem; color: var(--color-gray); }
 
-        /* REVEAL */
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        /* RESPONSIVE */
-        @media(max-width:1024px) { :root{--section-padding:80px} .footer-top{grid-template-columns:1fr;gap:3rem} }
-        @media(max-width:768px) {
+        @media(max-width:1024px){:root{--section-padding:80px}.footer-top{grid-template-columns:1fr;gap:3rem}}
+        @media(max-width:768px){
             :root{--section-padding:60px;--nav-height:68px}
-            .nav-links{display:none} .hamburger{display:flex} .nav-logo img{height:44px}
-            .form-row,.admin-form-row{grid-template-columns:1fr}
+            .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
+            .form-row,.admin-2col{grid-template-columns:1fr}
             .events-grid{grid-template-columns:1fr}
             .highlight-card{padding:2rem 1.5rem}
             .calendar-container{padding:1.5rem}
@@ -288,154 +295,116 @@
             .calendar-event-title{font-size:.5rem}
             .proposal-container{padding:2.5rem 1.5rem}
             .footer-links-grid{grid-template-columns:1fr 1fr}
-            .modal{padding:2rem 1.5rem}
-            .highlight-actions{flex-direction:column}
-            .highlight-actions .btn{width:100%}
+            .modal,.admin-modal{padding:2rem 1.5rem}
+            .highlight-actions{flex-direction:column}.highlight-actions .btn{width:100%}
         }
-        @media(max-width:480px) {
-            .nav-logo img{height:38px}
-            .page-hero-title{font-size:2rem}
+        @media(max-width:480px){
+            .nav-logo img{height:38px}.page-hero-title{font-size:2rem}
             .filter-tab{padding:6px 10px;font-size:.7rem}
             .calendar-day{min-height:45px;border-radius:8px;font-size:.75rem;padding:.3rem .15rem}
-            .calendar-event-dot{width:4px;height:4px}
-            .calendar-event-title{display:none}
+            .calendar-event-dot{width:4px;height:4px}.calendar-event-title{display:none}
             .calendar-month{font-size:1.2rem}
             .footer-links-grid{grid-template-columns:1fr}
-            .btn{width:100%}
-            .event-card-footer{flex-direction:column}
+            .btn{width:100%}.event-card-footer{flex-direction:column}
             .btn-cal{width:100%;height:auto;padding:12px;border-radius:14px}
             .stats-grid{grid-template-columns:1fr}
+            .nav-admin-btn{width:36px;height:36px;font-size:.85rem}
         }
     </style>
 </head>
 <body>
-
     <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div></div>
     <div class="confetti-container" id="confettiContainer"></div>
 
-    <!-- NAV -->
-    <nav class="navbar" id="navbar"><div class="nav-container"><a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci⁴"></a><div class="nav-links"><a href="index.html" class="nav-link">Home</a><a href="events.html" class="nav-link active">Events</a><a href="shop.html" class="nav-link">Shop</a><a href="kontakt.html" class="nav-link">Kontakt</a></div><button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button></div></nav>
-    <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content"><a href="index.html" class="mobile-link">Home</a><a href="events.html" class="mobile-link active">Events</a><a href="shop.html" class="mobile-link">Shop</a><a href="kontakt.html" class="mobile-link">Kontakt</a></div></div>
+    <!-- NAV with Admin Button -->
+    <nav class="navbar" id="navbar"><div class="nav-container">
+        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci⁴"></a>
+        <div class="nav-right">
+            <div class="nav-links"><a href="index.html" class="nav-link">Home</a><a href="events.html" class="nav-link active">Events</a><a href="shop.html" class="nav-link">Shop</a><a href="kontakt.html" class="nav-link">Kontakt</a></div>
+            <button class="nav-admin-btn" id="navAdminBtn" title="Admin Login">🔐</button>
+            <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+        </div>
+    </div></nav>
 
-    <!-- HERO -->
-    <section class="page-hero reveal">
-        <p class="section-overline">EVENTS</p>
-        <h1 class="page-hero-title">Was steht an?</h1>
-        <p class="page-hero-subtitle">Alle kommenden Events in der Poccistraße auf einen Blick.</p>
-    </section>
+    <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
+        <a href="index.html" class="mobile-link">Home</a><a href="events.html" class="mobile-link active">Events</a><a href="shop.html" class="mobile-link">Shop</a><a href="kontakt.html" class="mobile-link">Kontakt</a>
+        <a href="#" class="mobile-link" onclick="openAdminModal(); return false;">🔐 Admin</a>
+    </div></div>
+
+    <!-- ADMIN MODAL -->
+    <div class="admin-overlay" id="adminOverlay">
+        <div class="admin-modal">
+            <button class="admin-close" onclick="closeAdminModal()">✕</button>
+            <!-- Login View -->
+            <div id="adminLoginView" class="admin-login-view">
+                <div class="admin-login-icon">🔐</div>
+                <div class="admin-login-title">Admin Login</div>
+                <div class="admin-login-text">Gib das Admin-Passwort ein um Events und Statistiken zu verwalten.</div>
+                <div class="admin-pw-row">
+                    <input type="password" class="admin-pw-input" id="adminPwInput" placeholder="Passwort">
+                    <button class="admin-pw-btn" id="adminPwBtn">→</button>
+                </div>
+                <div class="admin-error" id="adminError">Falsches Passwort.</div>
+            </div>
+            <!-- Panel View -->
+            <div id="adminPanelView" style="display:none;">
+                <div class="admin-modal-title">⚙️ Admin Panel</div>
+                <div class="admin-modal-subtitle">Events und Spielestatistiken verwalten.</div>
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="addEvent">📅 Event</button>
+                    <button class="admin-tab" data-tab="addStat">🏆 Statistik</button>
+                    <button class="admin-tab" data-tab="manage">🗑️ Verwalten</button>
+                </div>
+                <!-- Add Event -->
+                <div class="admin-tab-content active" id="tab-addEvent">
+                    <div class="admin-2col"><div class="admin-field"><label class="admin-label">Event-Name</label><input class="admin-input" id="aeName" placeholder="z.B. Catan Abend"></div><div class="admin-field"><label class="admin-label">Emoji</label><input class="admin-input" id="aeEmoji" placeholder="🎲"></div></div>
+                    <div class="admin-2col"><div class="admin-field"><label class="admin-label">Datum</label><input type="date" class="admin-input" id="aeDate"></div><div class="admin-field"><label class="admin-label">Uhrzeit</label><input type="time" class="admin-input" id="aeTime" value="20:00"></div></div>
+                    <div class="admin-2col"><div class="admin-field"><label class="admin-label">Kategorie</label><select class="admin-select" id="aeCat"><option value="party">🎉 Party</option><option value="games" selected>🎲 Spieleabend</option><option value="drinks">🍻 Trinkabend</option><option value="film">🎬 Filmabend</option></select></div><div class="admin-field"><label class="admin-label">Max. Teilnehmer</label><input type="number" class="admin-input" id="aeCap" value="15"></div></div>
+                    <div class="admin-field"><label class="admin-label">Beschreibung</label><input class="admin-input" id="aeDesc" placeholder="Kurze Beschreibung..."></div>
+                    <button class="admin-action-btn" id="aeSubmit">Event erstellen ✅</button>
+                    <div class="admin-feedback" id="aeFeedback">✅ Event erfolgreich erstellt!</div>
+                </div>
+                <!-- Add Stat -->
+                <div class="admin-tab-content" id="tab-addStat">
+                    <div class="admin-2col"><div class="admin-field"><label class="admin-label">Spiel</label><input class="admin-input" id="asGame" placeholder="z.B. Catan"></div><div class="admin-field"><label class="admin-label">Emoji</label><input class="admin-input" id="asEmoji" placeholder="🏝️"></div></div>
+                    <div class="admin-2col"><div class="admin-field"><label class="admin-label">Gewinner</label><input class="admin-input" id="asWinner" placeholder="Name des Gewinners"></div><div class="admin-field"><label class="admin-label">Datum</label><input type="date" class="admin-input" id="asDate"></div></div>
+                    <button class="admin-action-btn" id="asSubmit">Statistik speichern 🏆</button>
+                    <div class="admin-feedback" id="asFeedback">🏆 Statistik gespeichert!</div>
+                </div>
+                <!-- Manage -->
+                <div class="admin-tab-content" id="tab-manage">
+                    <div class="admin-label" style="margin-bottom:1rem;font-size:.85rem;color:var(--color-text)">Events und Statistiken können direkt auf der Seite gelöscht werden. Such nach dem 🗑️ Button.</div>
+                    <button class="admin-action-btn" onclick="if(confirm('Alle Events löschen?')){localStorage.removeItem('pocci4_events');location.reload()}" style="background:#E63946;">⚠️ Alle Events löschen</button>
+                    <button class="admin-action-btn" onclick="if(confirm('Alle Statistiken löschen?')){localStorage.removeItem('pocci4_stats');location.reload()}" style="background:#E63946;margin-top:.75rem;">⚠️ Alle Statistiken löschen</button>
+                </div>
+                <button class="admin-logout-btn" onclick="logoutAdmin()">🔓 Ausloggen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero reveal"><p class="section-overline">EVENTS</p><h1 class="page-hero-title">Was steht an?</h1><p class="page-hero-subtitle">Alle kommenden Events in der Poccistraße auf einen Blick.</p></section>
 
     <!-- FILTERS -->
-    <section class="filter-section reveal">
-        <div class="filter-tabs" id="filterTabs">
-            <button class="filter-tab active" data-filter="all">Alle</button>
-            <button class="filter-tab" data-filter="party"><span class="filter-dot" style="background:var(--cat-party)"></span>Partys</button>
-            <button class="filter-tab" data-filter="games"><span class="filter-dot" style="background:var(--cat-games)"></span>Spiele</button>
-            <button class="filter-tab" data-filter="drinks"><span class="filter-dot" style="background:var(--cat-drinks)"></span>Drinks</button>
-            <button class="filter-tab" data-filter="film"><span class="filter-dot" style="background:var(--cat-film)"></span>Film</button>
-        </div>
-    </section>
+    <section class="filter-section reveal"><div class="filter-tabs" id="filterTabs"><button class="filter-tab active" data-filter="all">Alle</button><button class="filter-tab" data-filter="party"><span class="filter-dot" style="background:var(--cat-party)"></span>Partys</button><button class="filter-tab" data-filter="games"><span class="filter-dot" style="background:var(--cat-games)"></span>Spiele</button><button class="filter-tab" data-filter="drinks"><span class="filter-dot" style="background:var(--cat-drinks)"></span>Drinks</button><button class="filter-tab" data-filter="film"><span class="filter-dot" style="background:var(--cat-film)"></span>Film</button></div></section>
 
     <!-- HIGHLIGHT -->
     <section class="highlight-section reveal" id="highlightSection"></section>
 
     <!-- CALENDAR -->
-    <section class="calendar-section">
-        <div class="calendar-container reveal">
-            <div class="calendar-header"><h3 class="calendar-month" id="calendarMonth"></h3><div class="calendar-nav"><button class="calendar-nav-btn" id="prevMonth">‹</button><button class="calendar-nav-btn" id="nextMonth">›</button></div></div>
-            <div class="calendar-weekdays"><div class="calendar-weekday">Mo</div><div class="calendar-weekday">Di</div><div class="calendar-weekday">Mi</div><div class="calendar-weekday">Do</div><div class="calendar-weekday">Fr</div><div class="calendar-weekday">Sa</div><div class="calendar-weekday">So</div></div>
-            <div class="calendar-days" id="calendarDays"></div>
-            <div class="calendar-legend">
-                <div class="legend-item"><span class="legend-dot" style="background:var(--cat-party)"></span>Party</div>
-                <div class="legend-item"><span class="legend-dot" style="background:var(--cat-games)"></span>Spieleabend</div>
-                <div class="legend-item"><span class="legend-dot" style="background:var(--cat-drinks)"></span>Trinkabend</div>
-                <div class="legend-item"><span class="legend-dot" style="background:var(--cat-film)"></span>Filmabend</div>
-            </div>
-        </div>
-    </section>
+    <section class="calendar-section"><div class="calendar-container reveal"><div class="calendar-header"><h3 class="calendar-month" id="calendarMonth"></h3><div class="calendar-nav"><button class="calendar-nav-btn" id="prevMonth">‹</button><button class="calendar-nav-btn" id="nextMonth">›</button></div></div><div class="calendar-weekdays"><div class="calendar-weekday">Mo</div><div class="calendar-weekday">Di</div><div class="calendar-weekday">Mi</div><div class="calendar-weekday">Do</div><div class="calendar-weekday">Fr</div><div class="calendar-weekday">Sa</div><div class="calendar-weekday">So</div></div><div class="calendar-days" id="calendarDays"></div><div class="calendar-legend"><div class="legend-item"><span class="legend-dot" style="background:var(--cat-party)"></span>Party</div><div class="legend-item"><span class="legend-dot" style="background:var(--cat-games)"></span>Spieleabend</div><div class="legend-item"><span class="legend-dot" style="background:var(--cat-drinks)"></span>Trinkabend</div><div class="legend-item"><span class="legend-dot" style="background:var(--cat-film)"></span>Filmabend</div></div></div></section>
 
-    <!-- EVENT CARDS -->
-    <section class="events-grid-section">
-        <div class="events-grid-header reveal"><p class="section-overline">ALLE EVENTS</p><h2 class="section-title">Kommende Abende.</h2></div>
-        <div class="events-grid" id="eventsGrid"></div>
-    </section>
+    <!-- EVENTS -->
+    <section class="events-grid-section"><div class="events-grid-header reveal"><p class="section-overline">ALLE EVENTS</p><h2 class="section-title">Kommende Abende.</h2></div><div class="events-grid" id="eventsGrid"></div></section>
 
-    <!-- GAME STATS -->
-    <section class="stats-section">
-        <div class="stats-container reveal">
-            <div class="stats-header"><p class="section-overline">SPIELESTATISTIKEN</p><h2 class="section-title">Wer dominiert?</h2></div>
-            <div class="stats-grid" id="statsGrid"></div>
-        </div>
-    </section>
+    <!-- STATS -->
+    <section class="stats-section"><div class="stats-container reveal"><div class="stats-header"><p class="section-overline">SPIELESTATISTIKEN</p><h2 class="section-title">Wer dominiert?</h2></div><div class="stats-grid" id="statsGrid"></div></div></section>
 
     <!-- PROPOSAL -->
-    <section class="proposal-section" id="vorschlag">
-        <div class="proposal-container reveal">
-            <div class="proposal-header"><p class="section-overline">DEINE IDEE</p><h2 class="section-title">Event vorschlagen.</h2><p class="proposal-subtitle">Du hast eine Idee für den nächsten Abend? Schlag es vor!</p></div>
-            <form id="proposalForm" class="form-grid">
-                <div class="form-group"><label class="form-label">Dein Name</label><input type="text" class="form-input" placeholder="Max" required id="propName"></div>
-                <div class="form-row">
-                    <div class="form-group"><label class="form-label">Event-Typ</label><select class="form-select" required id="propType"><option value="" disabled selected>Wähle...</option><option value="party">🎉 Party</option><option value="games">🎲 Spieleabend</option><option value="drinks">🍻 Trinkabend</option><option value="film">🎬 Filmabend</option><option value="other">💡 Sonstiges</option></select></div>
-                    <div class="form-group"><label class="form-label">Wunschdatum</label><input type="date" class="form-input" required id="propDate"></div>
-                </div>
-                <div class="form-group"><label class="form-label">Deine Nachricht / Idee</label><textarea class="form-textarea" placeholder="Was schwebt dir vor?" id="propMsg"></textarea></div>
-                <div class="form-submit-row"><button type="submit" class="btn-submit">Vorschlag senden →</button></div>
-            </form>
-            <div class="form-success" id="formSuccess"><div class="form-success-icon">🎉</div><div class="form-success-title">Vorschlag gesendet!</div><div class="form-success-text">Wir schauen uns deine Idee an. Danke!</div></div>
-        </div>
-    </section>
+    <section class="proposal-section" id="vorschlag"><div class="proposal-container reveal"><div class="proposal-header"><p class="section-overline">DEINE IDEE</p><h2 class="section-title">Event vorschlagen.</h2><p class="proposal-subtitle">Du hast eine Idee für den nächsten Abend? Schlag es vor!</p></div><form id="proposalForm" class="form-grid"><div class="form-group"><label class="form-label">Dein Name</label><input type="text" class="form-input" placeholder="Max" required id="propName"></div><div class="form-row"><div class="form-group"><label class="form-label">Event-Typ</label><select class="form-select" required id="propType"><option value="" disabled selected>Wähle...</option><option value="party">🎉 Party</option><option value="games">🎲 Spieleabend</option><option value="drinks">🍻 Trinkabend</option><option value="film">🎬 Filmabend</option><option value="other">💡 Sonstiges</option></select></div><div class="form-group"><label class="form-label">Wunschdatum</label><input type="date" class="form-input" required id="propDate"></div></div><div class="form-group"><label class="form-label">Deine Nachricht</label><textarea class="form-textarea" placeholder="Was schwebt dir vor?" id="propMsg"></textarea></div><div class="form-submit-row"><button type="submit" class="btn-submit">Vorschlag senden →</button></div></form><div class="form-success" id="formSuccess"><div class="form-success-icon">🎉</div><div class="form-success-title">Vorschlag gesendet!</div><div class="form-success-text">Wir schauen uns deine Idee an. Danke!</div></div></div></section>
 
-    <!-- ADMIN -->
-    <section class="admin-section">
-        <div class="admin-toggle">
-            <button class="admin-toggle-btn" id="adminToggle">🔐 Admin</button>
-            <div class="admin-login" id="adminLogin">
-                <div class="admin-login-row"><input type="password" class="admin-input" placeholder="Admin-Passwort" id="adminPw"><button class="admin-login-btn" id="adminLoginBtn">→</button></div>
-                <div class="admin-error" id="adminError">Falsches Passwort.</div>
-            </div>
-        </div>
-        <div class="admin-panel" id="adminPanel">
-            <!-- ADD EVENT -->
-            <div class="admin-card">
-                <div class="admin-card-title">📅 Event hinzufügen</div>
-                <div class="admin-form-grid">
-                    <div class="admin-form-row">
-                        <div><label class="admin-label">Event-Name</label><input class="admin-field-input" id="aeName" placeholder="z.B. Catan Abend"></div>
-                        <div><label class="admin-label">Emoji</label><input class="admin-field-input" id="aeEmoji" placeholder="🎲"></div>
-                    </div>
-                    <div class="admin-form-row">
-                        <div><label class="admin-label">Datum</label><input type="date" class="admin-field-input" id="aeDate"></div>
-                        <div><label class="admin-label">Uhrzeit</label><input type="time" class="admin-field-input" id="aeTime" value="20:00"></div>
-                    </div>
-                    <div class="admin-form-row">
-                        <div><label class="admin-label">Kategorie</label><select class="admin-field-select" id="aeCat"><option value="party">🎉 Party</option><option value="games">🎲 Spieleabend</option><option value="drinks">🍻 Trinkabend</option><option value="film">🎬 Filmabend</option><option value="other">💡 Sonstiges</option></select></div>
-                        <div><label class="admin-label">Max. Teilnehmer</label><input type="number" class="admin-field-input" id="aeCap" value="15"></div>
-                    </div>
-                    <div><label class="admin-label">Beschreibung</label><input class="admin-field-input" id="aeDesc" placeholder="Kurze Beschreibung..."></div>
-                    <button class="admin-btn" id="aeSubmit">Event erstellen ✅</button>
-                    <div class="admin-success" id="aeSuccess">✅ Event erstellt!</div>
-                </div>
-            </div>
-            <!-- ADD GAME STAT -->
-            <div class="admin-card">
-                <div class="admin-card-title">🏆 Spielestatistik eintragen</div>
-                <div class="admin-form-grid">
-                    <div class="admin-form-row">
-                        <div><label class="admin-label">Spiel</label><input class="admin-field-input" id="asGame" placeholder="z.B. Catan"></div>
-                        <div><label class="admin-label">Emoji</label><input class="admin-field-input" id="asEmoji" placeholder="🏝️"></div>
-                    </div>
-                    <div class="admin-form-row">
-                        <div><label class="admin-label">Gewinner</label><input class="admin-field-input" id="asWinner" placeholder="Name"></div>
-                        <div><label class="admin-label">Datum</label><input type="date" class="admin-field-input" id="asDate"></div>
-                    </div>
-                    <button class="admin-btn" id="asSubmit">Statistik speichern 🏆</button>
-                    <div class="admin-success" id="asSuccess">✅ Statistik gespeichert!</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MODAL -->
-    <div class="modal-overlay" id="eventModal"><div class="modal"><button class="modal-close" onclick="closeModal()">✕</button><div class="modal-emoji" id="modalEmoji"></div><h3 class="modal-title" id="modalTitle"></h3><div class="modal-meta" id="modalMeta"></div><p class="modal-desc" id="modalDesc"></p><div class="modal-actions"><button class="btn btn-primary" id="modalJoinBtn">🎉 Ich bin dabei!</button><button class="btn btn-outline" id="modalCalBtn">📅 Kalender</button></div></div></div>
+    <!-- EVENT MODAL -->
+    <div class="modal-overlay" id="eventModal"><div class="modal"><button class="modal-close" onclick="closeEventModal()">✕</button><div class="modal-emoji" id="modalEmoji"></div><h3 class="modal-title" id="modalTitle"></h3><div class="modal-meta" id="modalMeta"></div><p class="modal-desc" id="modalDesc"></p><div class="modal-actions"><button class="btn btn-primary" id="modalJoinBtn">🎉 Ich bin dabei!</button><button class="btn btn-outline" id="modalCalBtn">📅 Kalender</button></div></div></div>
 
     <!-- FOOTER -->
     <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci⁴" class="footer-logo"><p class="footer-tagline">Poccistraße, München</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="#vorschlag">Event vorschlagen</a><a href="shop.html">Tickets</a></div><div class="footer-col"><h4>Connect</h4><a href="#">Instagram</a><a href="kontakt.html">Kontakt</a></div></div></div><div class="footer-bottom"><p>© 2025 pocci⁴ – Mit Liebe aus der Poccistraße.</p></div></div></footer>
@@ -447,289 +416,209 @@
         const catNames = {party:'Party',games:'Spieleabend',drinks:'Trinkabend',film:'Filmabend',other:'Sonstiges'};
         const catEmojis = {party:'🎉',games:'🎲',drinks:'🍻',film:'🎬',other:'💡'};
         const monthNames = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+        const today = new Date(); let currentMonth = today.getMonth(); let currentYear = today.getFullYear(); let activeFilter = 'all';
+        let isAdmin = localStorage.getItem('pocci4_admin') === 'true';
 
-        const today = new Date();
-        let currentMonth = today.getMonth();
-        let currentYear = today.getFullYear();
-        let activeFilter = 'all';
-
-        // LOAD DATA
-        function getEvents() {
-            const stored = localStorage.getItem('pocci4_events');
-            if (stored) return JSON.parse(stored);
-            return [{id:1,title:'1 Jahr Pocci – Einzugsparty!',emoji:'🎂',date:'2026-05-15',time:'20:00',category:'party',desc:'Ein Jahr in der Poccistraße – das muss gefeiert werden! Drinks, Musik & die besten Leute. 🍾',capacity:30,attending:12}];
-        }
-        function saveEvents(ev) { localStorage.setItem('pocci4_events', JSON.stringify(ev)); }
-        function getStats() { return JSON.parse(localStorage.getItem('pocci4_stats') || '[]'); }
-        function saveStats(st) { localStorage.setItem('pocci4_stats', JSON.stringify(st)); }
-
+        function getEvents() { const s = localStorage.getItem('pocci4_events'); if(s) return JSON.parse(s); return [{id:1,title:'1 Jahr Pocci – Einzugsparty!',emoji:'🎂',date:'2026-05-15',time:'20:00',category:'party',desc:'Ein Jahr in der Poccistraße – das muss gefeiert werden! Drinks, Musik & die besten Leute. 🍾',capacity:30,attending:12}]; }
+        function saveEvents(e) { localStorage.setItem('pocci4_events', JSON.stringify(e)); }
+        function getStats() { return JSON.parse(localStorage.getItem('pocci4_stats')||'[]'); }
+        function saveStats(s) { localStorage.setItem('pocci4_stats', JSON.stringify(s)); }
         let events = getEvents();
 
         // NAV
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileMenu.classList.toggle('active'); document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : ''; });
-        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => { hamburger.classList.remove('active'); mobileMenu.classList.remove('active'); document.body.style.overflow = ''; }));
+        const hamburger = document.getElementById('hamburger'); const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileMenu.classList.toggle('active'); document.body.style.overflow = mobileMenu.classList.contains('active')?'hidden':''; });
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => { hamburger.classList.remove('active'); mobileMenu.classList.remove('active'); document.body.style.overflow=''; }));
 
-        // FILTERS
-        document.querySelectorAll('.filter-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                activeFilter = tab.dataset.filter;
+        // ADMIN MODAL
+        const adminBtn = document.getElementById('navAdminBtn');
+        if(isAdmin) adminBtn.classList.add('logged-in');
+
+        window.openAdminModal = function() {
+            document.getElementById('adminOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            if(isAdmin) { document.getElementById('adminLoginView').style.display='none'; document.getElementById('adminPanelView').style.display='block'; }
+            else { document.getElementById('adminLoginView').style.display='block'; document.getElementById('adminPanelView').style.display='none'; }
+        };
+        window.closeAdminModal = function() { document.getElementById('adminOverlay').classList.remove('active'); document.body.style.overflow=''; };
+        adminBtn.addEventListener('click', openAdminModal);
+        document.getElementById('adminOverlay').addEventListener('click', function(e) { if(e.target===this) closeAdminModal(); });
+
+        // Login
+        document.getElementById('adminPwBtn').addEventListener('click', doLogin);
+        document.getElementById('adminPwInput').addEventListener('keydown', (e) => { if(e.key==='Enter') doLogin(); });
+        function doLogin() {
+            if(document.getElementById('adminPwInput').value === ADMIN_PW) {
+                isAdmin = true; localStorage.setItem('pocci4_admin','true');
+                adminBtn.classList.add('logged-in');
+                document.getElementById('adminLoginView').style.display='none';
+                document.getElementById('adminPanelView').style.display='block';
+                document.getElementById('adminError').style.display='none';
                 renderAll();
+            } else { document.getElementById('adminError').style.display='block'; }
+        }
+        window.logoutAdmin = function() {
+            isAdmin = false; localStorage.removeItem('pocci4_admin');
+            adminBtn.classList.remove('logged-in');
+            closeAdminModal(); renderAll();
+        };
+
+        // Admin Tabs
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
             });
         });
 
+        // Add Event
+        document.getElementById('aeSubmit').addEventListener('click', () => {
+            const n=document.getElementById('aeName').value, em=document.getElementById('aeEmoji').value, d=document.getElementById('aeDate').value, t=document.getElementById('aeTime').value, c=document.getElementById('aeCat').value, cap=parseInt(document.getElementById('aeCap').value)||15, desc=document.getElementById('aeDesc').value;
+            if(!n||!d) return;
+            events.push({id:Date.now(),title:n,emoji:em||catEmojis[c],date:d,time:t,category:c,desc:desc,capacity:cap,attending:0});
+            saveEvents(events); renderAll();
+            document.getElementById('aeName').value=''; document.getElementById('aeDesc').value='';
+            const fb=document.getElementById('aeFeedback'); fb.classList.add('show'); setTimeout(()=>fb.classList.remove('show'),3000);
+        });
+
+        // Add Stat
+        document.getElementById('asSubmit').addEventListener('click', () => {
+            const g=document.getElementById('asGame').value, em=document.getElementById('asEmoji').value, w=document.getElementById('asWinner').value, d=document.getElementById('asDate').value;
+            if(!g||!w) return;
+            const stats=getStats(); stats.push({game:g,emoji:em||'🎮',winner:w,date:d}); saveStats(stats); renderStats();
+            document.getElementById('asWinner').value='';
+            const fb=document.getElementById('asFeedback'); fb.classList.add('show'); setTimeout(()=>fb.classList.remove('show'),3000);
+        });
+
+        // Delete Event
+        window.deleteEvent = function(id) {
+            if(!confirm('Event wirklich löschen?')) return;
+            events = events.filter(e => e.id !== id); saveEvents(events); renderAll();
+        };
+
+        // Delete Stat Game
+        window.deleteStatGame = function(gameName) {
+            if(!confirm(`Alle "${gameName}" Statistiken löschen?`)) return;
+            const stats = getStats().filter(s => s.game !== gameName); saveStats(stats); renderStats();
+        };
+
+        // FILTERS
+        document.querySelectorAll('.filter-tab').forEach(tab => { tab.addEventListener('click', () => { document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active')); tab.classList.add('active'); activeFilter=tab.dataset.filter; renderAll(); }); });
+
         // HIGHLIGHT
         function renderHighlight() {
-            const section = document.getElementById('highlightSection');
-            const futureEvents = events.filter(e => new Date(e.date) >= new Date(today.toDateString())).sort((a,b) => new Date(a.date) - new Date(b.date));
-            if (futureEvents.length === 0) { section.innerHTML = ''; return; }
-            const e = futureEvents[0];
-            const d = new Date(e.date);
-            const pct = Math.round((e.attending/e.capacity)*100);
-            section.innerHTML = `<div class="highlight-card">
-                <div class="highlight-badge"><span class="pulse-dot"></span> Nächstes Event</div>
-                <div class="highlight-emoji">${e.emoji}</div>
-                <h2 class="highlight-title">${e.title}</h2>
-                <div class="highlight-meta">
-                    <div class="highlight-meta-item">📅 ${d.getDate()}. ${monthNames[d.getMonth()]} ${d.getFullYear()}</div>
-                    <div class="highlight-meta-item">🕐 ${e.time} Uhr</div>
-                    <div class="highlight-meta-item">📍 Poccistraße</div>
-                    <div class="highlight-meta-item">${catEmojis[e.category]} ${catNames[e.category]}</div>
-                </div>
-                <div class="capacity-bar-container"><div class="capacity-header"><span class="capacity-count">${e.attending} / ${e.capacity} Plätze</span><span class="capacity-label">${pct}% belegt</span></div><div class="capacity-bar"><div class="capacity-fill" style="--fill-width:${pct}%"></div></div></div>
-                <div class="highlight-actions">
-                    <button class="btn btn-primary" onclick="joinEvent(this,'${e.title}')">🎉 Ich bin dabei!</button>
-                    <button class="btn btn-outline" onclick="downloadICS('${e.title}','${e.date}','${e.time}')">📅 Zum Kalender</button>
-                </div>
-            </div>`;
-            setTimeout(() => document.querySelectorAll('.capacity-fill').forEach(el => el.classList.add('animated')), 500);
+            const sec = document.getElementById('highlightSection');
+            const future = events.filter(e => new Date(e.date)>=new Date(today.toDateString())).sort((a,b)=>new Date(a.date)-new Date(b.date));
+            if(!future.length){sec.innerHTML='';return;}
+            const e=future[0], d=new Date(e.date), pct=Math.round((e.attending/e.capacity)*100);
+            let deleteBtn = isAdmin ? `<div class="highlight-delete"><button class="btn-danger" onclick="deleteEvent(${e.id})">🗑️ Löschen</button></div>` : '';
+            sec.innerHTML = `<div class="highlight-card">${deleteBtn}<div class="highlight-badge"><span class="pulse-dot"></span> Nächstes Event</div><div class="highlight-emoji">${e.emoji}</div><h2 class="highlight-title">${e.title}</h2><div class="highlight-meta"><div class="highlight-meta-item">📅 ${d.getDate()}. ${monthNames[d.getMonth()]} ${d.getFullYear()}</div><div class="highlight-meta-item">🕐 ${e.time} Uhr</div><div class="highlight-meta-item">📍 Poccistraße</div><div class="highlight-meta-item">${catEmojis[e.category]} ${catNames[e.category]}</div></div><div class="capacity-bar-container"><div class="capacity-header"><span class="capacity-count">${e.attending}/${e.capacity} Plätze</span><span class="capacity-label">${pct}%</span></div><div class="capacity-bar"><div class="capacity-fill" style="--fill-width:${pct}%"></div></div></div><div class="highlight-actions"><button class="btn btn-primary" onclick="joinEvent(this,'${e.title}')">🎉 Ich bin dabei!</button><button class="btn btn-outline" onclick="downloadICS('${e.title}','${e.date}','${e.time}')">📅 Zum Kalender</button></div></div>`;
+            setTimeout(()=>document.querySelectorAll('.capacity-fill').forEach(el=>el.classList.add('animated')),500);
         }
 
         // CALENDAR
         function renderCalendar() {
             document.getElementById('calendarMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
-            const dc = document.getElementById('calendarDays');
-            dc.innerHTML = '';
-            const firstDay = new Date(currentYear, currentMonth, 1);
-            const lastDay = new Date(currentYear, currentMonth + 1, 0);
-            let startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-            const prevLast = new Date(currentYear, currentMonth, 0).getDate();
-
-            for (let i = startDay - 1; i >= 0; i--) {
-                const day = document.createElement('div');
-                day.className = 'calendar-day other-month';
-                day.innerHTML = `<span class="calendar-day-number">${prevLast - i}</span>`;
-                dc.appendChild(day);
-            }
-
-            for (let d = 1; d <= lastDay.getDate(); d++) {
-                const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-                const dayEvents = events.filter(e => e.date === dateStr);
-                const isToday = today.getDate() === d && today.getMonth() === currentMonth && today.getFullYear() === currentYear;
-
-                const day = document.createElement('div');
-                let cls = 'calendar-day current-month';
-                if (isToday) cls += ' today';
-                if (dayEvents.length > 0) { cls += ' has-event cat-' + dayEvents[0].category; }
-                day.className = cls;
-
-                let inner = `<span class="calendar-day-number">${d}</span>`;
-                if (dayEvents.length > 0) {
-                    inner += '<div class="calendar-event-indicator">';
-                    inner += `<span class="calendar-event-dot" style="background:${isToday ? 'rgba(255,255,255,.8)' : catColors[dayEvents[0].category]}"></span>`;
-                    inner += `<span class="calendar-event-title">${dayEvents[0].title}</span>`;
-                    inner += '</div>';
-                    day.addEventListener('click', () => openModal(dayEvents[0]));
+            const dc=document.getElementById('calendarDays'); dc.innerHTML='';
+            const first=new Date(currentYear,currentMonth,1), last=new Date(currentYear,currentMonth+1,0);
+            let start=first.getDay()===0?6:first.getDay()-1;
+            const prevLast=new Date(currentYear,currentMonth,0).getDate();
+            for(let i=start-1;i>=0;i--){const d=document.createElement('div');d.className='calendar-day other-month';d.innerHTML=`<span class="calendar-day-number">${prevLast-i}</span>`;dc.appendChild(d);}
+            for(let d=1;d<=last.getDate();d++){
+                const dateStr=`${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const dayEvents=events.filter(e=>e.date===dateStr);
+                const isToday=today.getDate()===d&&today.getMonth()===currentMonth&&today.getFullYear()===currentYear;
+                const day=document.createElement('div');
+                let cls='calendar-day current-month';
+                if(isToday)cls+=' today';
+                if(dayEvents.length)cls+=' has-event cat-'+dayEvents[0].category;
+                day.className=cls;
+                let inner=`<span class="calendar-day-number">${d}</span>`;
+                if(dayEvents.length){
+                    inner+=`<div class="calendar-event-indicator"><span class="calendar-event-dot" style="background:${isToday?'rgba(255,255,255,.8)':catColors[dayEvents[0].category]}"></span><span class="calendar-event-title">${dayEvents[0].title}</span></div>`;
+                    day.addEventListener('click',()=>openEventModal(dayEvents[0]));
                 }
-                day.innerHTML = inner;
-                dc.appendChild(day);
+                day.innerHTML=inner; dc.appendChild(day);
             }
-
-            const total = dc.children.length;
-            for (let i = 1; i <= 42 - total; i++) {
-                const day = document.createElement('div');
-                day.className = 'calendar-day other-month';
-                day.innerHTML = `<span class="calendar-day-number">${i}</span>`;
-                dc.appendChild(day);
-            }
+            const total=dc.children.length;
+            for(let i=1;i<=42-total;i++){const d=document.createElement('div');d.className='calendar-day other-month';d.innerHTML=`<span class="calendar-day-number">${i}</span>`;dc.appendChild(d);}
         }
-
-        document.getElementById('prevMonth').addEventListener('click', () => { currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} renderCalendar(); });
-        document.getElementById('nextMonth').addEventListener('click', () => { currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} renderCalendar(); });
+        document.getElementById('prevMonth').addEventListener('click',()=>{currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--;}renderCalendar();});
+        document.getElementById('nextMonth').addEventListener('click',()=>{currentMonth++;if(currentMonth>11){currentMonth=0;currentYear++;}renderCalendar();});
 
         // EVENT CARDS
         function renderEventCards() {
-            const grid = document.getElementById('eventsGrid');
-            grid.innerHTML = '';
-            let filtered = activeFilter === 'all' ? events : events.filter(e => e.category === activeFilter);
-            filtered = filtered.filter(e => new Date(e.date) >= new Date(today.toDateString())).sort((a,b) => new Date(a.date) - new Date(b.date));
-            if (filtered.length === 0) { grid.innerHTML = '<div class="no-events">Keine Events in dieser Kategorie geplant.</div>'; return; }
-
-            filtered.forEach(e => {
-                const d = new Date(e.date);
-                const pct = Math.round((e.attending/e.capacity)*100);
-                const card = document.createElement('div');
-                card.className = 'event-card';
-                card.innerHTML = `
-                    <div class="event-card-header"><div class="event-card-date"><span class="event-card-date-day">${d.getDate()}</span><span class="event-card-date-month">${monthNames[d.getMonth()].substring(0,3).toUpperCase()}</span></div><span class="event-card-category" style="background:${catColors[e.category]}">${catNames[e.category]}</span></div>
-                    <div class="event-card-body"><div class="event-card-emoji">${e.emoji}</div><h3 class="event-card-title">${e.title}</h3><p class="event-card-desc">${e.desc}</p><div class="event-card-meta"><span class="event-card-meta-item">🕐 ${e.time} Uhr</span><span class="event-card-meta-item">📍 Poccistraße</span></div><div class="event-card-capacity"><div class="event-card-capacity-bar"><div class="event-card-capacity-fill" style="width:${pct}%;background:${catColors[e.category]}"></div></div><div class="event-card-capacity-text"><span>${e.attending}/${e.capacity} Plätze</span><span>${pct}%</span></div></div></div>
-                    <div class="event-card-footer"><button class="btn-join" onclick="joinEvent(this,'${e.title}')">🎉 Ich bin dabei!</button><button class="btn-cal" onclick="downloadICS('${e.title}','${e.date}','${e.time}')">📅</button></div>`;
+            const grid=document.getElementById('eventsGrid'); grid.innerHTML='';
+            let filtered=activeFilter==='all'?events:events.filter(e=>e.category===activeFilter);
+            filtered=filtered.filter(e=>new Date(e.date)>=new Date(today.toDateString())).sort((a,b)=>new Date(a.date)-new Date(b.date));
+            if(!filtered.length){grid.innerHTML='<div class="no-events">Keine Events geplant. <a href="#vorschlag" style="color:var(--color-primary);font-weight:700;">Schlag eins vor!</a></div>';return;}
+            filtered.forEach(e=>{
+                const d=new Date(e.date), pct=Math.round((e.attending/e.capacity)*100);
+                let del=isAdmin?`<div class="event-card-delete"><button class="btn-danger" onclick="deleteEvent(${e.id})">🗑️</button></div>`:'';
+                const card=document.createElement('div'); card.className='event-card';
+                card.innerHTML=`${del}<div class="event-card-header"><div class="event-card-date"><span class="event-card-date-day">${d.getDate()}</span><span class="event-card-date-month">${monthNames[d.getMonth()].substring(0,3).toUpperCase()}</span></div><span class="event-card-category" style="background:${catColors[e.category]}">${catNames[e.category]}</span></div><div class="event-card-body"><div class="event-card-emoji">${e.emoji}</div><h3 class="event-card-title">${e.title}</h3><p class="event-card-desc">${e.desc}</p><div class="event-card-meta"><span class="event-card-meta-item">🕐 ${e.time} Uhr</span><span class="event-card-meta-item">📍 Poccistraße</span></div><div class="event-card-capacity"><div class="event-card-capacity-bar"><div class="event-card-capacity-fill" style="width:${pct}%;background:${catColors[e.category]}"></div></div><div class="event-card-capacity-text"><span>${e.attending}/${e.capacity}</span><span>${pct}%</span></div></div></div><div class="event-card-footer"><button class="btn-join" onclick="joinEvent(this,'${e.title}')">🎉 Ich bin dabei!</button><button class="btn-cal" onclick="downloadICS('${e.title}','${e.date}','${e.time}')">📅</button></div>`;
                 grid.appendChild(card);
             });
         }
 
-        // GAME STATS
+        // STATS
         function renderStats() {
-            const grid = document.getElementById('statsGrid');
-            const stats = getStats();
-            if (stats.length === 0) { grid.innerHTML = '<div class="no-stats">🎮 Noch keine Spielestatistiken. Spielt erstmal was!</div>'; return; }
-
-            const games = {};
-            stats.forEach(s => {
-                if (!games[s.game]) games[s.game] = { emoji: s.emoji, players: {} };
-                if (!games[s.game].players[s.winner]) games[s.game].players[s.winner] = 0;
-                games[s.game].players[s.winner]++;
-            });
-
-            grid.innerHTML = '';
-            Object.keys(games).forEach(gameName => {
-                const g = games[gameName];
-                const sorted = Object.entries(g.players).sort((a,b) => b[1] - a[1]);
-                const ranks = ['🥇','🥈','🥉'];
-                let playersHTML = sorted.slice(0,5).map((p,i) => `<div class="stat-player"><span class="stat-player-name"><span class="stat-player-rank">${ranks[i]||'  '}</span>${p[0]}</span><span class="stat-player-wins">${p[1]}×</span></div>`).join('');
-                const totalPlays = Object.values(g.players).reduce((a,b)=>a+b,0);
-
-                grid.innerHTML += `<div class="stat-game-card"><div class="stat-game-header"><span class="stat-game-emoji">${g.emoji}</span><div><div class="stat-game-name">${gameName}</div><div class="stat-game-plays">${totalPlays} Runden gespielt</div></div></div><div class="stat-game-leaderboard">${playersHTML}</div></div>`;
+            const grid=document.getElementById('statsGrid'); const stats=getStats();
+            if(!stats.length){grid.innerHTML='<div class="no-stats">🎮 Noch keine Spielestatistiken. Spielt erstmal was!</div>';return;}
+            const games={};
+            stats.forEach(s=>{if(!games[s.game])games[s.game]={emoji:s.emoji,players:{}};if(!games[s.game].players[s.winner])games[s.game].players[s.winner]=0;games[s.game].players[s.winner]++;});
+            grid.innerHTML='';
+            Object.keys(games).forEach(gn=>{
+                const g=games[gn], sorted=Object.entries(g.players).sort((a,b)=>b[1]-a[1]);
+                const ranks=['🥇','🥈','🥉'];
+                let players=sorted.slice(0,5).map((p,i)=>`<div class="stat-player"><span class="stat-player-name"><span>${ranks[i]||'  '}</span>${p[0]}</span><span class="stat-player-wins">${p[1]}×</span></div>`).join('');
+                const total=Object.values(g.players).reduce((a,b)=>a+b,0);
+                let del=isAdmin?`<div class="stat-delete-btn"><button class="btn-danger" onclick="deleteStatGame('${gn}')">🗑️</button></div>`:'';
+                grid.innerHTML+=`<div class="stat-game-card">${del}<div class="stat-game-header"><span class="stat-game-emoji">${g.emoji}</span><div><div class="stat-game-name">${gn}</div><div class="stat-game-plays">${total} Runden</div></div></div><div class="stat-game-leaderboard">${players}</div></div>`;
             });
         }
 
-        function renderAll() { renderHighlight(); renderCalendar(); renderEventCards(); renderStats(); }
+        function renderAll(){renderHighlight();renderCalendar();renderEventCards();renderStats();}
         renderAll();
 
-        // MODAL
-        window.openModal = function(e) {
-            const d = new Date(e.date);
-            document.getElementById('modalEmoji').textContent = e.emoji;
-            document.getElementById('modalTitle').textContent = e.title;
-            document.getElementById('modalDesc').textContent = e.desc;
-            document.getElementById('modalMeta').innerHTML = `
-                <div class="modal-meta-item">📅 ${d.getDate()}. ${monthNames[d.getMonth()]} ${d.getFullYear()}</div>
-                <div class="modal-meta-item">🕐 ${e.time} Uhr</div>
-                <div class="modal-meta-item">📍 Poccistraße</div>
-                <div class="modal-meta-item">👥 ${e.attending}/${e.capacity} Plätze</div>`;
-            document.getElementById('modalJoinBtn').onclick = function() { joinEvent(this, e.title); closeModal(); };
-            document.getElementById('modalCalBtn').onclick = function() { downloadICS(e.title, e.date, e.time); };
-            document.getElementById('eventModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+        // EVENT MODAL
+        window.openEventModal = function(e){
+            const d=new Date(e.date);
+            document.getElementById('modalEmoji').textContent=e.emoji;
+            document.getElementById('modalTitle').textContent=e.title;
+            document.getElementById('modalDesc').textContent=e.desc;
+            document.getElementById('modalMeta').innerHTML=`<div class="modal-meta-item">📅 ${d.getDate()}. ${monthNames[d.getMonth()]} ${d.getFullYear()}</div><div class="modal-meta-item">🕐 ${e.time} Uhr</div><div class="modal-meta-item">📍 Poccistraße</div><div class="modal-meta-item">👥 ${e.attending}/${e.capacity} Plätze</div>`;
+            document.getElementById('modalJoinBtn').onclick=function(){joinEvent(this,e.title);closeEventModal();};
+            document.getElementById('modalCalBtn').onclick=function(){downloadICS(e.title,e.date,e.time);};
+            document.getElementById('eventModal').classList.add('active'); document.body.style.overflow='hidden';
         };
-        window.closeModal = function() { document.getElementById('eventModal').classList.remove('active'); document.body.style.overflow = ''; };
-        document.getElementById('eventModal').addEventListener('click', function(ev) { if(ev.target===this) closeModal(); });
+        window.closeEventModal = function(){document.getElementById('eventModal').classList.remove('active');document.body.style.overflow='';};
+        document.getElementById('eventModal').addEventListener('click',function(e){if(e.target===this)closeEventModal();});
 
         // JOIN + CONFETTI
-        window.joinEvent = function(btn, name) {
-            if (btn.classList.contains('joined')) { btn.classList.remove('joined'); btn.innerHTML = '🎉 Ich bin dabei!'; return; }
-            btn.classList.add('joined'); btn.innerHTML = '✅ Du bist dabei!';
-            launchConfetti();
+        window.joinEvent = function(btn, name){
+            if(btn.classList.contains('joined')){btn.classList.remove('joined');btn.innerHTML='🎉 Ich bin dabei!';return;}
+            btn.classList.add('joined');btn.innerHTML='✅ Du bist dabei!';launchConfetti();
         };
-
-        function launchConfetti() {
-            const c = document.getElementById('confettiContainer');
-            const colors = ['#C03A2B','#E8501E','#C4A882','#457B9D','#FF6B6B','#FFD93D','#6BCB77'];
-            for (let i = 0; i < 50; i++) {
-                const p = document.createElement('div');
-                const sz = Math.random()*8+5;
-                p.style.cssText = `position:absolute;left:${Math.random()*100}%;top:-20px;width:${sz}px;height:${Math.random()>.5?sz:sz*2.5}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'3px'};opacity:1;animation:cFall ${Math.random()*2+2}s ease-out forwards;animation-delay:${Math.random()*.3}s;pointer-events:none;`;
-                c.appendChild(p);
-                setTimeout(() => p.remove(), 4000);
-            }
-        }
-        const cStyle = document.createElement('style');
-        cStyle.textContent = '@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}';
-        document.head.appendChild(cStyle);
+        function launchConfetti(){const c=document.getElementById('confettiContainer');const colors=['#C03A2B','#E8501E','#C4A882','#457B9D','#FF6B6B','#FFD93D','#6BCB77'];for(let i=0;i<50;i++){const p=document.createElement('div');const sz=Math.random()*8+5;p.style.cssText=`position:absolute;left:${Math.random()*100}%;top:-20px;width:${sz}px;height:${Math.random()>.5?sz:sz*2.5}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'3px'};opacity:1;animation:cFall ${Math.random()*2+2}s ease-out forwards;animation-delay:${Math.random()*.3}s;pointer-events:none;`;c.appendChild(p);setTimeout(()=>p.remove(),4000);}}
+        const cs=document.createElement('style');cs.textContent='@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}';document.head.appendChild(cs);
 
         // ICS
-        window.downloadICS = function(title, date, time) {
-            const [h,m] = time.split(':');
-            const s = date.replace(/-/g,'')+'T'+h+m+'00';
-            const eH = String(Math.min(parseInt(h)+4,23)).padStart(2,'0');
-            const en = date.replace(/-/g,'')+'T'+eH+m+'00';
-            const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:${s}\nDTEND:${en}\nSUMMARY:${title}\nLOCATION:Poccistraße München\nEND:VEVENT\nEND:VCALENDAR`;
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));
-            a.download = title.replace(/[^a-zA-Z0-9]/g,'_')+'.ics'; a.click();
-        };
+        window.downloadICS = function(title,date,time){const[h,m]=time.split(':');const s=date.replace(/-/g,'')+'T'+h+m+'00';const eH=String(Math.min(parseInt(h)+4,23)).padStart(2,'0');const en=date.replace(/-/g,'')+'T'+eH+m+'00';const ics=`BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:${s}\nDTEND:${en}\nSUMMARY:${title}\nLOCATION:Poccistraße München\nEND:VEVENT\nEND:VCALENDAR`;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download=title.replace(/[^a-zA-Z0-9]/g,'_')+'.ics';a.click();};
 
         // PROPOSAL
-        document.getElementById('proposalForm').addEventListener('submit', function(ev) {
-            ev.preventDefault(); this.style.display = 'none';
-            document.getElementById('formSuccess').classList.add('show');
-            launchConfetti();
-        });
-
-        // ADMIN
-        let isAdmin = localStorage.getItem('pocci4_admin') === 'true';
-        if (isAdmin) document.getElementById('adminPanel').classList.add('show');
-
-        document.getElementById('adminToggle').addEventListener('click', () => {
-            if (isAdmin) { document.getElementById('adminPanel').classList.toggle('show'); return; }
-            document.getElementById('adminLogin').classList.toggle('show');
-        });
-        document.getElementById('adminLoginBtn').addEventListener('click', () => {
-            if (document.getElementById('adminPw').value === ADMIN_PW) {
-                isAdmin = true; localStorage.setItem('pocci4_admin', 'true');
-                document.getElementById('adminLogin').classList.remove('show');
-                document.getElementById('adminPanel').classList.add('show');
-                document.getElementById('adminError').style.display = 'none';
-            } else { document.getElementById('adminError').style.display = 'block'; }
-        });
-        document.getElementById('adminPw').addEventListener('keydown', (ev) => { if(ev.key==='Enter') document.getElementById('adminLoginBtn').click(); });
-
-        // ADD EVENT
-        document.getElementById('aeSubmit').addEventListener('click', () => {
-            const name = document.getElementById('aeName').value;
-            const emoji = document.getElementById('aeEmoji').value || catEmojis[document.getElementById('aeCat').value];
-            const date = document.getElementById('aeDate').value;
-            const time = document.getElementById('aeTime').value;
-            const cat = document.getElementById('aeCat').value;
-            const cap = parseInt(document.getElementById('aeCap').value) || 15;
-            const desc = document.getElementById('aeDesc').value;
-            if (!name || !date) return;
-
-            events.push({id: Date.now(), title: name, emoji, date, time, category: cat, desc, capacity: cap, attending: 0});
-            saveEvents(events);
-            renderAll();
-            document.getElementById('aeName').value = '';
-            document.getElementById('aeDesc').value = '';
-            const s = document.getElementById('aeSuccess'); s.style.display = 'block'; setTimeout(() => s.style.display = 'none', 3000);
-        });
-
-        // ADD STAT
-        document.getElementById('asSubmit').addEventListener('click', () => {
-            const game = document.getElementById('asGame').value;
-            const emoji = document.getElementById('asEmoji').value || '🎮';
-            const winner = document.getElementById('asWinner').value;
-            const date = document.getElementById('asDate').value;
-            if (!game || !winner) return;
-
-            const stats = getStats();
-            stats.push({game, emoji, winner, date});
-            saveStats(stats);
-            renderStats();
-            document.getElementById('asWinner').value = '';
-            const s = document.getElementById('asSuccess'); s.style.display = 'block'; setTimeout(() => s.style.display = 'none', 3000);
-        });
+        document.getElementById('proposalForm').addEventListener('submit',function(e){e.preventDefault();this.style.display='none';document.getElementById('formSuccess').classList.add('show');launchConfetti();});
 
         // REVEAL
-        const ro = new IntersectionObserver((entries) => { entries.forEach((e,i) => { if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);ro.unobserve(e.target);} }); },{threshold:.1});
-        document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+        const ro=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);ro.unobserve(e.target);}});},{threshold:.1});
+        document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
         // PARALLAX
-        window.addEventListener('scroll', () => { document.querySelectorAll('.bg-shape').forEach((s,i) => { s.style.transform = `translateY(${window.scrollY*(i+1)*.015}px) rotate(${window.scrollY*.01*(i%2===0?1:-1)}deg)`; }); });
+        window.addEventListener('scroll',()=>{document.querySelectorAll('.bg-shape').forEach((s,i)=>{s.style.transform=`translateY(${window.scrollY*(i+1)*.015}px) rotate(${window.scrollY*.01*(i%2===0?1:-1)}deg)`;});});
     });
     </script>
 </body>
