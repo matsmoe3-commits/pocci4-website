@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>pocci⁴ – Kontakt</title>
+    <title>pocci4 - Kontakt</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -23,19 +23,17 @@
         a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
         img{max-width:100%;height:auto;display:block}
 
-        /* BG */
         .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
         .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
         .bg-shape-1{width:700px;height:500px;background:#E0CEBB;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
-        .bg-shape-2{width:550px;height:650px;background:#D4C0AD;bottom:-20%;right:-10%;border-radius:40% 60% 30% 70%/60% 30% 70% 40%;animation:m2 25s ease-in-out infinite}
+        .bg-shape-2{width:550px;height:650px;background:#D4C0AD;bottom:-20%;right:-10%;animation:m2 25s ease-in-out infinite}
         .bg-shape-3{width:450px;height:400px;background:#C9B8A5;top:35%;left:45%;animation:m3 22s ease-in-out infinite}
-        .bg-shape-4{width:380px;height:480px;background:#D8C9B8;top:60%;right:10%;border-radius:30% 70% 50% 50%/50% 40% 60% 50%;animation:m4 28s ease-in-out infinite;opacity:.3}
+        .bg-shape-4{width:380px;height:480px;background:#D8C9B8;top:60%;right:10%;animation:m4 28s ease-in-out infinite;opacity:.3}
         @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
         @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
         @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
         @keyframes m4{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(-60px,50px) rotate(-10deg) scale(1.1)}}
 
-        /* NAV */
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
         .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
         .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
@@ -45,6 +43,12 @@
         .nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}
         .nav-link:hover{color:var(--color-text);background:var(--color-bg)}
         .nav-link.active{background:var(--color-text);color:var(--color-white)}
+        .nav-link-dropdown{position:relative}
+        .nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-5px);background:var(--color-white);border-radius:16px;padding:8px;box-shadow:0 10px 40px rgba(0,0,0,.1);border:1px solid var(--color-border);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;min-width:180px;z-index:100}
+        .nav-link-dropdown.dropdown-visible .nav-dropdown{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+        .nav-dropdown-item{display:flex;align-items:center;gap:.6rem;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);white-space:nowrap}
+        .nav-dropdown-item:hover{background:var(--color-bg);color:var(--color-primary)}
+        .nav-dropdown-item span{font-size:1rem}
         .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
         .hamburger-line{width:24px;height:2px;background:var(--color-text);border-radius:2px;transition:var(--transition-smooth);transform-origin:center}
         .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
@@ -55,31 +59,22 @@
         .mobile-menu-content{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
         .mobile-link{font-size:2rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);transform:translateY(20px);opacity:0}
         .mobile-menu.active .mobile-link{transform:translateY(0);opacity:1}
-        .mobile-menu.active .mobile-link:nth-child(1){transition-delay:.1s}.mobile-menu.active .mobile-link:nth-child(2){transition-delay:.15s}.mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s}.mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}
+        .mobile-menu.active .mobile-link:nth-child(1){transition-delay:.1s}
+        .mobile-menu.active .mobile-link:nth-child(2){transition-delay:.15s}
+        .mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s}
+        .mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}
+        .mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}
         .mobile-link:hover,.mobile-link.active{color:var(--color-primary)}
+        .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
 
-        /* BUTTONS */
-        .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;border-radius:50px;font-family:var(--font-main);font-size:.9rem;font-weight:600;cursor:pointer;transition:var(--transition-smooth);border:2px solid transparent;gap:.5rem}
-        .btn-primary{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
-        .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
-        .btn-outline{background:transparent;color:var(--color-text);border-color:var(--color-text)}
-        .btn-outline:hover{background:var(--color-text);color:#fff;transform:translateY(-2px)}
-        .btn-whatsapp{background:#25D366;color:#fff;border-color:#25D366}
-        .btn-whatsapp:hover{background:#1DA851;border-color:#1DA851;transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,211,102,.25)}
-        .btn-instagram{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;border-color:transparent}
-        .btn-instagram:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(225,48,108,.25);opacity:.9}
         .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
         .section-title{font-size:clamp(1.8rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
 
-        /* PAGE HERO */
         .page-hero{padding:calc(var(--nav-height) + 4rem) 1.25rem 3rem;max-width:var(--container-width);margin:0 auto;text-align:center}
         .page-hero-title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem}
         .page-hero-subtitle{font-size:clamp(1rem,2vw,1.2rem);color:var(--color-text-light);max-width:550px;margin:0 auto}
 
-        /* QUICK CONTACT BUTTONS */
-        .quick-contact{padding:0 1.25rem 3rem;max-width:700px;margin:0 auto;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-
-        /* CREW SECTION */
+        /* CREW */
         .crew-section{padding:var(--section-padding) 1.25rem;overflow:hidden}
         .crew-container{max-width:var(--container-width);margin:0 auto}
         .crew-header{text-align:center;margin-bottom:4rem}
@@ -90,24 +85,24 @@
         .crew-card-andrei::before{background:var(--color-primary)}
         .crew-card-georgie::before{background:#457B9D}
         .crew-card-mats::before{background:var(--color-sand)}
-        .crew-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative}
+        .crew-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;font-size:3rem}
         .crew-card-andrei .crew-avatar{background:linear-gradient(135deg,rgba(192,58,43,.15),rgba(192,58,43,.05))}
         .crew-card-georgie .crew-avatar{background:linear-gradient(135deg,rgba(69,123,157,.15),rgba(69,123,157,.05))}
         .crew-card-mats .crew-avatar{background:linear-gradient(135deg,rgba(196,168,130,.2),rgba(196,168,130,.05))}
         .crew-name{font-size:1.4rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.25rem}
-        .crew-role{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem;padding:4px 14px;border-radius:50px;display:inline-block}
+        .crew-role{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;padding:4px 14px;border-radius:50px;display:inline-block}
         .crew-card-andrei .crew-role{background:rgba(192,58,43,.1);color:var(--color-primary)}
         .crew-card-georgie .crew-role{background:rgba(69,123,157,.1);color:#457B9D}
         .crew-card-mats .crew-role{background:rgba(196,168,130,.15);color:#8B7355}
+        .crew-ig{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--color-text-light);margin-bottom:1rem;transition:var(--transition-fast)}
+        .crew-ig:hover{color:var(--color-primary)}
         .crew-bio{font-size:.9rem;color:var(--color-text-light);line-height:1.6}
         .crew-traits{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:1rem}
         .crew-trait{padding:4px 10px;border-radius:8px;font-size:.7rem;font-weight:600;background:var(--color-bg);color:var(--color-text-light)}
 
-        /* CONTACT FORM + INFO GRID */
+        /* CONTACT FORM + INFO */
         .contact-section{padding:0 1.25rem var(--section-padding);overflow:hidden}
         .contact-container{max-width:var(--container-width);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-
-        /* Contact Form */
         .contact-form-card{background:var(--color-text);color:#fff;border-radius:24px;padding:3rem 2.5rem}
         .contact-form-header{margin-bottom:2rem}
         .contact-form-header .section-overline{color:var(--color-sand)}
@@ -129,7 +124,6 @@
         .c-form-success-title{font-size:1.3rem;font-weight:800;margin-bottom:.5rem}
         .c-form-success-text{color:var(--color-gray)}
 
-        /* Contact Info */
         .contact-info{display:flex;flex-direction:column;gap:1.5rem}
         .info-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:20px;padding:2rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth)}
         .info-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
@@ -140,17 +134,13 @@
         .info-card-icon-transport{background:rgba(69,123,157,.1)}
         .info-card-title{font-size:1rem;font-weight:700}
         .info-card-text{font-size:.9rem;color:var(--color-text-light);line-height:1.6}
-        .info-card-text a{color:var(--color-primary);font-weight:600}
-        .info-card-text a:hover{text-decoration:underline}
+        .info-card-text strong{color:var(--color-text);font-weight:700}
 
-        /* Social Links */
         .social-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:20px;padding:2rem;border:1px solid rgba(255,255,255,.5)}
         .social-links{display:flex;flex-direction:column;gap:.75rem;margin-top:1rem}
         .social-link{display:flex;align-items:center;gap:1rem;padding:1rem;border-radius:16px;transition:var(--transition-fast);border:1.5px solid var(--color-border)}
         .social-link:hover{border-color:var(--color-text);transform:translateX(4px)}
-        .social-link-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
-        .social-link-wa .social-link-icon{background:rgba(37,211,102,.1)}
-        .social-link-ig .social-link-icon{background:rgba(225,48,108,.08)}
+        .social-link-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;background:rgba(225,48,108,.08)}
         .social-link-info{flex:1}
         .social-link-name{font-size:.9rem;font-weight:700}
         .social-link-handle{font-size:.8rem;color:var(--color-gray)}
@@ -166,7 +156,7 @@
         .map-overlay{position:absolute;bottom:0;left:0;right:0;padding:2rem;background:linear-gradient(transparent,rgba(26,26,26,.85));color:#fff;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem}
         .map-address{font-size:1.1rem;font-weight:700}
         .map-address-sub{font-size:.85rem;color:rgba(255,255,255,.7);margin-top:.25rem}
-        .map-directions-btn{padding:10px 24px;border-radius:50px;background:rgba(255,255,255,.2);color:#fff;font-size:.85rem;font-weight:600;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);cursor:pointer;transition:var(--transition-fast);font-family:var(--font-main);text-decoration:none;display:inline-flex;align-items:center;gap:.4rem}
+        .map-directions-btn{padding:10px 24px;border-radius:50px;background:rgba(255,255,255,.2);color:#fff;font-size:.85rem;font-weight:600;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);cursor:pointer;transition:var(--transition-fast);font-family:var(--font-main);display:inline-flex;align-items:center;gap:.4rem}
         .map-directions-btn:hover{background:rgba(255,255,255,.35)}
 
         /* FAQ */
@@ -183,7 +173,7 @@
         .faq-item.open .faq-answer{max-height:300px;padding:0 1.5rem 1.25rem}
         .faq-answer-text{font-size:.9rem;color:var(--color-text-light);line-height:1.7}
 
-        /* HOUSE RULES */
+        /* RULES */
         .rules-section{padding:0 1.25rem var(--section-padding);overflow:hidden}
         .rules-container{max-width:700px;margin:0 auto}
         .rules-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2.5rem;border:1px solid rgba(255,255,255,.5)}
@@ -195,7 +185,8 @@
         .rule-text{font-size:.85rem;color:var(--color-text-light);line-height:1.5}
         .rule-text strong{color:var(--color-text);font-weight:700}
 
-        /* FOOTER */
+        .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
+
         .footer{background:var(--color-text);color:#fff;padding:4rem 1.25rem 2rem}
         .footer-container{max-width:var(--container-width);margin:0 auto}
         .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
@@ -211,10 +202,6 @@
         .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
         .reveal.visible{opacity:1;transform:translateY(0)}
 
-        /* CONFETTI */
-        .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
-
-        /* RESPONSIVE */
         @media(max-width:1024px){:root{--section-padding:80px}.contact-container{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr;gap:3rem}}
         @media(max-width:768px){
             :root{--section-padding:60px;--nav-height:68px}
@@ -225,8 +212,7 @@
             .map-wrapper iframe{height:300px}
             .map-overlay{flex-direction:column;align-items:flex-start}
             .footer-links-grid{grid-template-columns:1fr 1fr}
-            .quick-contact{flex-direction:column;align-items:center}
-            .quick-contact .btn{width:100%;max-width:320px}
+            .nav-dropdown{display:none!important}
         }
         @media(max-width:480px){
             .nav-logo img{height:38px}.page-hero-title{font-size:2rem}
@@ -234,7 +220,6 @@
             .crew-card{padding:2rem 1.5rem}
             .rules-card{padding:2rem 1.5rem}
             .footer-links-grid{grid-template-columns:1fr}
-            .btn{width:100%}
         }
     </style>
 </head>
@@ -242,61 +227,70 @@
     <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div><div class="bg-shape bg-shape-4"></div></div>
     <div class="confetti-container" id="confettiContainer"></div>
 
-    <!-- NAV -->
-    <nav class="navbar" id="navbar"><div class="nav-container"><a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci⁴"></a><div class="nav-links"><a href="index.html" class="nav-link">Home</a><a href="events.html" class="nav-link">Events</a><a href="shop.html" class="nav-link">Shop</a><a href="kontakt.html" class="nav-link active">Kontakt</a></div><button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button></div></nav>
-    <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content"><a href="index.html" class="mobile-link">Home</a><a href="events.html" class="mobile-link">Events</a><a href="shop.html" class="mobile-link">Shop</a><a href="kontakt.html" class="mobile-link active">Kontakt</a></div></div>
+    <nav class="navbar" id="navbar"><div class="nav-container">
+        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
+            <a href="shop.html" class="nav-link">Shop</a>
+            <a href="kontakt.html" class="nav-link active">Kontakt</a>
+        </div>
+        <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+    </div></nav>
+
+    <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="events.html" class="mobile-link">Events</a>
+        <a href="stats.html" class="mobile-link mobile-link-sub">🏆 Game Statistik</a>
+        <a href="shop.html" class="mobile-link">Shop</a>
+        <a href="kontakt.html" class="mobile-link active">Kontakt</a>
+    </div></div>
 
     <!-- HERO -->
     <section class="page-hero reveal">
         <p class="section-overline">SAG HALLO</p>
         <h1 class="page-hero-title">Schreib uns.</h1>
-        <p class="page-hero-subtitle">Fragen, Feedback oder einfach Hallo sagen – wir freuen uns von dir zu hören.</p>
+        <p class="page-hero-subtitle">Fragen, Feedback oder einfach Hallo sagen - wir freuen uns von dir zu hoeren.</p>
     </section>
 
-    <!-- QUICK CONTACT -->
-    <section class="quick-contact reveal">
-        <a href="https://wa.me/4915XXXXXXXXX" target="_blank" class="btn btn-whatsapp">💬 WhatsApp schreiben</a>
-        <a href="https://instagram.com/mats.lm" target="_blank" class="btn btn-instagram">📸 @mats.lm auf Instagram</a>
-    </section>
-
-    <!-- THE CREW -->
+    <!-- CREW -->
     <section class="crew-section">
         <div class="crew-container">
             <div class="crew-header reveal">
                 <p class="section-overline">DIE WG</p>
-                <h2 class="section-title">Die Köpfe hinter pocci⁴.</h2>
+                <h2 class="section-title">Die Koepfe hinter pocci4.</h2>
             </div>
             <div class="crew-grid">
-                <!-- ANDREI -->
                 <div class="crew-card crew-card-andrei reveal">
                     <div class="crew-avatar">💪</div>
                     <h3 class="crew-name">Andrei</h3>
                     <span class="crew-role">Der Tank</span>
-                    <p class="crew-bio">Breit, stark und immer am Pumpen. Wenn du ihn siehst, weißt du warum er durch jede Tür seitwärts geht. Das Herz der WG – im wahrsten Sinne ein großer Mensch.</p>
+                    <a href="https://instagram.com/andrei.ncu" target="_blank" class="crew-ig">📸 @andrei.ncu</a>
+                    <p class="crew-bio">Breit, stark und immer am Pumpen. Wenn du ihn siehst, weisst du warum er durch jede Tuer seitwaerts geht. Das Herz der WG - im wahrsten Sinne ein grosser Mensch.</p>
                     <div class="crew-traits">
                         <span class="crew-trait">🏋️ Gym Rat</span>
                         <span class="crew-trait">🫂 Gentle Giant</span>
                         <span class="crew-trait">🍗 Meal Prep King</span>
                     </div>
                 </div>
-                <!-- GEORGIE -->
                 <div class="crew-card crew-card-georgie reveal">
                     <div class="crew-avatar">🧠</div>
                     <h3 class="crew-name">Georgie</h3>
-                    <span class="crew-role">Das Köpfchen</span>
-                    <p class="crew-bio">Medizinstudentin mit dem Plan. Wenn sie nicht gerade Leben rettet, organisiert sie den nächsten Spieleabend. Die Strategin, die auch beim Catan immer gewinnt.</p>
+                    <span class="crew-role">Das Koepfchen</span>
+                    <a href="https://instagram.com/georginaamarie" target="_blank" class="crew-ig">📸 @georginaamarie</a>
+                    <p class="crew-bio">Medizinstudentin mit dem Plan. Wenn sie nicht gerade Leben rettet, organisiert sie den naechsten Spieleabend. Die Strategin, die auch beim Catan immer gewinnt.</p>
                     <div class="crew-traits">
                         <span class="crew-trait">🩺 Medizinerin</span>
                         <span class="crew-trait">🎲 Strategie-Queen</span>
                         <span class="crew-trait">📚 Brain</span>
                     </div>
                 </div>
-                <!-- MATS -->
                 <div class="crew-card crew-card-mats reveal">
                     <div class="crew-avatar">🏡</div>
                     <h3 class="crew-name">Mats</h3>
                     <span class="crew-role">Der BWLer</span>
-                    <p class="crew-bio">Real Estate BWLer – könnte auch Justus heißen. Macht die Website, managed die Finanzen und weiß genau was der Quadratmeter in der Poccistraße kostet. Naturally.</p>
+                    <a href="https://instagram.com/mats.lm" target="_blank" class="crew-ig">📸 @mats.lm</a>
+                    <p class="crew-bio">Real Estate BWLer - koennte auch Justus heissen. Macht die Website, managed die Finanzen und weiss genau was der Quadratmeter in der Poccistrasse kostet. Naturally.</p>
                     <div class="crew-traits">
                         <span class="crew-trait">📊 Real Estate</span>
                         <span class="crew-trait">💼 Justus-Energy</span>
@@ -310,82 +304,64 @@
     <!-- CONTACT FORM + INFO -->
     <section class="contact-section">
         <div class="contact-container">
-            <!-- FORM -->
             <div class="contact-form-card reveal">
                 <div class="contact-form-header">
                     <p class="section-overline">NACHRICHT</p>
                     <h2 class="section-title">Schreib uns direkt.</h2>
-                    <p class="contact-form-subtitle">Oder nimm den schnellen Weg über WhatsApp.</p>
+                    <p class="contact-form-subtitle">Oder schreib uns auf Instagram.</p>
                 </div>
                 <form class="c-form" id="contactForm">
                     <div class="c-form-row">
-                        <div class="c-form-group">
-                            <label class="c-form-label">Dein Name</label>
-                            <input type="text" class="c-form-input" placeholder="Max" required>
-                        </div>
-                        <div class="c-form-group">
-                            <label class="c-form-label">Betreff</label>
-                            <input type="text" class="c-form-input" placeholder="z.B. Event-Frage">
-                        </div>
+                        <div class="c-form-group"><label class="c-form-label">Dein Name</label><input type="text" class="c-form-input" placeholder="Max" required></div>
+                        <div class="c-form-group"><label class="c-form-label">Betreff</label><input type="text" class="c-form-input" placeholder="z.B. Event-Frage"></div>
                     </div>
-                    <div class="c-form-group">
-                        <label class="c-form-label">Nachricht</label>
-                        <textarea class="c-form-textarea" placeholder="Was liegt dir auf dem Herzen?" required></textarea>
-                    </div>
+                    <div class="c-form-group"><label class="c-form-label">Nachricht</label><textarea class="c-form-textarea" placeholder="Was liegt dir auf dem Herzen?" required></textarea></div>
                     <button type="submit" class="c-form-submit">Nachricht senden 📨</button>
                 </form>
                 <div class="c-form-success" id="formSuccess">
                     <div class="c-form-success-icon">📬</div>
                     <div class="c-form-success-title">Nachricht gesendet!</div>
-                    <div class="c-form-success-text">Wir melden uns so schnell wie möglich. Versprochen!</div>
+                    <div class="c-form-success-text">Wir melden uns so schnell wie moeglich. Versprochen!</div>
                 </div>
             </div>
 
-            <!-- INFO -->
             <div class="contact-info reveal">
                 <!-- Social -->
                 <div class="social-card">
                     <h3 style="font-size:1rem;font-weight:700;margin-bottom:.25rem;">Schneller Draht 🚀</h3>
                     <p style="font-size:.85rem;color:var(--color-text-light);">Am besten erreichst du uns hier:</p>
                     <div class="social-links">
-                        <a href="https://wa.me/4915XXXXXXXXX" target="_blank" class="social-link social-link-wa">
-                            <div class="social-link-icon">💬</div>
-                            <div class="social-link-info"><div class="social-link-name">WhatsApp</div><div class="social-link-handle">Direkt schreiben</div></div>
-                            <span class="social-link-arrow">→</span>
-                        </a>
-                        <a href="https://instagram.com/mats.lm" target="_blank" class="social-link social-link-ig">
+                        <a href="https://instagram.com/mats.lm" target="_blank" class="social-link">
                             <div class="social-link-icon">📸</div>
-                            <div class="social-link-info"><div class="social-link-name">Instagram</div><div class="social-link-handle">@mats.lm</div></div>
-                            <span class="social-link-arrow">→</span>
+                            <div class="social-link-info"><div class="social-link-name">Mats</div><div class="social-link-handle">@mats.lm</div></div>
+                            <span class="social-link-arrow">&#8594;</span>
+                        </a>
+                        <a href="https://instagram.com/georginaamarie" target="_blank" class="social-link">
+                            <div class="social-link-icon">📸</div>
+                            <div class="social-link-info"><div class="social-link-name">Georgie</div><div class="social-link-handle">@georginaamarie</div></div>
+                            <span class="social-link-arrow">&#8594;</span>
+                        </a>
+                        <a href="https://instagram.com/andrei.ncu" target="_blank" class="social-link">
+                            <div class="social-link-icon">📸</div>
+                            <div class="social-link-info"><div class="social-link-name">Andrei</div><div class="social-link-handle">@andrei.ncu</div></div>
+                            <span class="social-link-arrow">&#8594;</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Location -->
                 <div class="info-card">
                     <div class="info-card-header"><div class="info-card-icon info-card-icon-location">📍</div><h3 class="info-card-title">Adresse</h3></div>
-                    <p class="info-card-text">Poccistraße<br>80336 München</p>
+                    <p class="info-card-text">Poccistrasse<br>80336 Muenchen</p>
                 </div>
 
-                <!-- Transport -->
                 <div class="info-card">
                     <div class="info-card-header"><div class="info-card-icon info-card-icon-transport">🚇</div><h3 class="info-card-title">Anfahrt</h3></div>
-                    <p class="info-card-text">
-                        <strong>U-Bahn:</strong> U3/U6 – Poccistraße (1 Min.)<br>
-                        <strong>Tram:</strong> Linie 16/17 – Poccistraße<br>
-                        <strong>S-Bahn:</strong> S1-S8 – Hauptbahnhof (10 Min. zu Fuß)<br>
-                        <strong>Auto:</strong> Bitte nicht. Nimm die Bahn. 🍻
-                    </p>
+                    <p class="info-card-text"><strong>U-Bahn:</strong> U3/U6 - Poccistrasse (1 Min.)<br><strong>Tram:</strong> Linie 16/17 - Poccistrasse<br><strong>S-Bahn:</strong> S1-S8 - Hauptbahnhof (10 Min. zu Fuss)<br><strong>Auto:</strong> Bitte nicht. Nimm die Bahn. 🍻</p>
                 </div>
 
-                <!-- Best Times -->
                 <div class="info-card">
                     <div class="info-card-header"><div class="info-card-icon info-card-icon-time">🕐</div><h3 class="info-card-title">Beste Zeiten</h3></div>
-                    <p class="info-card-text">
-                        <strong>Events:</strong> Meistens ab 20:00 Uhr<br>
-                        <strong>Antwortzeit:</strong> Innerhalb von 24h<br>
-                        <strong>Spontan vorbei?</strong> Immer vorher schreiben! 📱
-                    </p>
+                    <p class="info-card-text"><strong>Events:</strong> Meistens ab 20:00 Uhr<br><strong>Antwortzeit:</strong> Innerhalb von 24h<br><strong>Spontan vorbei?</strong> Immer vorher schreiben! 📱</p>
                 </div>
             </div>
         </div>
@@ -402,8 +378,8 @@
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.7!2d11.5555!3d48.1285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479ddf5a3a0e3b1d%3A0x0!2sPoccistra%C3%9Fe%2C+80336+M%C3%BCnchen!5e0!3m2!1sde!2sde!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 <div class="map-overlay">
                     <div>
-                        <div class="map-address">📍 Poccistraße, München</div>
-                        <div class="map-address-sub">Direkt an der U3/U6 – Poccistraße</div>
+                        <div class="map-address">📍 Poccistrasse, Muenchen</div>
+                        <div class="map-address-sub">Direkt an der U3/U6 - Poccistrasse</div>
                     </div>
                     <a href="https://www.google.com/maps/dir//Poccistra%C3%9Fe,+80336+M%C3%BCnchen" target="_blank" class="map-directions-btn">🧭 Route planen</a>
                 </div>
@@ -416,140 +392,84 @@
         <div class="faq-container">
             <div class="faq-header reveal">
                 <p class="section-overline">FAQ</p>
-                <h2 class="section-title">Häufige Fragen.</h2>
+                <h2 class="section-title">Haeufige Fragen.</h2>
             </div>
-            <div class="faq-list reveal">
-                <div class="faq-item">
-                    <div class="faq-question"><span>Wer kann zu euren Events kommen?</span><span class="faq-toggle">+</span></div>
-                    <div class="faq-answer"><p class="faq-answer-text">Grundsätzlich jeder! Die meisten Events sind für Freunde und Freunde von Freunden. Wenn du uns noch nicht kennst, schreib uns einfach vorher kurz – wir sind super offen. Je mehr, desto besser! 🎉</p></div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question"><span>Muss man Eintritt zahlen?</span><span class="faq-toggle">+</span></div>
-                    <div class="faq-answer"><p class="faq-answer-text">Die meisten Events sind kostenlos. Bei größeren Partys gibt's manchmal einen kleinen Beitrag für Drinks und Deko – aber das steht immer vorher beim Event dabei. Kein Stress!</p></div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question"><span>Was soll ich mitbringen?</span><span class="faq-toggle">+</span></div>
-                    <div class="faq-answer"><p class="faq-answer-text">Gute Laune! Und wenn du willst, bring was zu trinken mit. Bei Spieleabenden sind eigene Spiele natürlich auch immer willkommen. Essen organisieren wir meistens zusammen.</p></div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question"><span>Wie komme ich am besten hin?</span><span class="faq-toggle">+</span></div>
-                    <div class="faq-answer"><p class="faq-answer-text">Am besten mit der U-Bahn: U3 oder U6, Station Poccistraße. Ihr steht quasi vor unserer Tür. Bitte NICHT mit dem Auto kommen – Parkplätze gibt's hier keine und nach ein paar Bier fahrt ihr eh nicht mehr. 🍻</p></div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question"><span>Kann ich ein Event vorschlagen?</span><span class="faq-toggle">+</span></div>
-                    <div class="faq-answer"><p class="faq-answer-text">Aber klar! Geh auf unsere <a href="events.html#vorschlag" style="color:var(--color-primary);font-weight:700;">Events-Seite</a> und füll das Formular aus. Wir prüfen jeden Vorschlag und melden uns. Die besten Ideen werden umgesetzt!</p></div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question"><span>Bis wie viel Uhr gehen eure Events?</span><span class="faq-toggle">+</span></div>
-                    <div class="faq-answer"><p class="faq-answer-text">Spieleabende meistens bis Mitternacht, Partys... naja, frag lieber nicht die Nachbarn. 😅 Wir versuchen ab 23 Uhr die Lautstärke runterzudrehen – aber Spaß haben wir trotzdem bis zum Schluss!</p></div>
-                </div>
+            <div class="faq-list reveal" id="faqList">
+                <div class="faq-item"><div class="faq-question"><span>Wer kann zu euren Events kommen?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p class="faq-answer-text">Grundsaetzlich jeder! Die meisten Events sind fuer Freunde und Freunde von Freunden. Wenn du uns noch nicht kennst, schreib uns einfach vorher kurz - wir sind super offen. Je mehr, desto besser! 🎉</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>Muss man Eintritt zahlen?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p class="faq-answer-text">Die meisten Events sind kostenlos. Bei groesseren Partys gibt es manchmal einen kleinen Beitrag fuer Drinks und Deko - aber das steht immer vorher beim Event dabei. Kein Stress!</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>Was soll ich mitbringen?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p class="faq-answer-text">Gute Laune! Und wenn du willst, bring was zu trinken mit. Bei Spieleabenden sind eigene Spiele natuerlich auch immer willkommen. Essen organisieren wir meistens zusammen.</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>Wie komme ich am besten hin?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p class="faq-answer-text">Am besten mit der U-Bahn: U3 oder U6, Station Poccistrasse. Ihr steht quasi vor unserer Tuer. Bitte NICHT mit dem Auto kommen - Parkplaetze gibt es hier keine und nach ein paar Bier fahrt ihr eh nicht mehr. 🍻</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>Kann ich ein Event vorschlagen?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p class="faq-answer-text">Aber klar! Geh auf unsere <a href="events.html#vorschlag" style="color:var(--color-primary);font-weight:700;">Events-Seite</a> und fuell das Formular aus. Wir pruefen jeden Vorschlag und melden uns. Die besten Ideen werden umgesetzt!</p></div></div>
+                <div class="faq-item"><div class="faq-question"><span>Bis wie viel Uhr gehen eure Events?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><p class="faq-answer-text">Spieleabende meistens bis Mitternacht, Partys... naja, frag lieber nicht die Nachbarn. 😅 Wir versuchen ab 23 Uhr die Lautstaerke runterzudrehen - aber Spass haben wir trotzdem bis zum Schluss!</p></div></div>
             </div>
         </div>
     </section>
 
-    <!-- HOUSE RULES -->
+    <!-- RULES -->
     <section class="rules-section">
         <div class="rules-container reveal">
             <div class="rules-card">
                 <div class="rules-header">
                     <p class="section-overline">FYI</p>
                     <h2 class="section-title" style="font-size:clamp(1.5rem,4vw,2.2rem)">Hausregeln.</h2>
-                    <p style="color:var(--color-text-light);font-size:.9rem;margin-top:.5rem;">Damit alle Spaß haben. Ist eigentlich common sense.</p>
+                    <p style="color:var(--color-text-light);font-size:.9rem;margin-top:.5rem;">Damit alle Spass haben. Ist eigentlich common sense.</p>
                 </div>
                 <div class="rules-grid">
-                    <div class="rule-item">
-                        <span class="rule-emoji">🤝</span>
-                        <p class="rule-text"><strong>Respekt.</strong> Gegenüber allen. Keine Ausnahmen. Wir sind hier um Leute zu mobben.</p>
-                    </div>
-                    <div class="rule-item">
-                        <span class="rule-emoji">🔇</span>
-                        <p class="rule-text"><strong>Lautstärke.</strong> Ab 23 Uhr drehen wir durch. Die Nachbarn wollen auch schlafen.</p>
-                    </div>
-                    <div class="rule-item">
-                        <span class="rule-emoji">🚭</span>
-                        <p class="rule-text"><strong>Rauchen nur draußen.</strong> Balkon ist dafür da. Drinnen bitte nicht außer du heißt Mats.</p>
-                    </div>
-                    <div class="rule-item">
-                        <span class="rule-emoji">🧹</span>
-                        <p class="rule-text"><strong>Aufräumen.</strong> Wer sein Glas mitnimmt ist ein Held. Wer hilft aufräumen eine Legende oder sei wie Mats.</p>
-                    </div>
-                    <div class="rule-item">
-                        <span class="rule-emoji">🍺</span>
-                        <p class="rule-text"><strong>Kenn dein Limit.</strong> Trinkt was ihr wollt, aber bitte lasst es komplett eskalieren</p>
-                    </div>
-                    <div class="rule-item">
-                        <span class="rule-emoji">📱</span>
-                        <p class="rule-text"><strong>Vorher anmelden.</strong> Kein Grund. Komm rum.</p>
-                    </div>
+                    <div class="rule-item"><span class="rule-emoji">🤝</span><p class="rule-text"><strong>Respekt.</strong> Gegenueber allen. Keine Ausnahmen. Wir sind hier zum Spass haben.</p></div>
+                    <div class="rule-item"><span class="rule-emoji">🔇</span><p class="rule-text"><strong>Lautstaerke.</strong> Ab 23 Uhr drehen wir runter. Die Nachbarn wollen auch schlafen.</p></div>
+                    <div class="rule-item"><span class="rule-emoji">🚭</span><p class="rule-text"><strong>Rauchen nur draussen.</strong> Balkon ist dafuer da. Drinnen bitte nicht.</p></div>
+                    <div class="rule-item"><span class="rule-emoji">🧹</span><p class="rule-text"><strong>Aufraeumen.</strong> Wer sein Glas mitnimmt ist ein Held. Wer hilft aufraeumen eine Legende.</p></div>
+                    <div class="rule-item"><span class="rule-emoji">🍺</span><p class="rule-text"><strong>Kenn dein Limit.</strong> Trinkt was ihr wollt, aber bitte verantwortungsvoll.</p></div>
+                    <div class="rule-item"><span class="rule-emoji">📱</span><p class="rule-text"><strong>Vorher anmelden.</strong> Schreib uns kurz bevor du spontan vorbeischaust.</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci⁴" class="footer-logo"><p class="footer-tagline">Poccistraße, München</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="events.html#vorschlag">Event vorschlagen</a></div><div class="footer-col"><h4>Connect</h4><a href="https://wa.me/4915XXXXXXXXX" target="_blank">WhatsApp</a><a href="https://instagram.com/mats.lm" target="_blank">Instagram</a></div></div></div><div class="footer-bottom"><p>© 2025 pocci⁴ – Mit Liebe aus der Poccistraße.</p></div></div></footer>
+    <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a><a href="events.html#vorschlag">Event vorschlagen</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p></div></div></footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (function(){
         // NAV
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
-        const hamburger = document.getElementById('hamburger'), mobileMenu = document.getElementById('mobileMenu');
-        hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileMenu.classList.toggle('active'); document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : ''; });
-        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => { hamburger.classList.remove('active'); mobileMenu.classList.remove('active'); document.body.style.overflow = ''; }));
+        var navbar=document.getElementById("navbar");
+        window.addEventListener("scroll",function(){navbar.classList.toggle("scrolled",window.scrollY>50);});
+        var hamburger=document.getElementById("hamburger"),mobileMenu=document.getElementById("mobileMenu");
+        hamburger.addEventListener("click",function(){hamburger.classList.toggle("active");mobileMenu.classList.toggle("active");document.body.style.overflow=mobileMenu.classList.contains("active")?"hidden":"";});
+        var ml=document.querySelectorAll(".mobile-link");for(var i=0;i<ml.length;i++)ml[i].addEventListener("click",function(){hamburger.classList.remove("active");mobileMenu.classList.remove("active");document.body.style.overflow="";});
 
-        // FAQ ACCORDION
-        document.querySelectorAll('.faq-question').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                const wasOpen = item.classList.contains('open');
-                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-                if (!wasOpen) item.classList.add('open');
+        var dd=document.getElementById("eventsDropdown"),ddT=null;
+        if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},2000);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
+
+        // FAQ
+        var faqQuestions=document.querySelectorAll(".faq-question");
+        for(var i=0;i<faqQuestions.length;i++){
+            faqQuestions[i].addEventListener("click",function(){
+                var item=this.parentElement;
+                var wasOpen=item.classList.contains("open");
+                var allItems=document.querySelectorAll(".faq-item");
+                for(var j=0;j<allItems.length;j++)allItems[j].classList.remove("open");
+                if(!wasOpen)item.classList.add("open");
             });
-        });
+        }
 
-        // CONTACT FORM
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            this.style.display = 'none';
-            document.getElementById('formSuccess').classList.add('show');
+        // FORM
+        document.getElementById("contactForm").addEventListener("submit",function(e){
+            e.preventDefault();this.style.display="none";
+            document.getElementById("formSuccess").classList.add("show");
             launchConfetti();
         });
 
         // CONFETTI
-        function launchConfetti() {
-            const c = document.getElementById('confettiContainer');
-            const colors = ['#C03A2B','#E8501E','#C4A882','#457B9D','#FF6B6B','#FFD93D','#6BCB77'];
-            for (let i = 0; i < 50; i++) {
-                const p = document.createElement('div');
-                const sz = Math.random() * 8 + 5;
-                p.style.cssText = `position:absolute;left:${Math.random()*100}%;top:-20px;width:${sz}px;height:${Math.random()>.5?sz:sz*2.5}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'3px'};opacity:1;animation:cFall ${Math.random()*2+2}s ease-out forwards;animation-delay:${Math.random()*.3}s;pointer-events:none;`;
-                c.appendChild(p);
-                setTimeout(() => p.remove(), 4000);
-            }
-        }
-        const cs = document.createElement('style');
-        cs.textContent = '@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}';
-        document.head.appendChild(cs);
+        function launchConfetti(){var c=document.getElementById("confettiContainer");var colors=["#C03A2B","#E8501E","#C4A882","#457B9D","#FF6B6B","#FFD93D","#6BCB77"];for(var i=0;i<50;i++){var p=document.createElement("div");var sz=Math.random()*8+5;var isCir=Math.random()>.5;p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"3px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.3)+"s;pointer-events:none;";c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4000);})(p);}}
+        var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";document.head.appendChild(cs);
 
         // REVEAL
-        const ro = new IntersectionObserver((entries) => {
-            entries.forEach((e, i) => {
-                if (e.isIntersecting) {
-                    setTimeout(() => e.target.classList.add('visible'), i * 80);
-                    ro.unobserve(e.target);
-                }
-            });
-        }, { threshold: .1 });
-        document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+        var ro=new IntersectionObserver(function(entries){for(var i=0;i<entries.length;i++){if(entries[i].isIntersecting){(function(el,idx){setTimeout(function(){el.classList.add("visible");},idx*80);})(entries[i].target,i);ro.unobserve(entries[i].target);}}},{threshold:.1});
+        var revEls=document.querySelectorAll(".reveal");for(var i=0;i<revEls.length;i++)ro.observe(revEls[i]);
 
         // PARALLAX
-        window.addEventListener('scroll', () => {
-            document.querySelectorAll('.bg-shape').forEach((s, i) => {
-                s.style.transform = `translateY(${window.scrollY*(i+1)*.015}px) rotate(${window.scrollY*.01*(i%2===0?1:-1)}deg)`;
-            });
-        });
-    });
+        window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";}});
+    })();
     </script>
 </body>
 </html>
