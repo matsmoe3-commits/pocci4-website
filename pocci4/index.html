@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>pocci⁴ – Partys. Spiele. Drinks. Repeat.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
             --color-sand: #C4A882;
             --color-border: #E0D6CC;
             --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --nav-height: 72px;
+            --nav-height: 80px;
             --section-padding: 120px;
             --container-width: 1240px;
             --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -31,15 +31,31 @@
             --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; }
-        body { font-family: var(--font-main); background-color: var(--color-bg); color: var(--color-text); line-height: 1.6; overflow-x: hidden; }
+        html {
+            scroll-behavior: smooth; font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        body {
+            font-family: var(--font-main); background-color: var(--color-bg);
+            color: var(--color-text); line-height: 1.6;
+            overflow-x: hidden; width: 100%;
+            min-height: 100vh;
+        }
         a { text-decoration: none; color: inherit; transition: var(--transition-fast); }
         img { max-width: 100%; height: auto; display: block; }
 
-        /* ===== ANIMATED BACKGROUND - RANDOM SHAPES ===== */
+        /* ===== FIX MOBILE WHITE BAR ===== */
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== ANIMATED BACKGROUND - MORPHING SHAPES ===== */
         .animated-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; overflow: hidden;
+            z-index: -1; overflow: hidden; pointer-events: none;
         }
         .bg-shape {
             position: absolute; filter: blur(100px); opacity: 0.45;
@@ -119,7 +135,7 @@
             height: 100%; display: flex; align-items: center; justify-content: space-between;
         }
         .nav-logo { display: flex; align-items: center; z-index: 1001; }
-        .nav-logo img { height: 44px; width: auto; }
+        .nav-logo img { height: 56px; width: auto; }
         .nav-links {
             display: flex; align-items: center; gap: 0.5rem; background: var(--color-white);
             padding: 6px; border-radius: 50px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -166,21 +182,23 @@
 
         /* ===== HERO ===== */
         .hero {
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: calc(var(--nav-height) + 2rem) 2rem 4rem; position: relative;
+            min-height: 100vh; min-height: 100dvh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: calc(var(--nav-height) + 2rem) 1.25rem 4rem;
+            position: relative;
         }
-        .hero-content { max-width: 800px; }
+        .hero-content { max-width: 800px; width: 100%; }
         .hero-overline {
             font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
             color: var(--color-primary); margin-bottom: 1.5rem; text-transform: uppercase;
         }
         .hero-title {
-            font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 700; line-height: 1.05;
+            font-size: clamp(2.2rem, 7vw, 5rem); font-weight: 700; line-height: 1.05;
             letter-spacing: -0.04em; color: var(--color-text); margin-bottom: 1.5rem;
         }
         .hero-highlight { color: var(--color-primary); font-style: italic; }
         .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.25rem); color: var(--color-text-light);
+            font-size: clamp(0.95rem, 2vw, 1.25rem); color: var(--color-text-light);
             font-weight: 400; margin-bottom: 2.5rem; letter-spacing: -0.01em;
         }
         .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
@@ -223,12 +241,12 @@
             color: var(--color-primary); text-transform: uppercase; margin-bottom: 1rem;
         }
         .section-title {
-            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700;
+            font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 700;
             line-height: 1.1; letter-spacing: -0.03em; color: var(--color-text);
         }
 
         /* ===== INTERACTIVE EXPAND CARDS ===== */
-        .cards-section { padding: var(--section-padding) 2rem; }
+        .cards-section { padding: var(--section-padding) 1.25rem; overflow: hidden; }
         .cards-header {
             max-width: var(--container-width); margin: 0 auto 4rem; text-align: center;
         }
@@ -241,7 +259,7 @@
             display: flex; gap: 1rem; height: 500px;
         }
         .expand-card {
-            flex: 1; min-width: 80px; border-radius: 24px; position: relative;
+            flex: 1; min-width: 60px; border-radius: 24px; position: relative;
             overflow: hidden; cursor: pointer;
             transition: flex 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -264,14 +282,14 @@
         }
         .expand-card:hover .expand-card-collapsed { opacity: 0; pointer-events: none; }
         .expand-card-number {
-            font-size: 1.5rem; font-weight: 800; color: rgba(255,255,255,0.9);
-            width: 50px; height: 50px; border-radius: 50%;
+            font-size: 1.2rem; font-weight: 800; color: rgba(255,255,255,0.9);
+            width: 44px; height: 44px; border-radius: 50%;
             background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
             display: flex; align-items: center; justify-content: center;
             border: 1.5px solid rgba(255,255,255,0.3);
         }
         .expand-card-emoji-small {
-            font-size: 2.5rem; animation: emojiPulse 3s ease-in-out infinite;
+            font-size: 2rem; animation: emojiPulse 3s ease-in-out infinite;
         }
         @keyframes emojiPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
@@ -283,9 +301,9 @@
             transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s; z-index: 2;
         }
         .expand-card:hover .expand-card-expanded { opacity: 1; transform: translateY(0); }
-        .expand-card-emoji-big { font-size: 4rem; margin-bottom: 0.5rem; }
-        .expand-card-title { font-size: 1.8rem; font-weight: 800; color: white; letter-spacing: -0.03em; }
-        .expand-card-desc { font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.5; max-width: 300px; }
+        .expand-card-emoji-big { font-size: 3.5rem; margin-bottom: 0.5rem; }
+        .expand-card-title { font-size: 1.6rem; font-weight: 800; color: white; letter-spacing: -0.03em; }
+        .expand-card-desc { font-size: 0.95rem; color: rgba(255,255,255,0.85); line-height: 1.5; max-width: 280px; }
         .expand-card-link {
             margin-top: 0.5rem; padding: 10px 24px; border-radius: 50px;
             background: rgba(255,255,255,0.2); color: white; font-weight: 600;
@@ -295,13 +313,14 @@
         .expand-card-link:hover { background: rgba(255,255,255,0.35); }
 
         /* ===== COUNTDOWN ===== */
-        .countdown-section { padding: var(--section-padding) 2rem; }
+        .countdown-section { padding: var(--section-padding) 1.25rem; overflow: hidden; }
         .countdown-container {
             max-width: 700px; margin: 0 auto; text-align: center;
             background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
-            border-radius: 24px; padding: 4rem 3rem;
+            border-radius: 24px; padding: 3.5rem 1.5rem;
             box-shadow: 0 4px 30px rgba(0,0,0,0.04);
             border: 1px solid rgba(255,255,255,0.5);
+            width: 100%;
         }
         .countdown-emoji {
             font-size: 3rem; margin-bottom: 1rem;
@@ -313,29 +332,44 @@
             75% { transform: rotate(10deg) scale(1.1); }
         }
         .countdown-event-name {
-            font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 900;
+            font-size: clamp(1.3rem, 4vw, 2.5rem); font-weight: 900;
             letter-spacing: -0.03em; margin: 0.5rem 0;
+            word-wrap: break-word;
         }
-        .countdown-date { font-size: 1rem; color: var(--color-text-light); margin-bottom: 2.5rem; }
-        .countdown-grid { display: flex; align-items: center; justify-content: center; gap: 1rem; }
-        .countdown-item { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
+        .countdown-date { font-size: clamp(0.85rem, 2vw, 1rem); color: var(--color-text-light); margin-bottom: 2rem; }
+        .countdown-grid {
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.5rem; flex-wrap: nowrap; width: 100%;
+        }
+        .countdown-item {
+            display: flex; flex-direction: column; align-items: center;
+            min-width: 0; flex: 1; max-width: 100px;
+        }
         .countdown-number {
-            font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900;
+            font-size: clamp(1.8rem, 5vw, 4rem); font-weight: 900;
             letter-spacing: -0.04em; color: var(--color-primary); line-height: 1;
             transition: var(--transition-fast);
         }
         .countdown-number.tick { animation: tickPop 0.3s ease; }
         @keyframes tickPop { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
         .countdown-label {
-            font-size: 0.75rem; color: var(--color-gray); text-transform: uppercase;
-            letter-spacing: 0.1em; margin-top: 0.25rem;
+            font-size: clamp(0.6rem, 1.5vw, 0.75rem); color: var(--color-gray);
+            text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.25rem;
         }
-        .countdown-separator { font-size: 2.5rem; font-weight: 300; color: var(--color-border); margin-bottom: 1rem; }
+        .countdown-separator {
+            font-size: clamp(1.2rem, 3vw, 2.5rem); font-weight: 300;
+            color: var(--color-border); margin-bottom: 1rem; flex-shrink: 0;
+        }
+        .countdown-subtext {
+            margin-top: 1.5rem; color: var(--color-text-light);
+            font-size: clamp(0.8rem, 2vw, 0.95rem); line-height: 1.6;
+        }
 
         /* ===== MARQUEE ===== */
         .marquee-section {
             padding: 2rem 0; overflow: hidden;
             border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);
+            width: 100%;
         }
         .marquee-track { display: flex; width: max-content; animation: marquee 25s linear infinite; }
         .marquee-text {
@@ -345,7 +379,7 @@
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* ===== ABOUT + PHOTO GRID ===== */
-        .about-section { padding: var(--section-padding) 2rem; }
+        .about-section { padding: var(--section-padding) 1.25rem; overflow: hidden; }
         .about-container {
             max-width: var(--container-width); margin: 0 auto;
             display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
@@ -371,26 +405,26 @@
         .photo-item-large { grid-column: span 2; grid-row: span 2; }
 
         /* ===== CTA ===== */
-        .cta-section { padding: var(--section-padding) 2rem; }
+        .cta-section { padding: var(--section-padding) 1.25rem; overflow: hidden; }
         .cta-container {
             max-width: 800px; margin: 0 auto; text-align: center;
             background: var(--color-text); color: var(--color-white);
-            border-radius: 24px; padding: 4rem 3rem;
+            border-radius: 24px; padding: 4rem 2rem;
         }
-        .cta-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; }
-        .cta-text { font-size: 1.05rem; color: var(--color-gray); margin-bottom: 2rem; }
+        .cta-title { font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; }
+        .cta-text { font-size: clamp(0.9rem, 2vw, 1.05rem); color: var(--color-gray); margin-bottom: 2rem; }
         .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         .cta-section .btn-outline { color: var(--color-white); border-color: rgba(255,255,255,0.3); }
         .cta-section .btn-outline:hover { background: var(--color-white); color: var(--color-text); border-color: var(--color-white); }
 
         /* ===== FOOTER ===== */
-        .footer { background: var(--color-text); color: var(--color-white); padding: 4rem 2rem 2rem; }
+        .footer { background: var(--color-text); color: var(--color-white); padding: 4rem 1.25rem 2rem; }
         .footer-container { max-width: var(--container-width); margin: 0 auto; }
         .footer-top {
             display: grid; grid-template-columns: 1fr 2fr; gap: 4rem;
             padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .footer-logo { height: 36px; width: auto; filter: brightness(0) invert(1); margin-bottom: 0.75rem; }
+        .footer-logo { height: 44px; width: auto; filter: brightness(0) invert(1); margin-bottom: 0.75rem; }
         .footer-tagline { font-size: 0.85rem; color: var(--color-gray); }
         .footer-links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
         .footer-col h4 {
@@ -412,49 +446,78 @@
         }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        /* ===== RESPONSIVE ===== */
+        /* ===== RESPONSIVE - TABLET ===== */
         @media (max-width: 1024px) {
             :root { --section-padding: 80px; }
             .expand-cards { height: 400px; }
             .about-container { grid-template-columns: 1fr; gap: 3rem; }
             .footer-top { grid-template-columns: 1fr; gap: 3rem; }
         }
+
+        /* ===== RESPONSIVE - MOBILE ===== */
         @media (max-width: 768px) {
-            :root { --section-padding: 60px; --nav-height: 64px; }
+            :root { --section-padding: 60px; --nav-height: 68px; }
             .nav-links { display: none; }
             .hamburger { display: flex; }
-            .nav-logo img { height: 36px; }
-            .hero { text-align: left; align-items: flex-end; padding-bottom: 6rem; }
+            .nav-logo img { height: 44px; }
+
+            .hero {
+                text-align: left; align-items: flex-end; padding-bottom: 5rem;
+                padding-left: 1.25rem; padding-right: 1.25rem;
+            }
             .hero-buttons { justify-content: flex-start; }
+
             .expand-cards { height: auto; flex-direction: column; gap: 0.75rem; }
-            .expand-card { min-width: 100%; height: 80px; flex: none; transition: height 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
-            .expand-card:hover, .expand-card.mobile-active { height: 300px; flex: none; }
+            .expand-card {
+                min-width: 100%; height: 80px; flex: none;
+                transition: height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .expand-card:hover, .expand-card.mobile-active { height: 280px; flex: none; }
             .expand-card-collapsed { flex-direction: row; gap: 1rem; }
-            .expand-card-number { width: 40px; height: 40px; font-size: 1.1rem; }
-            .expand-card-emoji-small { font-size: 2rem; }
-            .countdown-container { padding: 3rem 1.5rem; }
-            .countdown-grid { gap: 0.5rem; }
-            .countdown-separator { font-size: 1.5rem; }
-            .cta-container { padding: 3rem 1.5rem; }
+            .expand-card-number { width: 38px; height: 38px; font-size: 1rem; }
+            .expand-card-emoji-small { font-size: 1.8rem; }
+
+            .countdown-container { padding: 2.5rem 1.25rem; }
+            .countdown-grid { gap: 0.25rem; }
+
+            .cta-container { padding: 3rem 1.25rem; }
             .footer-links-grid { grid-template-columns: 1fr 1fr; }
             .hero-scroll-indicator { display: none; }
             .photo-grid { grid-template-rows: repeat(3, 100px); }
         }
+
+        /* ===== RESPONSIVE - SMALL MOBILE ===== */
         @media (max-width: 480px) {
-            .hero-title { font-size: 2.2rem; }
-            .section-title { font-size: 1.8rem; }
+            .nav-logo img { height: 38px; }
+            .hero-title { font-size: 2rem; }
+            .section-title { font-size: 1.6rem; }
             .btn { padding: 12px 24px; font-size: 0.85rem; width: 100%; }
             .hero-buttons { flex-direction: column; width: 100%; }
             .cta-buttons { flex-direction: column; }
             .footer-links-grid { grid-template-columns: 1fr; }
             .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(5, 100px); }
             .photo-item-large { grid-column: span 2; grid-row: span 1; }
+            .countdown-number { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+            .countdown-separator { font-size: 1rem; }
+            .expand-card-expanded { padding: 1.5rem; }
+            .expand-card-title { font-size: 1.3rem; }
+            .expand-card-desc { font-size: 0.85rem; }
+            .expand-card-emoji-big { font-size: 2.5rem; }
+        }
+
+        /* ===== RESPONSIVE - VERY SMALL ===== */
+        @media (max-width: 360px) {
+            .nav-logo img { height: 34px; }
+            .countdown-number { font-size: 1.3rem; }
+            .countdown-label { font-size: 0.55rem; }
+            .countdown-separator { font-size: 0.9rem; margin-bottom: 0.5rem; }
+            .hero-title { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ============ ANIMATED BACKGROUND - MORPHING SHAPES ============ -->
+    <!-- ============ ANIMATED BACKGROUND ============ -->
     <div class="animated-bg">
         <div class="bg-shape bg-shape-1"></div>
         <div class="bg-shape bg-shape-2"></div>
@@ -544,7 +607,7 @@
                 <div class="expand-card-expanded">
                     <div class="expand-card-emoji-big">🎲</div>
                     <div class="expand-card-title">Spieleabende</div>
-                    <div class="expand-card-desc">Von Catan bis Poker – bei uns wird gezockt bis einer weint. Verlierer zahlt die nächste Runde.</div>
+                    <div class="expand-card-desc">Von Catan bis Poker – bei uns wird gezockt bis einer weint.</div>
                 </div>
             </div>
             <div class="expand-card expand-card-3">
@@ -568,7 +631,7 @@
                 <div class="expand-card-expanded">
                     <div class="expand-card-emoji-big">🎬</div>
                     <div class="expand-card-title">Filmabende</div>
-                    <div class="expand-card-desc">Beamer an, Lichter aus, Popcorn raus. Kino-Feeling mitten in der WG.</div>
+                    <div class="expand-card-desc">Beamer an, Lichter aus, Popcorn raus. Kino-Feeling in der WG.</div>
                 </div>
             </div>
             <div class="expand-card expand-card-5">
@@ -580,7 +643,7 @@
                 <div class="expand-card-expanded">
                     <div class="expand-card-emoji-big">💡</div>
                     <div class="expand-card-title">Dein Event?</div>
-                    <div class="expand-card-desc">Dir fehlt was? Schlag uns dein Traumevent vor – wir machen es möglich!</div>
+                    <div class="expand-card-desc">Dir fehlt was? Schlag uns dein Traumevent vor!</div>
                     <a href="events.html#vorschlag" class="expand-card-link">Event vorschlagen →</a>
                 </div>
             </div>
@@ -615,7 +678,7 @@
                     <span class="countdown-label">Sekunden</span>
                 </div>
             </div>
-            <p style="margin-top: 1.5rem; color: var(--color-text-light); font-size: 0.95rem;">
+            <p class="countdown-subtext">
                 Ein Jahr in der Poccistraße – das muss gefeiert werden!<br>
                 Drinks, Musik & die besten Leute. Sei dabei! 🍾
             </p>
@@ -640,8 +703,7 @@
                 <p class="about-description">
                     Wir sind drei alte Schulfreunde, die zusammen in der Poccistraße in München wohnen.
                     Was als WG anfing, wurde schnell zum Treffpunkt für Freunde, Freunde von Freunden
-                    und alle, die Bock auf gute Abende haben. Ob Hausparty, Spieleabend oder einfach
-                    nur zusammen abhängen – bei uns ist jeder willkommen.
+                    und alle, die Bock auf gute Abende haben.
                 </p>
                 <a href="kontakt.html" class="btn btn-secondary">Schreib uns</a>
             </div>
@@ -747,7 +809,7 @@
             }
 
             // ===== MOBILE: TAP TO EXPAND CARDS =====
-            if (window.innerWidth <= 768) {
+            if ('ontouchstart' in window || window.innerWidth <= 768) {
                 document.querySelectorAll('.expand-card').forEach(card => {
                     card.addEventListener('click', () => {
                         const wasActive = card.classList.contains('mobile-active');
@@ -772,9 +834,9 @@
 
                 if (diff <= 0) {
                     daysEl.textContent = '🎉';
-                    hoursEl.textContent = 'Jetzt';
-                    minutesEl.textContent = "geht's";
-                    secondsEl.textContent = 'los!';
+                    hoursEl.textContent = '00';
+                    minutesEl.textContent = '00';
+                    secondsEl.textContent = '00';
                     return;
                 }
 
