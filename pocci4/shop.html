@@ -14,6 +14,7 @@
         html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden}a{text-decoration:none;color:inherit;transition:var(--transition-fast)}img{max-width:100%;height:auto;display:block}
         .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}.bg-shape{position:absolute;filter:blur(100px);opacity:.45}.bg-shape-1{width:700px;height:500px;background:#E0CEBB;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}.bg-shape-2{width:550px;height:650px;background:#D4C0AD;bottom:-20%;right:-10%;animation:m2 25s ease-in-out infinite}.bg-shape-3{width:450px;height:400px;background:#C9B8A5;top:35%;left:45%;animation:m3 22s ease-in-out infinite}@keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}@keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}@keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}.navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}.nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}.nav-logo{display:flex;align-items:center;z-index:1001}.nav-logo img{height:56px}.nav-right{display:flex;align-items:center;gap:1rem}.nav-links{display:flex;align-items:center;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 1px 3px rgba(0,0,0,.04)}.nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}.nav-link:hover{color:var(--color-text);background:var(--color-bg)}.nav-link.active{background:var(--color-text);color:var(--color-white)}.nav-link-dropdown{position:relative}.nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-5px);background:var(--color-white);border-radius:16px;padding:8px;box-shadow:0 10px 40px rgba(0,0,0,.1);border:1px solid var(--color-border);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;min-width:180px;z-index:100}.nav-link-dropdown.dropdown-visible .nav-dropdown{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}.nav-dropdown-item{display:flex;align-items:center;gap:.6rem;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);white-space:nowrap}.nav-dropdown-item:hover{background:var(--color-bg);color:var(--color-primary)}.nav-dropdown-item span{font-size:1rem}
+        .nav-right{display:flex;align-items:center;gap:.5rem}
         .nav-cart-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--color-border);background:var(--color-white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:var(--transition-fast);position:relative}.nav-cart-btn:hover{border-color:var(--color-text);background:var(--color-text);color:white}.cart-badge{position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--color-primary);color:#fff;font-size:.6rem;font-weight:800;display:none;align-items:center;justify-content:center;border:2px solid var(--color-bg)}.cart-badge.show{display:flex}
         .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}.hamburger-line{width:24px;height:2px;background:var(--color-text);border-radius:2px;transition:var(--transition-smooth);transform-origin:center}.hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.hamburger.active .hamburger-line:nth-child(2){opacity:0}.hamburger.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
         .mobile-menu{position:fixed;inset:0;background:rgba(245,240,235,.98);z-index:999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth)}.mobile-menu.active{opacity:1;pointer-events:all}.mobile-menu-content{display:flex;flex-direction:column;align-items:center;gap:1.5rem}.mobile-link{font-size:2rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);transform:translateY(20px);opacity:0}.mobile-menu.active .mobile-link{transform:translateY(0);opacity:1}.mobile-menu.active .mobile-link:nth-child(1){transition-delay:.1s}.mobile-menu.active .mobile-link:nth-child(2){transition-delay:.15s}.mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s}.mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}.mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}.mobile-link:hover,.mobile-link.active{color:var(--color-primary)}.mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
@@ -28,26 +29,38 @@
         @media(max-width:1024px){:root{--section-padding:80px}.footer-top{grid-template-columns:1fr;gap:3rem}}
         @media(max-width:768px){:root{--section-padding:60px;--nav-height:68px}.nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}.products-grid{grid-template-columns:1fr}.footer-links-grid{grid-template-columns:1fr 1fr}.nav-dropdown{display:none!important}.cart-panel{max-width:100vw;width:100%}}
         @media(max-width:480px){.nav-logo img{height:38px}.page-hero-title{font-size:2rem}.footer-links-grid{grid-template-columns:1fr}.product-image{height:180px}.product-emoji{font-size:4rem}.nav-cart-btn{width:36px;height:36px;font-size:.85rem}}
-    </style>
+    .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
+.admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
+.admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+.admin-modal-overlay.active{display:flex}
+.admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+.admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
+.admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
+.admin-modal input:focus{border-color:var(--color-primary)}
+.admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
+.admin-modal-btns .btn{flex:1;padding:10px 16px;font-size:.85rem}
+.admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
+</style>
 </head>
 <body>
     <!-- HTML bleibt EXAKT gleich wie dein Original -->
     <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div></div>
     <div class="confetti-container" id="confettiContainer"></div>
 
-    <nav class="navbar" id="navbar"><div class="nav-container">
-        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
-        <div class="nav-right">
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
-                <a href="shop.html" class="nav-link active">Shop</a>
-                <a href="kontakt.html" class="nav-link">Kontakt</a>
-            </div>
-            <button class="nav-cart-btn" id="cartBtn">🛒<span class="cart-badge" id="cartBadge">0</span></button>
-            <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+<nav class="navbar" id="navbar"><div class="nav-container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
+            <a href="shop.html" class="nav-link active">Shop</a>
+            <a href="kontakt.html" class="nav-link">Kontakt</a>
         </div>
-    </div></nav>
+        <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
+        <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+    </div>
+</div></nav>
 
     <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
         <a href="index.html" class="mobile-link">Home</a>
@@ -189,5 +202,65 @@
         window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";}});
     })();
     </script>
+    <!-- ADMIN MODAL -->
+<div class="admin-modal-overlay" id="adminOverlay">
+    <div class="admin-modal">
+        <h3>🔐 Admin Zugang</h3>
+        <p>Passwort eingeben um zum Admin Panel zu gelangen.</p>
+        <input type="password" id="adminPwInput" placeholder="Passwort">
+        <div class="admin-modal-btns">
+            <button class="btn btn-outline" id="adminCancel">Abbrechen</button>
+            <button class="btn btn-primary" id="adminSubmit">Login</button>
+        </div>
+        <div class="admin-error" id="adminError">Falsches Passwort!</div>
+    </div>
+</div>
+<script>
+(function(){
+    var ADMIN_PW = "pocci4admin";
+    var trigger = document.getElementById("adminTrigger");
+    var overlay = document.getElementById("adminOverlay");
+    var input = document.getElementById("adminPwInput");
+    var cancel = document.getElementById("adminCancel");
+    var submit = document.getElementById("adminSubmit");
+    var error = document.getElementById("adminError");
+    if(trigger){
+        trigger.addEventListener("click", function(){
+            if(sessionStorage.getItem("pocci4admin") === "true"){
+                window.location.href = "admin.html";
+                return;
+            }
+            overlay.classList.add("active");
+            setTimeout(function(){ input.focus(); }, 100);
+        });
+    }
+    if(cancel) cancel.addEventListener("click", function(){
+        overlay.classList.remove("active");
+        input.value = "";
+        error.style.display = "none";
+    });
+    if(overlay) overlay.addEventListener("click", function(e){
+        if(e.target === overlay){
+            overlay.classList.remove("active");
+            input.value = "";
+            error.style.display = "none";
+        }
+    });
+    function tryLogin(){
+        if(input.value === ADMIN_PW){
+            sessionStorage.setItem("pocci4admin", "true");
+            window.location.href = "admin.html";
+        } else {
+            error.style.display = "block";
+            input.value = "";
+            input.focus();
+        }
+    }
+    if(submit) submit.addEventListener("click", tryLogin);
+    if(input) input.addEventListener("keydown", function(e){
+        if(e.key === "Enter") tryLogin();
+    });
+})();
+</script>
 </body>
 </html>
