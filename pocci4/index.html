@@ -706,37 +706,62 @@ var crewData = [
         });
 
         // ========== CREW CAROUSEL ==========
-        function renderCrewCarousel(){
+function renderCrewCarousel(){
             var track = document.getElementById("crewTrack");
-            var html = "";
+            track.innerHTML = "";
             for(var i = 0; i < crewData.length; i++){
                 var c = crewData[i];
                 var traitsHtml = "";
                 for(var t = 0; t < c.traits.length; t++){
                     traitsHtml += "<span class=\"crew-trait\">" + c.traits[t] + "</span>";
                 }
-                // Avatar: Bild wenn vorhanden, sonst Emoji-Fallback
-                var avatarHtml = "";
-                if(c.img){
-                    avatarHtml = "<div class=\"crew-avatar\" style=\"background:" + hexToRgba(c.color, .1) + "\"><img src=\"" + c.img + "\" alt=\"" + c.name + "\" onerror=\"this.style.display='none';this.parentElement.textContent='" + (c.emoji || "👤") + "'\"></div>";
-                } else {
-                    avatarHtml = "<div class=\"crew-avatar\" style=\"background:" + hexToRgba(c.color, .1) + "\">" + (c.emoji || "👤") + "</div>";
-                }
 
-                html += "<div class=\"crew-card\">" +
-                    "<div class=\"crew-card-accent\" style=\"background:" + c.color + "\"></div>" +
-                    avatarHtml +
+                var card = document.createElement("div");
+                card.className = "crew-card";
+
+                // Accent bar
+                var accent = document.createElement("div");
+                accent.className = "crew-card-accent";
+                accent.style.background = c.color;
+                card.appendChild(accent);
+
+                // Avatar
+                var avatar = document.createElement("div");
+                avatar.className = "crew-avatar";
+                avatar.style.background = hexToRgba(c.color, .1);
+
+                if(c.img){
+                    var img = document.createElement("img");
+                    img.src = c.img;
+                    img.alt = c.name;
+                    img.onerror = function(){
+                        this.style.display = "none";
+                        this.parentElement.style.fontSize = "2.5rem";
+                        this.parentElement.textContent = "👤";
+                    };
+                    avatar.appendChild(img);
+                } else {
+                    avatar.textContent = c.emoji || "👤";
+                }
+                card.appendChild(avatar);
+
+                // Rest of card
+                var rest = document.createElement("div");
+                rest.innerHTML =
                     "<div class=\"crew-name\">" + c.name + "</div>" +
                     "<div class=\"crew-role\" style=\"background:" + hexToRgba(c.color, .12) + ";color:" + c.color + "\">" + c.role + "</div>" +
                     "<p class=\"crew-bio\">" + c.bio + "</p>" +
                     "<div class=\"crew-traits\">" + traitsHtml + "</div>" +
-                    (c.ig ? "<a href=\"https://instagram.com/" + c.ig + "\" target=\"_blank\" style=\"display:inline-flex;align-items:center;gap:.3rem;margin-top:.75rem;font-size:.75rem;font-weight:600;color:" + c.color + "\">📸 @" + c.ig + "</a>" : "") +
-                    "</div>";
+                    (c.ig ? "<a href=\"https://instagram.com/" + c.ig + "\" target=\"_blank\" style=\"display:inline-flex;align-items:center;gap:.3rem;margin-top:.75rem;font-size:.75rem;font-weight:600;color:" + c.color + "\">📸 @" + c.ig + "</a>" : "");
+
+                while(rest.firstChild){
+                    card.appendChild(rest.firstChild);
+                }
+
+                track.appendChild(card);
             }
-            track.innerHTML = html;
             initSwipe(track, "crewDots", crewData.length);
         }
-
         // ========== SWIPE ENGINE ==========
         function initSwipe(track, dotsId, itemCount){
             var isDragging = false;
