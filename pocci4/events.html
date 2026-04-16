@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>pocci4 - Events</title>
+    <link rel="icon" type="image/svg+xml" href="assets/p.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -590,7 +591,7 @@
         var h='<div class="highlight-card">';
         h+='<div class="highlight-badge"><span class="pulse-dot"></span> Nächstes Event</div>';
         h+='<div class="highlight-emoji">'+(e.emoji||catEmojis[cat]||"📅")+'</div>';
-        h+='<h2 class="highlight-title">'+esc(e.name||"Event")+'</h2>';
+h+='<h2 class="highlight-title"><a href="event-detail.html?id='+e._id+'" style="color:inherit;text-decoration:none">'+esc(e.name||"Event")+'</a></h2>';
         // PRICE TAG
         if(price>0){
             h+='<div class="highlight-price">💰 '+formatPrice(price)+'</div>';
@@ -658,6 +659,8 @@
             var price=getEventPrice(e);
 
             var card=document.createElement("div");card.className="event-card";
+card.style.cursor="pointer";
+(function(evId){card.addEventListener("click",function(evt){if(evt.target.closest("button"))return;window.location.href="event-detail.html?id="+evId;});})(e._id);
             var h='<div class="event-card-header">';
             h+='<div class="event-card-date"><span class="event-card-date-day">'+d.getDate()+'</span><span class="event-card-date-month">'+monthNames[d.getMonth()].substring(0,3).toUpperCase()+'</span></div>';
             h+='<span class="event-card-category" style="background:'+(catColors[cat]||"#999")+'">'+(catNames[cat]||"Event")+'</span>';
@@ -841,7 +844,8 @@
         document.getElementById("modalMeta").innerHTML=metaH;
 
         // Update modal actions
-        var actionsHtml='<button class="btn btn-primary" onclick="openSignup(\''+e._id+'\')">🎟️ Teilnehmen'+(price>0?' · '+formatPrice(price):'')+'</button>';
+var actionsHtml='<a href="event-detail.html?id='+e._id+'" class="btn btn-primary">📋 Details ansehen</a>';
+actionsHtml+='<button class="btn btn-outline" onclick="openSignup(\''+e._id+'\')">🎟️ Teilnehmen'+(price>0?' · '+formatPrice(price):'')+'</button>';
         actionsHtml+='<button class="btn btn-outline" onclick="downloadICS(\''+esc(e.name||"Event").replace(/'/g,"")+'\',\''+ds+'\',\''+(e.time||"20:00")+'\')">📅 Kalender</button>';
         document.querySelector("#eventModal .modal-actions").innerHTML=actionsHtml;
 
