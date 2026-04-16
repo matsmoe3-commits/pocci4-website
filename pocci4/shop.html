@@ -160,39 +160,93 @@
         var payOpts=document.querySelectorAll(".cart-payment-opt");for(var i=0;i<payOpts.length;i++){payOpts[i].addEventListener("click",function(){for(var j=0;j<payOpts.length;j++)payOpts[j].classList.remove("selected");this.classList.add("selected");paymentMethod=this.getAttribute("data-method");});}
 
         // CHECKOUT -> SAVE TO FIRESTORE
-        document.getElementById("checkoutBtn").addEventListener("click",function(){
-            if(cart.length===0)return;
-            var total=0;var items=[];var itemDetails=[];
-            for(var i=0;i<cart.length;i++){
-                var p=findProduct(cart[i].id);
-                if(p){
-                    total+=p.price*cart[i].qty;
-                    items.push(cart[i].qty+"x "+p.title);
-                    itemDetails.push({id:p.id,title:p.title,emoji:p.emoji,price:p.price,qty:cart[i].qty});
-                }
-            }
+document.getElementById("checkoutBtn").addEventListener("click", function(){
+    if(cart.length === 0) return;
 
-            // SAVE ORDER TO FIRESTORE
-            db.collection("orders").add({
-                items: itemDetails,
-                total: Math.round(total*100)/100,
-                paymentMethod: paymentMethod,
-                itemsSummary: items.join(", "),
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(function(){
-                var text="";
-                if(paymentMethod==="paypal"){text="Ueberweise <strong>"+total.toFixed(2).replace(".",",")+' EUR</strong> via PayPal.<br><br>Bestellung: '+items.join(", ")+"<br><br>Schreib uns auf Instagram mit deiner Bestaetigung!";}
-                else{text="Bezahle <strong>"+total.toFixed(2).replace(".",",")+' EUR</strong> beim naechsten Event vor Ort.<br><br>Bestellung: '+items.join(", ");}
-                document.getElementById("orderSuccessText").innerHTML=text;
-                document.getElementById("cartFooter").style.display="none";
-                document.getElementById("cartItems").innerHTML="";
-                document.getElementById("orderSuccess").classList.add("show");
-                cart=[];saveCart();updateBadge();launchConfetti();
-            }).catch(function(err){
-                console.error("Error saving order:", err);
-                alert("Fehler beim Bestellen! Versuche es nochmal.");
+    var total = 0;
+    var items = [];
+    var itemDetails = [];
+
+    for(var i = 0; i < cart.length; i++){
+        var p = findProduct(cart[i].id);
+        if(p){
+            total += p.price * cart[i].qty;
+            items.push(cart[i].qty + "x " + p.title);
+            itemDetails.push({
+                id: p.id,
+                title: p.title,
+                emoji: p.emoji,
+                price: p.price,
+                qty: cart[i].qty
             });
-        });
+        }
+    }
+
+    var roundedTotal = (Math.round(total * 100) / 100);
+
+    // SAVE ORDER TO FIRESTORE
+    db.collection("orders").add({
+        items: itemDetails,
+        total: roundedTotal,
+        paymentMethod: paymentMethod,
+        itemsSummary: items.join(", "),
+        status: paymentMethod === "paypal" ? "wartet auf Zahlung" : "vor Ort bezahlen",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function(){
+
+        if(paymentMethod === "paypal"){
+            // ✅ PAYPAL WEITERLEITUNG
+            var paypalURL = "https://www.paypal.com/paypalme/matsmoe32/"
+                + roundedTotal.toFixed(2)
+                + "EUR";
+
+            var text = "Du wirst jetzt zu <strong>PayPal</strong> weitergeleitet um "
+                + "<strong>" + roundedTotal.toFixed(2).replace(".",",") + " EUR</strong> zu bezahlen."
+                + "<br><br>📦 Bestellung: " + items.join(", ")
+                + "<br><br>Falls PayPal sich nicht öffnet, "
+                + "<a href='" + paypalURL + "' target='_blank' "
+                + "style='color:var(--color-primary);font-weight:700;text-decoration:underline;'>"
+                + "klicke hier</a>.";
+
+            document.getElementById("orderSuccessText").innerHTML = text;
+            document.getElementById("cartFooter").style.display = "none";
+            document.getElementById("cartItems").innerHTML = "";
+            document.getElementById("orderSuccess").classList.add("show");
+
+            cart = [];
+            saveCart();
+            updateBadge();
+            launchConfetti();
+
+            // PayPal in neuem Tab öffnen
+            setTimeout(function(){
+                window.open(paypalURL, "_blank");
+            }, 1500);
+
+        } else {
+            // VOR ORT BEZAHLEN
+            var text = "Bezahle <strong>"
+                + roundedTotal.toFixed(2).replace(".",",")
+                + " EUR</strong> beim nächsten Event vor Ort."
+                + "<br><br>📦 Bestellung: " + items.join(", ")
+                + "<br><br>Schreib uns auf Instagram zur Bestätigung! 📸";
+
+            document.getElementById("orderSuccessText").innerHTML = text;
+            document.getElementById("cartFooter").style.display = "none";
+            document.getElementById("cartItems").innerHTML = "";
+            document.getElementById("orderSuccess").classList.add("show");
+
+            cart = [];
+            saveCart();
+            updateBadge();
+            launchConfetti();
+        }
+
+    }).catch(function(err){
+        console.error("Error saving order:", err);
+        alert("Fehler beim Bestellen! Versuche es nochmal.");
+    });
+});
 
         document.getElementById("continueBtn").addEventListener("click",function(){closeCart();document.getElementById("orderSuccess").classList.remove("show");document.getElementById("cartFooter").style.display="block";renderCart();});
 
