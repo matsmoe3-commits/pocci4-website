@@ -940,14 +940,6 @@
     loadStatsPreview();
 })();
 
-        // === NAV ===
-        var navbar=document.getElementById("navbar");
-        window.addEventListener("scroll",function(){navbar.classList.toggle("scrolled",window.scrollY>50);});
-        var hamburger=document.getElementById("hamburger"),mobileMenu=document.getElementById("mobileMenu");
-        hamburger.addEventListener("click",function(){hamburger.classList.toggle("active");mobileMenu.classList.toggle("active");document.body.style.overflow=mobileMenu.classList.contains("active")?"hidden":"";});
-        document.querySelectorAll(".mobile-link").forEach(function(ml){ml.addEventListener("click",function(){hamburger.classList.remove("active");mobileMenu.classList.remove("active");document.body.style.overflow="";});});
-        var dd=document.getElementById("eventsDropdown"),ddT=null;
-        if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},200);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
 
         // === ADMIN TRIGGER ===
         var ADMIN_PW="pocci4admin";
