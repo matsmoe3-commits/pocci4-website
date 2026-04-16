@@ -51,15 +51,20 @@
 <nav class="navbar" id="navbar"><div class="nav-container">
     <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
     <div class="nav-right">
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
-            <a href="shop.html" class="nav-link active">Shop</a>
-            <a href="kontakt.html" class="nav-link">Kontakt</a>
-        </div>
-        <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
-        <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+    <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
+        <a href="shop.html" class="nav-link active">Shop</a>
+        <a href="kontakt.html" class="nav-link">Kontakt</a>
     </div>
+    <!-- ✅ THIS WAS MISSING — add it here -->
+    <button class="nav-cart-btn" id="cartBtn">
+        🛒
+        <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+    <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
+    <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+</div>
 </div></nav>
 
     <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
