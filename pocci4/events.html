@@ -94,9 +94,42 @@
         .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
         .section-title{font-size:clamp(1.8rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
 
-        .page-hero{padding:calc(var(--nav-height) + 4rem) 1.25rem 3rem;max-width:var(--container-width);margin:0 auto;text-align:center}
+        .page-hero{padding:calc(var(--nav-height) + 4rem) 1.25rem 2rem;max-width:var(--container-width);margin:0 auto;text-align:center}
         .page-hero-title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem}
         .page-hero-subtitle{font-size:clamp(1rem,2vw,1.2rem);color:var(--color-text-light);max-width:500px;margin:0 auto}
+
+        /* CONTACT CTA BANNER */
+        .contact-cta{max-width:700px;margin:0 auto 2rem;padding:0 1.25rem}
+        .contact-cta-card{background:var(--color-text);border-radius:20px;padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+        .contact-cta-left{display:flex;align-items:center;gap:1rem}
+        .contact-cta-emoji{font-size:2rem}
+        .contact-cta-text h3{font-size:1rem;font-weight:800;color:#fff;margin-bottom:.15rem}
+        .contact-cta-text p{font-size:.8rem;color:var(--color-gray)}
+        .contact-cta-btn{padding:10px 24px;border-radius:50px;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:.82rem;font-weight:700;border:none;cursor:pointer;transition:var(--transition-smooth);white-space:nowrap;display:inline-flex;align-items:center;gap:.4rem}
+        .contact-cta-btn:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,58,43,.3)}
+        @media(max-width:600px){.contact-cta-card{flex-direction:column;text-align:center;padding:1.5rem}.contact-cta-left{flex-direction:column}}
+
+        /* QUICK MESSAGE FORM */
+        .quick-msg-section{max-width:700px;margin:0 auto 3rem;padding:0 1.25rem}
+        .quick-msg-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:20px;padding:2rem 2.5rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03)}
+        .quick-msg-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+        .quick-msg-header h3{font-size:1.1rem;font-weight:800}
+        .quick-msg-header span{font-size:1.5rem}
+        .quick-msg-form{display:grid;gap:1rem}
+        .quick-msg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .quick-msg-input,.quick-msg-textarea{width:100%;padding:12px 16px;border:1.5px solid var(--color-border);border-radius:14px;font-family:var(--font-main);font-size:.88rem;outline:none;transition:var(--transition-fast);background:var(--color-white);color:var(--color-text)}
+        .quick-msg-input::placeholder,.quick-msg-textarea::placeholder{color:var(--color-gray)}
+        .quick-msg-input:focus,.quick-msg-textarea:focus{border-color:var(--color-primary)}
+        .quick-msg-textarea{min-height:90px;resize:vertical}
+        .quick-msg-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.35rem;display:block}
+        .quick-msg-submit{padding:12px 28px;border-radius:50px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:.88rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth);width:auto;justify-self:start}
+        .quick-msg-submit:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,58,43,.25)}
+        .quick-msg-success{display:none;text-align:center;padding:1.5rem}
+        .quick-msg-success.show{display:block}
+        .quick-msg-success-icon{font-size:2.5rem;margin-bottom:.5rem}
+        .quick-msg-success-title{font-size:1.1rem;font-weight:800;margin-bottom:.25rem}
+        .quick-msg-success-text{font-size:.85rem;color:var(--color-gray)}
+        @media(max-width:600px){.quick-msg-row{grid-template-columns:1fr}.quick-msg-card{padding:1.5rem}.quick-msg-submit{width:100%}}
 
         .filter-section{padding:0 1.25rem 2rem;max-width:var(--container-width);margin:0 auto;display:flex;justify-content:center}
         .filter-tabs{display:flex;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 2px 10px rgba(0,0,0,.04);flex-wrap:wrap;justify-content:center}
@@ -162,16 +195,10 @@
         .event-card-desc{font-size:.85rem;color:var(--color-text-light);line-height:1.5;margin-bottom:1rem}
         .event-card-meta{display:flex;gap:1rem;font-size:.8rem;color:var(--color-gray);margin-bottom:1rem;flex-wrap:wrap}
         .event-card-meta-item{display:flex;align-items:center;gap:.3rem}
-        .event-card-capacity{margin-bottom:1rem}
-        .event-card-capacity-bar{width:100%;height:6px;background:var(--color-bg);border-radius:10px;overflow:hidden}
-        .event-card-capacity-fill{height:100%;border-radius:10px;transition:width 1s ease}
-        .event-card-capacity-text{display:flex;justify-content:space-between;font-size:.7rem;color:var(--color-gray);margin-top:.35rem}
         .event-card-footer{padding:0 1.5rem 1.5rem;display:flex;gap:.75rem}
         .btn-cal{width:44px;height:44px;border-radius:14px;border:2px solid var(--color-border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:var(--transition-fast);flex-shrink:0}
         .btn-cal:hover{background:var(--color-text);color:#fff;border-color:var(--color-text)}
         .no-events{text-align:center;padding:3rem;color:var(--color-gray);font-size:1.1rem}
-        .event-card-status{position:absolute;top:1rem;right:1rem;padding:4px 10px;border-radius:50px;font-size:.6rem;font-weight:700;text-transform:uppercase;z-index:2}
-        .event-card-status.past{background:var(--color-bg);color:var(--color-gray)}
 
         .stats-preview{padding:0 1.25rem 2rem;overflow:hidden}
         .stats-preview-container{max-width:700px;margin:0 auto;text-align:center;background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:3rem 2rem;border:1px solid rgba(255,255,255,.5)}
@@ -300,6 +327,26 @@
 
     <section class="page-hero reveal"><p class="section-overline">EVENTS</p><h1 class="page-hero-title">Was steht an?</h1><p class="page-hero-subtitle">Alle kommenden Events in der Poccistrasse auf einen Blick.</p></section>
 
+    <!-- QUICK MESSAGE FORM (oben, direkt nach Hero) -->
+    <section class="quick-msg-section reveal">
+        <div class="quick-msg-card">
+            <div class="quick-msg-header"><span>📬</span><h3>Schreib uns eine Nachricht</h3></div>
+            <form class="quick-msg-form" id="quickMsgForm">
+                <div class="quick-msg-row">
+                    <div><label class="quick-msg-label">Dein Name</label><input type="text" class="quick-msg-input" id="qmName" placeholder="Max" required></div>
+                    <div><label class="quick-msg-label">Betreff</label><input type="text" class="quick-msg-input" id="qmSubject" placeholder="z.B. Frage zum Event"></div>
+                </div>
+                <div><label class="quick-msg-label">Nachricht</label><textarea class="quick-msg-textarea" id="qmMessage" placeholder="Was liegt dir auf dem Herzen?" required></textarea></div>
+                <button type="submit" class="quick-msg-submit">Nachricht senden 📨</button>
+            </form>
+            <div class="quick-msg-success" id="qmSuccess">
+                <div class="quick-msg-success-icon">📬</div>
+                <div class="quick-msg-success-title">Nachricht gesendet!</div>
+                <div class="quick-msg-success-text">Wir melden uns so schnell wie möglich.</div>
+            </div>
+        </div>
+    </section>
+
     <section class="filter-section reveal"><div class="filter-tabs" id="filterTabs">
         <button class="filter-tab active" data-filter="all">Alle</button>
         <button class="filter-tab" data-filter="party"><span class="filter-dot" style="background:var(--cat-party)"></span>Party</button>
@@ -338,7 +385,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
     <script>
-    // Global for onclick in HTML
     function closeEventModal(){document.getElementById("eventModal").classList.remove("active");document.body.style.overflow="";}
 
     (function(){
@@ -346,7 +392,6 @@
         if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
         var db=firebase.firestore();
 
-        // === MAPS for categories (matching admin.html categories) ===
         var catColors={party:"#C03A2B",gamenight:"#1A1A1A",dinner:"#C4A882",sport:"#457B9D",other:"#6B6B6B"};
         var catNames={party:"Party",gamenight:"Game Night",dinner:"Dinner",sport:"Sport",other:"Sonstiges"};
         var catEmojis={party:"🎉",gamenight:"🎮",dinner:"🍕",sport:"⚽",other:"✨"};
@@ -359,7 +404,6 @@
         var allPlayers=[];
         var allGames=[];
 
-        // === HELPERS ===
         function esc(str){return(str||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 
         function getDateStr(val){
@@ -385,10 +429,10 @@
         var dd=document.getElementById("eventsDropdown"),ddT=null;
         if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},200);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
 
-        // === ADMIN TRIGGER (standard pattern like shop/kontakt) ===
+        // === ADMIN TRIGGER ===
         var ADMIN_PW="pocci4admin";
         var trigger=document.getElementById("adminTrigger");
-        var overlay=document.getElementById("adminOverlay");
+        var aOverlay=document.getElementById("adminOverlay");
         var pwInput=document.getElementById("adminPwInput");
         var cancelBtn=document.getElementById("adminCancel");
         var submitBtn=document.getElementById("adminSubmit");
@@ -396,17 +440,41 @@
 
         trigger.addEventListener("click",function(){
             if(sessionStorage.getItem("pocci4admin")==="true"){window.location.href="admin.html";return;}
-            overlay.classList.add("active");
-            setTimeout(function(){pwInput.focus();},100);
+            aOverlay.classList.add("active");setTimeout(function(){pwInput.focus();},100);
         });
-        cancelBtn.addEventListener("click",function(){overlay.classList.remove("active");pwInput.value="";errorEl.style.display="none";});
-        overlay.addEventListener("click",function(e){if(e.target===overlay){overlay.classList.remove("active");pwInput.value="";errorEl.style.display="none";}});
+        cancelBtn.addEventListener("click",function(){aOverlay.classList.remove("active");pwInput.value="";errorEl.style.display="none";});
+        aOverlay.addEventListener("click",function(e){if(e.target===aOverlay){aOverlay.classList.remove("active");pwInput.value="";errorEl.style.display="none";}});
         function tryLogin(){
             if(pwInput.value===ADMIN_PW){sessionStorage.setItem("pocci4admin","true");window.location.href="admin.html";}
             else{errorEl.style.display="block";pwInput.value="";pwInput.focus();}
         }
         submitBtn.addEventListener("click",tryLogin);
         pwInput.addEventListener("keydown",function(e){if(e.key==="Enter")tryLogin();});
+
+        // === QUICK MESSAGE FORM ===
+        document.getElementById("quickMsgForm").addEventListener("submit",function(e){
+            e.preventDefault();
+            var name=document.getElementById("qmName").value.trim();
+            var subject=document.getElementById("qmSubject").value.trim();
+            var message=document.getElementById("qmMessage").value.trim();
+            if(!name||!message){alert("Bitte Name und Nachricht ausfüllen!");return;}
+
+            db.collection("messages").add({
+                name:name,
+                subject:subject||"Nachricht von Events-Seite",
+                message:message,
+                type:"contact",
+                read:false,
+                createdAt:firebase.firestore.FieldValue.serverTimestamp()
+            }).then(function(){
+                document.getElementById("quickMsgForm").style.display="none";
+                document.getElementById("qmSuccess").classList.add("show");
+                launchConfetti();
+            }).catch(function(err){
+                console.error("Error sending message:",err);
+                alert("Fehler beim Senden! Bitte versuche es nochmal oder schreib uns auf Instagram.");
+            });
+        });
 
         // === FILTERS ===
         document.querySelectorAll(".filter-tab").forEach(function(tab){
@@ -418,30 +486,24 @@
             });
         });
 
-        // === LOAD EVENTS (realtime with onSnapshot, NO orderBy) ===
+        // === LOAD EVENTS (realtime, NO orderBy) ===
         function loadEvents(){
             db.collection("events").onSnapshot(function(snap){
                 events=[];
                 snap.forEach(function(doc){
-                    var d=doc.data();
-                    d._id=doc.id;
-                    // Only show published events
+                    var d=doc.data();d._id=doc.id;
                     if(d.published===false)return;
                     events.push(d);
                 });
-                // Sort client-side by date ascending
-                events.sort(function(a,b){
-                    return(getDateStr(a.date)||"").localeCompare(getDateStr(b.date)||"");
-                });
+                events.sort(function(a,b){return(getDateStr(a.date)||"").localeCompare(getDateStr(b.date)||"");});
                 renderAll();
             },function(err){
                 console.error("Events load error:",err);
-                events=[];
-                renderAll();
+                events=[];renderAll();
             });
         }
 
-        // === LOAD PLAYERS + GAMES for Stats Preview ===
+        // === LOAD STATS PREVIEW ===
         function loadStatsPreview(){
             db.collection("players").onSnapshot(function(pSnap){
                 allPlayers=[];
@@ -454,24 +516,15 @@
             },function(err){console.error(err);renderStatsPreview();});
         }
 
-        // === RENDER ALL ===
-        function renderAll(){
-            renderHighlight();
-            renderCalendar();
-            renderEventCards();
-        }
+        function renderAll(){renderHighlight();renderCalendar();renderEventCards();}
 
-        // === HIGHLIGHT (next upcoming event) ===
+        // === HIGHLIGHT ===
         function renderHighlight(){
             var sec=document.getElementById("highlightSection");
             var todayStr=today.getFullYear()+"-"+String(today.getMonth()+1).padStart(2,"0")+"-"+String(today.getDate()).padStart(2,"0");
             var future=events.filter(function(e){return(getDateStr(e.date)||"9999")>=todayStr;});
             if(!future.length){sec.innerHTML='<div style="text-align:center;padding:2rem;color:var(--color-gray)">Keine kommenden Events. <a href="#vorschlag" style="color:var(--color-primary);font-weight:700">Schlag eins vor!</a></div>';return;}
-            var e=future[0];
-            var ds=getDateStr(e.date);
-            var cat=e.category||"other";
-            var maxG=e.maxGuests||0;
-            var loc=e.location||"Poccistrasse 4";
+            var e=future[0];var ds=getDateStr(e.date);var cat=e.category||"other";var maxG=e.maxGuests||0;var loc=e.location||"Poccistrasse 4";
 
             var h='<div class="highlight-card">';
             h+='<div class="highlight-badge"><span class="pulse-dot"></span> Nächstes Event</div>';
@@ -495,19 +548,11 @@
         function renderCalendar(){
             document.getElementById("calendarMonth").textContent=monthNames[currentMonth]+" "+currentYear;
             var dc=document.getElementById("calendarDays");dc.innerHTML="";
-            var first=new Date(currentYear,currentMonth,1);
-            var last=new Date(currentYear,currentMonth+1,0);
+            var first=new Date(currentYear,currentMonth,1);var last=new Date(currentYear,currentMonth+1,0);
             var start=first.getDay()===0?6:first.getDay()-1;
             var prevLast=new Date(currentYear,currentMonth,0).getDate();
 
-            // Previous month days
-            for(var i=start-1;i>=0;i--){
-                var dy=document.createElement("div");
-                dy.className="calendar-day other-month";
-                dy.innerHTML='<span class="calendar-day-number">'+(prevLast-i)+'</span>';
-                dc.appendChild(dy);
-            }
-            // Current month days
+            for(var i=start-1;i>=0;i--){var dy=document.createElement("div");dy.className="calendar-day other-month";dy.innerHTML='<span class="calendar-day-number">'+(prevLast-i)+'</span>';dc.appendChild(dy);}
             for(var d=1;d<=last.getDate();d++){
                 var dateStr=currentYear+"-"+String(currentMonth+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
                 var dayEvents=events.filter(function(e){return getDateStr(e.date)===dateStr;});
@@ -515,29 +560,19 @@
                 var dy=document.createElement("div");
                 var cls="calendar-day current-month";
                 if(isToday)cls+=" today";
-                if(dayEvents.length){
-                    var dCat=dayEvents[0].category||"other";
-                    cls+=" has-event cat-"+dCat;
-                }
+                if(dayEvents.length){var dCat=dayEvents[0].category||"other";cls+=" has-event cat-"+dCat;}
                 dy.className=cls;
                 var inner='<span class="calendar-day-number">'+d+'</span>';
                 if(dayEvents.length){
-                    var dCat=dayEvents[0].category||"other";
-                    var dotColor=isToday?"rgba(255,255,255,.8)":(catColors[dCat]||"#999");
+                    var dCat2=dayEvents[0].category||"other";
+                    var dotColor=isToday?"rgba(255,255,255,.8)":(catColors[dCat2]||"#999");
                     inner+='<div class="calendar-event-indicator"><span class="calendar-event-dot" style="background:'+dotColor+'"></span><span class="calendar-event-title">'+esc(dayEvents[0].name||"")+'</span></div>';
                     (function(ev){dy.addEventListener("click",function(){openEventModal(ev);});})(dayEvents[0]);
                 }
-                dy.innerHTML=inner;
-                dc.appendChild(dy);
+                dy.innerHTML=inner;dc.appendChild(dy);
             }
-            // Next month days
             var total=dc.children.length;
-            for(var i=1;i<=42-total;i++){
-                var dy=document.createElement("div");
-                dy.className="calendar-day other-month";
-                dy.innerHTML='<span class="calendar-day-number">'+i+'</span>';
-                dc.appendChild(dy);
-            }
+            for(var i=1;i<=42-total;i++){var dy=document.createElement("div");dy.className="calendar-day other-month";dy.innerHTML='<span class="calendar-day-number">'+i+'</span>';dc.appendChild(dy);}
         }
 
         document.getElementById("prevMonth").addEventListener("click",function(){currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--;}renderCalendar();});
@@ -548,26 +583,19 @@
             var grid=document.getElementById("eventsGrid");grid.innerHTML="";
             var todayStr=today.getFullYear()+"-"+String(today.getMonth()+1).padStart(2,"0")+"-"+String(today.getDate()).padStart(2,"0");
             var filtered=activeFilter==="all"?events:events.filter(function(e){return(e.category||"other")===activeFilter;});
-            // Show upcoming first
             var upcoming=filtered.filter(function(e){return(getDateStr(e.date)||"9999")>=todayStr;});
 
             if(!upcoming.length){grid.innerHTML='<div class="no-events">Keine Events geplant. <a href="#vorschlag" style="color:var(--color-primary);font-weight:700;">Schlag eins vor!</a></div>';return;}
 
             for(var i=0;i<upcoming.length;i++){
-                var e=upcoming[i];
-                var ds=getDateStr(e.date);
-                var d=ds?new Date(ds+"T00:00:00"):new Date();
-                var cat=e.category||"other";
-                var loc=e.location||"Poccistrasse 4";
-                var maxG=e.maxGuests||0;
+                var e=upcoming[i];var ds=getDateStr(e.date);var d=ds?new Date(ds+"T00:00:00"):new Date();
+                var cat=e.category||"other";var loc=e.location||"Poccistrasse 4";var maxG=e.maxGuests||0;
 
-                var card=document.createElement("div");
-                card.className="event-card";
+                var card=document.createElement("div");card.className="event-card";
                 var h='<div class="event-card-header">';
                 h+='<div class="event-card-date"><span class="event-card-date-day">'+d.getDate()+'</span><span class="event-card-date-month">'+monthNames[d.getMonth()].substring(0,3).toUpperCase()+'</span></div>';
                 h+='<span class="event-card-category" style="background:'+(catColors[cat]||"#999")+'">'+(catNames[cat]||"Event")+'</span>';
-                h+='</div>';
-                h+='<div class="event-card-body">';
+                h+='</div><div class="event-card-body">';
                 h+='<div class="event-card-emoji">'+(e.emoji||catEmojis[cat]||"📅")+'</div>';
                 h+='<h3 class="event-card-title">'+esc(e.name||"Event")+'</h3>';
                 if(e.description)h+='<p class="event-card-desc">'+esc(e.description)+'</p>';
@@ -576,26 +604,18 @@
                 h+='<span class="event-card-meta-item">📍 '+esc(loc.split(",")[0])+'</span>';
                 if(maxG)h+='<span class="event-card-meta-item">👥 Max. '+maxG+'</span>';
                 h+='</div></div>';
-                h+='<div class="event-card-footer">';
-                h+='<button class="btn-cal" data-cal-name="'+esc(e.name||"Event")+'" data-cal-date="'+ds+'" data-cal-time="'+(e.time||"20:00")+'">📅</button>';
-                h+='</div>';
-                card.innerHTML=h;
-                grid.appendChild(card);
+                h+='<div class="event-card-footer"><button class="btn-cal" data-cal-name="'+esc(e.name||"Event")+'" data-cal-date="'+ds+'" data-cal-time="'+(e.time||"20:00")+'">📅</button></div>';
+                card.innerHTML=h;grid.appendChild(card);
             }
 
-            // Calendar download buttons
             grid.querySelectorAll(".btn-cal").forEach(function(btn){
-                btn.addEventListener("click",function(){
-                    downloadICS(this.getAttribute("data-cal-name"),this.getAttribute("data-cal-date"),this.getAttribute("data-cal-time"));
-                });
+                btn.addEventListener("click",function(){downloadICS(this.getAttribute("data-cal-name"),this.getAttribute("data-cal-date"),this.getAttribute("data-cal-time"));});
             });
         }
 
-        // === EVENT MODAL (calendar click) ===
+        // === EVENT MODAL ===
         function openEventModal(e){
-            var ds=getDateStr(e.date);
-            var cat=e.category||"other";
-            var loc=e.location||"Poccistrasse 4";
+            var ds=getDateStr(e.date);var cat=e.category||"other";var loc=e.location||"Poccistrasse 4";
             document.getElementById("modalEmoji").textContent=e.emoji||catEmojis[cat]||"📅";
             document.getElementById("modalTitle").textContent=e.name||"Event";
             document.getElementById("modalDesc").textContent=e.description||"";
@@ -605,51 +625,30 @@
             metaH+='<div class="modal-meta-item">'+(catEmojis[cat]||"📅")+' '+(catNames[cat]||"Event")+'</div>';
             if(e.maxGuests)metaH+='<div class="modal-meta-item">👥 Max. '+e.maxGuests+' Gäste</div>';
             document.getElementById("modalMeta").innerHTML=metaH;
-
-            var calBtn=document.getElementById("modalCalBtn");
-            calBtn.onclick=function(){downloadICS(e.name||"Event",ds,e.time||"20:00");};
-
-            document.getElementById("eventModal").classList.add("active");
-            document.body.style.overflow="hidden";
+            document.getElementById("modalCalBtn").onclick=function(){downloadICS(e.name||"Event",ds,e.time||"20:00");};
+            document.getElementById("eventModal").classList.add("active");document.body.style.overflow="hidden";
         }
         window.openEventModal=openEventModal;
-
         document.getElementById("eventModalClose").addEventListener("click",closeEventModal);
         document.getElementById("eventModal").addEventListener("click",function(e){if(e.target===this)closeEventModal();});
 
         // === STATS PREVIEW ===
         function renderStatsPreview(){
             var grid=document.getElementById("statsPreviewGrid");
-            if(!allPlayers.length){
-                grid.innerHTML='<div class="stats-mini-card"><div class="stats-mini-emoji">🎮</div><div class="stats-mini-name">Noch keine Stats</div><div class="stats-mini-info">Spielt erstmal was!</div></div>';
-                return;
-            }
-            // Count wins per player
+            if(!allPlayers.length){grid.innerHTML='<div class="stats-mini-card"><div class="stats-mini-emoji">🎮</div><div class="stats-mini-name">Noch keine Stats</div><div class="stats-mini-info">Spielt erstmal was!</div></div>';return;}
             var wins={};
-            for(var i=0;i<allGames.length;i++){
-                var w=allGames[i].winnerId;
-                if(w){if(!wins[w])wins[w]=0;wins[w]++;}
-            }
-            // Sort by wins
+            for(var i=0;i<allGames.length;i++){var w=allGames[i].winnerId;if(w){if(!wins[w])wins[w]=0;wins[w]++;}}
             var sorted=allPlayers.slice().sort(function(a,b){return(wins[b._id]||0)-(wins[a._id]||0);});
-            var show=sorted.slice(0,3);
-            var h="";
-            for(var i=0;i<show.length;i++){
-                var p=show[i];
-                var medal=i===0?"🥇":i===1?"🥈":"🥉";
-                h+='<div class="stats-mini-card"><div class="stats-mini-emoji">'+(p.emoji||"😎")+'</div><div class="stats-mini-name">'+medal+' '+esc(p.name)+'</div><div class="stats-mini-info">'+(wins[p._id]||0)+' Siege</div></div>';
-            }
+            var show=sorted.slice(0,3);var h="";
+            for(var i=0;i<show.length;i++){var p=show[i];var medal=i===0?"🥇":i===1?"🥈":"🥉";
+                h+='<div class="stats-mini-card"><div class="stats-mini-emoji">'+(p.emoji||"😎")+'</div><div class="stats-mini-name">'+medal+' '+esc(p.name)+'</div><div class="stats-mini-info">'+(wins[p._id]||0)+' Siege</div></div>';}
             grid.innerHTML=h;
         }
 
-        // === ICS DOWNLOAD ===
+        // === ICS ===
         window.downloadICS=function(title,date,time){
-            if(!date)return;
-            var h=(time||"20:00").split(":")[0]||"20";
-            var m=(time||"20:00").split(":")[1]||"00";
-            var s=date.replace(/-/g,"")+"T"+h+m+"00";
-            var eH=String(Math.min(parseInt(h)+4,23)).padStart(2,"0");
-            var en=date.replace(/-/g,"")+"T"+eH+m+"00";
+            if(!date)return;var h=(time||"20:00").split(":")[0]||"20";var m=(time||"20:00").split(":")[1]||"00";
+            var s=date.replace(/-/g,"")+"T"+h+m+"00";var eH=String(Math.min(parseInt(h)+4,23)).padStart(2,"0");var en=date.replace(/-/g,"")+"T"+eH+m+"00";
             var ics="BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:"+s+"\nDTEND:"+en+"\nSUMMARY:"+title+"\nLOCATION:Poccistrasse Muenchen\nEND:VEVENT\nEND:VCALENDAR";
             var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));a.download=title.replace(/[^a-zA-Z0-9]/g,"_")+".ics";a.click();
         };
@@ -657,21 +656,17 @@
         // === PROPOSAL FORM ===
         document.getElementById("proposalForm").addEventListener("submit",function(e){
             e.preventDefault();
-            var name=document.getElementById("propName").value.trim();
-            var type=document.getElementById("propType").value;
-            var date=document.getElementById("propDate").value;
-            var msg=document.getElementById("propMsg").value.trim();
+            var name=document.getElementById("propName").value.trim();var type=document.getElementById("propType").value;
+            var date=document.getElementById("propDate").value;var msg=document.getElementById("propMsg").value.trim();
             if(!name){alert("Bitte Namen eingeben!");return;}
             db.collection("messages").add({
-                name:name,
-                subject:"Event-Vorschlag: "+(catNames[type]||type),
+                name:name,subject:"Event-Vorschlag: "+(catNames[type]||type),
                 message:"Wunschdatum: "+date+(msg?" | "+msg:""),
-                type:"proposal",
+                type:"proposal",read:false,
                 createdAt:firebase.firestore.FieldValue.serverTimestamp()
             }).then(function(){
                 document.getElementById("proposalForm").style.display="none";
-                document.getElementById("formSuccess").classList.add("show");
-                launchConfetti();
+                document.getElementById("formSuccess").classList.add("show");launchConfetti();
             }).catch(function(err){console.error(err);alert("Fehler beim Senden!");});
         });
 
@@ -679,17 +674,16 @@
         function launchConfetti(){var c=document.getElementById("confettiContainer");var colors=["#C03A2B","#E8501E","#C4A882","#457B9D","#FF6B6B","#FFD93D","#6BCB77"];for(var i=0;i<50;i++){var p=document.createElement("div");var sz=Math.random()*8+5;var isCir=Math.random()>.5;p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"3px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.3)+"s;pointer-events:none;";c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4000);})(p);}}
         var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";document.head.appendChild(cs);
 
-        // === REVEAL ANIMATIONS ===
+        // === REVEAL ===
         var ro=new IntersectionObserver(function(entries){for(var i=0;i<entries.length;i++){if(entries[i].isIntersecting){(function(el,idx){setTimeout(function(){el.classList.add("visible");},idx*80);})(entries[i].target,i);ro.unobserve(entries[i].target);}}},{threshold:.1});
         document.querySelectorAll(".reveal").forEach(function(el){ro.observe(el);});
 
-        // === PARALLAX BG ===
+        // === PARALLAX ===
         window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";}});
 
         // === INIT ===
         loadEvents();
         loadStatsPreview();
-
     })();
     </script>
 </body>
