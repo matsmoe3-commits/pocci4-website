@@ -358,17 +358,19 @@
 <!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
 <script>
+// closeModal muss global sein wegen onclick in HTML
+function closeModal(id){document.getElementById(id).classList.remove("active");document.body.style.overflow="";}
+function openModal(id){document.getElementById(id).classList.add("active");document.body.style.overflow="hidden";}
+
 (function(){
-    // ===== AUTH =====
     if(sessionStorage.getItem("pocci4admin")!=="true"){window.location.href="shop.html";return;}
 
-    // ===== FIREBASE =====
     var fc={apiKey:"AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",authDomain:"pocci4-a24e5.firebaseapp.com",projectId:"pocci4-a24e5",storageBucket:"pocci4-a24e5.firebasestorage.app",messagingSenderId:"518621760671",appId:"1:518621760671:web:90ad7c1bae464f313066aa"};
     if(!firebase.apps.length)firebase.initializeApp(fc);
     var db=firebase.firestore();
 
-    // ===== PRODUCTS =====
     var products=[
         {id:1,title:"Immobilienbewertung by Mats",emoji:"🏠",price:49.99},
         {id:2,title:"Trainingsplan by Andrei",emoji:"💪",price:29.99},
@@ -388,16 +390,37 @@
     ];
 
     var allOrders=[],allEvents=[],allPlayers=[],allGames=[];
+    var editingEventId=null,editingPlayerId=null;
 
-    // ===== TOAST =====
+    // ===== HELPERS =====
     function toast(msg,type){
-        var t=document.createElement("div");
-        t.className="toast "+(type||"success");
-        t.textContent=msg;
+        var t=document.createElement("div");t.className="toast "+(type||"success");t.textContent=msg;
         document.getElementById("toastContainer").appendChild(t);
         setTimeout(function(){t.classList.add("show");},50);
         setTimeout(function(){t.classList.remove("show");setTimeout(function(){t.remove();},400);},3000);
     }
+
+    function esc(str){return(str||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+    function getDateStr(val){
+        if(!val)return"";
+        if(val.seconds){var d=new Date(val.seconds*1000);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+        if(typeof val==="string")return val;
+        return"";
+    }
+
+    function fDate(ts){
+        if(!ts)return"-";
+        var d;
+        if(ts.seconds)d=new Date(ts.seconds*1000);
+        else if(typeof ts==="string")d=new Date(ts+"T00:00:00");
+        else return"-";
+        if(isNaN(d.getTime()))return"-";
+        return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"})+" · "+d.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
+    }
+
+    function monthName(m){return["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"][m];}
+    function todayStr(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 
     // ===== NAVIGATION =====
     function switchSection(name){
@@ -410,68 +433,32 @@
         window.scrollTo({top:0,behavior:"smooth"});
     }
 
-    var navBtns=document.querySelectorAll(".nav-center-link");
-    for(var i=0;i<navBtns.length;i++){(function(btn){btn.addEventListener("click",function(){switchSection(btn.getAttribute("data-section"));});})(navBtns[i]);}
-    var mobBtns=document.querySelectorAll(".admin-mtab");
-    for(var i=0;i<mobBtns.length;i++){(function(btn){btn.addEventListener("click",function(){switchSection(btn.getAttribute("data-section"));});})(mobBtns[i]);}
-
+    document.querySelectorAll(".nav-center-link").forEach(function(btn){btn.addEventListener("click",function(){switchSection(this.getAttribute("data-section"));});});
+    document.querySelectorAll(".admin-mtab").forEach(function(btn){btn.addEventListener("click",function(){switchSection(this.getAttribute("data-section"));});});
     document.getElementById("goToOrders").addEventListener("click",function(e){e.preventDefault();switchSection("orders");});
     document.getElementById("goToEvents").addEventListener("click",function(e){e.preventDefault();switchSection("events");});
     document.getElementById("logoutBtn").addEventListener("click",function(){sessionStorage.removeItem("pocci4admin");window.location.href="shop.html";});
 
-    // ===== MODAL HELPERS =====
-    function openModal(id){document.getElementById(id).classList.add("active");document.body.style.overflow="hidden";}
-    function closeModal(id){document.getElementById(id).classList.remove("active");document.body.style.overflow="";}
-    function closeOnOverlay(id){document.getElementById(id).addEventListener("click",function(e){if(e.target===this)closeModal(id);});}
-
-    // ===== DATE HELPERS =====
-    function parseDate(val){
-        if(!val) return null;
-        // Firestore Timestamp
-        if(val.seconds) return new Date(val.seconds*1000);
-        // String
-        if(typeof val==="string") return new Date(val+"T00:00:00");
-        // Date object
-        if(val instanceof Date) return val;
-        return new Date();
-    }
-
-    function fDate(ts){
-        var d=parseDate(ts);
-        if(!d||isNaN(d.getTime())) return "-";
-        return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"})+" · "+d.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
-    }
-
-    function fDateShort(val){
-        var d=parseDate(val);
-        if(!d||isNaN(d.getTime())) return "-";
-        return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"});
-    }
-
-    function monthName(m){return["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"][m];}
-
-    function todayStr(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
-
-    function getDateStr(val){
-        if(!val) return "";
-        if(val.seconds){var d=new Date(val.seconds*1000);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
-        if(typeof val==="string") return val;
-        return "";
-    }
+    // Close modals on overlay click
+    document.querySelectorAll(".modal-overlay").forEach(function(ov){
+        ov.addEventListener("click",function(e){if(e.target===ov)closeModal(ov.id);});
+    });
 
     // ============================================================
     //  ORDERS
     // ============================================================
     function loadOrders(){
-        db.collection("orders").orderBy("createdAt","desc").onSnapshot(function(snap){
+        db.collection("orders").onSnapshot(function(snap){
             allOrders=[];
             snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allOrders.push(d);});
-            renderOrders(allOrders);
-            renderRecentOrders();
-            updateDashboard();
-            renderBestsellers();
+            allOrders.sort(function(a,b){
+                var ta=a.createdAt?a.createdAt.seconds:0;
+                var tb=b.createdAt?b.createdAt.seconds:0;
+                return tb-ta;
+            });
+            renderOrders(allOrders);renderRecentOrders();updateDashboard();renderBestsellers();
         },function(err){
-            console.error("Orders error:",err);
+            console.error("Orders:",err);
             document.getElementById("ordersList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+err.message+'</p></div>';
         });
     }
@@ -482,68 +469,32 @@
         if(!orders.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📭</div><h3>Keine Bestellungen</h3><p>Sobald jemand bestellt taucht es hier auf.</p></div>';return;}
         var h="";
         for(var i=0;i<orders.length;i++){
-            var o=orders[i];
-            var dateStr=fDate(o.createdAt);
-            var mc=o.paymentMethod==="paypal"?"method-paypal":"method-vor-ort";
-            var ml=o.paymentMethod==="paypal"?"PayPal":"Vor Ort";
+            var o=orders[i],emojis="",names=[];
+            if(o.items&&o.items.length)for(var j=0;j<o.items.length;j++){emojis+=(o.items[j].emoji||"");names.push(o.items[j].qty+"x "+o.items[j].title);}
+            else if(o.itemsSummary)names.push(o.itemsSummary);
             var done=o.status==="done";
-            var emojis="",names=[];
-            if(o.items&&o.items.length){
-                for(var j=0;j<o.items.length;j++){
-                    emojis+=(o.items[j].emoji||"");
-                    names.push(o.items[j].qty+"x "+o.items[j].title);
-                }
-            } else if(o.itemsSummary){
-                names.push(o.itemsSummary);
-            }
-            h+='<div class="order-row">';
-            h+='<div><div class="order-id">#'+o._id.substring(0,8).toUpperCase()+'</div><div class="order-date">'+dateStr+'</div></div>';
-            h+='<div><div class="order-items-main">'+emojis+'</div><div class="order-items-detail">'+names.join(", ")+'</div></div>';
-            h+='<span class="order-method '+mc+'">'+ml+'</span>';
+            h+='<div class="order-row"><div><div class="order-id">#'+o._id.substring(0,8).toUpperCase()+'</div><div class="order-date">'+fDate(o.createdAt)+'</div></div>';
+            h+='<div><div class="order-items-main">'+emojis+'</div><div class="order-items-detail">'+esc(names.join(", "))+'</div></div>';
+            h+='<span class="order-method '+(o.paymentMethod==="paypal"?"method-paypal":"method-vor-ort")+'">'+(o.paymentMethod==="paypal"?"PayPal":"Vor Ort")+'</span>';
             h+='<div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+" €</div>";
-            h+='<div class="order-actions"><button class="status-btn'+(done?" done":"")+'" data-oid="'+o._id+'">'+(done?"✓ Erledigt":"Offen")+'</button><button class="del-btn" data-oid="'+o._id+'">🗑️</button></div>';
-            h+='</div>';
+            h+='<div class="order-actions"><button class="status-btn'+(done?" done":"")+'" data-oid="'+o._id+'">'+(done?"✓ Erledigt":"Offen")+'</button><button class="del-btn" data-oid="'+o._id+'">🗑️</button></div></div>';
         }
         c.innerHTML=h;
-
-        // Bind status buttons
-        var sBtns=c.querySelectorAll(".status-btn:not(.done)");
-        for(var s=0;s<sBtns.length;s++){
-            (function(btn){
-                btn.addEventListener("click",function(){
-                    db.collection("orders").doc(btn.getAttribute("data-oid")).update({status:"done"});
-                    toast("✓ Als erledigt markiert");
-                });
-            })(sBtns[s]);
-        }
-        // Bind delete buttons
-        var dBtns=c.querySelectorAll(".del-btn[data-oid]");
-        for(var d2=0;d2<dBtns.length;d2++){
-            (function(btn){
-                btn.addEventListener("click",function(){
-                    if(confirm("Bestellung löschen?")){
-                        db.collection("orders").doc(btn.getAttribute("data-oid")).delete();
-                        toast("Bestellung gelöscht","error");
-                    }
-                });
-            })(dBtns[d2]);
-        }
+        c.querySelectorAll(".status-btn:not(.done)").forEach(function(btn){btn.addEventListener("click",function(){db.collection("orders").doc(this.getAttribute("data-oid")).update({status:"done"});toast("✓ Erledigt");});});
+        c.querySelectorAll(".del-btn[data-oid]").forEach(function(btn){btn.addEventListener("click",function(){if(confirm("Bestellung löschen?")){db.collection("orders").doc(this.getAttribute("data-oid")).delete();toast("Gelöscht","error");}});});
     }
 
     function renderRecentOrders(){
-        var c=document.getElementById("recentOrdersList");
-        var recent=allOrders.slice(0,5);
+        var c=document.getElementById("recentOrdersList"),recent=allOrders.slice(0,5);
         if(!recent.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📭</div><p>Noch keine Bestellungen.</p></div>';return;}
         var h="";
         for(var i=0;i<recent.length;i++){
-            var o=recent[i];var names=[];
-            if(o.items){for(var j=0;j<o.items.length;j++)names.push(o.items[j].qty+"x "+o.items[j].title);}
-            else if(o.itemsSummary){names.push(o.itemsSummary);}
-            h+='<div class="order-row" style="grid-template-columns:1fr auto auto">';
-            h+='<div><div class="order-items-main">'+(names.join(", ")||"Bestellung")+'</div><div class="order-date">'+fDate(o.createdAt)+'</div></div>';
+            var o=recent[i],names=[];
+            if(o.items)for(var j=0;j<o.items.length;j++)names.push(o.items[j].qty+"x "+o.items[j].title);
+            else if(o.itemsSummary)names.push(o.itemsSummary);
+            h+='<div class="order-row" style="grid-template-columns:1fr auto auto"><div><div class="order-items-main">'+esc(names.join(", ")||"Bestellung")+'</div><div class="order-date">'+fDate(o.createdAt)+'</div></div>';
             h+='<span class="order-method '+(o.paymentMethod==="paypal"?"method-paypal":"method-vor-ort")+'">'+(o.paymentMethod==="paypal"?"PayPal":"Vor Ort")+'</span>';
-            h+='<div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+' €</div>';
-            h+='</div>';
+            h+='<div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+' €</div></div>';
         }
         c.innerHTML=h;
     }
@@ -553,7 +504,7 @@
         if(!q){renderOrders(allOrders);return;}
         renderOrders(allOrders.filter(function(o){
             var t=(o.itemsSummary||"")+" "+(o.paymentMethod||"")+" "+o._id;
-            if(o.items){for(var i=0;i<o.items.length;i++)t+=" "+o.items[i].title;}
+            if(o.items)for(var i=0;i<o.items.length;i++)t+=" "+o.items[i].title;
             return t.toLowerCase().indexOf(q)!==-1;
         }));
     });
@@ -561,24 +512,15 @@
     // ============================================================
     //  EVENTS
     // ============================================================
-    var editingEventId=null;
-
     function loadEvents(){
         db.collection("events").onSnapshot(function(snap){
             allEvents=[];
             snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allEvents.push(d);});
-            // Sort client-side to avoid index issues
-            allEvents.sort(function(a,b){
-                var da=getDateStr(a.date)||"";
-                var db2=getDateStr(b.date)||"";
-                return db2.localeCompare(da);
-            });
-            renderEvents(allEvents);
-            renderUpcomingEvents();
-            updateDashboard();
+            allEvents.sort(function(a,b){return(getDateStr(b.date)||"").localeCompare(getDateStr(a.date)||"");});
+            renderEvents(allEvents);renderUpcomingEvents();updateDashboard();
         },function(err){
-            console.error("Events error:",err);
-            document.getElementById("eventsList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler beim Laden</h3><p>'+err.message+'</p></div>';
+            console.error("Events:",err);
+            document.getElementById("eventsList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+err.message+'</p></div>';
         });
     }
 
@@ -586,75 +528,38 @@
         var c=document.getElementById("eventsList");
         document.getElementById("eventsCount").textContent=events.length;
         if(!events.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📅</div><h3>Keine Events</h3><p>Erstelle dein erstes Event!</p></div>';return;}
-        var h="";
         var now=new Date();now.setHours(0,0,0,0);
+        var h="";
         for(var i=0;i<events.length;i++){
-            var e=events[i];
-            var dateStr=getDateStr(e.date);
-            var d=dateStr?new Date(dateStr+"T00:00:00"):null;
+            var e=events[i],ds=getDateStr(e.date),d=ds?new Date(ds+"T00:00:00"):null;
             var isPast=d?d<now:false;
             var isPublished=e.published!==false;
-            var statusClass=!isPublished?"event-status-draft":isPast?"event-status-past":"event-status-live";
-            var statusText=!isPublished?"Entwurf":isPast?"Vergangen":"Live";
-
             h+='<div class="event-row">';
-            if(d&&!isNaN(d.getTime())){
-                h+='<div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div>';
-            } else {
-                h+='<div class="event-date-badge"><div class="event-date-day">?</div><div class="event-date-month">TBD</div></div>';
-            }
+            if(d&&!isNaN(d.getTime()))h+='<div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div>';
+            else h+='<div class="event-date-badge"><div class="event-date-day">?</div><div class="event-date-month">TBD</div></div>';
             h+='<div class="event-emoji">'+(e.emoji||"📅")+'</div>';
-            h+='<div><div class="event-title">'+(e.name||"Unbenannt")+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+e.location:"")+(e.maxGuests?" · Max "+e.maxGuests+" Gäste":"")+'</div></div>';
-            h+='<span class="'+statusClass+'">'+statusText+'</span>';
-            h+='<div class="order-actions"><button class="btn btn-sm btn-outline edit-evt-btn" data-eid="'+e._id+'">✏️</button><button class="del-btn" data-eid="'+e._id+'">🗑️</button></div>';
-            h+='</div>';
+            h+='<div><div class="event-title">'+esc(e.name||"Unbenannt")+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+esc(e.location):"")+(e.maxGuests?" · Max "+e.maxGuests+" Gäste":"")+'</div></div>';
+            h+='<span class="'+(!isPublished?"event-status-draft":isPast?"event-status-past":"event-status-live")+'">'+(!isPublished?"Entwurf":isPast?"Vergangen":"Live")+'</span>';
+            h+='<div class="order-actions"><button class="btn btn-sm btn-outline" data-edit-evt="'+e._id+'">✏️</button><button class="del-btn" data-del-evt="'+e._id+'">🗑️</button></div></div>';
         }
         c.innerHTML=h;
-
-        // Bind edit
-        var eBtns=c.querySelectorAll(".edit-evt-btn");
-        for(var i=0;i<eBtns.length;i++){
-            (function(btn){
-                btn.addEventListener("click",function(){editEvent(btn.getAttribute("data-eid"));});
-            })(eBtns[i]);
-        }
-        // Bind delete
-        var dBtns=c.querySelectorAll(".del-btn[data-eid]");
-        for(var i=0;i<dBtns.length;i++){
-            (function(btn){
-                btn.addEventListener("click",function(){
-                    if(confirm("Event löschen?")){
-                        db.collection("events").doc(btn.getAttribute("data-eid")).delete();
-                        toast("Event gelöscht","error");
-                    }
-                });
-            })(dBtns[i]);
-        }
+        c.querySelectorAll("[data-edit-evt]").forEach(function(btn){btn.addEventListener("click",function(){editEvent(this.getAttribute("data-edit-evt"));});});
+        c.querySelectorAll("[data-del-evt]").forEach(function(btn){btn.addEventListener("click",function(){if(confirm("Event löschen?")){db.collection("events").doc(this.getAttribute("data-del-evt")).delete();toast("Event gelöscht","error");}});});
     }
 
     function renderUpcomingEvents(){
         var c=document.getElementById("upcomingEventsList");
         var now=new Date();now.setHours(0,0,0,0);
         var upcoming=allEvents.filter(function(e){
-            if(e.published===false) return false;
-            var ds=getDateStr(e.date);
-            if(!ds) return false;
+            if(e.published===false)return false;
+            var ds=getDateStr(e.date);if(!ds)return false;
             return new Date(ds+"T00:00:00")>=now;
-        }).sort(function(a,b){
-            return (getDateStr(a.date)||"").localeCompare(getDateStr(b.date)||"");
-        }).slice(0,3);
-
+        }).sort(function(a,b){return(getDateStr(a.date)||"").localeCompare(getDateStr(b.date)||"");}).slice(0,3);
         if(!upcoming.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📅</div><p>Keine kommenden Events.</p></div>';return;}
         var h="";
         for(var i=0;i<upcoming.length;i++){
-            var e=upcoming[i];
-            var ds=getDateStr(e.date);
-            var d=ds?new Date(ds+"T00:00:00"):new Date();
-            h+='<div class="event-row" style="grid-template-columns:auto 40px 1fr">';
-            h+='<div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div>';
-            h+='<div class="event-emoji">'+(e.emoji||"📅")+'</div>';
-            h+='<div><div class="event-title">'+(e.name||"")+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+e.location:"")+'</div></div>';
-            h+='</div>';
+            var e=upcoming[i],ds=getDateStr(e.date),d=ds?new Date(ds+"T00:00:00"):new Date();
+            h+='<div class="event-row" style="grid-template-columns:auto 40px 1fr"><div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div><div class="event-emoji">'+(e.emoji||"📅")+'</div><div><div class="event-title">'+esc(e.name||"")+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+esc(e.location):"")+'</div></div></div>';
         }
         c.innerHTML=h;
     }
@@ -662,9 +567,7 @@
     document.getElementById("eventsSearch").addEventListener("input",function(){
         var q=this.value.toLowerCase();
         if(!q){renderEvents(allEvents);return;}
-        renderEvents(allEvents.filter(function(e){
-            return((e.name||"").toLowerCase().indexOf(q)!==-1||(e.location||"").toLowerCase().indexOf(q)!==-1||(e.category||"").toLowerCase().indexOf(q)!==-1);
-        }));
+        renderEvents(allEvents.filter(function(e){return(e.name||"").toLowerCase().indexOf(q)!==-1||(e.location||"").toLowerCase().indexOf(q)!==-1;}));
     });
 
     // Event Modal
@@ -684,13 +587,12 @@
     });
 
     function editEvent(id){
-        var e=null;
-        for(var i=0;i<allEvents.length;i++){if(allEvents[i]._id===id){e=allEvents[i];break;}}
-        if(!e) return;
+        var e=null;for(var i=0;i<allEvents.length;i++){if(allEvents[i]._id===id){e=allEvents[i];break;}}
+        if(!e)return;
         editingEventId=id;
         document.getElementById("eventModalTitle").textContent="Event bearbeiten";
         document.getElementById("evtName").value=e.name||"";
-        document.getElementById("evtEmoji").value=e.emoji||"";
+        document.getElementById("evtEmoji").value=e.emoji||"🎉";
         document.getElementById("evtDate").value=getDateStr(e.date);
         document.getElementById("evtTime").value=e.time||"20:00";
         document.getElementById("evtLocation").value=e.location||"";
@@ -702,51 +604,52 @@
     }
 
     document.getElementById("eventModalSave").addEventListener("click",function(){
-        var name=document.getElementById("evtName").value.trim();
-        if(!name){toast("Name ist Pflicht!","error");return;}
+        var nameField=document.getElementById("evtName");
+        var nameVal=nameField.value.trim();
+
+        console.log("Save clicked, name field value:", nameVal);
+        console.log("Name field element:", nameField);
+
+        if(!nameVal){toast("Name ist Pflicht!","error");nameField.focus();return;}
+
         var data={
-            name:name,
-            emoji:document.getElementById("evtEmoji").value.trim()||"📅",
-            date:document.getElementById("evtDate").value,
-            time:document.getElementById("evtTime").value,
-            location:document.getElementById("evtLocation").value.trim(),
-            description:document.getElementById("evtDesc").value.trim(),
-            category:document.getElementById("evtCategory").value,
-            maxGuests:parseInt(document.getElementById("evtMaxGuests").value)||0,
-            published:document.getElementById("evtPublished").checked,
-            updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+            name: nameVal,
+            emoji: document.getElementById("evtEmoji").value.trim()||"📅",
+            date: document.getElementById("evtDate").value||"",
+            time: document.getElementById("evtTime").value||"",
+            location: document.getElementById("evtLocation").value.trim()||"",
+            description: document.getElementById("evtDesc").value.trim()||"",
+            category: document.getElementById("evtCategory").value||"party",
+            maxGuests: parseInt(document.getElementById("evtMaxGuests").value)||0,
+            published: document.getElementById("evtPublished").checked,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         };
+
+        console.log("Saving data:", JSON.stringify(data));
+
         if(editingEventId){
             db.collection("events").doc(editingEventId).update(data).then(function(){
                 toast("Event aktualisiert! ✓");closeModal("eventModal");
-            }).catch(function(err){toast("Fehler: "+err.message,"error");});
+            }).catch(function(err){console.error(err);toast("Fehler: "+err.message,"error");});
         }else{
             data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
-            db.collection("events").add(data).then(function(){
+            db.collection("events").add(data).then(function(docRef){
+                console.log("Event created with ID:", docRef.id);
                 toast("Event erstellt! 🎉");closeModal("eventModal");
-            }).catch(function(err){toast("Fehler: "+err.message,"error");});
+            }).catch(function(err){console.error(err);toast("Fehler: "+err.message,"error");});
         }
     });
-
-    document.getElementById("eventModalClose").addEventListener("click",function(){closeModal("eventModal");});
-    document.getElementById("eventModalCancel").addEventListener("click",function(){closeModal("eventModal");});
-    closeOnOverlay("eventModal");
 
     // ============================================================
     //  GAME STATS
     // ============================================================
-    var editingPlayerId=null;
-
     function loadPlayers(){
         db.collection("players").onSnapshot(function(snap){
             allPlayers=[];
             snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allPlayers.push(d);});
             allPlayers.sort(function(a,b){return(a.name||"").localeCompare(b.name||"");});
-            updatePlayerDropdown();
-            loadGames();
-        },function(err){
-            console.error("Players error:",err);
-        });
+            updatePlayerDropdown();loadGames();
+        },function(err){console.error("Players:",err);});
     }
 
     function loadGames(){
@@ -754,132 +657,72 @@
             allGames=[];
             snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allGames.push(d);});
             allGames.sort(function(a,b){
-                var da=getDateStr(a.date)||getDateStr(a.createdAt)||"";
-                var db2=getDateStr(b.date)||getDateStr(b.createdAt)||"";
-                return db2.localeCompare(da);
+                var ta=a.createdAt?a.createdAt.seconds:0;
+                var tb=b.createdAt?b.createdAt.seconds:0;
+                return tb-ta;
             });
-            renderLeaderboard();
-            renderRecentGames();
-            updateDashboard();
-        },function(err){
-            console.error("Games error:",err);
-        });
+            renderLeaderboard();renderRecentGames();
+        },function(err){console.error("Games:",err);});
     }
 
     function renderLeaderboard(){
         var c=document.getElementById("gameStatsList");
         document.getElementById("playersCount").textContent=allPlayers.length+" Spieler";
-        if(!allPlayers.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🏆</div><h3>Keine Spieler</h3><p>Füge Spieler hinzu um Stats zu tracken.</p></div>';return;}
-
+        if(!allPlayers.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🏆</div><h3>Keine Spieler</h3><p>Füge Spieler hinzu!</p></div>';return;}
         var wins={};
-        for(var i=0;i<allGames.length;i++){
-            var w=allGames[i].winnerId;
-            if(w){
-                if(!wins[w])wins[w]={total:0,games:{}};
-                wins[w].total++;
-                var gt=allGames[i].type||"other";
-                if(!wins[w].games[gt])wins[w].games[gt]=0;
-                wins[w].games[gt]++;
-            }
-        }
-
-        var sorted=allPlayers.slice().sort(function(a,b){
-            return(wins[b._id]?wins[b._id].total:0)-(wins[a._id]?wins[a._id].total:0);
-        });
-
-        var totalGames=allGames.length;
+        for(var i=0;i<allGames.length;i++){var w=allGames[i].winnerId;if(w){if(!wins[w])wins[w]={total:0,types:{}};wins[w].total++;var gt=allGames[i].type||"other";if(!wins[w].types[gt])wins[w].types[gt]=0;wins[w].types[gt]++;}}
+        var sorted=allPlayers.slice().sort(function(a,b){return(wins[b._id]?wins[b._id].total:0)-(wins[a._id]?wins[a._id].total:0);});
+        var totalG=allGames.length;
         var h="";
         for(var i=0;i<sorted.length;i++){
-            var p=sorted[i];
-            var w=wins[p._id]||{total:0,games:{}};
+            var p=sorted[i],w=wins[p._id]||{total:0,types:{}};
             var medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":String(i+1)+".";
-            var rate=totalGames>0?Math.round(w.total/totalGames*100):0;
-
-            h+='<div class="game-row">';
-            h+='<div class="game-rank">'+medal+'</div>';
-            h+='<div class="game-player"><div class="game-avatar" style="background:'+(p.color||"#C03A2B")+'">'+(p.emoji||"😎")+'</div><div class="game-name">'+(p.name||"?")+'</div></div>';
-            h+='<div class="game-stat">'+w.total+'<div class="game-stat-label">Siege</div></div>';
-            h+='<div class="game-stat">'+rate+'%<div class="game-stat-label">Winrate</div></div>';
-            h+='<div class="game-stat">'+Object.keys(w.games).length+'<div class="game-stat-label">Spiele</div></div>';
-            h+='<div class="order-actions"><button class="btn btn-sm btn-outline edit-plr-btn" data-pid="'+p._id+'">✏️</button><button class="del-btn" data-pid="'+p._id+'">🗑️</button></div>';
-            h+='</div>';
+            var rate=totalG>0?Math.round(w.total/totalG*100):0;
+            h+='<div class="game-row"><div class="game-rank">'+medal+'</div><div class="game-player"><div class="game-avatar" style="background:'+(p.color||"#C03A2B")+'">'+(p.emoji||"😎")+'</div><div class="game-name">'+esc(p.name)+'</div></div>';
+            h+='<div class="game-stat">'+w.total+'<div class="game-stat-label">Siege</div></div><div class="game-stat">'+rate+'%<div class="game-stat-label">Winrate</div></div><div class="game-stat">'+Object.keys(w.types).length+'<div class="game-stat-label">Spiele</div></div>';
+            h+='<div class="order-actions"><button class="btn btn-sm btn-outline" data-edit-plr="'+p._id+'">✏️</button><button class="del-btn" data-del-plr="'+p._id+'">🗑️</button></div></div>';
         }
         c.innerHTML=h;
-
-        var eBtns=c.querySelectorAll(".edit-plr-btn");
-        for(var i=0;i<eBtns.length;i++){
-            (function(btn){btn.addEventListener("click",function(){editPlayer(btn.getAttribute("data-pid"));});})(eBtns[i]);
-        }
-        var dBtns=c.querySelectorAll(".del-btn[data-pid]");
-        for(var i=0;i<dBtns.length;i++){
-            (function(btn){btn.addEventListener("click",function(){
-                if(confirm("Spieler löschen?")){db.collection("players").doc(btn.getAttribute("data-pid")).delete();toast("Spieler gelöscht","error");}
-            });})(dBtns[i]);
-        }
+        c.querySelectorAll("[data-edit-plr]").forEach(function(btn){btn.addEventListener("click",function(){editPlayer(this.getAttribute("data-edit-plr"));});});
+        c.querySelectorAll("[data-del-plr]").forEach(function(btn){btn.addEventListener("click",function(){if(confirm("Spieler löschen?")){db.collection("players").doc(this.getAttribute("data-del-plr")).delete();toast("Gelöscht","error");}});});
     }
 
     function renderRecentGames(){
         var c=document.getElementById("recentGamesList");
-        if(!allGames.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🎮</div><p>Noch keine Spiele eingetragen.</p></div>';return;}
-        var gameEmojis={flunkyball:"🍺",bierpong:"🏓",catan:"🏝️","mario-kart":"🏎️",other:"🎮"};
+        if(!allGames.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🎮</div><p>Noch keine Spiele.</p></div>';return;}
+        var ge={flunkyball:"🍺",bierpong:"🏓",catan:"🏝️","mario-kart":"🏎️",other:"🎮"};
         var h="";
-        var max=Math.min(allGames.length,20);
-        for(var i=0;i<max;i++){
-            var g=allGames[i];
-            var winner=null;
+        for(var i=0;i<Math.min(allGames.length,20);i++){
+            var g=allGames[i],winner=null;
             for(var j=0;j<allPlayers.length;j++){if(allPlayers[j]._id===g.winnerId){winner=allPlayers[j];break;}}
-            var gameType=(g.type||"other");
-            var gameLabel=gameType.charAt(0).toUpperCase()+gameType.slice(1).replace("-"," ");
-            var dateDisplay=getDateStr(g.date)||fDateShort(g.createdAt)||"-";
-
-            h+='<div class="order-row" style="grid-template-columns:auto 1fr auto auto auto">';
-            h+='<div style="font-size:1.5rem">'+(gameEmojis[gameType]||"🎮")+'</div>';
-            h+='<div><div style="font-weight:800;font-size:.9rem">'+gameLabel+'</div><div class="order-date">'+(g.notes||"")+'</div></div>';
-            h+='<div style="font-weight:700;font-size:.85rem">🏆 '+(winner?winner.name:"?")+'</div>';
-            h+='<div class="order-date">'+dateDisplay+'</div>';
-            h+='<button class="del-btn" data-gid="'+g._id+'">🗑️</button>';
-            h+='</div>';
+            var gt=(g.type||"other"),gl=gt.charAt(0).toUpperCase()+gt.slice(1).replace("-"," ");
+            h+='<div class="order-row" style="grid-template-columns:auto 1fr auto auto auto"><div style="font-size:1.5rem">'+(ge[gt]||"🎮")+'</div>';
+            h+='<div><div style="font-weight:800;font-size:.9rem">'+esc(gl)+'</div><div class="order-date">'+esc(g.notes||"")+'</div></div>';
+            h+='<div style="font-weight:700;font-size:.85rem">🏆 '+esc(winner?winner.name:"?")+'</div>';
+            h+='<div class="order-date">'+(getDateStr(g.date)||fDate(g.createdAt))+'</div>';
+            h+='<button class="del-btn" data-del-game="'+g._id+'">🗑️</button></div>';
         }
         c.innerHTML=h;
-
-        var dBtns=c.querySelectorAll(".del-btn[data-gid]");
-        for(var i=0;i<dBtns.length;i++){
-            (function(btn){btn.addEventListener("click",function(){
-                if(confirm("Spiel löschen?")){db.collection("games").doc(btn.getAttribute("data-gid")).delete();toast("Spiel gelöscht","error");}
-            });})(dBtns[i]);
-        }
+        c.querySelectorAll("[data-del-game]").forEach(function(btn){btn.addEventListener("click",function(){if(confirm("Spiel löschen?")){db.collection("games").doc(this.getAttribute("data-del-game")).delete();toast("Gelöscht","error");}});});
     }
 
     function updatePlayerDropdown(){
         var sel=document.getElementById("gmWinner");
         sel.innerHTML='<option value="">-- Spieler wählen --</option>';
-        for(var i=0;i<allPlayers.length;i++){
-            var o=document.createElement("option");
-            o.value=allPlayers[i]._id;
-            o.textContent=(allPlayers[i].emoji||"")+" "+allPlayers[i].name;
-            sel.appendChild(o);
-        }
+        for(var i=0;i<allPlayers.length;i++){var o=document.createElement("option");o.value=allPlayers[i]._id;o.textContent=(allPlayers[i].emoji||"")+" "+allPlayers[i].name;sel.appendChild(o);}
     }
 
-    // Player Modal
     document.getElementById("addPlayerBtn").addEventListener("click",function(){
-        editingPlayerId=null;
-        document.getElementById("playerModalTitle").textContent="Neuer Spieler";
-        document.getElementById("plrName").value="";
-        document.getElementById("plrEmoji").value="😎";
-        document.getElementById("plrColor").value="#C03A2B";
+        editingPlayerId=null;document.getElementById("playerModalTitle").textContent="Neuer Spieler";
+        document.getElementById("plrName").value="";document.getElementById("plrEmoji").value="😎";document.getElementById("plrColor").value="#C03A2B";
         openModal("playerModal");
     });
 
     function editPlayer(id){
-        var p=null;
-        for(var i=0;i<allPlayers.length;i++){if(allPlayers[i]._id===id){p=allPlayers[i];break;}}
-        if(!p) return;
-        editingPlayerId=id;
+        var p=null;for(var i=0;i<allPlayers.length;i++){if(allPlayers[i]._id===id){p=allPlayers[i];break;}}
+        if(!p)return;editingPlayerId=id;
         document.getElementById("playerModalTitle").textContent="Spieler bearbeiten";
-        document.getElementById("plrName").value=p.name||"";
-        document.getElementById("plrEmoji").value=p.emoji||"";
-        document.getElementById("plrColor").value=p.color||"#C03A2B";
+        document.getElementById("plrName").value=p.name||"";document.getElementById("plrEmoji").value=p.emoji||"";document.getElementById("plrColor").value=p.color||"#C03A2B";
         openModal("playerModal");
     }
 
@@ -887,107 +730,70 @@
         var name=document.getElementById("plrName").value.trim();
         if(!name){toast("Name ist Pflicht!","error");return;}
         var data={name:name,emoji:document.getElementById("plrEmoji").value.trim()||"😎",color:document.getElementById("plrColor").value};
-        if(editingPlayerId){
-            db.collection("players").doc(editingPlayerId).update(data).then(function(){toast("Spieler aktualisiert ✓");closeModal("playerModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
-        }else{
-            db.collection("players").add(data).then(function(){toast("Spieler hinzugefügt! 🎮");closeModal("playerModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
-        }
+        if(editingPlayerId){db.collection("players").doc(editingPlayerId).update(data).then(function(){toast("Aktualisiert ✓");closeModal("playerModal");}).catch(function(err){toast("Fehler","error");});}
+        else{db.collection("players").add(data).then(function(){toast("Spieler hinzugefügt! 🎮");closeModal("playerModal");}).catch(function(err){toast("Fehler","error");});}
     });
 
-    document.getElementById("playerModalClose").addEventListener("click",function(){closeModal("playerModal");});
-    document.getElementById("playerModalCancel").addEventListener("click",function(){closeModal("playerModal");});
-    closeOnOverlay("playerModal");
-
-    // Game Modal
     document.getElementById("addGameBtn").addEventListener("click",function(){
         if(!allPlayers.length){toast("Erst Spieler hinzufügen!","error");return;}
-        document.getElementById("gmDate").value=todayStr();
-        document.getElementById("gmNotes").value="";
-        document.getElementById("gmType").value="flunkyball";
+        document.getElementById("gmDate").value=todayStr();document.getElementById("gmNotes").value="";document.getElementById("gmType").value="flunkyball";
         openModal("gameModal");
     });
 
     document.getElementById("gameModalSave").addEventListener("click",function(){
         var winnerId=document.getElementById("gmWinner").value;
-        if(!winnerId){toast("Bitte Gewinner wählen!","error");return;}
+        if(!winnerId){toast("Gewinner wählen!","error");return;}
         db.collection("games").add({
-            type:document.getElementById("gmType").value,
-            winnerId:winnerId,
-            date:document.getElementById("gmDate").value,
-            notes:document.getElementById("gmNotes").value.trim(),
+            type:document.getElementById("gmType").value,winnerId:winnerId,
+            date:document.getElementById("gmDate").value,notes:document.getElementById("gmNotes").value.trim(),
             createdAt:firebase.firestore.FieldValue.serverTimestamp()
-        }).then(function(){toast("Spiel eingetragen! 🏆");closeModal("gameModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
+        }).then(function(){toast("Spiel eingetragen! 🏆");closeModal("gameModal");}).catch(function(err){toast("Fehler","error");});
     });
 
-    document.getElementById("gameModalClose").addEventListener("click",function(){closeModal("gameModal");});
-    document.getElementById("gameModalCancel").addEventListener("click",function(){closeModal("gameModal");});
-    closeOnOverlay("gameModal");
-
     // ============================================================
-    //  CONTENT MANAGEMENT
+    //  CONTENT
     // ============================================================
 
-    // -- MEMBERS --
+    // MEMBERS
     function loadMembers(){
         db.collection("content").doc("members").onSnapshot(function(doc){
-            var data=doc.exists?doc.data():{list:[]};
-            var list=data.list||[];
-            document.getElementById("membersPreview").textContent=list.length?list.map(function(m){return(m.emoji||"")+" "+m.name;}).join(", "):"Noch keine Mitglieder.";
-        },function(err){console.error("Members error:",err);});
+            var list=(doc.exists?doc.data():{}).list||[];
+            document.getElementById("membersPreview").textContent=list.length?list.map(function(m){return(m.emoji||"")+" "+m.name;}).join(", "):"Keine Mitglieder.";
+        },function(err){console.error(err);});
     }
 
     document.getElementById("editMembersBtn").addEventListener("click",function(){
         db.collection("content").doc("members").get().then(function(doc){
-            var data=doc.exists?doc.data():{list:[]};
-            renderMembersForm(data.list||[]);
+            var list=(doc.exists?doc.data():{}).list||[];
+            var c=document.getElementById("membersModalBody");c.innerHTML="";
+            for(var i=0;i<list.length;i++)addMemberRow(c,list[i]);
             openModal("membersModal");
         });
     });
 
-    function renderMembersForm(list){
-        var c=document.getElementById("membersModalBody");c.innerHTML="";
-        for(var i=0;i<list.length;i++){addMemberRow(c,list[i]);}
-    }
-
     function addMemberRow(container,data){
-        data=data||{name:"",emoji:"",bio:"",instagram:""};
-        var div=document.createElement("div");
-        div.style.cssText="padding:1rem;background:var(--color-bg);border-radius:14px;margin-bottom:.75rem";
-        div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Name</label><input type="text" class="form-input member-name" value="'+escHTML(data.name)+'"></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Emoji</label><input type="text" class="form-input member-emoji" value="'+escHTML(data.emoji)+'" maxlength="4"></div></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Bio</label><input type="text" class="form-input member-bio" value="'+escHTML(data.bio)+'"></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Instagram</label><input type="text" class="form-input member-insta" value="'+escHTML(data.instagram)+'"></div><button class="btn btn-sm btn-danger" style="margin-top:.25rem">Entfernen</button>';
+        data=data||{};
+        var div=document.createElement("div");div.className="member-block";
+        div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Name</label><input type="text" class="form-input m-name" value="'+esc(data.name)+'"></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Emoji</label><input type="text" class="form-input m-emoji" value="'+esc(data.emoji)+'" maxlength="4"></div></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Bio</label><input type="text" class="form-input m-bio" value="'+esc(data.bio)+'"></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Instagram</label><input type="text" class="form-input m-insta" value="'+esc(data.instagram)+'"></div><button class="btn btn-sm btn-danger">Entfernen</button>';
         div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});
         container.appendChild(div);
     }
 
-    function escHTML(str){return(str||"").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-
-    document.getElementById("addMemberBtn").addEventListener("click",function(){
-        addMemberRow(document.getElementById("membersModalBody"));
-    });
+    document.getElementById("addMemberBtn").addEventListener("click",function(){addMemberRow(document.getElementById("membersModalBody"));});
 
     document.getElementById("membersModalSave").addEventListener("click",function(){
-        var items=document.getElementById("membersModalBody").children;
+        var items=document.getElementById("membersModalBody").querySelectorAll(".member-block");
         var list=[];
-        for(var i=0;i<items.length;i++){
-            var name=items[i].querySelector(".member-name").value.trim();
-            if(name)list.push({
-                name:name,
-                emoji:items[i].querySelector(".member-emoji").value.trim(),
-                bio:items[i].querySelector(".member-bio").value.trim(),
-                instagram:items[i].querySelector(".member-insta").value.trim()
-            });
-        }
-        db.collection("content").doc("members").set({list:list}).then(function(){toast("Mitglieder gespeichert ✓");closeModal("membersModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
+        items.forEach(function(el){var n=el.querySelector(".m-name").value.trim();if(n)list.push({name:n,emoji:el.querySelector(".m-emoji").value.trim(),bio:el.querySelector(".m-bio").value.trim(),instagram:el.querySelector(".m-insta").value.trim()});});
+        db.collection("content").doc("members").set({list:list}).then(function(){toast("Gespeichert ✓");closeModal("membersModal");}).catch(function(err){toast("Fehler","error");});
     });
 
-    document.getElementById("membersModalClose").addEventListener("click",function(){closeModal("membersModal");});
-    closeOnOverlay("membersModal");
-
-    // -- TEXTS --
+    // TEXTS
     function loadTexts(){
         db.collection("content").doc("texts").onSnapshot(function(doc){
-            var data=doc.exists?doc.data():{};
-            document.getElementById("textsPreview").textContent=data.heroTitle||"Noch nicht konfiguriert.";
-        },function(err){console.error("Texts error:",err);});
+            var d=doc.exists?doc.data():{};
+            document.getElementById("textsPreview").textContent=d.heroTitle||"Nicht konfiguriert.";
+        },function(err){console.error(err);});
     }
 
     document.getElementById("editTextsBtn").addEventListener("click",function(){
@@ -1007,146 +813,100 @@
             heroSubtitle:document.getElementById("txtHeroSub").value.trim(),
             aboutText:document.getElementById("txtAbout").value.trim(),
             disclaimer:document.getElementById("txtDisclaimer").value.trim()
-        }).then(function(){toast("Texte gespeichert ✓");closeModal("textsModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
+        }).then(function(){toast("Texte gespeichert ✓");closeModal("textsModal");}).catch(function(err){toast("Fehler","error");});
     });
 
-    document.getElementById("textsModalClose").addEventListener("click",function(){closeModal("textsModal");});
-    document.getElementById("textsModalCancel").addEventListener("click",function(){closeModal("textsModal");});
-    closeOnOverlay("textsModal");
-
-    // -- SOCIALS --
+    // SOCIALS
     function loadSocials(){
         db.collection("content").doc("socials").onSnapshot(function(doc){
-            var data=doc.exists?doc.data():{links:[]};
-            var links=data.links||[];
+            var links=(doc.exists?doc.data():{}).links||[];
             document.getElementById("socialsPreview").textContent=links.length?links.map(function(l){return l.label;}).join(", "):"Keine Links.";
-        },function(err){console.error("Socials error:",err);});
+        },function(err){console.error(err);});
     }
 
     document.getElementById("editSocialsBtn").addEventListener("click",function(){
         db.collection("content").doc("socials").get().then(function(doc){
-            var data=doc.exists?doc.data():{links:[]};
-            renderSocialsForm(data.links||[]);
+            var links=(doc.exists?doc.data():{}).links||[];
+            var c=document.getElementById("socialsModalBody");c.innerHTML="";
+            for(var i=0;i<links.length;i++)addSocialRow(c,links[i]);
             openModal("socialsModal");
         });
     });
 
-    function renderSocialsForm(links){
-        var c=document.getElementById("socialsModalBody");c.innerHTML="";
-        for(var i=0;i<links.length;i++){addSocialRow(c,links[i]);}
-    }
-
     function addSocialRow(container,data){
-        data=data||{label:"",url:""};
-        var div=document.createElement("div");
-        div.style.cssText="padding:.75rem;background:var(--color-bg);border-radius:12px;margin-bottom:.5rem";
-        div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:0"><label class="form-label">Label</label><input type="text" class="form-input social-label" value="'+escHTML(data.label)+'"></div><div class="form-group" style="margin-bottom:0"><label class="form-label">URL</label><input type="text" class="form-input social-url" value="'+escHTML(data.url)+'"></div></div><button class="btn btn-sm btn-danger" style="margin-top:.5rem">Entfernen</button>';
+        data=data||{};
+        var div=document.createElement("div");div.className="social-block";
+        div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:0"><label class="form-label">Label</label><input type="text" class="form-input s-label" value="'+esc(data.label)+'"></div><div class="form-group" style="margin-bottom:0"><label class="form-label">URL</label><input type="text" class="form-input s-url" value="'+esc(data.url)+'"></div></div><button class="btn btn-sm btn-danger" style="margin-top:.5rem">Entfernen</button>';
         div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});
         container.appendChild(div);
     }
 
-    document.getElementById("addSocialBtn").addEventListener("click",function(){
-        addSocialRow(document.getElementById("socialsModalBody"));
-    });
+    document.getElementById("addSocialBtn").addEventListener("click",function(){addSocialRow(document.getElementById("socialsModalBody"));});
 
     document.getElementById("socialsModalSave").addEventListener("click",function(){
-        var items=document.getElementById("socialsModalBody").children;
+        var items=document.getElementById("socialsModalBody").querySelectorAll(".social-block");
         var links=[];
-        for(var i=0;i<items.length;i++){
-            var label=items[i].querySelector(".social-label").value.trim();
-            var url=items[i].querySelector(".social-url").value.trim();
-            if(label&&url)links.push({label:label,url:url});
-        }
-        db.collection("content").doc("socials").set({links:links}).then(function(){toast("Social Links gespeichert ✓");closeModal("socialsModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
+        items.forEach(function(el){var l=el.querySelector(".s-label").value.trim(),u=el.querySelector(".s-url").value.trim();if(l&&u)links.push({label:l,url:u});});
+        db.collection("content").doc("socials").set({links:links}).then(function(){toast("Gespeichert ✓");closeModal("socialsModal");}).catch(function(err){toast("Fehler","error");});
     });
 
-    document.getElementById("socialsModalClose").addEventListener("click",function(){closeModal("socialsModal");});
-    closeOnOverlay("socialsModal");
-
-    // -- GALLERY --
+    // GALLERY
     function loadGallery(){
         db.collection("content").doc("gallery").onSnapshot(function(doc){
-            var data=doc.exists?doc.data():{images:[]};
-            var imgs=data.images||[];
+            var imgs=(doc.exists?doc.data():{}).images||[];
             document.getElementById("galleryPreview").textContent=imgs.length?imgs.length+" Bilder":"Keine Bilder.";
-        },function(err){console.error("Gallery error:",err);});
+        },function(err){console.error(err);});
     }
 
     document.getElementById("editGalleryBtn").addEventListener("click",function(){
         db.collection("content").doc("gallery").get().then(function(doc){
-            var data=doc.exists?doc.data():{images:[]};
-            renderGalleryForm(data.images||[]);
+            var imgs=(doc.exists?doc.data():{}).images||[];
+            var c=document.getElementById("galleryModalBody");c.innerHTML="";
+            for(var i=0;i<imgs.length;i++)addGalleryRow(c,imgs[i]);
             openModal("galleryModal");
         });
     });
 
-    function renderGalleryForm(images){
-        var c=document.getElementById("galleryModalBody");c.innerHTML="";
-        for(var i=0;i<images.length;i++){addGalleryRow(c,images[i]);}
-    }
-
     function addGalleryRow(container,data){
-        data=data||{url:"",caption:""};
-        var div=document.createElement("div");
+        data=data||{};
+        var div=document.createElement("div");div.className="gallery-block";
         div.style.cssText="display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem";
-        div.innerHTML='<input type="text" class="form-input gallery-url" value="'+escHTML(data.url)+'" placeholder="https://..." style="flex:1"><input type="text" class="form-input gallery-cap" value="'+escHTML(data.caption)+'" placeholder="Caption" style="width:140px"><button class="btn btn-sm btn-danger">✕</button>';
+        div.innerHTML='<input type="text" class="form-input g-url" value="'+esc(data.url)+'" placeholder="https://..." style="flex:1"><input type="text" class="form-input g-cap" value="'+esc(data.caption)+'" placeholder="Caption" style="width:140px"><button class="btn btn-sm btn-danger">✕</button>';
         div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});
         container.appendChild(div);
     }
 
-    document.getElementById("addGalleryBtn").addEventListener("click",function(){
-        addGalleryRow(document.getElementById("galleryModalBody"));
-    });
+    document.getElementById("addGalleryBtn").addEventListener("click",function(){addGalleryRow(document.getElementById("galleryModalBody"));});
 
     document.getElementById("galleryModalSave").addEventListener("click",function(){
-        var items=document.getElementById("galleryModalBody").children;
+        var items=document.getElementById("galleryModalBody").querySelectorAll(".gallery-block");
         var images=[];
-        for(var i=0;i<items.length;i++){
-            var url=items[i].querySelector(".gallery-url").value.trim();
-            if(url)images.push({url:url,caption:items[i].querySelector(".gallery-cap").value.trim()});
-        }
-        db.collection("content").doc("gallery").set({images:images}).then(function(){toast("Galerie gespeichert ✓");closeModal("galleryModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
+        items.forEach(function(el){var u=el.querySelector(".g-url").value.trim();if(u)images.push({url:u,caption:el.querySelector(".g-cap").value.trim()});});
+        db.collection("content").doc("gallery").set({images:images}).then(function(){toast("Gespeichert ✓");closeModal("galleryModal");}).catch(function(err){toast("Fehler","error");});
     });
-
-    document.getElementById("galleryModalClose").addEventListener("click",function(){closeModal("galleryModal");});
-    closeOnOverlay("galleryModal");
 
     // ============================================================
     //  DASHBOARD
     // ============================================================
     function updateDashboard(){
-        var totalRev=0,totalItems=0;
-        for(var i=0;i<allOrders.length;i++){
-            totalRev+=allOrders[i].total||0;
-            if(allOrders[i].items){for(var j=0;j<allOrders[i].items.length;j++)totalItems+=allOrders[i].items[j].qty||0;}
-        }
+        var rev=0,items=0;
+        for(var i=0;i<allOrders.length;i++){rev+=allOrders[i].total||0;if(allOrders[i].items)for(var j=0;j<allOrders[i].items.length;j++)items+=allOrders[i].items[j].qty||0;}
         document.getElementById("statOrders").textContent=allOrders.length;
-        document.getElementById("statRevenue").textContent=totalRev.toFixed(2).replace(".",",");
-        document.getElementById("statItems").textContent=totalItems;
+        document.getElementById("statRevenue").textContent=rev.toFixed(2).replace(".",",");
+        document.getElementById("statItems").textContent=items;
         document.getElementById("statEvents").textContent=allEvents.length;
     }
 
     function renderBestsellers(){
         var counts={};
-        for(var i=0;i<allOrders.length;i++){
-            if(!allOrders[i].items)continue;
-            for(var j=0;j<allOrders[i].items.length;j++){
-                var item=allOrders[i].items[j];
-                var id=item.id||item.title;
-                if(!counts[id])counts[id]={title:item.title,emoji:item.emoji||"",qty:0,revenue:0};
-                counts[id].qty+=item.qty||0;
-                counts[id].revenue+=(item.price||0)*(item.qty||0);
-            }
-        }
+        for(var i=0;i<allOrders.length;i++){if(!allOrders[i].items)continue;for(var j=0;j<allOrders[i].items.length;j++){var it=allOrders[i].items[j],id=it.id||it.title;if(!counts[id])counts[id]={title:it.title,emoji:it.emoji||"",qty:0,rev:0};counts[id].qty+=it.qty||0;counts[id].rev+=(it.price||0)*(it.qty||0);}}
         var sorted=Object.keys(counts).map(function(k){return counts[k];}).sort(function(a,b){return b.qty-a.qty;});
         var c=document.getElementById("bestsellerList");
-        if(!sorted.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📊</div><p>Noch keine Verkaufsdaten.</p></div>';return;}
+        if(!sorted.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📊</div><p>Noch keine Daten.</p></div>';return;}
         var h="";
-        var max=Math.min(sorted.length,5);
-        for(var i=0;i<max;i++){
-            var s=sorted[i];
-            var medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":String(i+1)+".";
-            h+='<div class="best-row"><div class="best-rank">'+medal+'</div><div class="best-emoji">'+s.emoji+'</div><div><div class="best-title">'+s.title+'</div></div><div class="best-qty">'+s.qty+'x<div class="best-sub">Verkauft</div></div><div class="best-rev">'+s.revenue.toFixed(2).replace(".",",")+' €<div class="best-sub">Umsatz</div></div></div>';
+        for(var i=0;i<Math.min(sorted.length,5);i++){
+            var s=sorted[i],medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":String(i+1)+".";
+            h+='<div class="best-row"><div class="best-rank">'+medal+'</div><div class="best-emoji">'+s.emoji+'</div><div><div class="best-title">'+esc(s.title)+'</div></div><div class="best-qty">'+s.qty+'x<div class="best-sub">Verkauft</div></div><div class="best-rev">'+s.rev.toFixed(2).replace(".",",")+' €<div class="best-sub">Umsatz</div></div></div>';
         }
         c.innerHTML=h;
     }
@@ -1154,16 +914,9 @@
     // ============================================================
     //  INIT
     // ============================================================
-    loadOrders();
-    loadEvents();
-    loadPlayers();
-    loadMembers();
-    loadTexts();
-    loadSocials();
-    loadGallery();
+    loadOrders();loadEvents();loadPlayers();loadMembers();loadTexts();loadSocials();loadGallery();
 
 })();
 </script>
-
 </body>
 </html>
