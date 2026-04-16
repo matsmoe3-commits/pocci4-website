@@ -499,7 +499,6 @@
 <!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-
 <script>
 (function(){
     // ===== AUTH =====
@@ -510,7 +509,7 @@
     if(!firebase.apps.length)firebase.initializeApp(fc);
     var db=firebase.firestore();
 
-    // ===== PRODUCTS (for order display) =====
+    // ===== PRODUCTS =====
     var products=[
         {id:1,title:"Immobilienbewertung by Mats",emoji:"🏠",price:49.99},
         {id:2,title:"Trainingsplan by Andrei",emoji:"💪",price:29.99},
@@ -545,16 +544,17 @@
     function switchSection(name){
         var secs=document.querySelectorAll(".admin-section");
         for(var i=0;i<secs.length;i++)secs[i].classList.toggle("active",secs[i].id==="sec-"+name);
-        var navBtns=document.querySelectorAll(".nav-center-link");
-        for(var i=0;i<navBtns.length;i++)navBtns[i].classList.toggle("active",navBtns[i].getAttribute("data-section")===name);
-        var mobBtns=document.querySelectorAll(".admin-mtab");
-        for(var i=0;i<mobBtns.length;i++)mobBtns[i].classList.toggle("active",mobBtns[i].getAttribute("data-section")===name);
+        var nBtns=document.querySelectorAll(".nav-center-link");
+        for(var i=0;i<nBtns.length;i++)nBtns[i].classList.toggle("active",nBtns[i].getAttribute("data-section")===name);
+        var mBtns=document.querySelectorAll(".admin-mtab");
+        for(var i=0;i<mBtns.length;i++)mBtns[i].classList.toggle("active",mBtns[i].getAttribute("data-section")===name);
         window.scrollTo({top:0,behavior:"smooth"});
     }
+
     var navBtns=document.querySelectorAll(".nav-center-link");
-    for(var i=0;i<navBtns.length;i++)navBtns[i].addEventListener("click",function(){switchSection(this.getAttribute("data-section"));});
+    for(var i=0;i<navBtns.length;i++){(function(btn){btn.addEventListener("click",function(){switchSection(btn.getAttribute("data-section"));});})(navBtns[i]);}
     var mobBtns=document.querySelectorAll(".admin-mtab");
-    for(var i=0;i<mobBtns.length;i++)mobBtns[i].addEventListener("click",function(){switchSection(this.getAttribute("data-section"));});
+    for(var i=0;i<mobBtns.length;i++){(function(btn){btn.addEventListener("click",function(){switchSection(btn.getAttribute("data-section"));});})(mobBtns[i]);}
 
     document.getElementById("goToOrders").addEventListener("click",function(e){e.preventDefault();switchSection("orders");});
     document.getElementById("goToEvents").addEventListener("click",function(e){e.preventDefault();switchSection("events");});
@@ -566,9 +566,39 @@
     function closeOnOverlay(id){document.getElementById(id).addEventListener("click",function(e){if(e.target===this)closeModal(id);});}
 
     // ===== DATE HELPERS =====
-    function fDate(ts){if(!ts)return"-";var d=new Date(ts.seconds*1000);return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"})+" · "+d.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});}
+    function parseDate(val){
+        if(!val) return null;
+        // Firestore Timestamp
+        if(val.seconds) return new Date(val.seconds*1000);
+        // String
+        if(typeof val==="string") return new Date(val+"T00:00:00");
+        // Date object
+        if(val instanceof Date) return val;
+        return new Date();
+    }
+
+    function fDate(ts){
+        var d=parseDate(ts);
+        if(!d||isNaN(d.getTime())) return "-";
+        return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"})+" · "+d.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
+    }
+
+    function fDateShort(val){
+        var d=parseDate(val);
+        if(!d||isNaN(d.getTime())) return "-";
+        return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"});
+    }
+
     function monthName(m){return["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"][m];}
+
     function todayStr(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+
+    function getDateStr(val){
+        if(!val) return "";
+        if(val.seconds){var d=new Date(val.seconds*1000);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+        if(typeof val==="string") return val;
+        return "";
+    }
 
     // ============================================================
     //  ORDERS
@@ -581,6 +611,9 @@
             renderRecentOrders();
             updateDashboard();
             renderBestsellers();
+        },function(err){
+            console.error("Orders error:",err);
+            document.getElementById("ordersList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+err.message+'</p></div>';
         });
     }
 
@@ -596,25 +629,46 @@
             var ml=o.paymentMethod==="paypal"?"PayPal":"Vor Ort";
             var done=o.status==="done";
             var emojis="",names=[];
-            if(o.items&&o.items.length){for(var j=0;j<o.items.length;j++){emojis+=(o.items[j].emoji||"");names.push(o.items[j].qty+"x "+o.items[j].title);}}
-            else if(o.itemsSummary)names.push(o.itemsSummary);
+            if(o.items&&o.items.length){
+                for(var j=0;j<o.items.length;j++){
+                    emojis+=(o.items[j].emoji||"");
+                    names.push(o.items[j].qty+"x "+o.items[j].title);
+                }
+            } else if(o.itemsSummary){
+                names.push(o.itemsSummary);
+            }
             h+='<div class="order-row">';
             h+='<div><div class="order-id">#'+o._id.substring(0,8).toUpperCase()+'</div><div class="order-date">'+dateStr+'</div></div>';
             h+='<div><div class="order-items-main">'+emojis+'</div><div class="order-items-detail">'+names.join(", ")+'</div></div>';
             h+='<span class="order-method '+mc+'">'+ml+'</span>';
             h+='<div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+" €</div>";
-            h+='<div class="order-actions"><button class="status-btn'+(done?" done":"")+'" data-id="'+o._id+'">'+(done?"✓ Erledigt":"Offen")+'</button><button class="del-btn" data-id="'+o._id+'">🗑️</button></div>';
+            h+='<div class="order-actions"><button class="status-btn'+(done?" done":"")+'" data-oid="'+o._id+'">'+(done?"✓ Erledigt":"Offen")+'</button><button class="del-btn" data-oid="'+o._id+'">🗑️</button></div>';
             h+='</div>';
         }
         c.innerHTML=h;
-        bindOrderBtns(c);
-    }
 
-    function bindOrderBtns(c){
-        var sb=c.querySelectorAll(".status-btn:not(.done)");
-        for(var i=0;i<sb.length;i++)sb[i].addEventListener("click",function(){db.collection("orders").doc(this.getAttribute("data-id")).update({status:"done"});toast("✓ Als erledigt markiert");});
-        var db2=c.querySelectorAll(".del-btn");
-        for(var i=0;i<db2.length;i++)db2[i].addEventListener("click",function(){if(confirm("Bestellung löschen?")){db.collection("orders").doc(this.getAttribute("data-id")).delete();toast("Bestellung gelöscht","error");}});
+        // Bind status buttons
+        var sBtns=c.querySelectorAll(".status-btn:not(.done)");
+        for(var s=0;s<sBtns.length;s++){
+            (function(btn){
+                btn.addEventListener("click",function(){
+                    db.collection("orders").doc(btn.getAttribute("data-oid")).update({status:"done"});
+                    toast("✓ Als erledigt markiert");
+                });
+            })(sBtns[s]);
+        }
+        // Bind delete buttons
+        var dBtns=c.querySelectorAll(".del-btn[data-oid]");
+        for(var d2=0;d2<dBtns.length;d2++){
+            (function(btn){
+                btn.addEventListener("click",function(){
+                    if(confirm("Bestellung löschen?")){
+                        db.collection("orders").doc(btn.getAttribute("data-oid")).delete();
+                        toast("Bestellung gelöscht","error");
+                    }
+                });
+            })(dBtns[d2]);
+        }
     }
 
     function renderRecentOrders(){
@@ -624,8 +678,13 @@
         var h="";
         for(var i=0;i<recent.length;i++){
             var o=recent[i];var names=[];
-            if(o.items)for(var j=0;j<o.items.length;j++)names.push(o.items[j].qty+"x "+o.items[j].title);
-            h+='<div class="order-row" style="grid-template-columns:1fr auto auto"><div><div class="order-items-main">'+names.join(", ")+'</div><div class="order-date">'+fDate(o.createdAt)+'</div></div><span class="order-method '+(o.paymentMethod==="paypal"?"method-paypal":"method-vor-ort")+'">'+(o.paymentMethod==="paypal"?"PayPal":"Vor Ort")+'</span><div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+' €</div></div>';
+            if(o.items){for(var j=0;j<o.items.length;j++)names.push(o.items[j].qty+"x "+o.items[j].title);}
+            else if(o.itemsSummary){names.push(o.itemsSummary);}
+            h+='<div class="order-row" style="grid-template-columns:1fr auto auto">';
+            h+='<div><div class="order-items-main">'+(names.join(", ")||"Bestellung")+'</div><div class="order-date">'+fDate(o.createdAt)+'</div></div>';
+            h+='<span class="order-method '+(o.paymentMethod==="paypal"?"method-paypal":"method-vor-ort")+'">'+(o.paymentMethod==="paypal"?"PayPal":"Vor Ort")+'</span>';
+            h+='<div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+' €</div>';
+            h+='</div>';
         }
         c.innerHTML=h;
     }
@@ -635,7 +694,7 @@
         if(!q){renderOrders(allOrders);return;}
         renderOrders(allOrders.filter(function(o){
             var t=(o.itemsSummary||"")+" "+(o.paymentMethod||"")+" "+o._id;
-            if(o.items)for(var i=0;i<o.items.length;i++)t+=" "+o.items[i].title;
+            if(o.items){for(var i=0;i<o.items.length;i++)t+=" "+o.items[i].title;}
             return t.toLowerCase().indexOf(q)!==-1;
         }));
     });
@@ -646,12 +705,21 @@
     var editingEventId=null;
 
     function loadEvents(){
-        db.collection("events").orderBy("date","desc").onSnapshot(function(snap){
+        db.collection("events").onSnapshot(function(snap){
             allEvents=[];
             snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allEvents.push(d);});
+            // Sort client-side to avoid index issues
+            allEvents.sort(function(a,b){
+                var da=getDateStr(a.date)||"";
+                var db2=getDateStr(b.date)||"";
+                return db2.localeCompare(da);
+            });
             renderEvents(allEvents);
             renderUpcomingEvents();
             updateDashboard();
+        },function(err){
+            console.error("Events error:",err);
+            document.getElementById("eventsList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler beim Laden</h3><p>'+err.message+'</p></div>';
         });
     }
 
@@ -660,37 +728,74 @@
         document.getElementById("eventsCount").textContent=events.length;
         if(!events.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📅</div><h3>Keine Events</h3><p>Erstelle dein erstes Event!</p></div>';return;}
         var h="";
+        var now=new Date();now.setHours(0,0,0,0);
         for(var i=0;i<events.length;i++){
             var e=events[i];
-            var d=e.date?new Date(e.date+"T00:00:00"):new Date();
-            var now=new Date();now.setHours(0,0,0,0);
-            var isPast=d<now;
-            var statusClass=!e.published?"event-status-draft":isPast?"event-status-past":"event-status-live";
-            var statusText=!e.published?"Entwurf":isPast?"Vergangen":"Live";
+            var dateStr=getDateStr(e.date);
+            var d=dateStr?new Date(dateStr+"T00:00:00"):null;
+            var isPast=d?d<now:false;
+            var isPublished=e.published!==false;
+            var statusClass=!isPublished?"event-status-draft":isPast?"event-status-past":"event-status-live";
+            var statusText=!isPublished?"Entwurf":isPast?"Vergangen":"Live";
+
             h+='<div class="event-row">';
-            h+='<div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div>';
+            if(d&&!isNaN(d.getTime())){
+                h+='<div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div>';
+            } else {
+                h+='<div class="event-date-badge"><div class="event-date-day">?</div><div class="event-date-month">TBD</div></div>';
+            }
             h+='<div class="event-emoji">'+(e.emoji||"📅")+'</div>';
-            h+='<div><div class="event-title">'+e.name+'</div><div class="event-meta">'+(e.time||"")+" · "+(e.location||"")+(e.maxGuests?" · Max "+e.maxGuests+" Gäste":"")+'</div></div>';
+            h+='<div><div class="event-title">'+(e.name||"Unbenannt")+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+e.location:"")+(e.maxGuests?" · Max "+e.maxGuests+" Gäste":"")+'</div></div>';
             h+='<span class="'+statusClass+'">'+statusText+'</span>';
-            h+='<div class="order-actions"><button class="btn btn-sm btn-outline edit-evt-btn" data-id="'+e._id+'">✏️</button><button class="del-btn" data-id="'+e._id+'">🗑️</button></div>';
+            h+='<div class="order-actions"><button class="btn btn-sm btn-outline edit-evt-btn" data-eid="'+e._id+'">✏️</button><button class="del-btn" data-eid="'+e._id+'">🗑️</button></div>';
             h+='</div>';
         }
         c.innerHTML=h;
-        var eb=c.querySelectorAll(".edit-evt-btn");
-        for(var i=0;i<eb.length;i++)eb[i].addEventListener("click",function(){editEvent(this.getAttribute("data-id"));});
-        var db2=c.querySelectorAll(".del-btn");
-        for(var i=0;i<db2.length;i++)db2[i].addEventListener("click",function(){if(confirm("Event löschen?")){db.collection("events").doc(this.getAttribute("data-id")).delete();toast("Event gelöscht","error");}});
+
+        // Bind edit
+        var eBtns=c.querySelectorAll(".edit-evt-btn");
+        for(var i=0;i<eBtns.length;i++){
+            (function(btn){
+                btn.addEventListener("click",function(){editEvent(btn.getAttribute("data-eid"));});
+            })(eBtns[i]);
+        }
+        // Bind delete
+        var dBtns=c.querySelectorAll(".del-btn[data-eid]");
+        for(var i=0;i<dBtns.length;i++){
+            (function(btn){
+                btn.addEventListener("click",function(){
+                    if(confirm("Event löschen?")){
+                        db.collection("events").doc(btn.getAttribute("data-eid")).delete();
+                        toast("Event gelöscht","error");
+                    }
+                });
+            })(dBtns[i]);
+        }
     }
 
     function renderUpcomingEvents(){
         var c=document.getElementById("upcomingEventsList");
         var now=new Date();now.setHours(0,0,0,0);
-        var upcoming=allEvents.filter(function(e){return e.published&&new Date(e.date+"T00:00:00")>=now;}).sort(function(a,b){return new Date(a.date)-new Date(b.date);}).slice(0,3);
+        var upcoming=allEvents.filter(function(e){
+            if(e.published===false) return false;
+            var ds=getDateStr(e.date);
+            if(!ds) return false;
+            return new Date(ds+"T00:00:00")>=now;
+        }).sort(function(a,b){
+            return (getDateStr(a.date)||"").localeCompare(getDateStr(b.date)||"");
+        }).slice(0,3);
+
         if(!upcoming.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📅</div><p>Keine kommenden Events.</p></div>';return;}
         var h="";
         for(var i=0;i<upcoming.length;i++){
-            var e=upcoming[i];var d=new Date(e.date+"T00:00:00");
-            h+='<div class="event-row" style="grid-template-columns:auto 40px 1fr"><div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div><div class="event-emoji">'+(e.emoji||"📅")+'</div><div><div class="event-title">'+e.name+'</div><div class="event-meta">'+(e.time||"")+" · "+(e.location||"")+'</div></div></div>';
+            var e=upcoming[i];
+            var ds=getDateStr(e.date);
+            var d=ds?new Date(ds+"T00:00:00"):new Date();
+            h+='<div class="event-row" style="grid-template-columns:auto 40px 1fr">';
+            h+='<div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div>';
+            h+='<div class="event-emoji">'+(e.emoji||"📅")+'</div>';
+            h+='<div><div class="event-title">'+(e.name||"")+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+e.location:"")+'</div></div>';
+            h+='</div>';
         }
         c.innerHTML=h;
     }
@@ -698,30 +803,41 @@
     document.getElementById("eventsSearch").addEventListener("input",function(){
         var q=this.value.toLowerCase();
         if(!q){renderEvents(allEvents);return;}
-        renderEvents(allEvents.filter(function(e){return(e.name||"").toLowerCase().indexOf(q)!==-1||(e.location||"").toLowerCase().indexOf(q)!==-1;}));
+        renderEvents(allEvents.filter(function(e){
+            return((e.name||"").toLowerCase().indexOf(q)!==-1||(e.location||"").toLowerCase().indexOf(q)!==-1||(e.category||"").toLowerCase().indexOf(q)!==-1);
+        }));
     });
 
     // Event Modal
     document.getElementById("addEventBtn").addEventListener("click",function(){
         editingEventId=null;
         document.getElementById("eventModalTitle").textContent="Neues Event";
-        document.getElementById("evtName").value="";document.getElementById("evtEmoji").value="🎉";
-        document.getElementById("evtDate").value="";document.getElementById("evtTime").value="20:00";
-        document.getElementById("evtLocation").value="Poccistrasse 4";document.getElementById("evtDesc").value="";
-        document.getElementById("evtCategory").value="party";document.getElementById("evtMaxGuests").value="";
+        document.getElementById("evtName").value="";
+        document.getElementById("evtEmoji").value="🎉";
+        document.getElementById("evtDate").value="";
+        document.getElementById("evtTime").value="20:00";
+        document.getElementById("evtLocation").value="Poccistrasse 4";
+        document.getElementById("evtDesc").value="";
+        document.getElementById("evtCategory").value="party";
+        document.getElementById("evtMaxGuests").value="";
         document.getElementById("evtPublished").checked=true;
         openModal("eventModal");
     });
 
     function editEvent(id){
-        var e=allEvents.find(function(ev){return ev._id===id;});
-        if(!e)return;
+        var e=null;
+        for(var i=0;i<allEvents.length;i++){if(allEvents[i]._id===id){e=allEvents[i];break;}}
+        if(!e) return;
         editingEventId=id;
         document.getElementById("eventModalTitle").textContent="Event bearbeiten";
-        document.getElementById("evtName").value=e.name||"";document.getElementById("evtEmoji").value=e.emoji||"";
-        document.getElementById("evtDate").value=e.date||"";document.getElementById("evtTime").value=e.time||"20:00";
-        document.getElementById("evtLocation").value=e.location||"";document.getElementById("evtDesc").value=e.description||"";
-        document.getElementById("evtCategory").value=e.category||"party";document.getElementById("evtMaxGuests").value=e.maxGuests||"";
+        document.getElementById("evtName").value=e.name||"";
+        document.getElementById("evtEmoji").value=e.emoji||"";
+        document.getElementById("evtDate").value=getDateStr(e.date);
+        document.getElementById("evtTime").value=e.time||"20:00";
+        document.getElementById("evtLocation").value=e.location||"";
+        document.getElementById("evtDesc").value=e.description||"";
+        document.getElementById("evtCategory").value=e.category||"party";
+        document.getElementById("evtMaxGuests").value=e.maxGuests||"";
         document.getElementById("evtPublished").checked=e.published!==false;
         openModal("eventModal");
     }
@@ -742,10 +858,14 @@
             updatedAt:firebase.firestore.FieldValue.serverTimestamp()
         };
         if(editingEventId){
-            db.collection("events").doc(editingEventId).update(data).then(function(){toast("Event aktualisiert! ✓");closeModal("eventModal");});
+            db.collection("events").doc(editingEventId).update(data).then(function(){
+                toast("Event aktualisiert! ✓");closeModal("eventModal");
+            }).catch(function(err){toast("Fehler: "+err.message,"error");});
         }else{
             data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
-            db.collection("events").add(data).then(function(){toast("Event erstellt! 🎉");closeModal("eventModal");});
+            db.collection("events").add(data).then(function(){
+                toast("Event erstellt! 🎉");closeModal("eventModal");
+            }).catch(function(err){toast("Fehler: "+err.message,"error");});
         }
     });
 
@@ -759,21 +879,31 @@
     var editingPlayerId=null;
 
     function loadPlayers(){
-        db.collection("players").orderBy("name").onSnapshot(function(snap){
+        db.collection("players").onSnapshot(function(snap){
             allPlayers=[];
             snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allPlayers.push(d);});
+            allPlayers.sort(function(a,b){return(a.name||"").localeCompare(b.name||"");});
             updatePlayerDropdown();
             loadGames();
+        },function(err){
+            console.error("Players error:",err);
         });
     }
 
     function loadGames(){
-        db.collection("games").orderBy("date","desc").onSnapshot(function(snap){
+        db.collection("games").onSnapshot(function(snap){
             allGames=[];
             snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allGames.push(d);});
+            allGames.sort(function(a,b){
+                var da=getDateStr(a.date)||getDateStr(a.createdAt)||"";
+                var db2=getDateStr(b.date)||getDateStr(b.createdAt)||"";
+                return db2.localeCompare(da);
+            });
             renderLeaderboard();
             renderRecentGames();
             updateDashboard();
+        },function(err){
+            console.error("Games error:",err);
         });
     }
 
@@ -781,33 +911,52 @@
         var c=document.getElementById("gameStatsList");
         document.getElementById("playersCount").textContent=allPlayers.length+" Spieler";
         if(!allPlayers.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🏆</div><h3>Keine Spieler</h3><p>Füge Spieler hinzu um Stats zu tracken.</p></div>';return;}
-        // calc wins
+
         var wins={};
         for(var i=0;i<allGames.length;i++){
             var w=allGames[i].winnerId;
-            if(w){if(!wins[w])wins[w]={total:0,games:{}};wins[w].total++;var gt=allGames[i].type||"other";if(!wins[w].games[gt])wins[w].games[gt]=0;wins[w].games[gt]++;}
+            if(w){
+                if(!wins[w])wins[w]={total:0,games:{}};
+                wins[w].total++;
+                var gt=allGames[i].type||"other";
+                if(!wins[w].games[gt])wins[w].games[gt]=0;
+                wins[w].games[gt]++;
+            }
         }
-        var sorted=allPlayers.slice().sort(function(a,b){return(wins[b._id]?wins[b._id].total:0)-(wins[a._id]?wins[a._id].total:0);});
+
+        var sorted=allPlayers.slice().sort(function(a,b){
+            return(wins[b._id]?wins[b._id].total:0)-(wins[a._id]?wins[a._id].total:0);
+        });
+
         var totalGames=allGames.length;
         var h="";
         for(var i=0;i<sorted.length;i++){
-            var p=sorted[i];var w=wins[p._id]||{total:0,games:{}};
-            var medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1)+".";
+            var p=sorted[i];
+            var w=wins[p._id]||{total:0,games:{}};
+            var medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":String(i+1)+".";
             var rate=totalGames>0?Math.round(w.total/totalGames*100):0;
+
             h+='<div class="game-row">';
             h+='<div class="game-rank">'+medal+'</div>';
-            h+='<div class="game-player"><div class="game-avatar" style="background:'+(p.color||"#C03A2B")+'">'+(p.emoji||"😎")+'</div><div class="game-name">'+p.name+'</div></div>';
+            h+='<div class="game-player"><div class="game-avatar" style="background:'+(p.color||"#C03A2B")+'">'+(p.emoji||"😎")+'</div><div class="game-name">'+(p.name||"?")+'</div></div>';
             h+='<div class="game-stat">'+w.total+'<div class="game-stat-label">Siege</div></div>';
             h+='<div class="game-stat">'+rate+'%<div class="game-stat-label">Winrate</div></div>';
             h+='<div class="game-stat">'+Object.keys(w.games).length+'<div class="game-stat-label">Spiele</div></div>';
-            h+='<div class="order-actions"><button class="btn btn-sm btn-outline edit-plr-btn" data-id="'+p._id+'">✏️</button><button class="del-btn" data-id="'+p._id+'">🗑️</button></div>';
+            h+='<div class="order-actions"><button class="btn btn-sm btn-outline edit-plr-btn" data-pid="'+p._id+'">✏️</button><button class="del-btn" data-pid="'+p._id+'">🗑️</button></div>';
             h+='</div>';
         }
         c.innerHTML=h;
-        var eb=c.querySelectorAll(".edit-plr-btn");
-        for(var i=0;i<eb.length;i++)eb[i].addEventListener("click",function(){editPlayer(this.getAttribute("data-id"));});
-        var db2=c.querySelectorAll(".del-btn");
-        for(var i=0;i<db2.length;i++)db2[i].addEventListener("click",function(){if(confirm("Spieler löschen?")){db.collection("players").doc(this.getAttribute("data-id")).delete();toast("Spieler gelöscht","error");}});
+
+        var eBtns=c.querySelectorAll(".edit-plr-btn");
+        for(var i=0;i<eBtns.length;i++){
+            (function(btn){btn.addEventListener("click",function(){editPlayer(btn.getAttribute("data-pid"));});})(eBtns[i]);
+        }
+        var dBtns=c.querySelectorAll(".del-btn[data-pid]");
+        for(var i=0;i<dBtns.length;i++){
+            (function(btn){btn.addEventListener("click",function(){
+                if(confirm("Spieler löschen?")){db.collection("players").doc(btn.getAttribute("data-pid")).delete();toast("Spieler gelöscht","error");}
+            });})(dBtns[i]);
+        }
     }
 
     function renderRecentGames(){
@@ -815,27 +964,41 @@
         if(!allGames.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🎮</div><p>Noch keine Spiele eingetragen.</p></div>';return;}
         var gameEmojis={flunkyball:"🍺",bierpong:"🏓",catan:"🏝️","mario-kart":"🏎️",other:"🎮"};
         var h="";
-        for(var i=0;i<Math.min(allGames.length,20);i++){
+        var max=Math.min(allGames.length,20);
+        for(var i=0;i<max;i++){
             var g=allGames[i];
-            var winner=allPlayers.find(function(p){return p._id===g.winnerId;});
+            var winner=null;
+            for(var j=0;j<allPlayers.length;j++){if(allPlayers[j]._id===g.winnerId){winner=allPlayers[j];break;}}
+            var gameType=(g.type||"other");
+            var gameLabel=gameType.charAt(0).toUpperCase()+gameType.slice(1).replace("-"," ");
+            var dateDisplay=getDateStr(g.date)||fDateShort(g.createdAt)||"-";
+
             h+='<div class="order-row" style="grid-template-columns:auto 1fr auto auto auto">';
-            h+='<div style="font-size:1.5rem">'+(gameEmojis[g.type]||"🎮")+'</div>';
-            h+='<div><div style="font-weight:800;font-size:.9rem">'+(g.type||"Spiel").charAt(0).toUpperCase()+(g.type||"").slice(1)+'</div><div class="order-date">'+(g.notes||"")+'</div></div>';
+            h+='<div style="font-size:1.5rem">'+(gameEmojis[gameType]||"🎮")+'</div>';
+            h+='<div><div style="font-weight:800;font-size:.9rem">'+gameLabel+'</div><div class="order-date">'+(g.notes||"")+'</div></div>';
             h+='<div style="font-weight:700;font-size:.85rem">🏆 '+(winner?winner.name:"?")+'</div>';
-            h+='<div class="order-date">'+(g.date||"-")+'</div>';
+            h+='<div class="order-date">'+dateDisplay+'</div>';
             h+='<button class="del-btn" data-gid="'+g._id+'">🗑️</button>';
             h+='</div>';
         }
         c.innerHTML=h;
-        var db2=c.querySelectorAll(".del-btn[data-gid]");
-        for(var i=0;i<db2.length;i++)db2[i].addEventListener("click",function(){if(confirm("Spiel löschen?")){db.collection("games").doc(this.getAttribute("data-gid")).delete();toast("Spiel gelöscht","error");}});
+
+        var dBtns=c.querySelectorAll(".del-btn[data-gid]");
+        for(var i=0;i<dBtns.length;i++){
+            (function(btn){btn.addEventListener("click",function(){
+                if(confirm("Spiel löschen?")){db.collection("games").doc(btn.getAttribute("data-gid")).delete();toast("Spiel gelöscht","error");}
+            });})(dBtns[i]);
+        }
     }
 
     function updatePlayerDropdown(){
         var sel=document.getElementById("gmWinner");
-        sel.innerHTML="";
+        sel.innerHTML='<option value="">-- Spieler wählen --</option>';
         for(var i=0;i<allPlayers.length;i++){
-            var o=document.createElement("option");o.value=allPlayers[i]._id;o.textContent=(allPlayers[i].emoji||"")+" "+allPlayers[i].name;sel.appendChild(o);
+            var o=document.createElement("option");
+            o.value=allPlayers[i]._id;
+            o.textContent=(allPlayers[i].emoji||"")+" "+allPlayers[i].name;
+            sel.appendChild(o);
         }
     }
 
@@ -843,15 +1006,21 @@
     document.getElementById("addPlayerBtn").addEventListener("click",function(){
         editingPlayerId=null;
         document.getElementById("playerModalTitle").textContent="Neuer Spieler";
-        document.getElementById("plrName").value="";document.getElementById("plrEmoji").value="😎";document.getElementById("plrColor").value="#C03A2B";
+        document.getElementById("plrName").value="";
+        document.getElementById("plrEmoji").value="😎";
+        document.getElementById("plrColor").value="#C03A2B";
         openModal("playerModal");
     });
 
     function editPlayer(id){
-        var p=allPlayers.find(function(pl){return pl._id===id;});if(!p)return;
+        var p=null;
+        for(var i=0;i<allPlayers.length;i++){if(allPlayers[i]._id===id){p=allPlayers[i];break;}}
+        if(!p) return;
         editingPlayerId=id;
         document.getElementById("playerModalTitle").textContent="Spieler bearbeiten";
-        document.getElementById("plrName").value=p.name||"";document.getElementById("plrEmoji").value=p.emoji||"";document.getElementById("plrColor").value=p.color||"#C03A2B";
+        document.getElementById("plrName").value=p.name||"";
+        document.getElementById("plrEmoji").value=p.emoji||"";
+        document.getElementById("plrColor").value=p.color||"#C03A2B";
         openModal("playerModal");
     }
 
@@ -860,9 +1029,9 @@
         if(!name){toast("Name ist Pflicht!","error");return;}
         var data={name:name,emoji:document.getElementById("plrEmoji").value.trim()||"😎",color:document.getElementById("plrColor").value};
         if(editingPlayerId){
-            db.collection("players").doc(editingPlayerId).update(data).then(function(){toast("Spieler aktualisiert ✓");closeModal("playerModal");});
+            db.collection("players").doc(editingPlayerId).update(data).then(function(){toast("Spieler aktualisiert ✓");closeModal("playerModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
         }else{
-            db.collection("players").add(data).then(function(){toast("Spieler hinzugefügt! 🎮");closeModal("playerModal");});
+            db.collection("players").add(data).then(function(){toast("Spieler hinzugefügt! 🎮");closeModal("playerModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
         }
     });
 
@@ -872,20 +1041,23 @@
 
     // Game Modal
     document.getElementById("addGameBtn").addEventListener("click",function(){
-        document.getElementById("gmDate").value=todayStr();document.getElementById("gmNotes").value="";
+        if(!allPlayers.length){toast("Erst Spieler hinzufügen!","error");return;}
+        document.getElementById("gmDate").value=todayStr();
+        document.getElementById("gmNotes").value="";
+        document.getElementById("gmType").value="flunkyball";
         openModal("gameModal");
     });
 
     document.getElementById("gameModalSave").addEventListener("click",function(){
         var winnerId=document.getElementById("gmWinner").value;
-        if(!winnerId){toast("Kein Spieler vorhanden!","error");return;}
+        if(!winnerId){toast("Bitte Gewinner wählen!","error");return;}
         db.collection("games").add({
             type:document.getElementById("gmType").value,
             winnerId:winnerId,
             date:document.getElementById("gmDate").value,
             notes:document.getElementById("gmNotes").value.trim(),
             createdAt:firebase.firestore.FieldValue.serverTimestamp()
-        }).then(function(){toast("Spiel eingetragen! 🏆");closeModal("gameModal");});
+        }).then(function(){toast("Spiel eingetragen! 🏆");closeModal("gameModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
     });
 
     document.getElementById("gameModalClose").addEventListener("click",function(){closeModal("gameModal");});
@@ -901,9 +1073,8 @@
         db.collection("content").doc("members").onSnapshot(function(doc){
             var data=doc.exists?doc.data():{list:[]};
             var list=data.list||[];
-            var prev=document.getElementById("membersPreview");
-            prev.textContent=list.length?list.map(function(m){return m.name;}).join(", "):"Noch keine Mitglieder.";
-        });
+            document.getElementById("membersPreview").textContent=list.length?list.map(function(m){return(m.emoji||"")+" "+m.name;}).join(", "):"Noch keine Mitglieder.";
+        },function(err){console.error("Members error:",err);});
     }
 
     document.getElementById("editMembersBtn").addEventListener("click",function(){
@@ -915,29 +1086,23 @@
     });
 
     function renderMembersForm(list){
-        var c=document.getElementById("membersModalBody");
-        var h="";
-        for(var i=0;i<list.length;i++){
-            h+='<div class="form-group" style="padding:1rem;background:var(--color-bg);border-radius:14px;margin-bottom:.75rem" data-idx="'+i+'">';
-            h+='<div class="form-row"><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Name</label><input type="text" class="form-input member-name" value="'+(list[i].name||"")+'"></div>';
-            h+='<div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Emoji</label><input type="text" class="form-input member-emoji" value="'+(list[i].emoji||"")+'" maxlength="4"></div></div>';
-            h+='<div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Bio</label><input type="text" class="form-input member-bio" value="'+(list[i].bio||"")+'"></div>';
-            h+='<div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Instagram</label><input type="text" class="form-input member-insta" value="'+(list[i].instagram||"")+'"></div>';
-            h+='<button class="btn btn-sm btn-danger remove-member-btn" style="margin-top:.25rem">Entfernen</button>';
-            h+='</div>';
-        }
-        c.innerHTML=h;
-        var rb=c.querySelectorAll(".remove-member-btn");
-        for(var i=0;i<rb.length;i++)rb[i].addEventListener("click",function(){this.parentElement.remove();});
+        var c=document.getElementById("membersModalBody");c.innerHTML="";
+        for(var i=0;i<list.length;i++){addMemberRow(c,list[i]);}
     }
 
-    document.getElementById("addMemberBtn").addEventListener("click",function(){
-        var c=document.getElementById("membersModalBody");
+    function addMemberRow(container,data){
+        data=data||{name:"",emoji:"",bio:"",instagram:""};
         var div=document.createElement("div");
-        div.className="form-group";div.style.cssText="padding:1rem;background:var(--color-bg);border-radius:14px;margin-bottom:.75rem";
-        div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Name</label><input type="text" class="form-input member-name"></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Emoji</label><input type="text" class="form-input member-emoji" maxlength="4"></div></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Bio</label><input type="text" class="form-input member-bio"></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Instagram</label><input type="text" class="form-input member-insta"></div><button class="btn btn-sm btn-danger remove-member-btn" style="margin-top:.25rem">Entfernen</button>';
-        c.appendChild(div);
-        div.querySelector(".remove-member-btn").addEventListener("click",function(){div.remove();});
+        div.style.cssText="padding:1rem;background:var(--color-bg);border-radius:14px;margin-bottom:.75rem";
+        div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Name</label><input type="text" class="form-input member-name" value="'+escHTML(data.name)+'"></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Emoji</label><input type="text" class="form-input member-emoji" value="'+escHTML(data.emoji)+'" maxlength="4"></div></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Bio</label><input type="text" class="form-input member-bio" value="'+escHTML(data.bio)+'"></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Instagram</label><input type="text" class="form-input member-insta" value="'+escHTML(data.instagram)+'"></div><button class="btn btn-sm btn-danger" style="margin-top:.25rem">Entfernen</button>';
+        div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});
+        container.appendChild(div);
+    }
+
+    function escHTML(str){return(str||"").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+    document.getElementById("addMemberBtn").addEventListener("click",function(){
+        addMemberRow(document.getElementById("membersModalBody"));
     });
 
     document.getElementById("membersModalSave").addEventListener("click",function(){
@@ -945,9 +1110,14 @@
         var list=[];
         for(var i=0;i<items.length;i++){
             var name=items[i].querySelector(".member-name").value.trim();
-            if(name)list.push({name:name,emoji:items[i].querySelector(".member-emoji").value.trim(),bio:items[i].querySelector(".member-bio").value.trim(),instagram:items[i].querySelector(".member-insta").value.trim()});
+            if(name)list.push({
+                name:name,
+                emoji:items[i].querySelector(".member-emoji").value.trim(),
+                bio:items[i].querySelector(".member-bio").value.trim(),
+                instagram:items[i].querySelector(".member-insta").value.trim()
+            });
         }
-        db.collection("content").doc("members").set({list:list}).then(function(){toast("Mitglieder gespeichert ✓");closeModal("membersModal");});
+        db.collection("content").doc("members").set({list:list}).then(function(){toast("Mitglieder gespeichert ✓");closeModal("membersModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
     });
 
     document.getElementById("membersModalClose").addEventListener("click",function(){closeModal("membersModal");});
@@ -958,7 +1128,7 @@
         db.collection("content").doc("texts").onSnapshot(function(doc){
             var data=doc.exists?doc.data():{};
             document.getElementById("textsPreview").textContent=data.heroTitle||"Noch nicht konfiguriert.";
-        });
+        },function(err){console.error("Texts error:",err);});
     }
 
     document.getElementById("editTextsBtn").addEventListener("click",function(){
@@ -978,7 +1148,7 @@
             heroSubtitle:document.getElementById("txtHeroSub").value.trim(),
             aboutText:document.getElementById("txtAbout").value.trim(),
             disclaimer:document.getElementById("txtDisclaimer").value.trim()
-        }).then(function(){toast("Texte gespeichert ✓");closeModal("textsModal");});
+        }).then(function(){toast("Texte gespeichert ✓");closeModal("textsModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
     });
 
     document.getElementById("textsModalClose").addEventListener("click",function(){closeModal("textsModal");});
@@ -991,7 +1161,7 @@
             var data=doc.exists?doc.data():{links:[]};
             var links=data.links||[];
             document.getElementById("socialsPreview").textContent=links.length?links.map(function(l){return l.label;}).join(", "):"Keine Links.";
-        });
+        },function(err){console.error("Socials error:",err);});
     }
 
     document.getElementById("editSocialsBtn").addEventListener("click",function(){
@@ -1003,25 +1173,21 @@
     });
 
     function renderSocialsForm(links){
-        var c=document.getElementById("socialsModalBody");
-        var h="";
-        for(var i=0;i<links.length;i++){
-            h+='<div class="form-group" style="padding:.75rem;background:var(--color-bg);border-radius:12px;margin-bottom:.5rem">';
-            h+='<div class="form-row"><div class="form-group" style="margin-bottom:0"><label class="form-label">Label</label><input type="text" class="form-input social-label" value="'+(links[i].label||"")+'"></div>';
-            h+='<div class="form-group" style="margin-bottom:0"><label class="form-label">URL</label><input type="text" class="form-input social-url" value="'+(links[i].url||"")+'"></div></div>';
-            h+='<button class="btn btn-sm btn-danger remove-social-btn" style="margin-top:.5rem">Entfernen</button></div>';
-        }
-        c.innerHTML=h;
-        var rb=c.querySelectorAll(".remove-social-btn");
-        for(var i=0;i<rb.length;i++)rb[i].addEventListener("click",function(){this.parentElement.remove();});
+        var c=document.getElementById("socialsModalBody");c.innerHTML="";
+        for(var i=0;i<links.length;i++){addSocialRow(c,links[i]);}
+    }
+
+    function addSocialRow(container,data){
+        data=data||{label:"",url:""};
+        var div=document.createElement("div");
+        div.style.cssText="padding:.75rem;background:var(--color-bg);border-radius:12px;margin-bottom:.5rem";
+        div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:0"><label class="form-label">Label</label><input type="text" class="form-input social-label" value="'+escHTML(data.label)+'"></div><div class="form-group" style="margin-bottom:0"><label class="form-label">URL</label><input type="text" class="form-input social-url" value="'+escHTML(data.url)+'"></div></div><button class="btn btn-sm btn-danger" style="margin-top:.5rem">Entfernen</button>';
+        div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});
+        container.appendChild(div);
     }
 
     document.getElementById("addSocialBtn").addEventListener("click",function(){
-        var c=document.getElementById("socialsModalBody");
-        var div=document.createElement("div");div.className="form-group";div.style.cssText="padding:.75rem;background:var(--color-bg);border-radius:12px;margin-bottom:.5rem";
-        div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:0"><label class="form-label">Label</label><input type="text" class="form-input social-label"></div><div class="form-group" style="margin-bottom:0"><label class="form-label">URL</label><input type="text" class="form-input social-url"></div></div><button class="btn btn-sm btn-danger remove-social-btn" style="margin-top:.5rem">Entfernen</button>';
-        c.appendChild(div);
-        div.querySelector(".remove-social-btn").addEventListener("click",function(){div.remove();});
+        addSocialRow(document.getElementById("socialsModalBody"));
     });
 
     document.getElementById("socialsModalSave").addEventListener("click",function(){
@@ -1032,7 +1198,7 @@
             var url=items[i].querySelector(".social-url").value.trim();
             if(label&&url)links.push({label:label,url:url});
         }
-        db.collection("content").doc("socials").set({links:links}).then(function(){toast("Social Links gespeichert ✓");closeModal("socialsModal");});
+        db.collection("content").doc("socials").set({links:links}).then(function(){toast("Social Links gespeichert ✓");closeModal("socialsModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
     });
 
     document.getElementById("socialsModalClose").addEventListener("click",function(){closeModal("socialsModal");});
@@ -1044,7 +1210,7 @@
             var data=doc.exists?doc.data():{images:[]};
             var imgs=data.images||[];
             document.getElementById("galleryPreview").textContent=imgs.length?imgs.length+" Bilder":"Keine Bilder.";
-        });
+        },function(err){console.error("Gallery error:",err);});
     }
 
     document.getElementById("editGalleryBtn").addEventListener("click",function(){
@@ -1056,25 +1222,21 @@
     });
 
     function renderGalleryForm(images){
-        var c=document.getElementById("galleryModalBody");
-        var h="";
-        for(var i=0;i<images.length;i++){
-            h+='<div class="form-group" style="display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem">';
-            h+='<input type="text" class="form-input gallery-url" value="'+(images[i].url||"")+'" placeholder="https://..." style="flex:1">';
-            h+='<input type="text" class="form-input gallery-cap" value="'+(images[i].caption||"")+'" placeholder="Caption" style="width:140px">';
-            h+='<button class="btn btn-sm btn-danger remove-gallery-btn">✕</button></div>';
-        }
-        c.innerHTML=h;
-        var rb=c.querySelectorAll(".remove-gallery-btn");
-        for(var i=0;i<rb.length;i++)rb[i].addEventListener("click",function(){this.parentElement.remove();});
+        var c=document.getElementById("galleryModalBody");c.innerHTML="";
+        for(var i=0;i<images.length;i++){addGalleryRow(c,images[i]);}
+    }
+
+    function addGalleryRow(container,data){
+        data=data||{url:"",caption:""};
+        var div=document.createElement("div");
+        div.style.cssText="display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem";
+        div.innerHTML='<input type="text" class="form-input gallery-url" value="'+escHTML(data.url)+'" placeholder="https://..." style="flex:1"><input type="text" class="form-input gallery-cap" value="'+escHTML(data.caption)+'" placeholder="Caption" style="width:140px"><button class="btn btn-sm btn-danger">✕</button>';
+        div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});
+        container.appendChild(div);
     }
 
     document.getElementById("addGalleryBtn").addEventListener("click",function(){
-        var c=document.getElementById("galleryModalBody");
-        var div=document.createElement("div");div.className="form-group";div.style.cssText="display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem";
-        div.innerHTML='<input type="text" class="form-input gallery-url" placeholder="https://..." style="flex:1"><input type="text" class="form-input gallery-cap" placeholder="Caption" style="width:140px"><button class="btn btn-sm btn-danger remove-gallery-btn">✕</button>';
-        c.appendChild(div);
-        div.querySelector(".remove-gallery-btn").addEventListener("click",function(){div.remove();});
+        addGalleryRow(document.getElementById("galleryModalBody"));
     });
 
     document.getElementById("galleryModalSave").addEventListener("click",function(){
@@ -1084,20 +1246,20 @@
             var url=items[i].querySelector(".gallery-url").value.trim();
             if(url)images.push({url:url,caption:items[i].querySelector(".gallery-cap").value.trim()});
         }
-        db.collection("content").doc("gallery").set({images:images}).then(function(){toast("Galerie gespeichert ✓");closeModal("galleryModal");});
+        db.collection("content").doc("gallery").set({images:images}).then(function(){toast("Galerie gespeichert ✓");closeModal("galleryModal");}).catch(function(err){toast("Fehler: "+err.message,"error");});
     });
 
     document.getElementById("galleryModalClose").addEventListener("click",function(){closeModal("galleryModal");});
     closeOnOverlay("galleryModal");
 
     // ============================================================
-    //  DASHBOARD STATS
+    //  DASHBOARD
     // ============================================================
     function updateDashboard(){
         var totalRev=0,totalItems=0;
         for(var i=0;i<allOrders.length;i++){
             totalRev+=allOrders[i].total||0;
-            if(allOrders[i].items)for(var j=0;j<allOrders[i].items.length;j++)totalItems+=allOrders[i].items[j].qty||0;
+            if(allOrders[i].items){for(var j=0;j<allOrders[i].items.length;j++)totalItems+=allOrders[i].items[j].qty||0;}
         }
         document.getElementById("statOrders").textContent=allOrders.length;
         document.getElementById("statRevenue").textContent=totalRev.toFixed(2).replace(".",",");
@@ -1110,17 +1272,21 @@
         for(var i=0;i<allOrders.length;i++){
             if(!allOrders[i].items)continue;
             for(var j=0;j<allOrders[i].items.length;j++){
-                var item=allOrders[i].items[j];var id=item.id||item.title;
+                var item=allOrders[i].items[j];
+                var id=item.id||item.title;
                 if(!counts[id])counts[id]={title:item.title,emoji:item.emoji||"",qty:0,revenue:0};
-                counts[id].qty+=item.qty||0;counts[id].revenue+=(item.price||0)*(item.qty||0);
+                counts[id].qty+=item.qty||0;
+                counts[id].revenue+=(item.price||0)*(item.qty||0);
             }
         }
         var sorted=Object.keys(counts).map(function(k){return counts[k];}).sort(function(a,b){return b.qty-a.qty;});
         var c=document.getElementById("bestsellerList");
         if(!sorted.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📊</div><p>Noch keine Verkaufsdaten.</p></div>';return;}
         var h="";
-        for(var i=0;i<Math.min(sorted.length,5);i++){
-            var s=sorted[i];var medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1)+".";
+        var max=Math.min(sorted.length,5);
+        for(var i=0;i<max;i++){
+            var s=sorted[i];
+            var medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":String(i+1)+".";
             h+='<div class="best-row"><div class="best-rank">'+medal+'</div><div class="best-emoji">'+s.emoji+'</div><div><div class="best-title">'+s.title+'</div></div><div class="best-qty">'+s.qty+'x<div class="best-sub">Verkauft</div></div><div class="best-rev">'+s.revenue.toFixed(2).replace(".",",")+' €<div class="best-sub">Umsatz</div></div></div>';
         }
         c.innerHTML=h;
@@ -1139,5 +1305,6 @@
 
 })();
 </script>
+
 </body>
 </html>
