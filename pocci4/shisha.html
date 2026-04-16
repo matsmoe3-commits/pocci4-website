@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>pocci4 - Shisha Lounge</title>
+    <link rel="icon" type="image/svg+xml" href="assets/p.svg">
+    <link rel="apple-touch-icon" href="assets/p-180.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#F5F0EB">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --color-primary:#C03A2B;--color-primary-light:#E8501E;--color-primary-hover:#A83225;
+            --color-bg:#F5F0EB;--color-bg-warm:#EDE5DB;--color-white:#FFFFFF;
+            --color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;
+            --color-sand:#C4A882;--color-border:#E0D6CC;
+            --font-main:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            --nav-height:80px;--section-padding:100px;--container-width:1240px;
+            --transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);
+            --transition-smooth:0.4s cubic-bezier(0.4,0,0.2,1);
+            --shisha-accent:#8B5CF6;--shisha-accent-light:#A78BFA;--shisha-accent-dark:#7C3AED;
+        }
+        html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+        body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden}
+        a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
+        img{max-width:100%;height:auto;display:block}
+
+        .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
+        .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
+        .bg-shape-1{width:700px;height:500px;background:#D4C0E0;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
+        .bg-shape-2{width:550px;height:650px;background:#E0D0C0;bottom:-20%;right:-10%;animation:m2 25s ease-in-out infinite}
+        .bg-shape-3{width:450px;height:400px;background:#C9B8D5;top:35%;left:45%;animation:m3 22s ease-in-out infinite}
+        @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
+        @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
+        @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
+
+        .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
+        .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
+        .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
+        .nav-logo{display:flex;align-items:center;z-index:1001}
+        .nav-logo img{height:56px}
+        .nav-right{display:flex;align-items:center;gap:.5rem}
+        .nav-links{display:flex;align-items:center;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+        .nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}
+        .nav-link:hover{color:var(--color-text);background:var(--color-bg)}
+        .nav-link.active{background:var(--color-text);color:var(--color-white)}
+        .nav-link-dropdown{position:relative}
+        .nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-5px);background:var(--color-white);border-radius:16px;padding:8px;box-shadow:0 10px 40px rgba(0,0,0,.1);border:1px solid var(--color-border);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;min-width:180px;z-index:100}
+        .nav-link-dropdown.dropdown-visible .nav-dropdown{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+        .nav-dropdown-item{display:flex;align-items:center;gap:.6rem;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);white-space:nowrap}
+        .nav-dropdown-item:hover{background:var(--color-bg);color:var(--color-primary)}
+        .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
+        .hamburger-line{width:24px;height:2px;background:var(--color-text);border-radius:2px;transition:var(--transition-smooth);transform-origin:center}
+        .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+        .hamburger.active .hamburger-line:nth-child(2){opacity:0}
+        .hamburger.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+        .mobile-menu{position:fixed;inset:0;background:rgba(245,240,235,.98);z-index:999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth)}
+        .mobile-menu.active{opacity:1;pointer-events:all}
+        .mobile-menu-content{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+        .mobile-link{font-size:2rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);transform:translateY(20px);opacity:0}
+        .mobile-menu.active .mobile-link{transform:translateY(0);opacity:1}
+        .mobile-menu.active .mobile-link:nth-child(1){transition-delay:.1s}
+        .mobile-menu.active .mobile-link:nth-child(2){transition-delay:.15s}
+        .mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s}
+        .mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}
+        .mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}
+        .mobile-menu.active .mobile-link:nth-child(6){transition-delay:.35s}
+        .mobile-link:hover,.mobile-link.active{color:var(--shisha-accent)}
+
+        .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
+        .admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
+        .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+        .admin-modal-overlay.active{display:flex}
+        .admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+        .admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+        .admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
+        .admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
+        .admin-modal input:focus{border-color:var(--shisha-accent)}
+        .admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
+        .admin-modal-btns .btn-modal{flex:1;padding:10px 16px;font-size:.85rem;border-radius:50px;font-family:var(--font-main);font-weight:700;cursor:pointer;transition:var(--transition-fast);border:none}
+        .admin-modal-btns .btn-modal-cancel{background:var(--color-bg);color:var(--color-text)}
+        .admin-modal-btns .btn-modal-submit{background:var(--shisha-accent);color:#fff}
+        .admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
+
+        /* HERO */
+        .shisha-hero{padding:calc(var(--nav-height) + 4rem) 1.25rem 3rem;max-width:var(--container-width);margin:0 auto;text-align:center}
+        .shisha-hero-smoke{font-size:6rem;margin-bottom:1rem;animation:smokeFloat 4s ease-in-out infinite}
+        @keyframes smokeFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-15px) scale(1.05)}}
+        .shisha-hero-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--shisha-accent);text-transform:uppercase;margin-bottom:1rem}
+        .shisha-hero-title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem}
+        .shisha-hero-title span{background:linear-gradient(135deg,var(--shisha-accent),var(--color-primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .shisha-hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--color-text-light);max-width:550px;margin:0 auto 2rem}
+        .andrei-badge{display:inline-flex;align-items:center;gap:.6rem;padding:10px 20px;border-radius:50px;background:var(--color-white);box-shadow:0 2px 15px rgba(0,0,0,.06);border:1px solid var(--color-border)}
+        .andrei-badge-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--shisha-accent),var(--color-primary));display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+        .andrei-badge-text{text-align:left}
+        .andrei-badge-name{font-size:.85rem;font-weight:800}
+        .andrei-badge-role{font-size:.7rem;color:var(--shisha-accent);font-weight:600}
+
+        /* MENU SECTION */
+        .menu-section{padding:0 1.25rem var(--section-padding);max-width:var(--container-width);margin:0 auto}
+        .menu-header{text-align:center;margin-bottom:3rem}
+        .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--shisha-accent);text-transform:uppercase;margin-bottom:1rem}
+        .section-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
+
+        /* CATEGORY TABS */
+        .cat-tabs{display:flex;gap:.5rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap}
+        .cat-tab{padding:8px 18px;border-radius:50px;font-size:.8rem;font-weight:600;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:none;background:var(--color-white);font-family:var(--font-main);box-shadow:0 1px 5px rgba(0,0,0,.04)}
+        .cat-tab:hover{color:var(--color-text);background:var(--color-bg-warm)}
+        .cat-tab.active{background:var(--shisha-accent);color:#fff;box-shadow:0 4px 15px rgba(139,92,246,.3)}
+
+        /* FLAVOR GRID */
+        .flavor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-bottom:3rem}
+        .flavor-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:18px;padding:1.25rem 1rem;text-align:center;border:2px solid transparent;cursor:pointer;transition:var(--transition-smooth);position:relative;overflow:hidden}
+        .flavor-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.08);border-color:var(--color-border)}
+        .flavor-card.selected{border-color:var(--shisha-accent);background:rgba(139,92,246,.06);box-shadow:0 8px 25px rgba(139,92,246,.15)}
+        .flavor-card.selected::after{content:'✓';position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;background:var(--shisha-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
+        .flavor-emoji{font-size:2.5rem;margin-bottom:.5rem}
+        .flavor-name{font-size:.85rem;font-weight:700;margin-bottom:.2rem}
+        .flavor-desc{font-size:.7rem;color:var(--color-gray);line-height:1.3}
+        .flavor-tag{display:inline-block;padding:2px 8px;border-radius:50px;font-size:.6rem;font-weight:700;margin-top:.4rem;text-transform:uppercase}
+        .flavor-tag.fruity{background:rgba(255,107,107,.12);color:#FF6B6B}
+        .flavor-tag.fresh{background:rgba(69,123,157,.12);color:#457B9D}
+        .flavor-tag.sweet{background:rgba(255,217,61,.15);color:#C9960C}
+        .flavor-tag.exotic{background:rgba(139,92,246,.12);color:var(--shisha-accent)}
+        .flavor-tag.classic{background:rgba(26,26,26,.08);color:var(--color-text)}
+        .flavor-tag.spicy{background:rgba(192,58,43,.1);color:var(--color-primary)}
+
+        /* BUILDER */
+        .builder-section{padding:0 1.25rem var(--section-padding);max-width:900px;margin:0 auto}
+        .builder-card{background:var(--color-text);border-radius:28px;padding:3rem 2.5rem;color:#fff;position:relative;overflow:hidden}
+        .builder-card::before{content:'';position:absolute;top:-50%;right:-30%;width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,.15) 0%,transparent 70%);pointer-events:none}
+        .builder-header{text-align:center;margin-bottom:2.5rem;position:relative;z-index:1}
+        .builder-header .section-overline{color:var(--shisha-accent-light)}
+        .builder-header .section-title{color:#fff;font-size:clamp(1.5rem,4vw,2.2rem)}
+        .builder-header p{color:var(--color-gray);font-size:.9rem;margin-top:.5rem}
+
+        .builder-step{margin-bottom:2rem;position:relative;z-index:1}
+        .step-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--shisha-accent-light);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+        .step-number{width:24px;height:24px;border-radius:50%;background:var(--shisha-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800}
+        .selected-flavors{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;min-height:40px}
+        .selected-chip{display:inline-flex;align-items:center;gap:.3rem;padding:6px 14px;border-radius:50px;background:rgba(139,92,246,.2);color:var(--shisha-accent-light);font-size:.8rem;font-weight:600;animation:chipIn .3s ease}
+        @keyframes chipIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+        .selected-chip button{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:1rem;padding:0 0 0 4px;transition:var(--transition-fast)}
+        .selected-chip button:hover{color:#fff}
+        .no-selection{color:rgba(255,255,255,.3);font-size:.85rem;padding:.5rem 0}
+        .mix-options{display:flex;gap:.75rem;flex-wrap:wrap}
+        .mix-option{padding:8px 16px;border-radius:50px;border:1.5px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.7);font-family:var(--font-main);font-size:.8rem;font-weight:600;cursor:pointer;transition:var(--transition-fast)}
+        .mix-option:hover{border-color:var(--shisha-accent);color:#fff}
+        .mix-option.active{background:var(--shisha-accent);border-color:var(--shisha-accent);color:#fff}
+
+        .builder-extras{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.5rem}
+        .extra-card{padding:1rem;border-radius:14px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;transition:var(--transition-fast);text-align:center}
+        .extra-card:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08)}
+        .extra-card.selected{border-color:var(--shisha-accent);background:rgba(139,92,246,.15)}
+        .extra-emoji{font-size:1.5rem;margin-bottom:.25rem}
+        .extra-name{font-size:.8rem;font-weight:700}
+        .extra-price{font-size:.7rem;color:var(--shisha-accent-light)}
+
+        .builder-note{width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:var(--font-main);font-size:.85rem;resize:vertical;min-height:70px;transition:var(--transition-fast)}
+        .builder-note::placeholder{color:rgba(255,255,255,.3)}
+        .builder-note:focus{outline:none;border-color:var(--shisha-accent)}
+
+        .builder-name{width:100%;padding:14px 18px;border-radius:14px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:var(--font-main);font-size:.95rem;font-weight:600;transition:var(--transition-fast)}
+        .builder-name::placeholder{color:rgba(255,255,255,.3)}
+        .builder-name:focus{outline:none;border-color:var(--shisha-accent)}
+
+        .builder-summary{background:rgba(255,255,255,.08);border-radius:16px;padding:1.5rem;margin:1.5rem 0;border:1px solid rgba(255,255,255,.1)}
+        .summary-row{display:flex;justify-content:space-between;padding:.35rem 0;font-size:.85rem}
+        .summary-label{color:var(--color-gray)}
+        .summary-value{font-weight:700}
+        .summary-total{border-top:1px solid rgba(255,255,255,.15);margin-top:.5rem;padding-top:.5rem;font-size:1.1rem}
+        .summary-total .summary-value{color:var(--shisha-accent-light);font-size:1.2rem}
+
+        .builder-submit{width:100%;padding:18px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--shisha-accent),var(--color-primary));color:#fff;font-family:var(--font-main);font-size:1rem;font-weight:800;cursor:pointer;transition:var(--transition-smooth);position:relative;z-index:1}
+        .builder-submit:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(139,92,246,.35)}
+        .builder-submit:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+        .builder-success{display:none;text-align:center;padding:2.5rem 1rem;position:relative;z-index:1}
+        .builder-success.show{display:block}
+        .builder-success-icon{font-size:4rem;margin-bottom:1rem;animation:successPop .5s ease}
+        @keyframes successPop{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+        .builder-success-title{font-size:1.5rem;font-weight:900;margin-bottom:.5rem}
+        .builder-success-text{color:var(--color-gray);font-size:.9rem;line-height:1.5;margin-bottom:1.5rem}
+        .builder-success-btn{padding:14px 32px;border-radius:50px;border:none;background:var(--shisha-accent);color:#fff;font-family:var(--font-main);font-size:.9rem;font-weight:700;cursor:pointer;transition:var(--transition-fast)}
+        .builder-success-btn:hover{background:var(--shisha-accent-dark)}
+
+        /* POPULAR COMBOS */
+        .combos-section{padding:0 1.25rem var(--section-padding);max-width:var(--container-width);margin:0 auto}
+        .combos-header{text-align:center;margin-bottom:2.5rem}
+        .combos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+        .combo-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:20px;padding:1.5rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth);cursor:pointer}
+        .combo-card:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,.08)}
+        .combo-emojis{font-size:2rem;margin-bottom:.75rem;display:flex;gap:.3rem}
+        .combo-name{font-size:1.1rem;font-weight:800;margin-bottom:.25rem}
+        .combo-flavors{font-size:.8rem;color:var(--shisha-accent);font-weight:600;margin-bottom:.5rem}
+        .combo-desc{font-size:.8rem;color:var(--color-text-light);line-height:1.4;margin-bottom:.75rem}
+        .combo-order-btn{padding:8px 18px;border-radius:50px;border:none;background:var(--shisha-accent);color:#fff;font-family:var(--font-main);font-size:.78rem;font-weight:700;cursor:pointer;transition:var(--transition-fast)}
+        .combo-order-btn:hover{background:var(--shisha-accent-dark);transform:translateY(-1px)}
+        .combo-badge{display:inline-flex;align-items:center;gap:.3rem;padding:3px 10px;border-radius:50px;font-size:.6rem;font-weight:700;margin-bottom:.75rem}
+        .combo-badge.popular{background:rgba(255,217,61,.15);color:#C9960C}
+        .combo-badge.new{background:rgba(139,92,246,.12);color:var(--shisha-accent)}
+        .combo-badge.andrei{background:rgba(192,58,43,.1);color:var(--color-primary)}
+
+        /* RULES */
+        .rules-section{padding:0 1.25rem var(--section-padding);max-width:700px;margin:0 auto}
+        .rules-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2.5rem;border:1px solid rgba(255,255,255,.5)}
+        .rules-header{text-align:center;margin-bottom:2rem}
+        .rule-row{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--color-border);align-items:flex-start}
+        .rule-row:last-child{border-bottom:none}
+        .rule-emoji{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
+        .rule-text{font-size:.9rem;color:var(--color-text-light);line-height:1.5}
+        .rule-text strong{color:var(--color-text)}
+
+        /* FOOTER */
+        .footer{background:var(--color-text);color:#fff;padding:4rem 1.25rem 2rem}
+        .footer-container{max-width:var(--container-width);margin:0 auto}
+        .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
+        .footer-logo{height:44px;filter:brightness(0) invert(1);margin-bottom:.75rem}
+        .footer-tagline{font-size:.85rem;color:var(--color-gray)}
+        .footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+        .footer-col h4{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--color-gray);margin-bottom:1rem}
+        .footer-col a{display:block;font-size:.9rem;color:rgba(255,255,255,.7);padding:.3rem 0}
+        .footer-col a:hover{color:#fff}
+        .footer-bottom{padding-top:2rem;text-align:center}
+        .footer-bottom p{font-size:.8rem;color:var(--color-gray)}
+
+        .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
+
+        .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+
+        @media(max-width:1024px){.footer-top{grid-template-columns:1fr;gap:3rem}}
+        @media(max-width:768px){
+            :root{--nav-height:68px;--section-padding:60px}
+            .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
+            .flavor-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem}
+            .builder-card{padding:2rem 1.5rem;border-radius:20px}
+            .builder-extras{grid-template-columns:1fr 1fr}
+            .combos-grid{grid-template-columns:1fr}
+            .footer-links-grid{grid-template-columns:1fr 1fr}
+            .nav-dropdown{display:none!important}
+        }
+        @media(max-width:480px){
+            .nav-logo img{height:38px}
+            .flavor-grid{grid-template-columns:repeat(2,1fr)}
+            .builder-extras{grid-template-columns:1fr}
+            .footer-links-grid{grid-template-columns:1fr}
+            .shisha-hero-smoke{font-size:4rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div></div>
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <nav class="navbar" id="navbar"><div class="nav-container">
+        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
+                <a href="shisha.html" class="nav-link active">Shisha</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="kontakt.html" class="nav-link">Kontakt</a>
+            </div>
+            <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
+            <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+        </div>
+    </div></nav>
+
+    <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="events.html" class="mobile-link">Events</a>
+        <a href="stats.html" class="mobile-link" style="font-size:1.2rem;color:var(--color-gray)">🏆 Game Statistik</a>
+        <a href="shisha.html" class="mobile-link active">Shisha</a>
+        <a href="shop.html" class="mobile-link">Shop</a>
+        <a href="kontakt.html" class="mobile-link">Kontakt</a>
+    </div></div>
+
+    <!-- ADMIN MODAL -->
+    <div class="admin-modal-overlay" id="adminOverlay"><div class="admin-modal"><h3>🔐 Admin Zugang</h3><p>Passwort eingeben um zum Admin Panel zu gelangen.</p><input type="password" id="adminPwInput" placeholder="Passwort"><div class="admin-modal-btns"><button class="btn-modal btn-modal-cancel" id="adminCancel">Abbrechen</button><button class="btn-modal btn-modal-submit" id="adminSubmit">Login</button></div><div class="admin-error" id="adminError">Falsches Passwort!</div></div></div>
+
+    <!-- HERO -->
+    <section class="shisha-hero reveal">
+        <div class="shisha-hero-smoke">💨</div>
+        <p class="shisha-hero-overline">SHISHA LOUNGE</p>
+        <h1 class="shisha-hero-title">Bestell dir deine <span>Shisha.</span></h1>
+        <p class="shisha-hero-sub">Waehle deine Lieblingsgeschmaecker, mix sie zusammen und Andrei baut sie dir.</p>
+        <div class="andrei-badge">
+            <div class="andrei-badge-avatar">🫅</div>
+            <div class="andrei-badge-text">
+                <div class="andrei-badge-name">Andrei</div>
+                <div class="andrei-badge-role">Shisha-Meister</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POPULAR COMBOS -->
+    <section class="combos-section reveal">
+        <div class="combos-header">
+            <p class="section-overline">BELIEBT</p>
+            <h2 class="section-title">Top Kombinationen.</h2>
+        </div>
+        <div class="combos-grid" id="combosGrid"></div>
+    </section>
+
+    <!-- FLAVOR MENU -->
+    <section class="menu-section" id="menuSection">
+        <div class="menu-header reveal">
+            <p class="section-overline">GESCHMAECKER</p>
+            <h2 class="section-title">Waehle deine Sorten.</h2>
+        </div>
+        <div class="cat-tabs reveal" id="catTabs"></div>
+        <div class="flavor-grid reveal" id="flavorGrid"></div>
+    </section>
+
+    <!-- BUILDER -->
+    <section class="builder-section" id="builderSection">
+        <div class="builder-card reveal">
+            <div class="builder-header">
+                <p class="section-overline">DEINE BESTELLUNG</p>
+                <h2 class="section-title">Shisha zusammenstellen.</h2>
+                <p>Waehle oben deine Geschmaecker und stelle hier deine Shisha zusammen.</p>
+            </div>
+
+            <div id="builderFormWrap">
+                <!-- STEP 1: Selected Flavors -->
+                <div class="builder-step">
+                    <div class="step-label"><span class="step-number">1</span> Deine Geschmaecker</div>
+                    <div class="selected-flavors" id="selectedFlavors">
+                        <div class="no-selection">Waehle oben deine Geschmaecker aus...</div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Mix Type -->
+                <div class="builder-step">
+                    <div class="step-label"><span class="step-number">2</span> Mix-Art</div>
+                    <div class="mix-options" id="mixOptions">
+                        <button class="mix-option active" data-mix="normal">Normal</button>
+                        <button class="mix-option" data-mix="stark">💪 Stark</button>
+                        <button class="mix-option" data-mix="leicht">🌿 Leicht</button>
+                        <button class="mix-option" data-mix="doppelt">🔥 Doppelkopf</button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Extras -->
+                <div class="builder-step">
+                    <div class="step-label"><span class="step-number">3</span> Extras</div>
+                    <div class="builder-extras" id="extrasGrid"></div>
+                </div>
+
+                <!-- STEP 4: Note -->
+                <div class="builder-step">
+                    <div class="step-label"><span class="step-number">4</span> Sonderwuensche</div>
+                    <textarea class="builder-note" id="orderNote" placeholder="z.B. Extra viel Minze, kein Eis, bestimmter Kopf..."></textarea>
+                </div>
+
+                <!-- STEP 5: Name -->
+                <div class="builder-step">
+                    <div class="step-label"><span class="step-number">5</span> Dein Name</div>
+                    <input type="text" class="builder-name" id="orderName" placeholder="Wer bestellt?">
+                </div>
+
+                <!-- SUMMARY -->
+                <div class="builder-summary" id="orderSummary"></div>
+
+                <!-- SUBMIT -->
+                <button class="builder-submit" id="orderSubmit" disabled>💨 Bestellung aufgeben</button>
+            </div>
+
+            <!-- SUCCESS -->
+            <div class="builder-success" id="orderSuccess">
+                <div class="builder-success-icon">💨</div>
+                <div class="builder-success-title">Bestellung aufgegeben!</div>
+                <div class="builder-success-text" id="orderSuccessText">Andrei baut deine Shisha. Lehn dich zurueck! 🛋️</div>
+                <button class="builder-success-btn" id="orderNewBtn">🔄 Neue Bestellung</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- RULES -->
+    <section class="rules-section reveal">
+        <div class="rules-card">
+            <div class="rules-header">
+                <p class="section-overline">HAUSREGELN</p>
+                <h2 class="section-title" style="font-size:1.5rem">Shisha Etikette.</h2>
+            </div>
+            <div class="rule-row"><span class="rule-emoji">🫅</span><div class="rule-text"><strong>Andrei ist der Chef.</strong> Er entscheidet ueber den Kopf, den Mix und die Kohle. Vertrau dem Meister.</div></div>
+            <div class="rule-row"><span class="rule-emoji">💰</span><div class="rule-text"><strong>Faire Kasse.</strong> Kohle und Tabak kosten Geld. Wirf was in die Shisha-Kasse oder zahl per PayPal.</div></div>
+            <div class="rule-row"><span class="rule-emoji">🔄</span><div class="rule-text"><strong>Kohle wechseln.</strong> Sag Bescheid wenn die Kohle durch ist. Nicht selbst rumbasteln!</div></div>
+            <div class="rule-row"><span class="rule-emoji">🚫</span><div class="rule-text"><strong>Kein Schlauch-Hogging.</strong> Immer weiterreichen. Die Shisha gehoert allen am Tisch.</div></div>
+            <div class="rule-row"><span class="rule-emoji">💧</span><div class="rule-text"><strong>Wasser trinken.</strong> Shisha dehydriert. Andrei sagt: Wer nicht trinkt, raucht nicht.</div></div>
+            <div class="rule-row"><span class="rule-emoji">🪟</span><div class="rule-text"><strong>Fenster auf.</strong> Wir rauchen mit Durchzug. Keine Sauna hier.</div></div>
+        </div>
+    </section>
+
+    <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shisha.html">Shisha</a><a href="shop.html">Shop</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p></div></div></footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script>
+(function(){
+    var firebaseConfig={apiKey:"AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",authDomain:"pocci4-a24e5.firebaseapp.com",projectId:"pocci4-a24e5",storageBucket:"pocci4-a24e5.firebasestorage.app",messagingSenderId:"518621760671",appId:"1:518621760671:web:90ad7c1bae464f313066aa"};
+    if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+    var db=firebase.firestore();
+
+    // ===== FLAVOR DATABASE =====
+    var FLAVORS = [
+        // Fruity
+        {id:"watermelon",name:"Wassermelone",emoji:"🍉",cat:"fruity",desc:"Saftig & suess",tag:"fruity"},
+        {id:"grape",name:"Traube",emoji:"🍇",cat:"fruity",desc:"Klassisch fruchtig",tag:"fruity"},
+        {id:"blueberry",name:"Blaubeere",emoji:"🫐",cat:"fruity",desc:"Beerig intensiv",tag:"fruity"},
+        {id:"peach",name:"Pfirsich",emoji:"🍑",cat:"fruity",desc:"Suess & weich",tag:"fruity"},
+        {id:"mango",name:"Mango",emoji:"🥭",cat:"fruity",desc:"Tropisch suess",tag:"exotic"},
+        {id:"apple",name:"Apfel",emoji:"🍏",cat:"fruity",desc:"Gruen & frisch",tag:"fruity"},
+        {id:"cherry",name:"Kirsche",emoji:"🍒",cat:"fruity",desc:"Suess-sauer",tag:"fruity"},
+        {id:"lemon",name:"Zitrone",emoji:"🍋",cat:"fruity",desc:"Sauer & erfrischend",tag:"fresh"},
+        {id:"orange",name:"Orange",emoji:"🍊",cat:"fruity",desc:"Citrus pur",tag:"fruity"},
+        {id:"raspberry",name:"Himbeere",emoji:"🫐",cat:"fruity",desc:"Beerig suess",tag:"fruity"},
+        {id:"strawberry",name:"Erdbeere",emoji:"🍓",cat:"fruity",desc:"Der Klassiker",tag:"fruity"},
+        {id:"banana",name:"Banane",emoji:"🍌",cat:"fruity",desc:"Cremig suess",tag:"sweet"},
+        {id:"pineapple",name:"Ananas",emoji:"🍍",cat:"fruity",desc:"Tropisch frisch",tag:"exotic"},
+        {id:"passion",name:"Maracuja",emoji:"🌺",cat:"fruity",desc:"Exotisch sauer",tag:"exotic"},
+        {id:"pomegranate",name:"Granatapfel",emoji:"🫐",cat:"fruity",desc:"Herb suess",tag:"fruity"},
+        // Fresh
+        {id:"mint",name:"Minze",emoji:"🌿",cat:"fresh",desc:"Eiskalt frisch",tag:"fresh"},
+        {id:"ice",name:"Ice / Kalt",emoji:"🧊",cat:"fresh",desc:"Purer Ice Kick",tag:"fresh"},
+        {id:"menthol",name:"Menthol",emoji:"❄️",cat:"fresh",desc:"Extra frisch",tag:"fresh"},
+        {id:"cucumber",name:"Gurke",emoji:"🥒",cat:"fresh",desc:"Leicht & kuehl",tag:"fresh"},
+        {id:"eucalyptus",name:"Eukalyptus",emoji:"🌲",cat:"fresh",desc:"Frei durchatmen",tag:"fresh"},
+        // Sweet
+        {id:"vanilla",name:"Vanille",emoji:"🍦",cat:"sweet",desc:"Cremig warm",tag:"sweet"},
+        {id:"caramel",name:"Karamell",emoji:"🍮",cat:"sweet",desc:"Suess & warm",tag:"sweet"},
+        {id:"chocolate",name:"Schokolade",emoji:"🍫",cat:"sweet",desc:"Dunkel & intensiv",tag:"sweet"},
+        {id:"honey",name:"Honig",emoji:"🍯",cat:"sweet",desc:"Natuerlich suess",tag:"sweet"},
+        {id:"bubblegum",name:"Kaugummi",emoji:"🫧",cat:"sweet",desc:"Suess & fun",tag:"sweet"},
+        {id:"cinnamon",name:"Zimt",emoji:"🫙",cat:"sweet",desc:"Wuerzige Waerme",tag:"spicy"},
+        // Exotic
+        {id:"coconut",name:"Kokos",emoji:"🥥",cat:"exotic",desc:"Tropical vibes",tag:"exotic"},
+        {id:"lychee",name:"Litschi",emoji:"🌸",cat:"exotic",desc:"Blumig suess",tag:"exotic"},
+        {id:"guava",name:"Guave",emoji:"🍈",cat:"exotic",desc:"Tropisch herb",tag:"exotic"},
+        {id:"dragon",name:"Drachenfrucht",emoji:"🐉",cat:"exotic",desc:"Exotisch mild",tag:"exotic"},
+        {id:"rose",name:"Rose",emoji:"🌹",cat:"exotic",desc:"Blumig elegant",tag:"exotic"},
+        // Classic
+        {id:"doppelapfel",name:"Doppelapfel",emoji:"🍎",cat:"classic",desc:"DER Klassiker",tag:"classic"},
+        {id:"traube-minze",name:"Traube-Minze",emoji:"🍇",cat:"classic",desc:"Beliebteste Kombi",tag:"classic"},
+        {id:"love66",name:"Love 66",emoji:"💜",cat:"classic",desc:"Al Fakher Legende",tag:"classic"},
+        {id:"fresh-lemon",name:"Frische Zitrone",emoji:"🍋",cat:"classic",desc:"Ewig gut",tag:"classic"},
+    ];
+
+    var EXTRAS = [
+        {id:"ice-hose",name:"Ice-Schlauch",emoji:"🧊",price:0},
+        {id:"double-coal",name:"Extra Kohle",emoji:"🔥",price:0},
+        {id:"fruit-bowl",name:"Obst-Kopf",emoji:"🍎",price:2},
+        {id:"led",name:"LED Base",emoji:"💡",price:0},
+        {id:"milk",name:"Milch statt Wasser",emoji:"🥛",price:0},
+        {id:"molasses",name:"Extra Molasse",emoji:"🍯",price:1},
+    ];
+
+    var COMBOS = [
+        {name:"Andrei's Special",emoji:"🫅🔥",flavors:["watermelon","mint","ice"],desc:"Wassermelone Minze Ice – Andrei's Signature Mix. Frisch und stark.",badge:"andrei"},
+        {name:"Tropical Paradise",emoji:"🌴🥥",flavors:["mango","coconut","pineapple"],desc:"Karibik-Feeling pur. Suess, cremig und exotisch.",badge:"popular"},
+        {name:"Berry Blast",emoji:"🫐💥",flavors:["blueberry","raspberry","ice"],desc:"Beerenbombe mit Ice Kick. Suess-saurer Genuss.",badge:"popular"},
+        {name:"Classic OG",emoji:"🍇🌿",flavors:["grape","mint"],desc:"Traube-Minze. Die unangefochtene Nummer 1.",badge:"popular"},
+        {name:"Love Clouds",emoji:"💜☁️",flavors:["love66","vanilla"],desc:"Love 66 meets Vanille. Suess & cremig.",badge:"new"},
+        {name:"Winter Spice",emoji:"🫙❄️",flavors:["cinnamon","apple","ice"],desc:"Zimt-Apfel mit Ice. Wie Gluehwein zum Rauchen.",badge:"new"},
+        {name:"Citrus Fresh",emoji:"🍋🍊",flavors:["lemon","orange","menthol"],desc:"Zitrus-Explosion. Maximal erfrischend.",badge:"popular"},
+        {name:"Double Apple OG",emoji:"🍎🍏",flavors:["doppelapfel","mint"],desc:"Doppelapfel mit leichter Minze. Timeless.",badge:"classic"},
+    ];
+
+    var CATS = [
+        {id:"all",name:"Alle"},
+        {id:"fruity",name:"🍉 Fruchtig"},
+        {id:"fresh",name:"🧊 Frisch"},
+        {id:"sweet",name:"🍯 Suess"},
+        {id:"exotic",name:"🌴 Exotisch"},
+        {id:"classic",name:"⭐ Klassiker"},
+    ];
+
+    var selectedFlavors = [];
+    var selectedExtras = [];
+    var currentMix = "normal";
+    var activeCat = "all";
+
+    // ===== NAV =====
+    var navbar=document.getElementById("navbar");
+    window.addEventListener("scroll",function(){navbar.classList.toggle("scrolled",window.scrollY>50);});
+    var hamburger=document.getElementById("hamburger"),mobileMenu=document.getElementById("mobileMenu");
+    hamburger.addEventListener("click",function(){hamburger.classList.toggle("active");mobileMenu.classList.toggle("active");document.body.style.overflow=mobileMenu.classList.contains("active")?"hidden":"";});
+    document.querySelectorAll(".mobile-link").forEach(function(ml){ml.addEventListener("click",function(){hamburger.classList.remove("active");mobileMenu.classList.remove("active");document.body.style.overflow="";});});
+    var dd=document.getElementById("eventsDropdown"),ddT=null;
+    if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},200);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
+
+    // ===== ADMIN =====
+    (function(){
+        var ADMIN_PW="pocci4admin";var t=document.getElementById("adminTrigger");var o=document.getElementById("adminOverlay");var i=document.getElementById("adminPwInput");var c=document.getElementById("adminCancel");var s=document.getElementById("adminSubmit");var e=document.getElementById("adminError");
+        t.addEventListener("click",function(){if(sessionStorage.getItem("pocci4admin")==="true"){window.location.href="admin.html";return;}o.classList.add("active");setTimeout(function(){i.focus();},100);});
+        c.addEventListener("click",function(){o.classList.remove("active");i.value="";e.style.display="none";});
+        o.addEventListener("click",function(ev){if(ev.target===o){o.classList.remove("active");i.value="";e.style.display="none";}});
+        function tryLogin(){if(i.value===ADMIN_PW){sessionStorage.setItem("pocci4admin","true");window.location.href="admin.html";}else{e.style.display="block";i.value="";i.focus();}}
+        s.addEventListener("click",tryLogin);i.addEventListener("keydown",function(ev){if(ev.key==="Enter")tryLogin();});
+    })();
+
+    // ===== RENDER CATEGORY TABS =====
+    function renderCatTabs(){
+        var html="";
+        for(var i=0;i<CATS.length;i++){
+            html+='<button class="cat-tab'+(CATS[i].id===activeCat?' active':'')+'" data-cat="'+CATS[i].id+'">'+CATS[i].name+'</button>';
+        }
+        document.getElementById("catTabs").innerHTML=html;
+        document.querySelectorAll(".cat-tab").forEach(function(tab){
+            tab.addEventListener("click",function(){
+                activeCat=this.getAttribute("data-cat");
+                document.querySelectorAll(".cat-tab").forEach(function(t){t.classList.remove("active");});
+                this.classList.add("active");
+                renderFlavorGrid();
+            });
+        });
+    }
+
+    // ===== RENDER FLAVOR GRID =====
+    function renderFlavorGrid(){
+        var filtered=activeCat==="all"?FLAVORS:FLAVORS.filter(function(f){return f.cat===activeCat;});
+        var html="";
+        for(var i=0;i<filtered.length;i++){
+            var f=filtered[i];
+            var isSelected=selectedFlavors.indexOf(f.id)!==-1;
+            html+='<div class="flavor-card'+(isSelected?' selected':'')+'" data-id="'+f.id+'">';
+            html+='<div class="flavor-emoji">'+f.emoji+'</div>';
+            html+='<div class="flavor-name">'+f.name+'</div>';
+            html+='<div class="flavor-desc">'+f.desc+'</div>';
+            html+='<span class="flavor-tag '+f.tag+'">'+f.tag+'</span>';
+            html+='</div>';
+        }
+        document.getElementById("flavorGrid").innerHTML=html;
+        document.querySelectorAll(".flavor-card").forEach(function(card){
+            card.addEventListener("click",function(){
+                var id=this.getAttribute("data-id");
+                var idx=selectedFlavors.indexOf(id);
+                if(idx!==-1){
+                    selectedFlavors.splice(idx,1);
+                    this.classList.remove("selected");
+                } else {
+                    if(selectedFlavors.length>=4){alert("Maximal 4 Geschmaecker!");return;}
+                    selectedFlavors.push(id);
+                    this.classList.add("selected");
+                }
+                updateBuilder();
+            });
+        });
+    }
+
+    // ===== RENDER EXTRAS =====
+    function renderExtras(){
+        var html="";
+        for(var i=0;i<EXTRAS.length;i++){
+            var ex=EXTRAS[i];
+            html+='<div class="extra-card" data-id="'+ex.id+'">';
+            html+='<div class="extra-emoji">'+ex.emoji+'</div>';
+            html+='<div class="extra-name">'+ex.name+'</div>';
+            if(ex.price>0)html+='<div class="extra-price">+'+ex.price+' EUR</div>';
+            else html+='<div class="extra-price">Kostenlos</div>';
+            html+='</div>';
+        }
+        document.getElementById("extrasGrid").innerHTML=html;
+        document.querySelectorAll(".extra-card").forEach(function(card){
+            card.addEventListener("click",function(){
+                var id=this.getAttribute("data-id");
+                var idx=selectedExtras.indexOf(id);
+                if(idx!==-1){selectedExtras.splice(idx,1);this.classList.remove("selected");}
+                else{selectedExtras.push(id);this.classList.add("selected");}
+                updateBuilder();
+            });
+        });
+    }
+
+    // ===== MIX OPTIONS =====
+    document.querySelectorAll(".mix-option").forEach(function(btn){
+        btn.addEventListener("click",function(){
+            document.querySelectorAll(".mix-option").forEach(function(b){b.classList.remove("active");});
+            this.classList.add("active");
+            currentMix=this.getAttribute("data-mix");
+            updateBuilder();
+        });
+    });
+
+    // ===== UPDATE BUILDER =====
+    function updateBuilder(){
+        // Selected chips
+        var chipHtml="";
+        if(selectedFlavors.length===0){
+            chipHtml='<div class="no-selection">Waehle oben deine Geschmaecker aus...</div>';
+        } else {
+            for(var i=0;i<selectedFlavors.length;i++){
+                var f=findFlavor(selectedFlavors[i]);
+                if(f) chipHtml+='<span class="selected-chip">'+f.emoji+' '+f.name+'<button data-remove="'+f.id+'">✕</button></span>';
+            }
+        }
+        document.getElementById("selectedFlavors").innerHTML=chipHtml;
+
+        // Bind remove buttons
+        document.querySelectorAll(".selected-chip button").forEach(function(btn){
+            btn.addEventListener("click",function(e){
+                e.stopPropagation();
+                var id=this.getAttribute("data-remove");
+                var idx=selectedFlavors.indexOf(id);
+                if(idx!==-1)selectedFlavors.splice(idx,1);
+                renderFlavorGrid();
+                updateBuilder();
+            });
+        });
+
+        // Summary
+        var extrasTotal=0;
+        var extraNames=[];
+        for(var i=0;i<selectedExtras.length;i++){
+            var ex=findExtra(selectedExtras[i]);
+            if(ex){extrasTotal+=ex.price;extraNames.push(ex.emoji+" "+ex.name);}
+        }
+        var flavorNames=[];
+        for(var i=0;i<selectedFlavors.length;i++){
+            var f=findFlavor(selectedFlavors[i]);
+            if(f)flavorNames.push(f.emoji+" "+f.name);
+        }
+        var mixNames={normal:"Normal",stark:"💪 Stark",leicht:"🌿 Leicht",doppelt:"🔥 Doppelkopf"};
+        var basePrice=currentMix==="doppelt"?2:0;
+        var total=basePrice+extrasTotal;
+
+        var sh='<div class="summary-row"><span class="summary-label">Geschmaecker</span><span class="summary-value">'+(flavorNames.length?flavorNames.join(", "):"–")+'</span></div>';
+        sh+='<div class="summary-row"><span class="summary-label">Mix</span><span class="summary-value">'+(mixNames[currentMix]||"Normal")+'</span></div>';
+        if(extraNames.length)sh+='<div class="summary-row"><span class="summary-label">Extras</span><span class="summary-value">'+extraNames.join(", ")+'</span></div>';
+        sh+='<div class="summary-row summary-total"><span class="summary-label">Beitrag Shisha-Kasse</span><span class="summary-value">'+(total>0?total.toFixed(2).replace(".",",")+" EUR":"Kostenlos / Kasse")+'</span></div>';
+        document.getElementById("orderSummary").innerHTML=sh;
+
+        // Enable/disable submit
+        document.getElementById("orderSubmit").disabled=selectedFlavors.length===0;
+    }
+
+    // ===== RENDER COMBOS =====
+    function renderCombos(){
+        var html="";
+        for(var i=0;i<COMBOS.length;i++){
+            var c=COMBOS[i];
+            var flavorList=[];
+            for(var j=0;j<c.flavors.length;j++){var f=findFlavor(c.flavors[j]);if(f)flavorList.push(f.name);}
+            var badgeHtml="";
+            if(c.badge==="popular")badgeHtml='<span class="combo-badge popular">🔥 Beliebt</span>';
+            else if(c.badge==="new")badgeHtml='<span class="combo-badge new">✨ Neu</span>';
+            else if(c.badge==="andrei")badgeHtml='<span class="combo-badge andrei">🫅 Andrei\'s Pick</span>';
+            html+='<div class="combo-card" data-combo="'+i+'">';
+            html+=badgeHtml;
+            html+='<div class="combo-emojis">'+c.emoji+'</div>';
+            html+='<div class="combo-name">'+c.name+'</div>';
+            html+='<div class="combo-flavors">'+flavorList.join(" + ")+'</div>';
+            html+='<div class="combo-desc">'+c.desc+'</div>';
+            html+='<button class="combo-order-btn" data-combo="'+i+'">💨 Diese Kombi bestellen</button>';
+            html+='</div>';
+        }
+        document.getElementById("combosGrid").innerHTML=html;
+        document.querySelectorAll(".combo-order-btn").forEach(function(btn){
+            btn.addEventListener("click",function(e){
+                e.stopPropagation();
+                var idx=parseInt(this.getAttribute("data-combo"));
+                var combo=COMBOS[idx];
+                selectedFlavors=combo.flavors.slice();
+                renderFlavorGrid();
+                updateBuilder();
+                document.getElementById("builderSection").scrollIntoView({behavior:"smooth",block:"start"});
+            });
+        });
+    }
+
+    // ===== SUBMIT ORDER =====
+    document.getElementById("orderSubmit").addEventListener("click",function(){
+        var name=document.getElementById("orderName").value.trim();
+        if(!name){alert("Bitte gib deinen Namen ein!");document.getElementById("orderName").focus();return;}
+        if(selectedFlavors.length===0){alert("Waehle mindestens einen Geschmack!");return;}
+
+        var flavorNames=[];
+        for(var i=0;i<selectedFlavors.length;i++){var f=findFlavor(selectedFlavors[i]);if(f)flavorNames.push(f.name);}
+        var extraNames=[];var extrasTotal=0;
+        for(var i=0;i<selectedExtras.length;i++){var ex=findExtra(selectedExtras[i]);if(ex){extraNames.push(ex.name);extrasTotal+=ex.price;}}
+        var basePrice=currentMix==="doppelt"?2:0;
+
+        db.collection("shisha_orders").add({
+            name:name,
+            flavors:flavorNames,
+            flavorIds:selectedFlavors.slice(),
+            mix:currentMix,
+            extras:extraNames,
+            extraIds:selectedExtras.slice(),
+            note:document.getElementById("orderNote").value.trim(),
+            total:basePrice+extrasTotal,
+            status:"neu",
+            createdAt:firebase.firestore.FieldValue.serverTimestamp()
+        }).then(function(){
+            document.getElementById("builderFormWrap").style.display="none";
+            var s=document.getElementById("orderSuccess");
+            s.classList.add("show");
+            document.getElementById("orderSuccessText").innerHTML="<strong>"+esc(name)+"</strong>, deine Shisha wird gebaut!<br>"+flavorNames.join(" + ")+" ("+currentMix+")<br>Andrei kuemmert sich drum. 🫅💨";
+            launchConfetti();
+        }).catch(function(err){console.error(err);alert("Fehler beim Bestellen!");});
+    });
+
+    // New order
+    document.getElementById("orderNewBtn").addEventListener("click",function(){
+        selectedFlavors=[];selectedExtras=[];currentMix="normal";
+        document.getElementById("orderName").value="";
+        document.getElementById("orderNote").value="";
+        document.getElementById("builderFormWrap").style.display="block";
+        document.getElementById("orderSuccess").classList.remove("show");
+        document.getElementById("orderSuccess").style.display="none";
+        document.querySelectorAll(".mix-option").forEach(function(b){b.classList.remove("active");});
+        document.querySelector('.mix-option[data-mix="normal"]').classList.add("active");
+        renderFlavorGrid();
+        renderExtras();
+        updateBuilder();
+        window.scrollTo({top:0,behavior:"smooth"});
+    });
+
+    // ===== HELPERS =====
+    function findFlavor(id){for(var i=0;i<FLAVORS.length;i++){if(FLAVORS[i].id===id)return FLAVORS[i];}return null;}
+    function findExtra(id){for(var i=0;i<EXTRAS.length;i++){if(EXTRAS[i].id===id)return EXTRAS[i];}return null;}
+    function esc(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+    // CONFETTI
+    function launchConfetti(){var c=document.getElementById("confettiContainer");var colors=["#8B5CF6","#A78BFA","#C03A2B","#E8501E","#C4A882","#FF6B6B","#FFD93D"];for(var i=0;i<50;i++){var p=document.createElement("div");var sz=Math.random()*8+5;var isCir=Math.random()>.5;p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"3px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.3)+"s;pointer-events:none;";c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4000);})(p);}}
+    var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";document.head.appendChild(cs);
+
+    // REVEAL
+    var ro=new IntersectionObserver(function(entries){for(var i=0;i<entries.length;i++){if(entries[i].isIntersecting){(function(el,idx){setTimeout(function(){el.classList.add("visible");},idx*80);})(entries[i].target,i);ro.unobserve(entries[i].target);}}},{threshold:.1});
+    document.querySelectorAll(".reveal").forEach(function(el){ro.observe(el);});
+
+    // PARALLAX
+    window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";}});
+
+    // ===== INIT =====
+    renderCatTabs();
+    renderFlavorGrid();
+    renderExtras();
+    renderCombos();
+    updateBuilder();
+
+})();
+    </script>
+</body>
+</html>
