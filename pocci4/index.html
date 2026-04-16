@@ -447,3 +447,471 @@
 
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+    (function(){
+        var firebaseConfig = {
+            apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
+            authDomain: "pocci4-a24e5.firebaseapp.com",
+            projectId: "pocci4-a24e5",
+            storageBucket: "pocci4-a24e5.firebasestorage.app",
+            messagingSenderId: "518621760671",
+            appId: "1:518621760671:web:90ad7c1bae464f313066aa"
+        };
+        if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+
+        var catColors = {party:"#C03A2B",games:"#1A1A1A",drinks:"#C4A882",film:"#457B9D",other:"#6B6B6B"};
+        var catNames = {party:"Party",games:"Spieleabend",drinks:"Trinkabend",film:"Filmabend",other:"Sonstiges"};
+        var catEmojis = {party:"🎉",games:"🎲",drinks:"🍻",film:"🎬",other:"💡"};
+        var monthNames = ["Januar","Februar","Maerz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+        var today = new Date();
+        var mcMonth = today.getMonth();
+        var mcYear = today.getFullYear();
+        var events = [];
+        var futureEvents = [];
+        var cdIndex = 0;
+        var cdInterval = null;
+
+        // ========== CREW DATA ==========
+        var crewData = [
+            {name:"Mats",role:"Der BWLer",color:"#C4A882",emoji:"🏡",bio:"Real Estate BWLer - koennte auch Justus heissen. Macht die Website und weiss was der Quadratmeter kostet. Naturally.",traits:["📊 Real Estate","💼 Justus-Energy","🌐 Webmaster"],ig:"mats.lm"},
+            {name:"Georgie",role:"Das Koepfchen",color:"#457B9D",emoji:"🧠",bio:"Medizinstudentin mit dem Plan. Strategin die auch beim Catan immer gewinnt. Unterschaetz sie nicht.",traits:["🩺 Medizinerin","🎲 Strategie-Queen","📚 Brain"],ig:"georginaamarie"},
+            {name:"Andrei",role:"Der Tank",color:"#C03A2B",emoji:"💪",bio:"Breit, stark und immer am Pumpen. Das Herz der WG - im wahrsten Sinne ein grosser Mensch.",traits:["🏋️ Gym Rat","🫂 Gentle Giant","🍗 Meal Prep King"],ig:"andrei.ncu"},
+            {name:"Caro",role:"Vorstadt-Prinzessin",color:"#D4A574",emoji:"👑",bio:"Die Prinzessin aus der Vorstadt. Sieht aus wie High Society, feiert aber haerter als alle anderen.",traits:["👑 Vorstadt-Vibes","🥂 Champagner-Energy"]},
+            {name:"Felix",role:"Sportliche Maschine",color:"#2D6A4F",emoji:"⚽",bio:"Egal welcher Sport - Felix macht mit und gewinnt wahrscheinlich. Der Typ ist einfach gebaut fuer Bewegung.",traits:["⚽ Allround-Athlet","💪 Maschine"]},
+            {name:"Fabe",role:"Kuenstler der Informatik",color:"#7B68EE",emoji:"🎨",bio:"Studiert Informatik aber ist eigentlich Kuenstler. Wie das geht? Fragt ihn. Er weiss es selbst nicht.",traits:["🎨 Kuenstler-Seele","💻 Informatiker","❓ Paradox"]},
+            {name:"Fabian S.",role:"Der Wilde",color:"#E63946",emoji:"🔥",bio:"Wilder Mensch der hier eigentlich Miete zahlen muesste. Ist oefter da als manche Moebel.",traits:["🔥 Chaot","🏠 Untermieter (inoffiziell)"]},
+            {name:"Sebastian",role:"Das Phantom",color:"#6C757D",emoji:"👻",bio:"Kriegt man nicht zu Gesicht. Aber WENN er da ist, ist er gut drauf. Rare aber legendaer.",traits:["👻 Phantom","✨ Rare Appearance"]},
+            {name:"Jannik",role:"Mr. Zuverlaessig",color:"#0077B6",emoji:"🤝",bio:"Enttaeuscht nie - aber sich selbst beim Poker meistens. Trotzdem jedes Mal wieder am Tisch.",traits:["🤝 Zuverlaessig","🃏 Poker-Opfer"]},
+            {name:"Eva",role:"Innsbrucker Maus",color:"#F4A261",emoji:"🏔️",bio:"Nuechtern und trotzdem die Lustigste im Raum. Wie macht sie das? Alpen-Energie.",traits:["🏔️ Tirolerin","😂 Natural High"]},
+            {name:"Andre",role:"Gast des Jahrhunderts",color:"#E76F51",emoji:"🗣️",bio:"Liebt es zu tratschen. Also lieber keine Geheimnisse erzaehlen wenn er in der Naehe ist.",traits:["🗣️ Tratsch-Koenig","🏆 Gast des Jhd."]},
+            {name:"Tim",role:"Der Zahnfluesterer",color:"#264653",emoji:"🦷",bio:"Zahnmediziner mit Fetisch fuer Zahnluecken. Laechelt euch an und bewertet direkt euer Gebiss.",traits:["🦷 Zahnmedizin","😬 Zahnluecken-Fan"]}
+        ];
+
+        // ========== NAV ==========
+        var navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", function(){
+            navbar.classList.toggle("scrolled", window.scrollY > 50);
+        });
+        var hamburger = document.getElementById("hamburger");
+        var mobileMenu = document.getElementById("mobileMenu");
+        hamburger.addEventListener("click", function(){
+            hamburger.classList.toggle("active");
+            mobileMenu.classList.toggle("active");
+            document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
+        });
+        var mLinks = document.querySelectorAll(".mobile-link");
+        for(var i = 0; i < mLinks.length; i++){
+            mLinks[i].addEventListener("click", function(){
+                hamburger.classList.remove("active");
+                mobileMenu.classList.remove("active");
+                document.body.style.overflow = "";
+            });
+        }
+        var dd = document.getElementById("eventsDropdown"), ddT = null;
+        if(dd){
+            dd.addEventListener("mouseenter", function(){ ddT = setTimeout(function(){ dd.classList.add("dropdown-visible"); }, 2000); });
+            dd.addEventListener("mouseleave", function(){ clearTimeout(ddT); setTimeout(function(){ dd.classList.remove("dropdown-visible"); }, 300); });
+        }
+
+        // ========== LOAD EVENTS ==========
+        function loadEvents(cb){
+            db.collection("events").orderBy("date","asc").get().then(function(snap){
+                events = [];
+                snap.forEach(function(doc){
+                    var d = doc.data();
+                    d.id = doc.id;
+                    if(!d.attendees) d.attendees = [];
+                    events.push(d);
+                });
+                futureEvents = events.filter(function(e){
+                    return new Date(e.date) >= new Date(today.toDateString());
+                });
+                if(cb) cb();
+            }).catch(function(err){
+                console.error("Error:", err);
+                events = [];
+                futureEvents = [];
+                if(cb) cb();
+            });
+        }
+
+        function countAttending(ev){
+            var t = 0;
+            var a = ev.attendees || [];
+            for(var i = 0; i < a.length; i++) t += (a[i].persons || 1);
+            return t;
+        }
+
+        // ========== COUNTDOWN ==========
+        function renderCountdown(){
+            var container = document.getElementById("countdownContent");
+            var dotsContainer = document.getElementById("cdDots");
+
+            if(!futureEvents.length){
+                container.innerHTML = "<div style=\"text-align:center;padding:2rem\"><div style=\"font-size:2.5rem;margin-bottom:.75rem\">🎉</div><p style=\"font-size:1rem;font-weight:700;margin-bottom:.5rem\">Aktuell keine Events geplant</p><p style=\"font-size:.85rem;color:var(--color-gray)\">Bald kommt was neues!</p><a href=\"events.html#vorschlag\" class=\"btn btn-primary\" style=\"margin-top:1rem\">Event vorschlagen</a></div>";
+                dotsContainer.innerHTML = "";
+                return;
+            }
+
+            if(cdIndex >= futureEvents.length) cdIndex = 0;
+            if(cdIndex < 0) cdIndex = futureEvents.length - 1;
+
+            var e = futureEvents[cdIndex];
+            var attending = countAttending(e);
+            var pct = e.capacity > 0 ? Math.round((attending / e.capacity) * 100) : 0;
+            var catColor = catColors[e.category] || catColors.other;
+
+            container.innerHTML =
+                "<div class=\"countdown-emoji\">" + e.emoji + "</div>" +
+                "<span class=\"countdown-event-cat\" style=\"background:" + catColor + "\">" + (catNames[e.category] || "Event") + "</span>" +
+                "<div class=\"countdown-event-name\">" + esc(e.title) + "</div>" +
+                "<div class=\"countdown-event-date\">📅 " + formatDate(e.date) + " &bull; 🕐 " + e.time + " Uhr</div>" +
+                "<div class=\"countdown-grid\" id=\"cdGrid\"></div>" +
+                "<div class=\"countdown-capacity\"><div class=\"countdown-capacity-bar\"><div class=\"countdown-capacity-fill\" style=\"width:" + pct + "%\"></div></div><div class=\"countdown-capacity-text\"><span>👥 " + attending + "/" + e.capacity + " Plaetze</span><span>" + pct + "%</span></div></div>" +
+                "<div class=\"countdown-actions\"><a href=\"event-detail.html?id=" + e.id + "\" class=\"btn btn-primary\">Details ansehen</a><a href=\"events.html\" class=\"btn btn-outline\">Alle Events</a></div>";
+
+            // Dots
+            var dotsHtml = "";
+            for(var i = 0; i < Math.min(futureEvents.length, 8); i++){
+                dotsHtml += "<div class=\"countdown-dot" + (i === cdIndex ? " active" : "") + "\" data-idx=\"" + i + "\"></div>";
+            }
+            dotsContainer.innerHTML = dotsHtml;
+            var dots = dotsContainer.querySelectorAll(".countdown-dot");
+            for(var i = 0; i < dots.length; i++){
+                dots[i].addEventListener("click", function(){
+                    cdIndex = parseInt(this.getAttribute("data-idx"));
+                    renderCountdown();
+                });
+            }
+
+            // Start countdown timer
+            startCountdownTimer(e);
+        }
+
+        function startCountdownTimer(e){
+            if(cdInterval) clearInterval(cdInterval);
+            var target = new Date(e.date + "T" + (e.time || "20:00") + ":00");
+
+            function updateTimer(){
+                var now = new Date();
+                var diff = target - now;
+                var grid = document.getElementById("cdGrid");
+                if(!grid) return;
+
+                if(diff <= 0){
+                    grid.innerHTML = "<div style=\"text-align:center;width:100%\"><span style=\"font-size:1.2rem;font-weight:800;color:var(--color-primary)\">🎉 Jetzt live!</span></div>";
+                    return;
+                }
+
+                var days = Math.floor(diff / 86400000);
+                var hours = Math.floor((diff % 86400000) / 3600000);
+                var mins = Math.floor((diff % 3600000) / 60000);
+                var secs = Math.floor((diff % 60000) / 1000);
+
+                grid.innerHTML =
+                    "<div class=\"countdown-item\"><span class=\"countdown-number\" id=\"cdD\">" + pad(days) + "</span><span class=\"countdown-label\">Tage</span></div>" +
+                    "<span class=\"countdown-separator\">:</span>" +
+                    "<div class=\"countdown-item\"><span class=\"countdown-number\" id=\"cdH\">" + pad(hours) + "</span><span class=\"countdown-label\">Std</span></div>" +
+                    "<span class=\"countdown-separator\">:</span>" +
+                    "<div class=\"countdown-item\"><span class=\"countdown-number\" id=\"cdM\">" + pad(mins) + "</span><span class=\"countdown-label\">Min</span></div>" +
+                    "<span class=\"countdown-separator\">:</span>" +
+                    "<div class=\"countdown-item\"><span class=\"countdown-number\" id=\"cdS\">" + pad(secs) + "</span><span class=\"countdown-label\">Sek</span></div>";
+            }
+
+            updateTimer();
+            cdInterval = setInterval(updateTimer, 1000);
+        }
+
+        document.getElementById("cdPrev").addEventListener("click", function(){
+            cdIndex--;
+            renderCountdown();
+        });
+        document.getElementById("cdNext").addEventListener("click", function(){
+            cdIndex++;
+            renderCountdown();
+        });
+
+        // ========== MINI CALENDAR ==========
+        function renderMiniCal(){
+            document.getElementById("mcMonth").textContent = monthNames[mcMonth] + " " + mcYear;
+            var dc = document.getElementById("mcDays");
+            dc.innerHTML = "";
+            var first = new Date(mcYear, mcMonth, 1);
+            var last = new Date(mcYear, mcMonth + 1, 0);
+            var start = first.getDay() === 0 ? 6 : first.getDay() - 1;
+            var prevLast = new Date(mcYear, mcMonth, 0).getDate();
+
+            for(var i = start - 1; i >= 0; i--){
+                dc.innerHTML += "<div class=\"mini-cal-day other\">" + (prevLast - i) + "</div>";
+            }
+
+            for(var d = 1; d <= last.getDate(); d++){
+                var dateStr = mcYear + "-" + String(mcMonth + 1).padStart(2,"0") + "-" + String(d).padStart(2,"0");
+                var dayEv = events.filter(function(e){ return e.date === dateStr; });
+                var isToday = today.getDate() === d && today.getMonth() === mcMonth && today.getFullYear() === mcYear;
+                var cls = "mini-cal-day current";
+                if(isToday) cls += " today";
+                if(dayEv.length) cls += " has-event cat-" + dayEv[0].category;
+                var el = document.createElement("div");
+                el.className = cls;
+                el.textContent = d;
+                if(dayEv.length){
+                    (function(ev){
+                        el.addEventListener("click", function(){
+                            window.location.href = "event-detail.html?id=" + ev.id;
+                        });
+                    })(dayEv[0]);
+                }
+                dc.appendChild(el);
+            }
+
+            var total = dc.children.length;
+            for(var i = 1; i <= 42 - total; i++){
+                dc.innerHTML += "<div class=\"mini-cal-day other\">" + i + "</div>";
+            }
+
+            // Upcoming list
+            renderUpcoming();
+        }
+
+        function renderUpcoming(){
+            var container = document.getElementById("mcUpcoming");
+            var upcoming = futureEvents.slice(0, 4);
+            if(!upcoming.length){
+                container.innerHTML = "<div class=\"mini-cal-upcoming-title\">Naechste Events</div><p style=\"font-size:.8rem;color:var(--color-gray)\">Keine Events geplant.</p>";
+                return;
+            }
+            var html = "<div class=\"mini-cal-upcoming-title\">Naechste Events</div>";
+            for(var i = 0; i < upcoming.length; i++){
+                var e = upcoming[i];
+                var catColor = catColors[e.category] || catColors.other;
+                html += "<a href=\"event-detail.html?id=" + e.id + "\" class=\"mini-cal-event\">" +
+                    "<span class=\"mini-cal-event-emoji\">" + e.emoji + "</span>" +
+                    "<div class=\"mini-cal-event-info\"><div class=\"mini-cal-event-name\">" + esc(e.title) + "</div><div class=\"mini-cal-event-date\">" + formatDateShort(e.date) + " &bull; " + e.time + "</div></div>" +
+                    "<span class=\"mini-cal-event-badge\" style=\"background:" + catColor + "\">" + (catNames[e.category] || "").substring(0,5) + "</span></a>";
+            }
+            container.innerHTML = html;
+        }
+
+        document.getElementById("mcPrev").addEventListener("click", function(){
+            mcMonth--;
+            if(mcMonth < 0){ mcMonth = 11; mcYear--; }
+            renderMiniCal();
+        });
+        document.getElementById("mcNext").addEventListener("click", function(){
+            mcMonth++;
+            if(mcMonth > 11){ mcMonth = 0; mcYear++; }
+            renderMiniCal();
+        });
+
+        // ========== CREW CAROUSEL ==========
+        function renderCrewCarousel(){
+            var track = document.getElementById("crewTrack");
+            var html = "";
+            for(var i = 0; i < crewData.length; i++){
+                var c = crewData[i];
+                var traitsHtml = "";
+                for(var t = 0; t < c.traits.length; t++){
+                    traitsHtml += "<span class=\"crew-trait\">" + c.traits[t] + "</span>";
+                }
+                html += "<div class=\"crew-card\">" +
+                    "<div class=\"crew-card-accent\" style=\"background:" + c.color + "\"></div>" +
+                    "<div class=\"crew-avatar\">" + c.emoji + "</div>" +
+                    "<div class=\"crew-name\">" + c.name + "</div>" +
+                    "<div class=\"crew-role\" style=\"background:" + hexToRgba(c.color, .12) + ";color:" + c.color + "\">" + c.role + "</div>" +
+                    "<p class=\"crew-bio\">" + c.bio + "</p>" +
+                    "<div class=\"crew-traits\">" + traitsHtml + "</div>" +
+                    (c.ig ? "<a href=\"https://instagram.com/" + c.ig + "\" target=\"_blank\" style=\"display:inline-flex;align-items:center;gap:.3rem;margin-top:.75rem;font-size:.75rem;font-weight:600;color:" + c.color + "\">📸 @" + c.ig + "</a>" : "") +
+                    "</div>";
+            }
+            track.innerHTML = html;
+            initSwipe(track, "crewDots", crewData.length);
+        }
+
+        // ========== SWIPE ENGINE ==========
+        function initSwipe(track, dotsId, itemCount){
+            var isDragging = false;
+            var startX = 0;
+            var currentTranslate = 0;
+            var prevTranslate = 0;
+            var currentIdx = 0;
+            var autoSlideInterval = null;
+            var cardWidth = 0;
+            var maxIdx = 0;
+
+            function recalc(){
+                if(!track.children.length) return;
+                var card = track.children[0];
+                var style = window.getComputedStyle(card);
+                cardWidth = card.offsetWidth + parseFloat(style.marginRight || 0) + parseFloat(window.getComputedStyle(track).gap || 0);
+                var visibleCards = Math.floor(window.innerWidth / cardWidth);
+                maxIdx = Math.max(0, itemCount - visibleCards);
+            }
+
+            function goTo(idx){
+                recalc();
+                if(idx < 0) idx = 0;
+                if(idx > maxIdx) idx = 0; // loop
+                currentIdx = idx;
+                currentTranslate = -currentIdx * cardWidth;
+                prevTranslate = currentTranslate;
+                track.style.transform = "translateX(" + currentTranslate + "px)";
+                track.classList.remove("grabbing");
+                updateDots();
+            }
+
+            function updateDots(){
+                if(!dotsId) return;
+                var dotsC = document.getElementById(dotsId);
+                if(!dotsC) return;
+                recalc();
+                var totalDots = maxIdx + 1;
+                if(totalDots < 2){ dotsC.innerHTML = ""; return; }
+                var html = "";
+                for(var i = 0; i < Math.min(totalDots, 10); i++){
+                    html += "<div class=\"crew-scroll-dot" + (i === currentIdx ? " active" : "") + "\" data-i=\"" + i + "\"></div>";
+                }
+                dotsC.innerHTML = html;
+                var ds = dotsC.querySelectorAll(".crew-scroll-dot");
+                for(var i = 0; i < ds.length; i++){
+                    ds[i].addEventListener("click", function(){
+                        goTo(parseInt(this.getAttribute("data-i")));
+                        resetAuto();
+                    });
+                }
+            }
+
+            // Drag
+            function onStart(e){
+                isDragging = true;
+                startX = getX(e);
+                track.classList.add("grabbing");
+                clearInterval(autoSlideInterval);
+            }
+            function onMove(e){
+                if(!isDragging) return;
+                var x = getX(e);
+                var diff = x - startX;
+                currentTranslate = prevTranslate + diff;
+                track.style.transform = "translateX(" + currentTranslate + "px)";
+            }
+            function onEnd(e){
+                if(!isDragging) return;
+                isDragging = false;
+                var diff = currentTranslate - prevTranslate;
+                recalc();
+                if(Math.abs(diff) > cardWidth * 0.2){
+                    if(diff < 0) currentIdx++;
+                    else currentIdx--;
+                }
+                goTo(currentIdx);
+                resetAuto();
+            }
+            function getX(e){
+                return e.type.indexOf("touch") !== -1 ? e.touches[0].clientX : e.clientX;
+            }
+
+            track.addEventListener("mousedown", onStart);
+            track.addEventListener("mousemove", onMove);
+            track.addEventListener("mouseup", onEnd);
+            track.addEventListener("mouseleave", function(){ if(isDragging) onEnd(); });
+            track.addEventListener("touchstart", onStart, {passive:true});
+            track.addEventListener("touchmove", onMove, {passive:true});
+            track.addEventListener("touchend", onEnd);
+
+            // Prevent drag on links
+            track.addEventListener("click", function(e){
+                if(Math.abs(currentTranslate - prevTranslate) > 5) e.preventDefault();
+            });
+
+            // Auto slide
+            function resetAuto(){
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = setInterval(function(){
+                    currentIdx++;
+                    goTo(currentIdx);
+                }, 4000);
+            }
+
+            // Init
+            setTimeout(function(){
+                recalc();
+                goTo(0);
+                resetAuto();
+            }, 300);
+
+            window.addEventListener("resize", function(){ recalc(); goTo(currentIdx); });
+        }
+
+        // Init Gebote swipe
+        function initGeboteSwipe(){
+            var track = document.getElementById("geboteTrack");
+            initSwipe(track, null, 5);
+        }
+
+        // ========== HELPERS ==========
+        function pad(n){ return n < 10 ? "0" + n : n; }
+        function esc(s){ if(!s) return ""; return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+        function formatDate(ds){
+            if(!ds) return "";
+            var p = ds.split("-");
+            if(p.length === 3) return parseInt(p[2]) + ". " + monthNames[parseInt(p[1])-1] + " " + p[0];
+            return ds;
+        }
+        function formatDateShort(ds){
+            if(!ds) return "";
+            var p = ds.split("-");
+            if(p.length === 3) return parseInt(p[2]) + "." + p[1] + ".";
+            return ds;
+        }
+        function hexToRgba(hex, alpha){
+            var r = 0, g = 0, b = 0;
+            if(hex.length === 4){
+                r = parseInt(hex[1]+hex[1],16);
+                g = parseInt(hex[2]+hex[2],16);
+                b = parseInt(hex[3]+hex[3],16);
+            } else if(hex.length === 7){
+                r = parseInt(hex.substring(1,3),16);
+                g = parseInt(hex.substring(3,5),16);
+                b = parseInt(hex.substring(5,7),16);
+            }
+            return "rgba("+r+","+g+","+b+","+alpha+")";
+        }
+
+        // ========== INIT ==========
+        loadEvents(function(){
+            renderCountdown();
+            renderMiniCal();
+        });
+        renderCrewCarousel();
+        initGeboteSwipe();
+
+        // ========== REVEAL ==========
+        var ro = new IntersectionObserver(function(entries){
+            for(var i = 0; i < entries.length; i++){
+                if(entries[i].isIntersecting){
+                    (function(el, idx){
+                        setTimeout(function(){ el.classList.add("visible"); }, idx * 80);
+                    })(entries[i].target, i);
+                    ro.unobserve(entries[i].target);
+                }
+            }
+        }, {threshold: .1});
+        var revEls = document.querySelectorAll(".reveal");
+        for(var i = 0; i < revEls.length; i++) ro.observe(revEls[i]);
+
+        // ========== PARALLAX ==========
+        window.addEventListener("scroll", function(){
+            var shapes = document.querySelectorAll(".bg-shape");
+            for(var i = 0; i < shapes.length; i++){
+                var speed = (i + 1) * 0.012;
+                var rot = window.scrollY * 0.008 * (i % 2 === 0 ? 1 : -1);
+                shapes[i].style.transform = "translateY(" + (window.scrollY * speed) + "px) rotate(" + rot + "deg)";
+            }
+        });
+
+    })();
+    </script>
+</body>
+</html>
