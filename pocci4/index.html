@@ -185,25 +185,36 @@
         .crew-scroll-dot{width:8px;height:8px;border-radius:50%;background:var(--color-border);transition:var(--transition-fast);cursor:pointer}
         .crew-scroll-dot.active{background:var(--color-primary);width:24px;border-radius:4px}
 
-        /* ====== GEBOTE CARDS (swipeable) ====== */
-        .gebote-section{padding:var(--section-padding) 0;overflow:hidden}
-        .gebote-header{text-align:center;margin-bottom:3rem;padding:0 1.25rem}
-        .gebote-track-wrapper{position:relative;padding:1rem 0}
-        .gebote-track{display:flex;gap:1.25rem;padding:0 2rem;transition:transform .5s cubic-bezier(.4,0,.2,1);cursor:grab;user-select:none;-webkit-user-select:none}
-        .gebote-track.grabbing{cursor:grabbing;transition:none}
-        .gebote-card{min-width:260px;max-width:260px;border-radius:24px;position:relative;overflow:hidden;flex-shrink:0;padding:2.5rem 2rem;text-align:center;transition:transform .4s ease,box-shadow .4s ease}
-        .gebote-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 20px 50px rgba(0,0,0,.12)}
+        /* ====== GEBOTE EXPAND CARDS ====== */
+        .gebote-section{padding:var(--section-padding) 1.25rem;overflow:hidden}
+        .gebote-header{text-align:center;margin-bottom:3rem}
+        .gebote-container{max-width:var(--container-width);margin:0 auto}
+        .gebote-cards{display:flex;gap:.75rem;height:420px}
+        .gebote-card{flex:1;border-radius:24px;position:relative;overflow:hidden;cursor:pointer;transition:flex .6s cubic-bezier(.4,0,.2,1),transform .4s ease,box-shadow .4s ease;min-width:0}
+        .gebote-card:hover{flex:3}
+        .gebote-card.expanded{flex:3}
         .gebote-card-bg{position:absolute;inset:0;z-index:0}
-        .gebote-card-content{position:relative;z-index:1}
-        .gebote-number{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:1rem}
-        .gebote-emoji{font-size:3rem;margin-bottom:1rem}
-        .gebote-title{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:.5rem;letter-spacing:-.02em}
-        .gebote-desc{font-size:.85rem;color:rgba(255,255,255,.8);line-height:1.5}
+        .gebote-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.1) 50%,transparent 100%);z-index:1}
+        .gebote-card-content{position:absolute;bottom:0;left:0;right:0;padding:2rem;z-index:2;transition:var(--transition-smooth)}
+        .gebote-number{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.5rem}
+        .gebote-emoji{font-size:2.5rem;margin-bottom:.75rem;transition:transform .4s ease}
+        .gebote-card:hover .gebote-emoji,.gebote-card.expanded .gebote-emoji{transform:scale(1.2)}
+        .gebote-title{font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:0;letter-spacing:-.02em;white-space:nowrap;transition:var(--transition-smooth)}
+        .gebote-desc{font-size:.85rem;color:rgba(255,255,255,.8);line-height:1.5;max-height:0;overflow:hidden;opacity:0;transition:max-height .5s cubic-bezier(.4,0,.2,1),opacity .4s ease,margin .4s ease;margin-top:0}
+        .gebote-card:hover .gebote-desc,.gebote-card.expanded .gebote-desc{max-height:100px;opacity:1;margin-top:.5rem}
         .gebote-card-1 .gebote-card-bg{background:linear-gradient(135deg,#C03A2B,#E8501E)}
         .gebote-card-2 .gebote-card-bg{background:linear-gradient(135deg,#1A1A1A,#444)}
         .gebote-card-3 .gebote-card-bg{background:linear-gradient(135deg,#C4A882,#8B7355)}
         .gebote-card-4 .gebote-card-bg{background:linear-gradient(135deg,#457B9D,#2D5F7D)}
         .gebote-card-5 .gebote-card-bg{background:linear-gradient(135deg,#2D6A4F,#52B788)}
+
+        @media(max-width:768px){
+            .gebote-cards{flex-direction:column;height:auto}
+            .gebote-card{height:100px;flex:none!important;transition:height .5s cubic-bezier(.4,0,.2,1)}
+            .gebote-card:hover,.gebote-card.expanded{height:220px}
+            .gebote-desc{max-height:0;opacity:0}
+            .gebote-card:hover .gebote-desc,.gebote-card.expanded .gebote-desc{max-height:100px;opacity:1;margin-top:.5rem}
+        }
 
         /* ====== MARQUEE ====== */
         .marquee-section{padding:2rem 0;overflow:hidden;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);width:100%}
@@ -374,17 +385,62 @@
 
     <!-- 5 GEBOTE -->
     <section class="gebote-section">
-        <div class="gebote-header reveal">
-            <p class="section-overline">UNSERE REGELN</p>
-            <h2 class="section-title">Die 5 Gebote der Poccistrasse.</h2>
-        </div>
-        <div class="gebote-track-wrapper">
-            <div class="gebote-track" id="geboteTrack">
-                <div class="gebote-card gebote-card-1"><div class="gebote-card-bg"></div><div class="gebote-card-content"><div class="gebote-number">Gebot I</div><div class="gebote-emoji">🍺</div><div class="gebote-title">Du sollst trinken.</div><div class="gebote-desc">Ob Bier, Wein oder Hugo - Hauptsache das Glas ist nie leer.</div></div></div>
-                <div class="gebote-card gebote-card-2"><div class="gebote-card-bg"></div><div class="gebote-card-content"><div class="gebote-number">Gebot II</div><div class="gebote-emoji">🎲</div><div class="gebote-title">Du sollst spielen.</div><div class="gebote-desc">Catan, Poker, Beer Pong - Verlierer raeumt auf. Keine Ausnahmen.</div></div></div>
-                <div class="gebote-card gebote-card-3"><div class="gebote-card-bg"></div><div class="gebote-card-content"><div class="gebote-number">Gebot III</div><div class="gebote-emoji">🤝</div><div class="gebote-title">Du sollst Spass haben.</div><div class="gebote-desc">Schlechte Laune bleibt draussen. Hier drinnen wird gelacht.</div></div></div>
-                <div class="gebote-card gebote-card-4"><div class="gebote-card-bg"></div><div class="gebote-card-content"><div class="gebote-number">Gebot IV</div><div class="gebote-emoji">📱</div><div class="gebote-title">Du sollst dich anmelden.</div><div class="gebote-desc">Spontan ist geil - aber kurz Bescheid sagen noch geiler.</div></div></div>
-                <div class="gebote-card gebote-card-5"><div class="gebote-card-bg"></div><div class="gebote-card-content"><div class="gebote-number">Gebot V</div><div class="gebote-emoji">🧹</div><div class="gebote-title">Du sollst aufraeumen.</div><div class="gebote-desc">Wer hilft aufraeumen wird beim naechsten Mal zuerst eingeladen.</div></div></div>
+        <div class="gebote-container">
+            <div class="gebote-header reveal">
+                <p class="section-overline">UNSERE REGELN</p>
+                <h2 class="section-title">Die 5 Gebote der Poccistrasse.</h2>
+            </div>
+            <div class="gebote-cards reveal" id="geboteCards">
+                <div class="gebote-card gebote-card-1">
+                    <div class="gebote-card-bg"></div>
+                    <div class="gebote-card-overlay"></div>
+                    <div class="gebote-card-content">
+                        <div class="gebote-number">Gebot I</div>
+                        <div class="gebote-emoji">🍺</div>
+                        <div class="gebote-title">Du sollst trinken.</div>
+                        <div class="gebote-desc">Ob Bier, Wein oder Hugo - Hauptsache das Glas ist nie leer.</div>
+                    </div>
+                </div>
+                <div class="gebote-card gebote-card-2">
+                    <div class="gebote-card-bg"></div>
+                    <div class="gebote-card-overlay"></div>
+                    <div class="gebote-card-content">
+                        <div class="gebote-number">Gebot II</div>
+                        <div class="gebote-emoji">🎲</div>
+                        <div class="gebote-title">Du sollst spielen.</div>
+                        <div class="gebote-desc">Catan, Poker, Beer Pong - Verlierer raeumt auf. Keine Ausnahmen.</div>
+                    </div>
+                </div>
+                <div class="gebote-card gebote-card-3">
+                    <div class="gebote-card-bg"></div>
+                    <div class="gebote-card-overlay"></div>
+                    <div class="gebote-card-content">
+                        <div class="gebote-number">Gebot III</div>
+                        <div class="gebote-emoji">🤝</div>
+                        <div class="gebote-title">Du sollst Spass haben.</div>
+                        <div class="gebote-desc">Schlechte Laune bleibt draussen. Hier drinnen wird gelacht.</div>
+                    </div>
+                </div>
+                <div class="gebote-card gebote-card-4">
+                    <div class="gebote-card-bg"></div>
+                    <div class="gebote-card-overlay"></div>
+                    <div class="gebote-card-content">
+                        <div class="gebote-number">Gebot IV</div>
+                        <div class="gebote-emoji">📱</div>
+                        <div class="gebote-title">Du sollst dich anmelden.</div>
+                        <div class="gebote-desc">Spontan ist geil - aber kurz Bescheid sagen noch geiler.</div>
+                    </div>
+                </div>
+                <div class="gebote-card gebote-card-5">
+                    <div class="gebote-card-bg"></div>
+                    <div class="gebote-card-overlay"></div>
+                    <div class="gebote-card-content">
+                        <div class="gebote-number">Gebot V</div>
+                        <div class="gebote-emoji">🧹</div>
+                        <div class="gebote-title">Du sollst aufraeumen.</div>
+                        <div class="gebote-desc">Wer hilft aufraeumen wird beim naechsten Mal zuerst eingeladen.</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -877,10 +933,16 @@ function renderCrewCarousel(){
             window.addEventListener("resize", function(){ recalc(); goTo(currentIdx); });
         }
 
-        // Init Gebote swipe
-        function initGeboteSwipe(){
-            var track = document.getElementById("geboteTrack");
-            initSwipe(track, null, 5);
+// GEBOTE EXPAND (Mobile Touch Support)
+        var geboteCards = document.querySelectorAll(".gebote-card");
+        for(var i = 0; i < geboteCards.length; i++){
+            geboteCards[i].addEventListener("click", function(){
+                var wasExpanded = this.classList.contains("expanded");
+                for(var j = 0; j < geboteCards.length; j++){
+                    geboteCards[j].classList.remove("expanded");
+                }
+                if(!wasExpanded) this.classList.add("expanded");
+            });
         }
 
         // ========== HELPERS ==========
