@@ -473,19 +473,19 @@
         var cdInterval = null;
 
         // ========== CREW DATA ==========
-        var crewData = [
-            {name:"Mats",role:"Der BWLer",color:"#C4A882",emoji:"🏡",bio:"Real Estate BWLer - koennte auch Justus heissen. Macht die Website und weiss was der Quadratmeter kostet. Naturally.",traits:["📊 Real Estate","💼 Justus-Energy","🌐 Webmaster"],ig:"mats.lm"},
-            {name:"Georgie",role:"Das Koepfchen",color:"#457B9D",emoji:"🧠",bio:"Medizinstudentin mit dem Plan. Strategin die auch beim Catan immer gewinnt. Unterschaetz sie nicht.",traits:["🩺 Medizinerin","🎲 Strategie-Queen","📚 Brain"],ig:"georginaamarie"},
-            {name:"Andrei",role:"Der Tank",color:"#C03A2B",emoji:"💪",bio:"Breit, stark und immer am Pumpen. Das Herz der WG - im wahrsten Sinne ein grosser Mensch.",traits:["🏋️ Gym Rat","🫂 Gentle Giant","🍗 Meal Prep King"],ig:"andrei.ncu"},
-            {name:"Caro",role:"Vorstadt-Prinzessin",color:"#D4A574",emoji:"👑",bio:"Die Prinzessin aus der Vorstadt. Sieht aus wie High Society, feiert aber haerter als alle anderen.",traits:["👑 Vorstadt-Vibes","🥂 Champagner-Energy"]},
-            {name:"Felix",role:"Sportliche Maschine",color:"#2D6A4F",emoji:"⚽",bio:"Egal welcher Sport - Felix macht mit und gewinnt wahrscheinlich. Der Typ ist einfach gebaut fuer Bewegung.",traits:["⚽ Allround-Athlet","💪 Maschine"]},
-            {name:"Fabe",role:"Kuenstler der Informatik",color:"#7B68EE",emoji:"🎨",bio:"Studiert Informatik aber ist eigentlich Kuenstler. Wie das geht? Fragt ihn. Er weiss es selbst nicht.",traits:["🎨 Kuenstler-Seele","💻 Informatiker","❓ Paradox"]},
-            {name:"Fabian S.",role:"Der Wilde",color:"#E63946",emoji:"🔥",bio:"Wilder Mensch der hier eigentlich Miete zahlen muesste. Ist oefter da als manche Moebel.",traits:["🔥 Chaot","🏠 Untermieter (inoffiziell)"]},
-            {name:"Sebastian",role:"Das Phantom",color:"#6C757D",emoji:"👻",bio:"Kriegt man nicht zu Gesicht. Aber WENN er da ist, ist er gut drauf. Rare aber legendaer.",traits:["👻 Phantom","✨ Rare Appearance"]},
-            {name:"Jannik",role:"Mr. Zuverlaessig",color:"#0077B6",emoji:"🤝",bio:"Enttaeuscht nie - aber sich selbst beim Poker meistens. Trotzdem jedes Mal wieder am Tisch.",traits:["🤝 Zuverlaessig","🃏 Poker-Opfer"]},
-            {name:"Eva",role:"Innsbrucker Maus",color:"#F4A261",emoji:"🏔️",bio:"Nuechtern und trotzdem die Lustigste im Raum. Wie macht sie das? Alpen-Energie.",traits:["🏔️ Tirolerin","😂 Natural High"]},
-            {name:"Andre",role:"Gast des Jahrhunderts",color:"#E76F51",emoji:"🗣️",bio:"Liebt es zu tratschen. Also lieber keine Geheimnisse erzaehlen wenn er in der Naehe ist.",traits:["🗣️ Tratsch-Koenig","🏆 Gast des Jhd."]},
-            {name:"Tim",role:"Der Zahnfluesterer",color:"#264653",emoji:"🦷",bio:"Zahnmediziner mit Fetisch fuer Zahnluecken. Laechelt euch an und bewertet direkt euer Gebiss.",traits:["🦷 Zahnmedizin","😬 Zahnluecken-Fan"]}
+var crewData = [
+            {name:"Mats",role:"Der BWLer",color:"#C4A882",img:"assets/crew/mats.jpg",bio:"Real Estate BWLer - koennte auch Justus heissen. Macht die Website und weiss was der Quadratmeter kostet. Naturally.",traits:["📊 Real Estate","💼 Justus-Energy","🌐 Webmaster"],ig:"mats.lm"},
+            {name:"Georgie",role:"Das Koepfchen",color:"#457B9D",img:"assets/crew/georgie.jpg",bio:"Medizinstudentin mit dem Plan. Strategin die auch beim Catan immer gewinnt. Unterschaetz sie nicht.",traits:["🩺 Medizinerin","🎲 Strategie-Queen","📚 Brain"],ig:"georginaamarie"},
+            {name:"Andrei",role:"Der Tank",color:"#C03A2B",img:"assets/crew/andrei.jpg",bio:"Breit, stark und immer am Pumpen. Das Herz der WG - im wahrsten Sinne ein grosser Mensch.",traits:["🏋️ Gym Rat","🫂 Gentle Giant","🍗 Meal Prep King"],ig:"andrei.ncu"},
+            {name:"Caro",role:"Vorstadt-Prinzessin",color:"#D4A574",img:"assets/crew/caro.jpg",bio:"Die Prinzessin aus der Vorstadt. Sieht aus wie High Society, feiert aber haerter als alle anderen.",traits:["👑 Vorstadt-Vibes","🥂 Champagner-Energy"]},
+            {name:"Felix",role:"Sportliche Maschine",color:"#2D6A4F",img:"assets/crew/felix.jpg",bio:"Egal welcher Sport - Felix macht mit und gewinnt wahrscheinlich. Der Typ ist einfach gebaut fuer Bewegung.",traits:["⚽ Allround-Athlet","💪 Maschine"]},
+            {name:"Fabe",role:"Kuenstler der Informatik",color:"#7B68EE",img:"assets/crew/fabe.jpg",bio:"Studiert Informatik aber ist eigentlich Kuenstler. Wie das geht? Fragt ihn. Er weiss es selbst nicht.",traits:["🎨 Kuenstler-Seele","💻 Informatiker","❓ Paradox"]},
+            {name:"Fabian S.",role:"Der Wilde",color:"#E63946",img:"assets/crew/fabian-s.jpg",bio:"Wilder Mensch der hier eigentlich Miete zahlen muesste. Ist oefter da als manche Moebel.",traits:["🔥 Chaot","🏠 Untermieter (inoffiziell)"]},
+            {name:"Sebastian",role:"Das Phantom",color:"#6C757D",img:"assets/crew/sebastian.jpg",bio:"Kriegt man nicht zu Gesicht. Aber WENN er da ist, ist er gut drauf. Rare aber legendaer.",traits:["👻 Phantom","✨ Rare Appearance"]},
+            {name:"Jannik",role:"Mr. Zuverlaessig",color:"#0077B6",img:"assets/crew/jannik.jpg",bio:"Enttaeuscht nie - aber sich selbst beim Poker meistens. Trotzdem jedes Mal wieder am Tisch.",traits:["🤝 Zuverlaessig","🃏 Poker-Opfer"]},
+            {name:"Eva",role:"Innsbrucker Maus",color:"#F4A261",img:"assets/crew/eva.jpg",bio:"Nuechtern und trotzdem die Lustigste im Raum. Wie macht sie das? Alpen-Energie.",traits:["🏔️ Tirolerin","😂 Natural High"]},
+            {name:"Andre",role:"Gast des Jahrhunderts",color:"#E76F51",img:"assets/crew/andre.jpg",bio:"Liebt es zu tratschen. Also lieber keine Geheimnisse erzaehlen wenn er in der Naehe ist.",traits:["🗣️ Tratsch-Koenig","🏆 Gast des Jhd."]},
+            {name:"Tim",role:"Der Zahnfluesterer",color:"#264653",img:"assets/crew/tim.jpg",bio:"Zahnmediziner mit Fetisch fuer Zahnluecken. Laechelt euch an und bewertet direkt euer Gebiss.",traits:["🦷 Zahnmedizin","😬 Zahnluecken-Fan"]}
         ];
 
         // ========== NAV ==========
@@ -715,9 +715,17 @@
                 for(var t = 0; t < c.traits.length; t++){
                     traitsHtml += "<span class=\"crew-trait\">" + c.traits[t] + "</span>";
                 }
+                // Avatar: Bild wenn vorhanden, sonst Emoji-Fallback
+                var avatarHtml = "";
+                if(c.img){
+                    avatarHtml = "<div class=\"crew-avatar\" style=\"background:" + hexToRgba(c.color, .1) + "\"><img src=\"" + c.img + "\" alt=\"" + c.name + "\" onerror=\"this.style.display='none';this.parentElement.textContent='" + (c.emoji || "👤") + "'\"></div>";
+                } else {
+                    avatarHtml = "<div class=\"crew-avatar\" style=\"background:" + hexToRgba(c.color, .1) + "\">" + (c.emoji || "👤") + "</div>";
+                }
+
                 html += "<div class=\"crew-card\">" +
                     "<div class=\"crew-card-accent\" style=\"background:" + c.color + "\"></div>" +
-                    "<div class=\"crew-avatar\">" + c.emoji + "</div>" +
+                    avatarHtml +
                     "<div class=\"crew-name\">" + c.name + "</div>" +
                     "<div class=\"crew-role\" style=\"background:" + hexToRgba(c.color, .12) + ";color:" + c.color + "\">" + c.role + "</div>" +
                     "<p class=\"crew-bio\">" + c.bio + "</p>" +
