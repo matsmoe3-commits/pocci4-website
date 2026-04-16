@@ -40,6 +40,7 @@
         .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
         .nav-logo{display:flex;align-items:center;z-index:1001}
         .nav-logo img{height:56px;width:auto}
+        .nav-right{display:flex;align-items:center;gap:.5rem}
         .nav-links{display:flex;align-items:center;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
         .nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}
         .nav-link:hover{color:var(--color-text);background:var(--color-bg)}
@@ -248,6 +249,19 @@
             .countdown-separator{font-size:1rem}
             .footer-links-grid{grid-template-columns:1fr}
             .crew-card{min-width:220px;max-width:220px;padding:1.5rem 1.25rem}
+
+.admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
+.admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
+.admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+.admin-modal-overlay.active{display:flex}
+.admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+.admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
+.admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
+.admin-modal input:focus{border-color:var(--color-primary)}
+.admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
+.admin-modal-btns .btn{flex:1;padding:10px 16px;font-size:.85rem}
+.admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
         }
     </style>
 </head>
@@ -259,22 +273,19 @@
         <div class="bg-shape bg-shape-4"></div>
         <div class="bg-shape bg-shape-5"></div>
     </div>
-    <nav class="navbar" id="navbar"><div class="nav-container">
-        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+<nav class="navbar" id="navbar"><div class="nav-container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+    <div class="nav-right">
         <div class="nav-links">
             <a href="index.html" class="nav-link active">Home</a>
-            <div class="nav-link-dropdown" id="eventsDropdown">
-                <a href="events.html" class="nav-link">Events</a>
-                <div class="nav-dropdown">
-                    <a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a>
-                    <a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a>
-                </div>
-            </div>
+            <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
             <a href="shop.html" class="nav-link">Shop</a>
             <a href="kontakt.html" class="nav-link">Kontakt</a>
         </div>
+        <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
         <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
-    </div></nav>
+    </div>
+</div></nav>
     <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
         <a href="index.html" class="mobile-link active">Home</a>
         <a href="events.html" class="mobile-link">Events</a>
@@ -862,5 +873,67 @@
 
 })();
 </script>
+
+    <!-- ADMIN MODAL -->
+<div class="admin-modal-overlay" id="adminOverlay">
+    <div class="admin-modal">
+        <h3>🔐 Admin Zugang</h3>
+        <p>Passwort eingeben um zum Admin Panel zu gelangen.</p>
+        <input type="password" id="adminPwInput" placeholder="Passwort">
+        <div class="admin-modal-btns">
+            <button class="btn btn-outline" id="adminCancel">Abbrechen</button>
+            <button class="btn btn-primary" id="adminSubmit">Login</button>
+        </div>
+        <div class="admin-error" id="adminError">Falsches Passwort!</div>
+    </div>
+</div>
+<script>
+(function(){
+    var ADMIN_PW = "pocci4admin";
+    var trigger = document.getElementById("adminTrigger");
+    var overlay = document.getElementById("adminOverlay");
+    var input = document.getElementById("adminPwInput");
+    var cancel = document.getElementById("adminCancel");
+    var submit = document.getElementById("adminSubmit");
+    var error = document.getElementById("adminError");
+    if(trigger){
+        trigger.addEventListener("click", function(){
+            if(sessionStorage.getItem("pocci4admin") === "true"){
+                window.location.href = "admin.html";
+                return;
+            }
+            overlay.classList.add("active");
+            setTimeout(function(){ input.focus(); }, 100);
+        });
+    }
+    if(cancel) cancel.addEventListener("click", function(){
+        overlay.classList.remove("active");
+        input.value = "";
+        error.style.display = "none";
+    });
+    if(overlay) overlay.addEventListener("click", function(e){
+        if(e.target === overlay){
+            overlay.classList.remove("active");
+            input.value = "";
+            error.style.display = "none";
+        }
+    });
+    function tryLogin(){
+        if(input.value === ADMIN_PW){
+            sessionStorage.setItem("pocci4admin", "true");
+            window.location.href = "admin.html";
+        } else {
+            error.style.display = "block";
+            input.value = "";
+            input.focus();
+        }
+    }
+    if(submit) submit.addEventListener("click", tryLogin);
+    if(input) input.addEventListener("keydown", function(e){
+        if(e.key === "Enter") tryLogin();
+    });
+})();
+</script>
+    
 </body>
 </html>
