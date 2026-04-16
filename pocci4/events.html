@@ -587,7 +587,7 @@
         if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},2000);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
 
         // ADMIN
-        var adminBtn=document.getElementById("navAdminBtn");
+var adminBtn=document.getElementById("adminTrigger");
         if(isAdmin)adminBtn.classList.add("logged-in");
 
         function openAdmin(){
@@ -1056,64 +1056,6 @@
         window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";}});
     })();
     </script>
-    <div class="admin-modal-overlay" id="adminOverlay">
-    <div class="admin-modal">
-        <h3>🔐 Admin Zugang</h3>
-        <p>Passwort eingeben um zum Admin Panel zu gelangen.</p>
-        <input type="password" id="adminPwInput" placeholder="Passwort">
-        <div class="admin-modal-btns">
-            <button class="btn btn-outline" id="adminCancel">Abbrechen</button>
-            <button class="btn btn-primary" id="adminSubmit">Login</button>
-        </div>
-        <div class="admin-error" id="adminError">Falsches Passwort!</div>
-    </div>
-</div>
-<script>
-(function(){
-    var ADMIN_PW = "pocci4admin";
-    var trigger = document.getElementById("adminTrigger");
-    var overlay = document.getElementById("adminOverlay");
-    var input = document.getElementById("adminPwInput");
-    var cancel = document.getElementById("adminCancel");
-    var submit = document.getElementById("adminSubmit");
-    var error = document.getElementById("adminError");
-    if(trigger){
-        trigger.addEventListener("click", function(){
-            if(sessionStorage.getItem("pocci4admin") === "true"){
-                window.location.href = "admin.html";
-                return;
-            }
-            overlay.classList.add("active");
-            setTimeout(function(){ input.focus(); }, 100);
-        });
-    }
-    if(cancel) cancel.addEventListener("click", function(){
-        overlay.classList.remove("active");
-        input.value = "";
-        error.style.display = "none";
-    });
-    if(overlay) overlay.addEventListener("click", function(e){
-        if(e.target === overlay){
-            overlay.classList.remove("active");
-            input.value = "";
-            error.style.display = "none";
-        }
-    });
-    function tryLogin(){
-        if(input.value === ADMIN_PW){
-            sessionStorage.setItem("pocci4admin", "true");
-            window.location.href = "admin.html";
-        } else {
-            error.style.display = "block";
-            input.value = "";
-            input.focus();
-        }
-    }
-    if(submit) submit.addEventListener("click", tryLogin);
-    if(input) input.addEventListener("keydown", function(e){
-        if(e.key === "Enter") tryLogin();
-    });
-})();
-</script>
+   
 </body>
 </html>
