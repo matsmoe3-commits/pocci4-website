@@ -68,39 +68,31 @@
         .mobile-link:hover,.mobile-link.active{color:var(--color-primary)}
         .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
 
+        .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
+        .admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
+        .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+        .admin-modal-overlay.active{display:flex}
+        .admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+        .admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+        .admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
+        .admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
+        .admin-modal input:focus{border-color:var(--color-primary)}
+        .admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
+        .admin-modal-btns .btn-modal{flex:1;padding:10px 16px;font-size:.85rem;border-radius:50px;font-family:var(--font-main);font-weight:700;cursor:pointer;transition:var(--transition-fast);border:none}
+        .admin-modal-btns .btn-modal-cancel{background:var(--color-bg);color:var(--color-text)}
+        .admin-modal-btns .btn-modal-cancel:hover{background:var(--color-border)}
+        .admin-modal-btns .btn-modal-submit{background:var(--color-primary);color:#fff}
+        .admin-modal-btns .btn-modal-submit:hover{background:var(--color-primary-hover)}
+        .admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
+
         .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
         .section-title{font-size:clamp(1.8rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
 
-        .page-hero{padding:calc(var(--nav-height) + 4rem) 1.25rem 3rem;max-width:var(--container-width);margin:0 auto;text-align:center}
+        .page-hero{padding:calc(var(--nav-height) + 4rem) 1.25rem 2rem;max-width:var(--container-width);margin:0 auto;text-align:center}
         .page-hero-title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem}
         .page-hero-subtitle{font-size:clamp(1rem,2vw,1.2rem);color:var(--color-text-light);max-width:550px;margin:0 auto}
 
-        .crew-section{padding:var(--section-padding) 1.25rem;overflow:hidden}
-        .crew-container{max-width:var(--container-width);margin:0 auto}
-        .crew-header{text-align:center;margin-bottom:4rem}
-        .crew-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:900px;margin:0 auto}
-        .crew-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2.5rem 2rem;text-align:center;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth);position:relative;overflow:hidden}
-        .crew-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.08)}
-        .crew-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:24px 24px 0 0}
-        .crew-card-andrei::before{background:var(--color-primary)}
-        .crew-card-georgie::before{background:#457B9D}
-        .crew-card-mats::before{background:var(--color-sand)}
-        .crew-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;font-size:3rem}
-        .crew-card-andrei .crew-avatar{background:linear-gradient(135deg,rgba(192,58,43,.15),rgba(192,58,43,.05))}
-        .crew-card-georgie .crew-avatar{background:linear-gradient(135deg,rgba(69,123,157,.15),rgba(69,123,157,.05))}
-        .crew-card-mats .crew-avatar{background:linear-gradient(135deg,rgba(196,168,130,.2),rgba(196,168,130,.05))}
-        .crew-name{font-size:1.4rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.25rem}
-        .crew-role{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;padding:4px 14px;border-radius:50px;display:inline-block}
-        .crew-card-andrei .crew-role{background:rgba(192,58,43,.1);color:var(--color-primary)}
-        .crew-card-georgie .crew-role{background:rgba(69,123,157,.1);color:#457B9D}
-        .crew-card-mats .crew-role{background:rgba(196,168,130,.15);color:#8B7355}
-        .crew-ig{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--color-text-light);margin-bottom:1rem;transition:var(--transition-fast)}
-        .crew-ig:hover{color:var(--color-primary)}
-        .crew-bio{font-size:.9rem;color:var(--color-text-light);line-height:1.6}
-        .crew-traits{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:1rem}
-        .crew-trait{padding:4px 10px;border-radius:8px;font-size:.7rem;font-weight:600;background:var(--color-bg);color:var(--color-text-light)}
-
-        .contact-section{padding:0 1.25rem var(--section-padding);overflow:hidden}
+        .contact-section{padding:2rem 1.25rem var(--section-padding);overflow:hidden}
         .contact-container{max-width:var(--container-width);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
         .contact-form-card{background:var(--color-text);color:#fff;border-radius:24px;padding:3rem 2.5rem}
         .contact-form-header{margin-bottom:2rem}
@@ -145,6 +137,31 @@
         .social-link-handle{font-size:.8rem;color:var(--color-gray)}
         .social-link-arrow{font-size:1rem;color:var(--color-gray);transition:var(--transition-fast)}
         .social-link:hover .social-link-arrow{color:var(--color-text);transform:translateX(4px)}
+
+        .crew-section{padding:var(--section-padding) 1.25rem;overflow:hidden}
+        .crew-container{max-width:var(--container-width);margin:0 auto}
+        .crew-header{text-align:center;margin-bottom:4rem}
+        .crew-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:900px;margin:0 auto}
+        .crew-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2.5rem 2rem;text-align:center;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth);position:relative;overflow:hidden}
+        .crew-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.08)}
+        .crew-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:24px 24px 0 0}
+        .crew-card-andrei::before{background:var(--color-primary)}
+        .crew-card-georgie::before{background:#457B9D}
+        .crew-card-mats::before{background:var(--color-sand)}
+        .crew-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;font-size:3rem}
+        .crew-card-andrei .crew-avatar{background:linear-gradient(135deg,rgba(192,58,43,.15),rgba(192,58,43,.05))}
+        .crew-card-georgie .crew-avatar{background:linear-gradient(135deg,rgba(69,123,157,.15),rgba(69,123,157,.05))}
+        .crew-card-mats .crew-avatar{background:linear-gradient(135deg,rgba(196,168,130,.2),rgba(196,168,130,.05))}
+        .crew-name{font-size:1.4rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.25rem}
+        .crew-role{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;padding:4px 14px;border-radius:50px;display:inline-block}
+        .crew-card-andrei .crew-role{background:rgba(192,58,43,.1);color:var(--color-primary)}
+        .crew-card-georgie .crew-role{background:rgba(69,123,157,.1);color:#457B9D}
+        .crew-card-mats .crew-role{background:rgba(196,168,130,.15);color:#8B7355}
+        .crew-ig{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--color-text-light);margin-bottom:1rem;transition:var(--transition-fast)}
+        .crew-ig:hover{color:var(--color-primary)}
+        .crew-bio{font-size:.9rem;color:var(--color-text-light);line-height:1.6}
+        .crew-traits{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:1rem}
+        .crew-trait{padding:4px 10px;border-radius:8px;font-size:.7rem;font-weight:600;background:var(--color-bg);color:var(--color-text-light)}
 
         .map-section{padding:0 1.25rem var(--section-padding);overflow:hidden}
         .map-container{max-width:var(--container-width);margin:0 auto}
@@ -217,37 +234,25 @@
             .rules-card{padding:2rem 1.5rem}
             .footer-links-grid{grid-template-columns:1fr}
         }
-.admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
-.admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
-.admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
-.admin-modal-overlay.active{display:flex}
-.admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
-.admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
-.admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
-.admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
-.admin-modal input:focus{border-color:var(--color-primary)}
-.admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
-.admin-modal-btns .btn{flex:1;padding:10px 16px;font-size:.85rem}
-.admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
     </style>
 </head>
 <body>
     <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div><div class="bg-shape bg-shape-4"></div></div>
     <div class="confetti-container" id="confettiContainer"></div>
 
-<nav class="navbar" id="navbar"><div class="nav-container">
-    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
-    <div class="nav-right">
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
-            <a href="shop.html" class="nav-link">Shop</a>
-            <a href="kontakt.html" class="nav-link active">Kontakt</a>
+    <nav class="navbar" id="navbar"><div class="nav-container">
+        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="kontakt.html" class="nav-link active">Kontakt</a>
+            </div>
+            <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
+            <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
         </div>
-        <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
-        <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
-    </div>
-</div></nav>
+    </div></nav>
 
     <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
         <a href="index.html" class="mobile-link">Home</a>
@@ -259,12 +264,7 @@
 
     <section class="page-hero reveal"><p class="section-overline">SAG HALLO</p><h1 class="page-hero-title">Schreib uns.</h1><p class="page-hero-subtitle">Fragen, Feedback oder einfach Hallo sagen - wir freuen uns von dir zu hoeren.</p></section>
 
-    <section class="crew-section"><div class="crew-container"><div class="crew-header reveal"><p class="section-overline">DIE WG</p><h2 class="section-title">Die Koepfe hinter pocci4.</h2></div><div class="crew-grid">
-        <div class="crew-card crew-card-andrei reveal"><div class="crew-avatar">💪</div><h3 class="crew-name">Andrei</h3><span class="crew-role">Der Tank</span><a href="https://instagram.com/andrei.ncu" target="_blank" class="crew-ig">📸 @andrei.ncu</a><p class="crew-bio">Breit, stark und immer am Pumpen. Wenn du ihn siehst, weisst du warum er durch jede Tuer seitwaerts geht. Das Herz der WG - im wahrsten Sinne ein grosser Mensch.</p><div class="crew-traits"><span class="crew-trait">🏋️ Gym Rat</span><span class="crew-trait">🫂 Gentle Giant</span><span class="crew-trait">🍗 Meal Prep King</span></div></div>
-        <div class="crew-card crew-card-georgie reveal"><div class="crew-avatar">🧠</div><h3 class="crew-name">Georgie</h3><span class="crew-role">Das Koepfchen</span><a href="https://instagram.com/georginaamarie" target="_blank" class="crew-ig">📸 @georginaamarie</a><p class="crew-bio">Medizinstudentin mit dem Plan. Wenn sie nicht gerade Leben rettet, organisiert sie den naechsten Spieleabend. Die Strategin, die auch beim Catan immer gewinnt.</p><div class="crew-traits"><span class="crew-trait">🩺 Medizinerin</span><span class="crew-trait">🎲 Strategie-Queen</span><span class="crew-trait">📚 Brain</span></div></div>
-        <div class="crew-card crew-card-mats reveal"><div class="crew-avatar">🏡</div><h3 class="crew-name">Mats</h3><span class="crew-role">Der BWLer</span><a href="https://instagram.com/mats.lm" target="_blank" class="crew-ig">📸 @mats.lm</a><p class="crew-bio">Real Estate BWLer - koennte auch Justus heissen. Macht die Website, managed die Finanzen und weiss genau was der Quadratmeter in der Poccistrasse kostet. Naturally.</p><div class="crew-traits"><span class="crew-trait">📊 Real Estate</span><span class="crew-trait">💼 Justus-Energy</span><span class="crew-trait">🌐 Webmaster</span></div></div>
-    </div></div></section>
-
+    <!-- KONTAKTFORMULAR + INFO — jetzt GANZ OBEN direkt nach Hero -->
     <section class="contact-section"><div class="contact-container">
         <div class="contact-form-card reveal"><div class="contact-form-header"><p class="section-overline">NACHRICHT</p><h2 class="section-title">Schreib uns direkt.</h2><p class="contact-form-subtitle">Oder schreib uns auf Instagram.</p></div>
             <form class="c-form" id="contactForm">
@@ -277,15 +277,22 @@
 
         <div class="contact-info reveal">
             <div class="social-card"><h3 style="font-size:1rem;font-weight:700;margin-bottom:.25rem;">Schneller Draht 🚀</h3><p style="font-size:.85rem;color:var(--color-text-light);">Am besten erreichst du uns hier:</p><div class="social-links">
-                <a href="https://instagram.com/mats.lm" target="_blank" class="social-link"><div class="social-link-icon">📸</div><div class="social-link-info"><div class="social-link-name">Mats</div><div class="social-link-handle">@mats.lm</div></div><span class="social-link-arrow">&#8594;</span></a>
-                <a href="https://instagram.com/georginaamarie" target="_blank" class="social-link"><div class="social-link-icon">📸</div><div class="social-link-info"><div class="social-link-name">Georgie</div><div class="social-link-handle">@georginaamarie</div></div><span class="social-link-arrow">&#8594;</span></a>
-                <a href="https://instagram.com/andrei.ncu" target="_blank" class="social-link"><div class="social-link-icon">📸</div><div class="social-link-info"><div class="social-link-name">Andrei</div><div class="social-link-handle">@andrei.ncu</div></div><span class="social-link-arrow">&#8594;</span></a>
+                <a href="https://instagram.com/mats.lm" target="_blank" class="social-link"><div class="social-link-icon">📸</div><div class="social-link-info"><div class="social-link-name">Mats</div><div class="social-link-handle">@mats.lm</div></div><span class="social-link-arrow">→</span></a>
+                <a href="https://instagram.com/georginaamarie" target="_blank" class="social-link"><div class="social-link-icon">📸</div><div class="social-link-info"><div class="social-link-name">Georgie</div><div class="social-link-handle">@georginaamarie</div></div><span class="social-link-arrow">→</span></a>
+                <a href="https://instagram.com/andrei.ncu" target="_blank" class="social-link"><div class="social-link-icon">📸</div><div class="social-link-info"><div class="social-link-name">Andrei</div><div class="social-link-handle">@andrei.ncu</div></div><span class="social-link-arrow">→</span></a>
             </div></div>
             <div class="info-card"><div class="info-card-header"><div class="info-card-icon info-card-icon-location">📍</div><h3 class="info-card-title">Adresse</h3></div><p class="info-card-text">Poccistrasse<br>80336 Muenchen</p></div>
             <div class="info-card"><div class="info-card-header"><div class="info-card-icon info-card-icon-transport">🚇</div><h3 class="info-card-title">Anfahrt</h3></div><p class="info-card-text"><strong>U-Bahn:</strong> U3/U6 - Poccistrasse (1 Min.)<br><strong>Tram:</strong> Linie 16/17 - Poccistrasse<br><strong>S-Bahn:</strong> S1-S8 - Hauptbahnhof (10 Min. zu Fuss)<br><strong>Auto:</strong> Bitte nicht. Nimm die Bahn. 🍻</p></div>
             <div class="info-card"><div class="info-card-header"><div class="info-card-icon info-card-icon-time">🕐</div><h3 class="info-card-title">Beste Zeiten</h3></div><p class="info-card-text"><strong>Events:</strong> Meistens ab 20:00 Uhr<br><strong>Antwortzeit:</strong> Innerhalb von 24h<br><strong>Spontan vorbei?</strong> Immer vorher schreiben! 📱</p></div>
         </div>
     </div></section>
+
+    <!-- CREW SECTION — jetzt NACH dem Kontaktformular -->
+    <section class="crew-section"><div class="crew-container"><div class="crew-header reveal"><p class="section-overline">DIE WG</p><h2 class="section-title">Die Koepfe hinter pocci4.</h2></div><div class="crew-grid">
+        <div class="crew-card crew-card-andrei reveal"><div class="crew-avatar">💪</div><h3 class="crew-name">Andrei</h3><span class="crew-role">Der Tank</span><a href="https://instagram.com/andrei.ncu" target="_blank" class="crew-ig">📸 @andrei.ncu</a><p class="crew-bio">Breit, stark und immer am Pumpen. Wenn du ihn siehst, weisst du warum er durch jede Tuer seitwaerts geht. Das Herz der WG - im wahrsten Sinne ein grosser Mensch.</p><div class="crew-traits"><span class="crew-trait">🏋️ Gym Rat</span><span class="crew-trait">🫂 Gentle Giant</span><span class="crew-trait">🍗 Meal Prep King</span></div></div>
+        <div class="crew-card crew-card-georgie reveal"><div class="crew-avatar">🧠</div><h3 class="crew-name">Georgie</h3><span class="crew-role">Das Koepfchen</span><a href="https://instagram.com/georginaamarie" target="_blank" class="crew-ig">📸 @georginaamarie</a><p class="crew-bio">Medizinstudentin mit dem Plan. Wenn sie nicht gerade Leben rettet, organisiert sie den naechsten Spieleabend. Die Strategin, die auch beim Catan immer gewinnt.</p><div class="crew-traits"><span class="crew-trait">🩺 Medizinerin</span><span class="crew-trait">🎲 Strategie-Queen</span><span class="crew-trait">📚 Brain</span></div></div>
+        <div class="crew-card crew-card-mats reveal"><div class="crew-avatar">🏡</div><h3 class="crew-name">Mats</h3><span class="crew-role">Der BWLer</span><a href="https://instagram.com/mats.lm" target="_blank" class="crew-ig">📸 @mats.lm</a><p class="crew-bio">Real Estate BWLer - koennte auch Justus heissen. Macht die Website, managed die Finanzen und weiss genau was der Quadratmeter in der Poccistrasse kostet. Naturally.</p><div class="crew-traits"><span class="crew-trait">📊 Real Estate</span><span class="crew-trait">💼 Justus-Energy</span><span class="crew-trait">🌐 Webmaster</span></div></div>
+    </div></div></section>
 
     <section class="map-section"><div class="map-container reveal"><div class="map-header"><p class="section-overline">STANDORT</p><h2 class="section-title">So findest du uns.</h2></div><div class="map-wrapper"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.7!2d11.5555!3d48.1285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479ddf5a3a0e3b1d%3A0x0!2sPoccistra%C3%9Fe%2C+80336+M%C3%BCnchen!5e0!3m2!1sde!2sde!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="map-overlay"><div><div class="map-address">📍 Poccistrasse, Muenchen</div><div class="map-address-sub">Direkt an der U3/U6 - Poccistrasse</div></div><a href="https://www.google.com/maps/dir//Poccistra%C3%9Fe,+80336+M%C3%BCnchen" target="_blank" class="map-directions-btn">🧭 Route planen</a></div></div></div></section>
 
@@ -308,6 +315,20 @@
     </div></div></div></section>
 
     <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a><a href="events.html#vorschlag">Event vorschlagen</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p></div></div></footer>
+
+    <!-- ADMIN MODAL -->
+    <div class="admin-modal-overlay" id="adminOverlay">
+        <div class="admin-modal">
+            <h3>🔐 Admin Zugang</h3>
+            <p>Passwort eingeben um zum Admin Panel zu gelangen.</p>
+            <input type="password" id="adminPwInput" placeholder="Passwort">
+            <div class="admin-modal-btns">
+                <button class="btn-modal btn-modal-cancel" id="adminCancel">Abbrechen</button>
+                <button class="btn-modal btn-modal-submit" id="adminSubmit">Login</button>
+            </div>
+            <div class="admin-error" id="adminError">Falsches Passwort!</div>
+        </div>
+    </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -332,7 +353,7 @@
         hamburger.addEventListener("click",function(){hamburger.classList.toggle("active");mobileMenu.classList.toggle("active");document.body.style.overflow=mobileMenu.classList.contains("active")?"hidden":"";});
         var ml=document.querySelectorAll(".mobile-link");for(var i=0;i<ml.length;i++)ml[i].addEventListener("click",function(){hamburger.classList.remove("active");mobileMenu.classList.remove("active");document.body.style.overflow="";});
         var dd=document.getElementById("eventsDropdown"),ddT=null;
-        if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},2000);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
+        if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},200);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
 
         // FAQ
         var faqQuestions=document.querySelectorAll(".faq-question");
@@ -346,7 +367,7 @@
             });
         }
 
-        // CONTACT FORM -> FIREBASE
+        // CONTACT FORM -> FIREBASE (mit read: false für Admin-Ungelesen-Badge)
         document.getElementById("contactForm").addEventListener("submit",function(e){
             e.preventDefault();
             var name = document.getElementById("cName").value.trim();
@@ -360,6 +381,7 @@
                 subject: subject || "Kein Betreff",
                 message: message,
                 type: "contact",
+                read: false,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }).then(function(){
                 document.getElementById("contactForm").style.display = "none";
@@ -381,67 +403,30 @@
 
         // PARALLAX
         window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";}});
+
+        // ADMIN TRIGGER (standard pattern)
+        var ADMIN_PW="pocci4admin";
+        var trigger=document.getElementById("adminTrigger");
+        var overlay=document.getElementById("adminOverlay");
+        var input=document.getElementById("adminPwInput");
+        var cancel=document.getElementById("adminCancel");
+        var submit=document.getElementById("adminSubmit");
+        var error=document.getElementById("adminError");
+
+        trigger.addEventListener("click",function(){
+            if(sessionStorage.getItem("pocci4admin")==="true"){window.location.href="admin.html";return;}
+            overlay.classList.add("active");
+            setTimeout(function(){input.focus();},100);
+        });
+        cancel.addEventListener("click",function(){overlay.classList.remove("active");input.value="";error.style.display="none";});
+        overlay.addEventListener("click",function(e){if(e.target===overlay){overlay.classList.remove("active");input.value="";error.style.display="none";}});
+        function tryLogin(){
+            if(input.value===ADMIN_PW){sessionStorage.setItem("pocci4admin","true");window.location.href="admin.html";}
+            else{error.style.display="block";input.value="";input.focus();}
+        }
+        submit.addEventListener("click",tryLogin);
+        input.addEventListener("keydown",function(e){if(e.key==="Enter")tryLogin();});
     })();
     </script>
-    <!-- ADMIN MODAL -->
-<div class="admin-modal-overlay" id="adminOverlay">
-    <div class="admin-modal">
-        <h3>🔐 Admin Zugang</h3>
-        <p>Passwort eingeben um zum Admin Panel zu gelangen.</p>
-        <input type="password" id="adminPwInput" placeholder="Passwort">
-        <div class="admin-modal-btns">
-            <button class="btn btn-outline" id="adminCancel">Abbrechen</button>
-            <button class="btn btn-primary" id="adminSubmit">Login</button>
-        </div>
-        <div class="admin-error" id="adminError">Falsches Passwort!</div>
-    </div>
-</div>
-<script>
-(function(){
-    var ADMIN_PW = "pocci4admin";
-    var trigger = document.getElementById("adminTrigger");
-    var overlay = document.getElementById("adminOverlay");
-    var input = document.getElementById("adminPwInput");
-    var cancel = document.getElementById("adminCancel");
-    var submit = document.getElementById("adminSubmit");
-    var error = document.getElementById("adminError");
-    if(trigger){
-        trigger.addEventListener("click", function(){
-            if(sessionStorage.getItem("pocci4admin") === "true"){
-                window.location.href = "admin.html";
-                return;
-            }
-            overlay.classList.add("active");
-            setTimeout(function(){ input.focus(); }, 100);
-        });
-    }
-    if(cancel) cancel.addEventListener("click", function(){
-        overlay.classList.remove("active");
-        input.value = "";
-        error.style.display = "none";
-    });
-    if(overlay) overlay.addEventListener("click", function(e){
-        if(e.target === overlay){
-            overlay.classList.remove("active");
-            input.value = "";
-            error.style.display = "none";
-        }
-    });
-    function tryLogin(){
-        if(input.value === ADMIN_PW){
-            sessionStorage.setItem("pocci4admin", "true");
-            window.location.href = "admin.html";
-        } else {
-            error.style.display = "block";
-            input.value = "";
-            input.focus();
-        }
-    }
-    if(submit) submit.addEventListener("click", tryLogin);
-    if(input) input.addEventListener("keydown", function(e){
-        if(e.key === "Enter") tryLogin();
-    });
-})();
-</script>
 </body>
 </html>
