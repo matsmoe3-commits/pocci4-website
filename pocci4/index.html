@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>pocci4</title>
-<link rel="icon" type="image/svg+xml" href="assets/p.svg">
-<link rel="apple-touch-icon" href="assets/p-180.png">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#F5F0EB">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="pocci4">
+    <title>pocci4 - Shisha Lounge</title>
+    <link rel="icon" type="image/svg+xml" href="assets/p.svg">
+    <link rel="apple-touch-icon" href="assets/p-180.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#F5F0EB">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -20,33 +17,31 @@
             --color-bg:#F5F0EB;--color-bg-warm:#EDE5DB;--color-white:#FFFFFF;
             --color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;
             --color-sand:#C4A882;--color-border:#E0D6CC;
-            --cat-party:#C03A2B;--cat-games:#1A1A1A;--cat-drinks:#C4A882;--cat-film:#457B9D;--cat-other:#6B6B6B;
             --font-main:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-            --nav-height:80px;--section-padding:120px;--container-width:1240px;
+            --nav-height:80px;--section-padding:100px;--container-width:1240px;
             --transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);
             --transition-smooth:0.4s cubic-bezier(0.4,0,0.2,1);
+            --shisha-accent:#8B5CF6;--shisha-accent-light:#A78BFA;--shisha-accent-dark:#7C3AED;
         }
         html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-        body{font-family:var(--font-main);background-color:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden;width:100%;min-height:100vh}
+        body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden}
         a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
         img{max-width:100%;height:auto;display:block}
+
         .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
         .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
-        .bg-shape-1{width:700px;height:500px;background:#E0CEBB;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:mf1 20s ease-in-out infinite}
-        .bg-shape-2{width:550px;height:650px;background:#D4C0AD;bottom:-20%;right:-10%;border-radius:40% 60% 30% 70%/60% 30% 70% 40%;animation:mf2 25s ease-in-out infinite}
-        .bg-shape-3{width:450px;height:400px;background:#C9B8A5;top:35%;left:45%;border-radius:50% 50% 30% 70%/40% 60% 40% 60%;animation:mf3 22s ease-in-out infinite}
-        .bg-shape-4{width:380px;height:480px;background:#D8C9B8;top:5%;right:15%;border-radius:30% 70% 50% 50%/50% 40% 60% 50%;animation:mf4 28s ease-in-out infinite}
-        .bg-shape-5{width:500px;height:350px;background:#E5D8CA;bottom:10%;left:20%;border-radius:70% 30% 50% 50%/30% 50% 50% 70%;animation:mf5 24s ease-in-out infinite}
-        @keyframes mf1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}25%{transform:translate(40px,-50px) rotate(5deg) scale(1.05)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}75%{transform:translate(50px,40px) rotate(7deg) scale(1.03)}}
-        @keyframes mf2{0%,100%{transform:translate(0,0) rotate(0) scale(1)}33%{transform:translate(-50px,-40px) rotate(-8deg) scale(1.08)}66%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
-        @keyframes mf3{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(60px,-30px) rotate(10deg)}50%{transform:translate(-40px,40px) rotate(-5deg)}75%{transform:translate(30px,60px) rotate(8deg)}}
-        @keyframes mf4{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-60px,50px) rotate(-10deg) scale(1.1)}}
-        @keyframes mf5{0%,100%{transform:translate(0,0) rotate(0)}33%{transform:translate(50px,-60px) rotate(12deg)}66%{transform:translate(-30px,30px) rotate(-7deg)}}
-        .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;transition:var(--transition-smooth);border-bottom:1px solid transparent}
+        .bg-shape-1{width:700px;height:500px;background:#D4C0E0;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
+        .bg-shape-2{width:550px;height:650px;background:#E0D0C0;bottom:-20%;right:-10%;animation:m2 25s ease-in-out infinite}
+        .bg-shape-3{width:450px;height:400px;background:#C9B8D5;top:35%;left:45%;animation:m3 22s ease-in-out infinite}
+        @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
+        @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
+        @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
+
+        .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
         .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
         .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
         .nav-logo{display:flex;align-items:center;z-index:1001}
-        .nav-logo img{height:56px;width:auto}
+        .nav-logo img{height:56px}
         .nav-right{display:flex;align-items:center;gap:.5rem}
         .nav-links{display:flex;align-items:center;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
         .nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}
@@ -57,7 +52,6 @@
         .nav-link-dropdown.dropdown-visible .nav-dropdown{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
         .nav-dropdown-item{display:flex;align-items:center;gap:.6rem;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);white-space:nowrap}
         .nav-dropdown-item:hover{background:var(--color-bg);color:var(--color-primary)}
-        .nav-dropdown-item span{font-size:1rem}
         .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
         .hamburger-line{width:24px;height:2px;background:var(--color-text);border-radius:2px;transition:var(--transition-smooth);transform-origin:center}
         .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
@@ -73,874 +67,743 @@
         .mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s}
         .mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}
         .mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}
-        .mobile-link:hover,.mobile-link.active{color:var(--color-primary)}
+        .mobile-menu.active .mobile-link:nth-child(6){transition-delay:.35s}
+        .mobile-menu.active .mobile-link:nth-child(7){transition-delay:.4s}
+        .mobile-link:hover,.mobile-link.active{color:var(--shisha-accent)}
         .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
-        .hero{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;text-align:center;padding:calc(var(--nav-height) + 2rem) 1.25rem 4rem;position:relative}
-        .hero-content{max-width:800px;width:100%}
-        .hero-logo{width:180px;height:auto;margin:0 auto 2rem;filter:drop-shadow(0 4px 20px rgba(0,0,0,.08));animation:heroLogoFloat 4s ease-in-out infinite}
-        @keyframes heroLogoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-        .hero-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);margin-bottom:1.5rem;text-transform:uppercase}
-        .hero-title{font-size:clamp(2.2rem,7vw,5rem);font-weight:700;line-height:1.05;letter-spacing:-.04em;color:var(--color-text);margin-bottom:1.5rem}
-        .hero-highlight{color:var(--color-primary);font-style:italic}
-        .hero-subtitle{font-size:clamp(.95rem,2vw,1.25rem);color:var(--color-text-light);font-weight:400;margin-bottom:2.5rem}
-        .hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-        .hero-scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem}
-        .hero-scroll-indicator span{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-gray)}
-        .scroll-line{width:1px;height:40px;background:var(--color-gray);position:relative;overflow:hidden}
-        .scroll-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--color-primary);animation:scrollLine 2s infinite}
-        @keyframes scrollLine{0%{top:-100%}100%{top:100%}}
-        .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;border-radius:50px;font-family:var(--font-main);font-size:.9rem;font-weight:600;cursor:pointer;transition:var(--transition-smooth);border:2px solid transparent;gap:.5rem}
-        .btn-primary{background:var(--color-primary);color:var(--color-white);border-color:var(--color-primary)}
-        .btn-primary:hover{background:var(--color-primary-hover);border-color:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
-        .btn-secondary{background:var(--color-text);color:var(--color-white);border-color:var(--color-text)}
-        .btn-secondary:hover{background:transparent;color:var(--color-text);transform:translateY(-2px)}
-        .btn-outline{background:transparent;color:var(--color-text);border-color:var(--color-text)}
-        .btn-outline:hover{background:var(--color-text);color:var(--color-white);transform:translateY(-2px)}
-        .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
-        .section-title{font-size:clamp(1.8rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;color:var(--color-text)}
-        .events-preview{padding:var(--section-padding) 1.25rem;overflow:hidden}
-        .events-preview-container{max-width:var(--container-width);margin:0 auto}
-        .events-preview-header{text-align:center;margin-bottom:4rem}
-        .events-split{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
-        .countdown-card{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:24px;padding:2.5rem;box-shadow:0 4px 30px rgba(0,0,0,.04);border:1px solid rgba(255,255,255,.5);position:relative}
-        .countdown-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-        .countdown-nav-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--color-text);transition:var(--transition-fast);font-family:var(--font-main)}
-        .countdown-nav-btn:hover{background:var(--color-text);color:#fff;border-color:var(--color-text)}
-        .countdown-event-indicator{display:flex;gap:.4rem}
-        .countdown-dot{width:8px;height:8px;border-radius:50%;background:var(--color-border);transition:var(--transition-fast);cursor:pointer}
-        .countdown-dot.active{background:var(--color-primary);transform:scale(1.3)}
-        .countdown-emoji{font-size:2.5rem;margin-bottom:.75rem}
-        .countdown-event-cat{display:inline-block;padding:4px 12px;border-radius:50px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fff;margin-bottom:.75rem}
-        .countdown-event-name{font-size:clamp(1.3rem,3vw,2rem);font-weight:900;letter-spacing:-.03em;margin-bottom:.25rem;line-height:1.15}
-        .countdown-event-date{font-size:.85rem;color:var(--color-text-light);margin-bottom:1.5rem}
-        .countdown-grid{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-bottom:1.5rem}
-        .countdown-item{display:flex;flex-direction:column;align-items:center;min-width:0;flex:1;max-width:80px}
-        .countdown-number{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;letter-spacing:-.04em;color:var(--color-primary);line-height:1}
-        .countdown-label{font-size:.6rem;color:var(--color-gray);text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
-        .countdown-separator{font-size:clamp(1rem,2vw,1.8rem);font-weight:300;color:var(--color-border);margin-bottom:.8rem;flex-shrink:0}
-        .countdown-capacity{margin-bottom:1.25rem}
-        .countdown-capacity-bar{width:100%;height:6px;background:var(--color-bg);border-radius:10px;overflow:hidden}
-        .countdown-capacity-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--color-primary),var(--color-primary-light));transition:width 1.5s ease}
-        .countdown-capacity-text{display:flex;justify-content:space-between;font-size:.7rem;color:var(--color-gray);margin-top:.3rem}
-        .countdown-actions{display:flex;gap:.75rem}
-        .countdown-actions .btn{flex:1;padding:12px 16px;font-size:.8rem}
-        .mini-cal{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:24px;padding:2rem;box-shadow:0 4px 30px rgba(0,0,0,.04);border:1px solid rgba(255,255,255,.5)}
-        .mini-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-        .mini-cal-month{font-size:1.1rem;font-weight:800}
-        .mini-cal-nav{display:flex;gap:.35rem}
-        .mini-cal-nav-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--color-text);transition:var(--transition-fast);font-family:var(--font-main)}
-        .mini-cal-nav-btn:hover{background:var(--color-text);color:#fff;border-color:var(--color-text)}
-        .mini-cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:.35rem}
-        .mini-cal-wd{text-align:center;font-size:.6rem;font-weight:700;color:var(--color-gray);text-transform:uppercase;letter-spacing:.05em;padding:.3rem 0}
-        .mini-cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-        .mini-cal-day{width:100%;aspect-ratio:1;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:500;cursor:default;transition:var(--transition-fast);position:relative}
-        .mini-cal-day.current{color:var(--color-text)}
-        .mini-cal-day.other{color:var(--color-border)}
-        .mini-cal-day.today{background:var(--color-primary);color:#fff!important;font-weight:800;box-shadow:0 2px 8px rgba(192,58,43,.3)}
-        .mini-cal-day.has-event{font-weight:700;cursor:pointer}
-        .mini-cal-day.has-event:not(.today)::after{content:'';position:absolute;bottom:3px;width:5px;height:5px;border-radius:50%}
-        .mini-cal-day.has-event.cat-party:not(.today)::after{background:var(--cat-party)}
-        .mini-cal-day.has-event.cat-games:not(.today)::after{background:var(--cat-games)}
-        .mini-cal-day.has-event.cat-drinks:not(.today)::after{background:var(--cat-drinks)}
-        .mini-cal-day.has-event.cat-film:not(.today)::after{background:var(--cat-film)}
-        .mini-cal-day.has-event.cat-other:not(.today)::after{background:var(--cat-other)}
-        .mini-cal-day.has-event:hover{transform:scale(1.15);box-shadow:0 2px 8px rgba(0,0,0,.08)}
-        .mini-cal-upcoming{margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--color-border)}
-        .mini-cal-upcoming-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.75rem}
-        .mini-cal-event{display:flex;align-items:center;gap:.75rem;padding:.6rem .75rem;border-radius:12px;transition:var(--transition-fast);cursor:pointer;margin-bottom:.35rem}
-        .mini-cal-event:hover{background:var(--color-bg-warm)}
-        .mini-cal-event-emoji{font-size:1.3rem;flex-shrink:0}
-        .mini-cal-event-info{flex:1;min-width:0}
-        .mini-cal-event-name{font-size:.8rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .mini-cal-event-date{font-size:.65rem;color:var(--color-gray)}
-        .mini-cal-event-badge{padding:2px 8px;border-radius:50px;font-size:.55rem;font-weight:700;color:#fff;flex-shrink:0}
-        .mini-cal-link{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:1rem;padding:.75rem;border-radius:12px;font-size:.8rem;font-weight:600;color:var(--color-primary);transition:var(--transition-fast)}
-        .mini-cal-link:hover{background:rgba(192,58,43,.08)}
-        .crew-section{padding:var(--section-padding) 0;overflow:hidden}
-        .crew-header{text-align:center;margin-bottom:3rem;padding:0 1.25rem}
-        .crew-track-wrapper{position:relative;padding:1rem 0 2rem}
-        .crew-track{display:flex;gap:1.25rem;padding:0 2rem;transition:transform .5s cubic-bezier(.4,0,.2,1);cursor:grab;user-select:none;-webkit-user-select:none}
-        .crew-track.grabbing{cursor:grabbing;transition:none}
-        .crew-card{min-width:280px;max-width:280px;background:rgba(255,255,255,.9);backdrop-filter:blur(15px);border-radius:24px;padding:2rem 1.5rem;text-align:center;border:1px solid rgba(255,255,255,.5);box-shadow:0 4px 20px rgba(0,0,0,.04);transition:transform .4s ease,box-shadow .4s ease;flex-shrink:0;position:relative;overflow:hidden}
-        .crew-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.08)}
-        .crew-card-accent{position:absolute;top:0;left:0;right:0;height:4px}
-        .crew-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 1.25rem;display:flex;align-items:center;justify-content:center;font-size:2.5rem;overflow:hidden;flex-shrink:0;position:relative}
-        .crew-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;border-radius:50%}
-        .crew-name{font-size:1.2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.2rem}
-        .crew-role{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 12px;border-radius:50px;display:inline-block;margin-bottom:.75rem}
-        .crew-bio{font-size:.82rem;color:var(--color-text-light);line-height:1.6;margin-bottom:1rem}
-        .crew-traits{display:flex;flex-wrap:wrap;gap:.3rem;justify-content:center}
-        .crew-trait{padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:var(--color-bg);color:var(--color-text-light)}
-        .crew-scroll-indicator{display:flex;justify-content:center;gap:.4rem;margin-top:1.5rem}
-        .crew-scroll-dot{width:8px;height:8px;border-radius:50%;background:var(--color-border);transition:var(--transition-fast);cursor:pointer}
-        .crew-scroll-dot.active{background:var(--color-primary);width:24px;border-radius:4px}
-        .gebote-section{padding:var(--section-padding) 1.25rem;overflow:hidden}
-        .gebote-header{text-align:center;margin-bottom:3rem}
-        .gebote-container{max-width:var(--container-width);margin:0 auto}
-        .gebote-cards{display:flex;gap:.75rem;height:420px}
-        .gebote-card{flex:1;border-radius:24px;position:relative;overflow:hidden;cursor:pointer;transition:flex .6s cubic-bezier(.4,0,.2,1),transform .4s ease,box-shadow .4s ease;min-width:0}
-        .gebote-card:hover{flex:3}
-        .gebote-card.expanded{flex:3}
-        .gebote-card-bg{position:absolute;inset:0;z-index:0}
-        .gebote-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.1) 50%,transparent 100%);z-index:1}
-        .gebote-card-content{position:absolute;bottom:0;left:0;right:0;padding:2rem;z-index:2;transition:var(--transition-smooth)}
-        .gebote-number{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.5rem}
-        .gebote-emoji{font-size:2.5rem;margin-bottom:.75rem;transition:transform .4s ease}
-        .gebote-card:hover .gebote-emoji,.gebote-card.expanded .gebote-emoji{transform:scale(1.2)}
-        .gebote-title{font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:0;letter-spacing:-.02em;white-space:nowrap;transition:var(--transition-smooth)}
-        .gebote-desc{font-size:.85rem;color:rgba(255,255,255,.8);line-height:1.5;max-height:0;overflow:hidden;opacity:0;transition:max-height .5s cubic-bezier(.4,0,.2,1),opacity .4s ease,margin .4s ease;margin-top:0}
-        .gebote-card:hover .gebote-desc,.gebote-card.expanded .gebote-desc{max-height:100px;opacity:1;margin-top:.5rem}
-        .gebote-card-1 .gebote-card-bg{background:linear-gradient(135deg,#C03A2B,#E8501E)}
-        .gebote-card-2 .gebote-card-bg{background:linear-gradient(135deg,#1A1A1A,#444)}
-        .gebote-card-3 .gebote-card-bg{background:linear-gradient(135deg,#C4A882,#8B7355)}
-        .gebote-card-4 .gebote-card-bg{background:linear-gradient(135deg,#457B9D,#2D5F7D)}
-        .gebote-card-5 .gebote-card-bg{background:linear-gradient(135deg,#2D6A4F,#52B788)}
-        .marquee-section{padding:2rem 0;overflow:hidden;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);width:100%}
-        .marquee-track{display:flex;width:max-content;animation:marquee 25s linear infinite}
-        .marquee-text{font-size:.8rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--color-gray);white-space:nowrap}
-        @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-        .quicklinks-section{padding:var(--section-padding) 1.25rem;overflow:hidden}
-        .quicklinks-container{max-width:var(--container-width);margin:0 auto}
-        .quicklinks-header{text-align:center;margin-bottom:4rem}
-        .quicklinks-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-        .quicklink{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2.5rem 2rem;text-align:center;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth);position:relative;overflow:hidden;cursor:pointer;display:block}
-        .quicklink:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.08)}
-        .quicklink-icon{width:64px;height:64px;border-radius:20px;margin:0 auto 1.25rem;display:flex;align-items:center;justify-content:center;font-size:1.8rem;transition:transform .4s ease}
-        .quicklink:hover .quicklink-icon{transform:scale(1.1) rotate(-5deg)}
-        .quicklink-icon-events{background:linear-gradient(135deg,rgba(192,58,43,.15),rgba(192,58,43,.05))}
-        .quicklink-icon-stats{background:linear-gradient(135deg,rgba(26,26,26,.1),rgba(26,26,26,.03))}
-        .quicklink-icon-shop{background:linear-gradient(135deg,rgba(196,168,130,.2),rgba(196,168,130,.05))}
-        .quicklink-icon-kontakt{background:linear-gradient(135deg,rgba(69,123,157,.15),rgba(69,123,157,.05))}
-        .quicklink-title{font-size:1.1rem;font-weight:800;margin-bottom:.35rem}
-        .quicklink-desc{font-size:.8rem;color:var(--color-text-light);line-height:1.5;margin-bottom:1rem}
-        .quicklink-arrow{display:inline-flex;align-items:center;gap:.3rem;font-size:.8rem;font-weight:600;color:var(--color-primary);transition:var(--transition-fast)}
-        .quicklink:hover .quicklink-arrow{gap:.6rem}
-        .footer{background:var(--color-text);color:var(--color-white);padding:4rem 1.25rem 2rem}
+
+        .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
+        .admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
+        .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+        .admin-modal-overlay.active{display:flex}
+        .admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+        .admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+        .admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
+        .admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
+        .admin-modal input:focus{border-color:var(--shisha-accent)}
+        .admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
+        .admin-modal-btns .btn-modal{flex:1;padding:10px 16px;font-size:.85rem;border-radius:50px;font-family:var(--font-main);font-weight:700;cursor:pointer;transition:var(--transition-fast);border:none}
+        .admin-modal-btns .btn-modal-cancel{background:var(--color-bg);color:var(--color-text)}
+        .admin-modal-btns .btn-modal-submit{background:var(--shisha-accent);color:#fff}
+        .admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
+
+        /* ===== SMOKE EFFECTS ===== */
+        .smoke-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2500;overflow:hidden}
+        .smoke-puff{position:absolute;border-radius:50%;pointer-events:none;filter:blur(8px);animation:smokePuff var(--dur,3s) ease-out forwards}
+        @keyframes smokePuff{
+            0%{transform:translate(0,0) scale(.3);opacity:.7}
+            30%{opacity:.5}
+            100%{transform:translate(var(--dx,-30px),var(--dy,-200px)) scale(2.5);opacity:0}
+        }
+        .smoke-ring{position:absolute;border:3px solid rgba(255,255,255,.3);border-radius:50%;pointer-events:none;animation:smokeRing 2s ease-out forwards}
+        @keyframes smokeRing{
+            0%{transform:scale(.2);opacity:.6}
+            100%{transform:scale(3);opacity:0}
+        }
+        .flavor-burst{position:absolute;pointer-events:none;font-size:1.5rem;animation:flavorBurst 1.5s ease-out forwards}
+        @keyframes flavorBurst{
+            0%{transform:translate(0,0) scale(0) rotate(0);opacity:1}
+            50%{transform:translate(var(--bx,20px),var(--by,-80px)) scale(1.2) rotate(180deg);opacity:.8}
+            100%{transform:translate(var(--bx2,40px),var(--by2,-160px)) scale(.5) rotate(360deg);opacity:0}
+        }
+
+        /* HERO */
+        .shisha-hero{padding:calc(var(--nav-height) + 4rem) 1.25rem 3rem;max-width:var(--container-width);margin:0 auto;text-align:center;position:relative}
+        .shisha-hero-smoke{font-size:6rem;margin-bottom:1rem;animation:smokeFloat 4s ease-in-out infinite;position:relative;display:inline-block}
+        .hero-smoke-bg{position:absolute;top:50%;left:50%;width:200px;height:200px;background:radial-gradient(circle,rgba(139,92,246,.15) 0%,transparent 70%);transform:translate(-50%,-50%);border-radius:50%;animation:heroGlow 3s ease-in-out infinite alternate;pointer-events:none}
+        @keyframes heroGlow{0%{opacity:.3;transform:translate(-50%,-50%) scale(1)}100%{opacity:.6;transform:translate(-50%,-50%) scale(1.3)}}
+        @keyframes smokeFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-15px) scale(1.05)}}
+        .shisha-hero-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--shisha-accent);text-transform:uppercase;margin-bottom:1rem}
+        .shisha-hero-title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem}
+        .shisha-hero-title span{background:linear-gradient(135deg,var(--shisha-accent),var(--color-primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .shisha-hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--color-text-light);max-width:550px;margin:0 auto 2rem}
+        .andrei-badge{display:inline-flex;align-items:center;gap:.6rem;padding:10px 20px;border-radius:50px;background:var(--color-white);box-shadow:0 2px 15px rgba(0,0,0,.06);border:1px solid var(--color-border)}
+        .andrei-badge-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--shisha-accent),var(--color-primary));display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+        .andrei-badge-text{text-align:left}
+        .andrei-badge-name{font-size:.85rem;font-weight:800}
+        .andrei-badge-role{font-size:.7rem;color:var(--shisha-accent);font-weight:600}
+
+        .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--shisha-accent);text-transform:uppercase;margin-bottom:1rem}
+        .section-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
+
+        /* TYPE SELECTION (Kohle vs E-Shisha) */
+        .type-section{padding:0 1.25rem 3rem;max-width:700px;margin:0 auto}
+        .type-header{text-align:center;margin-bottom:1.5rem}
+        .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .type-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:20px;padding:2rem 1.5rem;text-align:center;border:3px solid transparent;cursor:pointer;transition:var(--transition-smooth);position:relative;overflow:hidden}
+        .type-card:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,.08);border-color:var(--color-border)}
+        .type-card.selected{border-color:var(--shisha-accent);box-shadow:0 10px 30px rgba(139,92,246,.2)}
+        .type-card.selected::after{content:'✓';position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:var(--shisha-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800}
+        .type-emoji{font-size:3.5rem;margin-bottom:.75rem}
+        .type-name{font-size:1.2rem;font-weight:800;margin-bottom:.25rem}
+        .type-desc{font-size:.8rem;color:var(--color-text-light);line-height:1.4}
+        .type-features{display:flex;flex-direction:column;gap:.3rem;margin-top:.75rem;font-size:.72rem;color:var(--color-gray)}
+        .type-feature{display:flex;align-items:center;gap:.3rem;justify-content:center}
+        .type-required{text-align:center;margin-top:1rem;font-size:.78rem;color:var(--color-primary);font-weight:600;display:none}
+        .type-required.show{display:block}
+
+        /* CATEGORY TABS */
+        .menu-section{padding:0 1.25rem var(--section-padding);max-width:var(--container-width);margin:0 auto}
+        .menu-header{text-align:center;margin-bottom:3rem}
+        .cat-tabs{display:flex;gap:.5rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap}
+        .cat-tab{padding:8px 18px;border-radius:50px;font-size:.8rem;font-weight:600;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:none;background:var(--color-white);font-family:var(--font-main);box-shadow:0 1px 5px rgba(0,0,0,.04)}
+        .cat-tab:hover{color:var(--color-text);background:var(--color-bg-warm)}
+        .cat-tab.active{background:var(--shisha-accent);color:#fff;box-shadow:0 4px 15px rgba(139,92,246,.3)}
+
+        /* FLAVOR GRID */
+        .flavor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:.75rem;margin-bottom:3rem}
+        .flavor-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:16px;padding:1.1rem .9rem;text-align:center;border:2px solid transparent;cursor:pointer;transition:var(--transition-smooth);position:relative;overflow:hidden}
+        .flavor-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--glow-color,transparent) 0%,transparent 70%);opacity:0;transition:opacity .4s ease;pointer-events:none}
+        .flavor-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.08);border-color:var(--color-border)}
+        .flavor-card:hover::before{opacity:.15}
+        .flavor-card.selected{border-color:var(--shisha-accent);background:rgba(139,92,246,.06);box-shadow:0 8px 25px rgba(139,92,246,.15)}
+        .flavor-card.selected::before{opacity:.2}
+        .flavor-card.selected::after{content:'✓';position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:var(--shisha-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;animation:checkPop .3s ease}
+        @keyframes checkPop{0%{transform:scale(0)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+        .flavor-emoji{font-size:2.2rem;margin-bottom:.4rem;transition:transform .3s ease}
+        .flavor-card:hover .flavor-emoji{transform:scale(1.15) rotate(5deg)}
+        .flavor-card.selected .flavor-emoji{animation:selectedBounce .5s ease}
+        @keyframes selectedBounce{0%{transform:scale(1)}30%{transform:scale(1.3) rotate(-10deg)}60%{transform:scale(.9) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
+        .flavor-name{font-size:.8rem;font-weight:700;margin-bottom:.15rem}
+        .flavor-brand{font-size:.6rem;color:var(--shisha-accent);font-weight:600;margin-bottom:.15rem}
+        .flavor-desc{font-size:.65rem;color:var(--color-gray);line-height:1.3}
+        .flavor-tag{display:inline-block;padding:2px 7px;border-radius:50px;font-size:.55rem;font-weight:700;margin-top:.35rem;text-transform:uppercase}
+        .flavor-tag.fruity{background:rgba(255,107,107,.12);color:#FF6B6B}
+        .flavor-tag.fresh{background:rgba(69,123,157,.12);color:#457B9D}
+        .flavor-tag.sweet{background:rgba(255,217,61,.15);color:#C9960C}
+        .flavor-tag.exotic{background:rgba(139,92,246,.12);color:var(--shisha-accent)}
+        .flavor-tag.classic{background:rgba(26,26,26,.08);color:var(--color-text)}
+        .flavor-tag.spicy{background:rgba(192,58,43,.1);color:var(--color-primary)}
+        .flavor-tag.creamy{background:rgba(196,168,130,.15);color:#8B6914}
+        .flavor-tag.berry{background:rgba(155,89,182,.12);color:#9B59B6}
+        .flavor-tag.sour{background:rgba(46,204,113,.12);color:#27AE60}
+        .flavor-count{position:fixed;bottom:2rem;right:2rem;background:var(--shisha-accent);color:#fff;border-radius:50px;padding:12px 24px;font-size:.85rem;font-weight:800;box-shadow:0 8px 25px rgba(139,92,246,.4);z-index:100;display:none;align-items:center;gap:.5rem;cursor:pointer;transition:var(--transition-smooth);animation:countSlideIn .4s ease}
+        .flavor-count.visible{display:flex}
+        .flavor-count:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(139,92,246,.5)}
+        @keyframes countSlideIn{from{transform:translateY(100px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+        /* BUILDER */
+        .builder-section{padding:0 1.25rem var(--section-padding);max-width:900px;margin:0 auto}
+        .builder-card{background:var(--color-text);border-radius:28px;padding:3rem 2.5rem;color:#fff;position:relative;overflow:hidden}
+        .builder-card::before{content:'';position:absolute;top:-50%;right:-30%;width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,.15) 0%,transparent 70%);pointer-events:none}
+        .builder-card::after{content:'';position:absolute;bottom:-30%;left:-20%;width:350px;height:350px;background:radial-gradient(circle,rgba(192,58,43,.1) 0%,transparent 70%);pointer-events:none}
+        .builder-header{text-align:center;margin-bottom:2.5rem;position:relative;z-index:1}
+        .builder-header .section-overline{color:var(--shisha-accent-light)}
+        .builder-header .section-title{color:#fff;font-size:clamp(1.5rem,4vw,2.2rem)}
+        .builder-header p{color:var(--color-gray);font-size:.9rem;margin-top:.5rem}
+        .builder-step{margin-bottom:2rem;position:relative;z-index:1}
+        .step-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--shisha-accent-light);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+        .step-number{width:24px;height:24px;border-radius:50%;background:var(--shisha-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800}
+        .step-number.done{background:#2D6A4F}
+        .selected-flavors{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;min-height:40px}
+        .selected-chip{display:inline-flex;align-items:center;gap:.3rem;padding:6px 14px;border-radius:50px;background:rgba(139,92,246,.2);color:var(--shisha-accent-light);font-size:.8rem;font-weight:600;animation:chipIn .3s ease}
+        @keyframes chipIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+        .selected-chip button{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:1rem;padding:0 0 0 4px;transition:var(--transition-fast)}
+        .selected-chip button:hover{color:#fff}
+        .no-selection{color:rgba(255,255,255,.3);font-size:.85rem;padding:.5rem 0}
+        .type-display{display:inline-flex;align-items:center;gap:.4rem;padding:8px 16px;border-radius:50px;font-size:.85rem;font-weight:700;margin-bottom:.5rem}
+        .type-display.kohle{background:rgba(255,107,107,.15);color:#FF6B6B}
+        .type-display.eshisha{background:rgba(69,123,157,.15);color:#457B9D}
+        .mix-options{display:flex;gap:.75rem;flex-wrap:wrap}
+        .mix-option{padding:8px 16px;border-radius:50px;border:1.5px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.7);font-family:var(--font-main);font-size:.8rem;font-weight:600;cursor:pointer;transition:var(--transition-fast)}
+        .mix-option:hover{border-color:var(--shisha-accent);color:#fff}
+        .mix-option.active{background:var(--shisha-accent);border-color:var(--shisha-accent);color:#fff}
+        .builder-extras{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.5rem}
+        .extra-card{padding:1rem;border-radius:14px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;transition:var(--transition-fast);text-align:center}
+        .extra-card:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08)}
+        .extra-card.selected{border-color:var(--shisha-accent);background:rgba(139,92,246,.15)}
+        .extra-emoji{font-size:1.5rem;margin-bottom:.25rem}
+        .extra-name{font-size:.8rem;font-weight:700}
+        .extra-price{font-size:.7rem;color:var(--shisha-accent-light)}
+        .builder-note{width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:var(--font-main);font-size:.85rem;resize:vertical;min-height:70px;transition:var(--transition-fast)}
+        .builder-note::placeholder{color:rgba(255,255,255,.3)}
+        .builder-note:focus{outline:none;border-color:var(--shisha-accent)}
+        .builder-name{width:100%;padding:14px 18px;border-radius:14px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:var(--font-main);font-size:.95rem;font-weight:600;transition:var(--transition-fast)}
+        .builder-name::placeholder{color:rgba(255,255,255,.3)}
+        .builder-name:focus{outline:none;border-color:var(--shisha-accent)}
+        .builder-summary{background:rgba(255,255,255,.08);border-radius:16px;padding:1.5rem;margin:1.5rem 0;border:1px solid rgba(255,255,255,.1)}
+        .summary-row{display:flex;justify-content:space-between;padding:.35rem 0;font-size:.85rem;gap:.5rem}
+        .summary-label{color:var(--color-gray);flex-shrink:0}
+        .summary-value{font-weight:700;text-align:right;word-break:break-word}
+        .summary-total{border-top:1px solid rgba(255,255,255,.15);margin-top:.5rem;padding-top:.5rem;font-size:1.1rem}
+        .summary-total .summary-value{color:var(--shisha-accent-light);font-size:1.2rem}
+        .builder-submit{width:100%;padding:18px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--shisha-accent),var(--color-primary));color:#fff;font-family:var(--font-main);font-size:1rem;font-weight:800;cursor:pointer;transition:var(--transition-smooth);position:relative;z-index:1}
+        .builder-submit:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(139,92,246,.35)}
+        .builder-submit:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+        .builder-error{color:#FF6B6B;font-size:.8rem;font-weight:600;text-align:center;margin-top:.75rem;display:none}
+        .builder-error.show{display:block;animation:shake .4s ease}
+        @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+        .builder-success{display:none;text-align:center;padding:2.5rem 1rem;position:relative;z-index:1}
+        .builder-success.show{display:block}
+        .builder-success-icon{font-size:4rem;margin-bottom:1rem;animation:successPop .5s ease}
+        @keyframes successPop{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+        .builder-success-title{font-size:1.5rem;font-weight:900;margin-bottom:.5rem}
+        .builder-success-text{color:var(--color-gray);font-size:.9rem;line-height:1.5;margin-bottom:1.5rem}
+        .builder-success-btn{padding:14px 32px;border-radius:50px;border:none;background:var(--shisha-accent);color:#fff;font-family:var(--font-main);font-size:.9rem;font-weight:700;cursor:pointer;transition:var(--transition-fast)}
+        .builder-success-btn:hover{background:var(--shisha-accent-dark)}
+
+        /* COMBOS */
+        .combos-section{padding:0 1.25rem var(--section-padding);max-width:var(--container-width);margin:0 auto}
+        .combos-header{text-align:center;margin-bottom:2.5rem}
+        .combos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem}
+        .combo-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:20px;padding:1.5rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth);cursor:pointer}
+        .combo-card:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,.08)}
+        .combo-emojis{font-size:2rem;margin-bottom:.75rem;display:flex;gap:.3rem}
+        .combo-name{font-size:1.05rem;font-weight:800;margin-bottom:.25rem}
+        .combo-flavors{font-size:.78rem;color:var(--shisha-accent);font-weight:600;margin-bottom:.5rem}
+        .combo-desc{font-size:.78rem;color:var(--color-text-light);line-height:1.4;margin-bottom:.75rem}
+        .combo-order-btn{padding:8px 18px;border-radius:50px;border:none;background:var(--shisha-accent);color:#fff;font-family:var(--font-main);font-size:.75rem;font-weight:700;cursor:pointer;transition:var(--transition-fast)}
+        .combo-order-btn:hover{background:var(--shisha-accent-dark);transform:translateY(-1px)}
+        .combo-badge{display:inline-flex;align-items:center;gap:.3rem;padding:3px 10px;border-radius:50px;font-size:.6rem;font-weight:700;margin-bottom:.75rem}
+        .combo-badge.popular{background:rgba(255,217,61,.15);color:#C9960C}
+        .combo-badge.new{background:rgba(139,92,246,.12);color:var(--shisha-accent)}
+        .combo-badge.andrei{background:rgba(192,58,43,.1);color:var(--color-primary)}
+
+        /* RULES */
+        .rules-section{padding:0 1.25rem var(--section-padding);max-width:700px;margin:0 auto}
+        .rules-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2.5rem;border:1px solid rgba(255,255,255,.5)}
+        .rules-header{text-align:center;margin-bottom:2rem}
+        .rule-row{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--color-border);align-items:flex-start}
+        .rule-row:last-child{border-bottom:none}
+        .rule-emoji{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
+        .rule-text{font-size:.9rem;color:var(--color-text-light);line-height:1.5}
+        .rule-text strong{color:var(--color-text)}
+
+        .footer{background:var(--color-text);color:#fff;padding:4rem 1.25rem 2rem}
         .footer-container{max-width:var(--container-width);margin:0 auto}
         .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
-        .footer-logo{height:44px;width:auto;filter:brightness(0) invert(1);margin-bottom:.75rem}
+        .footer-logo{height:44px;filter:brightness(0) invert(1);margin-bottom:.75rem}
         .footer-tagline{font-size:.85rem;color:var(--color-gray)}
         .footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
         .footer-col h4{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--color-gray);margin-bottom:1rem}
-        .footer-col a{display:block;font-size:.9rem;color:rgba(255,255,255,.7);padding:.3rem 0;transition:var(--transition-fast)}
-        .footer-col a:hover{color:var(--color-white)}
+        .footer-col a{display:block;font-size:.9rem;color:rgba(255,255,255,.7);padding:.3rem 0}
+        .footer-col a:hover{color:#fff}
         .footer-bottom{padding-top:2rem;text-align:center}
         .footer-bottom p{font-size:.8rem;color:var(--color-gray)}
+
+        .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
         .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
         .reveal.visible{opacity:1;transform:translateY(0)}
-        @media(max-width:1024px){:root{--section-padding:80px}.events-split{grid-template-columns:1fr}.quicklinks-grid{grid-template-columns:repeat(2,1fr)}.footer-top{grid-template-columns:1fr;gap:3rem}}
+
+        @media(max-width:1024px){.footer-top{grid-template-columns:1fr;gap:3rem}}
         @media(max-width:768px){
-            :root{--section-padding:60px;--nav-height:68px}
+            :root{--nav-height:68px;--section-padding:60px}
             .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
-            .hero{text-align:left;align-items:flex-end;padding-bottom:5rem}
-            .hero-logo{margin:0 0 2rem}
-            .hero-buttons{justify-content:flex-start}
-            .quicklinks-grid{grid-template-columns:1fr}
-            .countdown-actions{flex-direction:column}
-            .countdown-actions .btn{width:100%}
-            .crew-card{min-width:250px;max-width:250px}
+            .flavor-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.6rem}
+            .builder-card{padding:2rem 1.5rem;border-radius:20px}
+            .builder-extras{grid-template-columns:1fr 1fr}
+            .combos-grid{grid-template-columns:1fr}
+            .type-grid{gap:.75rem}
+            .type-card{padding:1.5rem 1rem}
+            .type-emoji{font-size:2.5rem}
             .footer-links-grid{grid-template-columns:1fr 1fr}
-            .hero-scroll-indicator{display:none}
             .nav-dropdown{display:none!important}
-            .gebote-cards{flex-direction:column;height:auto}
-            .gebote-card{height:100px;flex:none!important;transition:height .5s cubic-bezier(.4,0,.2,1)}
-            .gebote-card:hover,.gebote-card.expanded{height:220px}
+            .flavor-count{bottom:1.5rem;right:1.5rem;padding:10px 20px;font-size:.8rem}
         }
         @media(max-width:480px){
-            .nav-logo img{height:38px}.hero-title{font-size:2rem}.section-title{font-size:1.6rem}
-            .btn{padding:12px 24px;font-size:.85rem;width:100%}
-            .hero-buttons{flex-direction:column;width:100%}
-            .hero-logo{width:120px}
-            .quicklinks-grid{gap:1rem}
-            .countdown-number{font-size:1.5rem}
-            .countdown-separator{font-size:1rem}
+            .nav-logo img{height:38px}
+            .flavor-grid{grid-template-columns:repeat(2,1fr)}
+            .builder-extras{grid-template-columns:1fr}
             .footer-links-grid{grid-template-columns:1fr}
-            .crew-card{min-width:220px;max-width:220px;padding:1.5rem 1.25rem}
-}
-.admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
-.admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
-.admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
-.admin-modal-overlay.active{display:flex}
-.admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
-.admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
-.admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
-.admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
-.admin-modal input:focus{border-color:var(--color-primary)}
-.admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
-.admin-modal-btns .btn{flex:1;padding:10px 16px;font-size:.85rem}
-.admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
-        
+            .shisha-hero-smoke{font-size:4rem}
+            .type-grid{grid-template-columns:1fr}
+        }
     </style>
 </head>
 <body>
-    <div class="animated-bg">
-        <div class="bg-shape bg-shape-1"></div>
-        <div class="bg-shape bg-shape-2"></div>
-        <div class="bg-shape bg-shape-3"></div>
-        <div class="bg-shape bg-shape-4"></div>
-        <div class="bg-shape bg-shape-5"></div>
-    </div>
-<nav class="navbar" id="navbar"><div class="nav-container">
-    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
-    <div class="nav-right">
-        <div class="nav-links">
-            <a href="index.html" class="nav-link active">Home</a>
-            <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link active">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a><a href="shisha.html" class="nav-dropdown-item"><span>💨</span> Shisha Lounge</a></div></div>
-              <a href="shop.html" class="nav-link">Shop</a>
-            <a href="kontakt.html" class="nav-link">Kontakt</a>
+    <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div></div>
+    <div class="confetti-container" id="confettiContainer"></div>
+    <div class="smoke-container" id="smokeContainer"></div>
+
+    <nav class="navbar" id="navbar"><div class="nav-container">
+        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link active">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a><a href="shisha.html" class="nav-dropdown-item"><span>💨</span> Shisha Lounge</a></div></div>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="kontakt.html" class="nav-link">Kontakt</a>
+            </div>
+            <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
+            <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
         </div>
-        <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
-        <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
-    </div>
-</div></nav>
+    </div></nav>
+
     <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
-        <a href="index.html" class="mobile-link active">Home</a>
+        <a href="index.html" class="mobile-link">Home</a>
         <a href="events.html" class="mobile-link">Events</a>
         <a href="stats.html" class="mobile-link mobile-link-sub">🏆 Game Statistik</a>
+        <a href="shisha.html" class="mobile-link mobile-link-sub active">💨 Shisha Lounge</a>
         <a href="shop.html" class="mobile-link">Shop</a>
         <a href="kontakt.html" class="mobile-link">Kontakt</a>
     </div></div>
-    <section class="hero">
-        <div class="hero-content">
-            <img src="assets/logo.svg" alt="pocci4" class="hero-logo reveal">
-            <p class="hero-overline reveal">POCCISTRASSE, MUENCHEN</p>
-            <h1 class="hero-title reveal">Drei Freunde,<br>eine Bude,<br><span class="hero-highlight">endlose Abende.</span></h1>
-            <p class="hero-subtitle reveal">Partys. Spieleabende. Trinkabende. Und alles dazwischen.</p>
-            <div class="hero-buttons reveal">
-                <a href="events.html" class="btn btn-primary">Events entdecken</a>
-                <a href="shop.html" class="btn btn-secondary">Shop</a>
-            </div>
-        </div>
-        <div class="hero-scroll-indicator"><div class="scroll-line"></div><span>Scroll</span></div>
+
+    <div class="admin-modal-overlay" id="adminOverlay"><div class="admin-modal"><h3>🔐 Admin Zugang</h3><p>Passwort eingeben.</p><input type="password" id="adminPwInput" placeholder="Passwort"><div class="admin-modal-btns"><button class="btn-modal btn-modal-cancel" id="adminCancel">Abbrechen</button><button class="btn-modal btn-modal-submit" id="adminSubmit">Login</button></div><div class="admin-error" id="adminError">Falsches Passwort!</div></div></div>
+
+    <!-- HERO -->
+    <section class="shisha-hero reveal">
+        <div style="position:relative;display:inline-block"><div class="hero-smoke-bg"></div><div class="shisha-hero-smoke">💨</div></div>
+        <p class="shisha-hero-overline">SHISHA LOUNGE</p>
+        <h1 class="shisha-hero-title">Bestell dir deine <span>Shisha.</span></h1>
+        <p class="shisha-hero-sub">Waehle deine Lieblingsgeschmaecker, mix sie zusammen und Andrei baut sie dir.</p>
+        <div class="andrei-badge"><div class="andrei-badge-avatar">🫅</div><div class="andrei-badge-text"><div class="andrei-badge-name">Andrei</div><div class="andrei-badge-role">Shisha-Meister</div></div></div>
     </section>
-    <section class="events-preview">
-        <div class="events-preview-container">
-            <div class="events-preview-header reveal">
-                <p class="section-overline">WAS STEHT AN</p>
-                <h2 class="section-title">Die naechsten Abende.</h2>
-            </div>
-            <div class="events-split">
-                <div class="countdown-card reveal" id="countdownCard">
-                    <div class="countdown-nav">
-                        <button class="countdown-nav-btn" id="cdPrev">&#8249;</button>
-                        <div class="countdown-event-indicator" id="cdDots"></div>
-                        <button class="countdown-nav-btn" id="cdNext">&#8250;</button>
-                    </div>
-                    <div id="countdownContent"><div style="text-align:center;padding:2rem;color:var(--color-gray)">Lade Events...</div></div>
+
+    <!-- TYPE SELECTION -->
+    <section class="type-section reveal" id="typeSection">
+        <div class="type-header">
+            <p class="section-overline">SCHRITT 1</p>
+            <h2 class="section-title">Kohle oder E-Shisha?</h2>
+        </div>
+        <div class="type-grid" id="typeGrid">
+            <div class="type-card" data-type="kohle">
+                <div class="type-emoji">🔥</div>
+                <div class="type-name">Klassische Kohle</div>
+                <div class="type-desc">Traditionelle Shisha mit Naturkohle</div>
+                <div class="type-features">
+                    <span class="type-feature">🌿 Authentischer Geschmack</span>
+                    <span class="type-feature">💨 Dichter Rauch</span>
+                    <span class="type-feature">⏱️ ~60-90 Min Session</span>
                 </div>
-                <div class="mini-cal reveal">
-                    <div class="mini-cal-header">
-                        <h3 class="mini-cal-month" id="mcMonth"></h3>
-                        <div class="mini-cal-nav">
-                            <button class="mini-cal-nav-btn" id="mcPrev">&#8249;</button>
-                            <button class="mini-cal-nav-btn" id="mcNext">&#8250;</button>
-                        </div>
-                    </div>
-                    <div class="mini-cal-weekdays"><div class="mini-cal-wd">Mo</div><div class="mini-cal-wd">Di</div><div class="mini-cal-wd">Mi</div><div class="mini-cal-wd">Do</div><div class="mini-cal-wd">Fr</div><div class="mini-cal-wd">Sa</div><div class="mini-cal-wd">So</div></div>
-                    <div class="mini-cal-days" id="mcDays"></div>
-                    <div class="mini-cal-upcoming" id="mcUpcoming"></div>
-                    <a href="events.html" class="mini-cal-link">📅 Vollstaendigen Kalender ansehen &#8594;</a>
+            </div>
+            <div class="type-card" data-type="eshisha">
+                <div class="type-emoji">⚡</div>
+                <div class="type-name">E-Shisha</div>
+                <div class="type-desc">Elektrisch, kein Kohle-Aufwand</div>
+                <div class="type-features">
+                    <span class="type-feature">🔌 Sofort bereit</span>
+                    <span class="type-feature">🌬️ Smoothe Clouds</span>
+                    <span class="type-feature">♻️ Wiederverwendbar</span>
                 </div>
             </div>
         </div>
+        <div class="type-required" id="typeRequired">⚠️ Bitte waehle zuerst eine Art!</div>
     </section>
-    <section class="crew-section">
-        <div class="crew-header reveal">
-            <p class="section-overline">DIE CREW</p>
-            <h2 class="section-title">Die Koepfe hinter pocci4.</h2>
-        </div>
-        <div class="crew-track-wrapper">
-            <div class="crew-track" id="crewTrack"></div>
-        </div>
-        <div class="crew-scroll-indicator" id="crewDots"></div>
+
+    <!-- POPULAR COMBOS -->
+    <section class="combos-section reveal">
+        <div class="combos-header"><p class="section-overline">BELIEBT</p><h2 class="section-title">Top Kombinationen.</h2></div>
+        <div class="combos-grid" id="combosGrid"></div>
     </section>
-    <section class="gebote-section">
-        <div class="gebote-container">
-            <div class="gebote-header reveal">
-                <p class="section-overline">UNSERE REGELN</p>
-                <h2 class="section-title">Die 5 Gebote der Poccistrasse.</h2>
-            </div>
-            <div class="gebote-cards reveal" id="geboteCards">
-                <div class="gebote-card gebote-card-1"><div class="gebote-card-bg"></div><div class="gebote-card-overlay"></div><div class="gebote-card-content"><div class="gebote-number">Gebot I</div><div class="gebote-emoji">🍺</div><div class="gebote-title">Du sollst trinken.</div><div class="gebote-desc">Ob Bier, Wein oder Hugo - Hauptsache das Glas ist nie leer.</div></div></div>
-                <div class="gebote-card gebote-card-2"><div class="gebote-card-bg"></div><div class="gebote-card-overlay"></div><div class="gebote-card-content"><div class="gebote-number">Gebot II</div><div class="gebote-emoji">🎲</div><div class="gebote-title">Du sollst spielen.</div><div class="gebote-desc">Catan, Poker, Beer Pong - Verlierer raeumt auf. Keine Ausnahmen.</div></div></div>
-                <div class="gebote-card gebote-card-3"><div class="gebote-card-bg"></div><div class="gebote-card-overlay"></div><div class="gebote-card-content"><div class="gebote-number">Gebot III</div><div class="gebote-emoji">🤝</div><div class="gebote-title">Du sollst Spass haben.</div><div class="gebote-desc">Schlechte Laune bleibt draussen. Hier drinnen wird gelacht.</div></div></div>
-                <div class="gebote-card gebote-card-4"><div class="gebote-card-bg"></div><div class="gebote-card-overlay"></div><div class="gebote-card-content"><div class="gebote-number">Gebot IV</div><div class="gebote-emoji">📱</div><div class="gebote-title">Du sollst dich anmelden.</div><div class="gebote-desc">Spontan ist geil - aber kurz Bescheid sagen noch geiler.</div></div></div>
-                <div class="gebote-card gebote-card-5"><div class="gebote-card-bg"></div><div class="gebote-card-overlay"></div><div class="gebote-card-content"><div class="gebote-number">Gebot V</div><div class="gebote-emoji">🧹</div><div class="gebote-title">Du sollst aufraeumen.</div><div class="gebote-desc">Wer hilft aufraeumen wird beim naechsten Mal zuerst eingeladen.</div></div></div>
-            </div>
-        </div>
+
+    <!-- FLAVORS -->
+    <section class="menu-section" id="menuSection">
+        <div class="menu-header reveal"><p class="section-overline">GESCHMAECKER</p><h2 class="section-title">Waehle deine Sorten.</h2></div>
+        <div class="cat-tabs reveal" id="catTabs"></div>
+        <div class="flavor-grid reveal" id="flavorGrid"></div>
     </section>
-    <section class="marquee-section">
-        <div class="marquee-track">
-            <span class="marquee-text">PARTYS ✦ SPIELEABENDE ✦ TRINKABENDE ✦ FILMABENDE ✦ GUTE VIBES ✦ POCCISTRASSE ✦ MUENCHEN ✦ PARTYS ✦ SPIELEABENDE ✦ TRINKABENDE ✦ FILMABENDE ✦ GUTE VIBES ✦ POCCISTRASSE ✦ MUENCHEN ✦&nbsp;</span>
-            <span class="marquee-text">PARTYS ✦ SPIELEABENDE ✦ TRINKABENDE ✦ FILMABENDE ✦ GUTE VIBES ✦ POCCISTRASSE ✦ MUENCHEN ✦ PARTYS ✦ SPIELEABENDE ✦ TRINKABENDE ✦ FILMABENDE ✦ GUTE VIBES ✦ POCCISTRASSE ✦ MUENCHEN ✦&nbsp;</span>
-        </div>
-    </section>
-    <section class="quicklinks-section">
-        <div class="quicklinks-container">
-            <div class="quicklinks-header reveal">
-                <p class="section-overline">ENTDECKEN</p>
-                <h2 class="section-title">Was willst du machen?</h2>
+
+    <!-- FLOATING COUNT -->
+    <div class="flavor-count" id="flavorCount"><span id="flavorCountText">0 ausgewaehlt</span> → Bestellen</div>
+
+    <!-- BUILDER -->
+    <section class="builder-section" id="builderSection">
+        <div class="builder-card reveal">
+            <div class="builder-header"><p class="section-overline">DEINE BESTELLUNG</p><h2 class="section-title">Shisha zusammenstellen.</h2><p>Alles gewaehlt? Dann ab dafuer!</p></div>
+            <div id="builderFormWrap">
+                <div class="builder-step"><div class="step-label"><span class="step-number" id="stepType">1</span> Shisha-Typ</div><div id="typeDisplay"><div class="no-selection">Oben auswaehlen...</div></div></div>
+                <div class="builder-step"><div class="step-label"><span class="step-number" id="stepFlavors">2</span> Deine Geschmaecker</div><div class="selected-flavors" id="selectedFlavors"><div class="no-selection">Waehle oben deine Geschmaecker aus...</div></div></div>
+                <div class="builder-step"><div class="step-label"><span class="step-number">3</span> Mix-Staerke</div><div class="mix-options" id="mixOptions"><button class="mix-option active" data-mix="normal">Normal</button><button class="mix-option" data-mix="stark">💪 Stark</button><button class="mix-option" data-mix="leicht">🌿 Leicht</button><button class="mix-option" data-mix="doppelt">🔥 Doppelkopf</button></div></div>
+                <div class="builder-step"><div class="step-label"><span class="step-number">4</span> Extras</div><div class="builder-extras" id="extrasGrid"></div></div>
+                <div class="builder-step"><div class="step-label"><span class="step-number">5</span> Sonderwuensche</div><textarea class="builder-note" id="orderNote" placeholder="z.B. Extra viel Minze, kein Eis, bestimmter Kopf..."></textarea></div>
+                <div class="builder-step"><div class="step-label"><span class="step-number">6</span> Dein Name</div><input type="text" class="builder-name" id="orderName" placeholder="Wer bestellt?"></div>
+                <div class="builder-summary" id="orderSummary"></div>
+                <button class="builder-submit" id="orderSubmit" disabled>💨 Bestellung aufgeben</button>
+                <div class="builder-error" id="builderError"></div>
             </div>
-            <div class="quicklinks-grid">
-                <a href="events.html" class="quicklink reveal"><div class="quicklink-icon quicklink-icon-events">📅</div><div class="quicklink-title">Events</div><p class="quicklink-desc">Alle kommenden Abende, Partys und Spieleabende.</p><span class="quicklink-arrow">Entdecken &#8594;</span></a>
-                <a href="stats.html" class="quicklink reveal"><div class="quicklink-icon quicklink-icon-stats">🏆</div><div class="quicklink-title">Game Stats</div><p class="quicklink-desc">Leaderboards, Head-to-Head und alle Ergebnisse.</p><span class="quicklink-arrow">Rangliste &#8594;</span></a>
-                <a href="shop.html" class="quicklink reveal"><div class="quicklink-icon quicklink-icon-shop">🛍️</div><div class="quicklink-title">Shop</div><p class="quicklink-desc">Unnoetig aber geil. Services, Merch und mehr.</p><span class="quicklink-arrow">Shoppen &#8594;</span></a>
-                <a href="kontakt.html" class="quicklink reveal"><div class="quicklink-icon quicklink-icon-kontakt">💬</div><div class="quicklink-title">Kontakt</div><p class="quicklink-desc">Schreib uns, komm vorbei oder folg uns auf Insta.</p><span class="quicklink-arrow">Schreiben &#8594;</span></a>
-            </div>
+            <div class="builder-success" id="orderSuccess"><div class="builder-success-icon">💨</div><div class="builder-success-title">Bestellung aufgegeben!</div><div class="builder-success-text" id="orderSuccessText"></div><button class="builder-success-btn" id="orderNewBtn">🔄 Neue Bestellung</button></div>
         </div>
     </section>
-    <footer class="footer"><div class="footer-container">
-        <div class="footer-top">
-            <div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div>
-            <div class="footer-links-grid">
-                <div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div>
-                <div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a><a href="events.html#vorschlag">Event vorschlagen</a></div>
-                <div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div>
-            </div>
+
+    <!-- RULES -->
+    <section class="rules-section reveal">
+        <div class="rules-card">
+            <div class="rules-header"><p class="section-overline">HAUSREGELN</p><h2 class="section-title" style="font-size:1.5rem">Shisha Etikette.</h2></div>
+            <div class="rule-row"><span class="rule-emoji">🫅</span><div class="rule-text"><strong>Andrei ist der Chef.</strong> Er entscheidet ueber Kopf, Mix und Kohle.</div></div>
+            <div class="rule-row"><span class="rule-emoji">💰</span><div class="rule-text"><strong>Faire Kasse.</strong> Kohle und Tabak kosten. Wirf was in die Shisha-Kasse.</div></div>
+            <div class="rule-row"><span class="rule-emoji">🔄</span><div class="rule-text"><strong>Kohle wechseln.</strong> Sag Bescheid, nicht selbst rumbasteln!</div></div>
+            <div class="rule-row"><span class="rule-emoji">🚫</span><div class="rule-text"><strong>Kein Schlauch-Hogging.</strong> Immer weiterreichen.</div></div>
+            <div class="rule-row"><span class="rule-emoji">💧</span><div class="rule-text"><strong>Wasser trinken.</strong> Shisha dehydriert. Andrei sagt: Wer nicht trinkt, raucht nicht.</div></div>
+            <div class="rule-row"><span class="rule-emoji">🪟</span><div class="rule-text"><strong>Fenster auf.</strong> Wir rauchen mit Durchzug.</div></div>
         </div>
-        <div class="footer-bottom"><p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p></div>
-    </div></footer>
+    </section>
+
+    <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shisha.html">Shisha</a><a href="shop.html">Shop</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p></div></div></footer>
+
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
     <script>
 (function(){
-    var firebaseConfig = {
-        apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
-        authDomain: "pocci4-a24e5.firebaseapp.com",
-        projectId: "pocci4-a24e5",
-        storageBucket: "pocci4-a24e5.firebasestorage.app",
-        messagingSenderId: "518621760671",
-        appId: "1:518621760671:web:90ad7c1bae464f313066aa"
-    };
-    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore();
+    var firebaseConfig={apiKey:"AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",authDomain:"pocci4-a24e5.firebaseapp.com",projectId:"pocci4-a24e5",storageBucket:"pocci4-a24e5.firebasestorage.app",messagingSenderId:"518621760671",appId:"1:518621760671:web:90ad7c1bae464f313066aa"};
+    if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+    var db=firebase.firestore();
 
-    var catColors = {party:"#C03A2B",games:"#1A1A1A",drinks:"#C4A882",film:"#457B9D",other:"#6B6B6B"};
-    var catNames = {party:"Party",games:"Spieleabend",drinks:"Trinkabend",film:"Filmabend",other:"Sonstiges"};
-    var monthNames = ["Januar","Februar","Maerz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-    var today = new Date();
-    var mcMonth = today.getMonth();
-    var mcYear = today.getFullYear();
-    var events = [];
-    var futureEvents = [];
-    var cdIndex = 0;
-    var cdInterval = null;
-
-    // ========== CREW DATA (.jpeg!) ==========
-    var crewData = [
-        {name:"Mats",role:"Der BWLer",color:"#C4A882",emoji:"🏡",img:"assets/crew/mats.jpeg",bio:"Real Estate BWLer - koennte auch Justus heissen. Macht die Website und weiss was der Quadratmeter kostet.",traits:["📊 Real Estate","💼 Justus-Energy","🌐 Webmaster"],ig:"mats.lm"},
-        {name:"Georgie",role:"Das Koepfchen",color:"#457B9D",emoji:"🧠",img:"assets/crew/georgie.jpeg",bio:"Medizinstudentin mit dem Plan. Strategin die auch beim Catan immer gewinnt. Unterschaetz sie nicht.",traits:["🩺 Medizinerin","🎲 Strategie-Queen","📚 Brain"],ig:"georginaamarie"},
-        {name:"Andrei",role:"Der Tank",color:"#C03A2B",emoji:"💪",img:"assets/crew/andrei.jpeg",bio:"Breit, stark und immer am Pumpen. Das Herz der WG - im wahrsten Sinne ein grosser Mensch.",traits:["🏋️ Gym Rat","🫂 Gentle Giant","🍗 Meal Prep King"],ig:"andrei.ncu"},
-        {name:"Caro",role:"Vorstadt-Prinzessin",color:"#D4A574",emoji:"👑",img:"assets/crew/caro.jpeg",bio:"Die Prinzessin aus der Vorstadt. Sieht aus wie High Society, feiert aber haerter als alle anderen.",traits:["👑 Vorstadt-Vibes","🥂 Champagner-Energy"]},
-        {name:"Felix",role:"Sportliche Maschine",color:"#2D6A4F",emoji:"⚽",img:"assets/crew/felix.jpeg",bio:"Egal welcher Sport - Felix macht mit und gewinnt wahrscheinlich. Der Typ ist einfach gebaut fuer Bewegung.",traits:["⚽ Allround-Athlet","💪 Maschine"]},
-        {name:"Fabe",role:"Kuenstler der Informatik",color:"#7B68EE",emoji:"🎨",img:"assets/crew/fabe.jpeg",bio:"Studiert Informatik aber ist eigentlich Kuenstler. Wie das geht? Fragt ihn. Er weiss es selbst nicht.",traits:["🎨 Kuenstler-Seele","💻 Informatiker","❓ Paradox"]},
-        {name:"Fabian S.",role:"Der Wilde",color:"#E63946",emoji:"🔥",img:"assets/crew/fabian-s.jpeg",bio:"Wilder Mensch der hier eigentlich Miete zahlen muesste. Ist oefter da als manche Moebel.",traits:["🔥 Chaot","🏠 Untermieter (inoffiziell)"]},
-        {name:"Sebastian",role:"Das Phantom",color:"#6C757D",emoji:"👻",img:"assets/crew/sebastian.jpeg",bio:"Kriegt man nicht zu Gesicht. Aber WENN er da ist, ist er gut drauf. Rare aber legendaer.",traits:["👻 Phantom","✨ Rare Appearance"]},
-        {name:"Jannik",role:"Mr. Zuverlaessig",color:"#0077B6",emoji:"🤝",img:"assets/crew/jannik.jpeg",bio:"Enttaeuscht nie - aber sich selbst beim Poker meistens. Trotzdem jedes Mal wieder am Tisch.",traits:["🤝 Zuverlaessig","🃏 Poker-Opfer"]},
-        {name:"Eva",role:"Innsbrucker Maus",color:"#F4A261",emoji:"🏔️",img:"assets/crew/eva.jpeg",bio:"Nuechtern und trotzdem die Lustigste im Raum. Wie macht sie das? Alpen-Energie.",traits:["🏔️ Tirolerin","😂 Natural High"]},
-        {name:"Andre",role:"Gast des Jahrhunderts",color:"#E76F51",emoji:"🗣️",img:"assets/crew/andre.jpeg",bio:"Liebt es zu tratschen. Also lieber keine Geheimnisse erzaehlen wenn er in der Naehe ist.",traits:["🗣️ Tratsch-Koenig","🏆 Gast des Jhd."]},
-        {name:"Tim",role:"Der Zahnfluesterer",color:"#264653",emoji:"🦷",img:"assets/crew/tim.jpeg",bio:"Zahnmediziner mit Fetisch fuer Zahnluecken. Laechelt euch an und bewertet direkt euer Gebiss.",traits:["🦷 Zahnmedizin","😬 Zahnluecken-Fan"]}
+    // ===== MASSIVE FLAVOR DATABASE =====
+    var FLAVORS = [
+        // FRUITY
+        {id:"watermelon",name:"Wassermelone",emoji:"🍉",cat:"fruity",desc:"Saftig & suess",tag:"fruity",brand:"Al Fakher",glow:"#ff6b6b"},
+        {id:"grape",name:"Traube",emoji:"🍇",cat:"fruity",desc:"Klassisch fruchtig",tag:"fruity",brand:"Al Fakher",glow:"#9b59b6"},
+        {id:"blueberry",name:"Blaubeere",emoji:"🫐",cat:"fruity",desc:"Beerig intensiv",tag:"berry",brand:"Adalya",glow:"#5b6abf"},
+        {id:"peach",name:"Pfirsich",emoji:"🍑",cat:"fruity",desc:"Suess & weich",tag:"fruity",brand:"Social Smoke",glow:"#ffb347"},
+        {id:"mango",name:"Mango",emoji:"🥭",cat:"fruity",desc:"Tropisch suess",tag:"exotic",brand:"Adalya",glow:"#f39c12"},
+        {id:"apple-green",name:"Gruener Apfel",emoji:"🍏",cat:"fruity",desc:"Sauer & frisch",tag:"sour",brand:"Al Fakher",glow:"#2ecc71"},
+        {id:"apple-red",name:"Roter Apfel",emoji:"🍎",cat:"fruity",desc:"Suess & mild",tag:"fruity",brand:"Al Fakher",glow:"#e74c3c"},
+        {id:"cherry",name:"Kirsche",emoji:"🍒",cat:"fruity",desc:"Suess-sauer",tag:"fruity",brand:"Starbuzz",glow:"#c0392b"},
+        {id:"lemon",name:"Zitrone",emoji:"🍋",cat:"fruity",desc:"Sauer & erfrischend",tag:"sour",brand:"Al Fakher",glow:"#f1c40f"},
+        {id:"orange",name:"Orange",emoji:"🍊",cat:"fruity",desc:"Citrus pur",tag:"fruity",brand:"Al Fakher",glow:"#e67e22"},
+        {id:"raspberry",name:"Himbeere",emoji:"🫐",cat:"fruity",desc:"Beerig suess",tag:"berry",brand:"Fumari",glow:"#e84393"},
+        {id:"strawberry",name:"Erdbeere",emoji:"🍓",cat:"fruity",desc:"Der Klassiker",tag:"fruity",brand:"Al Fakher",glow:"#ff6b6b"},
+        {id:"banana",name:"Banane",emoji:"🍌",cat:"fruity",desc:"Cremig suess",tag:"creamy",brand:"Adalya",glow:"#f9ca24"},
+        {id:"pineapple",name:"Ananas",emoji:"🍍",cat:"fruity",desc:"Tropisch frisch",tag:"exotic",brand:"Fumari",glow:"#f1c40f"},
+        {id:"passion",name:"Maracuja",emoji:"🌺",cat:"fruity",desc:"Exotisch sauer",tag:"exotic",brand:"Adalya",glow:"#e056a0"},
+        {id:"pomegranate",name:"Granatapfel",emoji:"🍎",cat:"fruity",desc:"Herb suess",tag:"fruity",brand:"Al Fakher",glow:"#c0392b"},
+        {id:"kiwi",name:"Kiwi",emoji:"🥝",cat:"fruity",desc:"Sauer fruchtig",tag:"sour",brand:"Social Smoke",glow:"#6ab04c"},
+        {id:"grapefruit",name:"Grapefruit",emoji:"🍊",cat:"fruity",desc:"Bitter-suess",tag:"sour",brand:"Fumari",glow:"#ff7979"},
+        {id:"plum",name:"Pflaume",emoji:"🫐",cat:"fruity",desc:"Dunkel & suess",tag:"fruity",brand:"Starbuzz",glow:"#6c5ce7"},
+        {id:"melon",name:"Honigmelone",emoji:"🍈",cat:"fruity",desc:"Mild & suess",tag:"sweet",brand:"Al Fakher",glow:"#badc58"},
+        {id:"lime",name:"Limette",emoji:"🍋",cat:"fruity",desc:"Sauer-herb",tag:"sour",brand:"Adalya",glow:"#2ecc71"},
+        {id:"cranberry",name:"Cranberry",emoji:"🫐",cat:"fruity",desc:"Herb fruchtig",tag:"berry",brand:"Social Smoke",glow:"#eb4d4b"},
+        {id:"blackberry",name:"Brombeere",emoji:"🫐",cat:"fruity",desc:"Dunkel beerig",tag:"berry",brand:"Fumari",glow:"#2d3436"},
+        {id:"fig",name:"Feige",emoji:"🫐",cat:"fruity",desc:"Suess oriental",tag:"exotic",brand:"Starbuzz",glow:"#6c5ce7"},
+        // FRESH
+        {id:"mint",name:"Minze",emoji:"🌿",cat:"fresh",desc:"Eiskalt frisch",tag:"fresh",brand:"Al Fakher",glow:"#00cec9"},
+        {id:"ice",name:"Ice / Kalt",emoji:"🧊",cat:"fresh",desc:"Purer Ice Kick",tag:"fresh",brand:"XRacher",glow:"#74b9ff"},
+        {id:"menthol",name:"Menthol",emoji:"❄️",cat:"fresh",desc:"Extra frisch",tag:"fresh",brand:"Al Fakher",glow:"#81ecec"},
+        {id:"spearmint",name:"Spearmint",emoji:"🌿",cat:"fresh",desc:"Milde Minze",tag:"fresh",brand:"Fumari",glow:"#55efc4"},
+        {id:"peppermint",name:"Pfefferminz",emoji:"🌿",cat:"fresh",desc:"Starke Minze",tag:"fresh",brand:"Al Fakher",glow:"#00b894"},
+        {id:"cucumber",name:"Gurke",emoji:"🥒",cat:"fresh",desc:"Leicht & kuehl",tag:"fresh",brand:"Social Smoke",glow:"#badc58"},
+        {id:"eucalyptus",name:"Eukalyptus",emoji:"🌲",cat:"fresh",desc:"Frei durchatmen",tag:"fresh",brand:"Adalya",glow:"#00cec9"},
+        {id:"ice-bonbon",name:"Eisbonbon",emoji:"🍬",cat:"fresh",desc:"Suess & eisig",tag:"fresh",brand:"XRacher",glow:"#a29bfe"},
+        {id:"cold-limo",name:"Kalte Limo",emoji:"🥤",cat:"fresh",desc:"Limonaden-Fresh",tag:"fresh",brand:"Adalya",glow:"#ffeaa7"},
+        // SWEET
+        {id:"vanilla",name:"Vanille",emoji:"🍦",cat:"sweet",desc:"Cremig warm",tag:"creamy",brand:"Fumari",glow:"#ffeaa7"},
+        {id:"caramel",name:"Karamell",emoji:"🍮",cat:"sweet",desc:"Suess & warm",tag:"creamy",brand:"Starbuzz",glow:"#d4a259"},
+        {id:"chocolate",name:"Schokolade",emoji:"🍫",cat:"sweet",desc:"Dunkel & intensiv",tag:"sweet",brand:"Al Fakher",glow:"#6F4E37"},
+        {id:"honey",name:"Honig",emoji:"🍯",cat:"sweet",desc:"Natuerlich suess",tag:"sweet",brand:"Adalya",glow:"#f9ca24"},
+        {id:"bubblegum",name:"Kaugummi",emoji:"🫧",cat:"sweet",desc:"Suess & fun",tag:"sweet",brand:"XRacher",glow:"#fd79a8"},
+        {id:"cotton-candy",name:"Zuckerwatte",emoji:"🍭",cat:"sweet",desc:"Jahrmarkt vibes",tag:"sweet",brand:"Adalya",glow:"#fab1a0"},
+        {id:"cookie",name:"Cookie",emoji:"🍪",cat:"sweet",desc:"Keksig suess",tag:"creamy",brand:"Fumari",glow:"#d4a259"},
+        {id:"tiramisu",name:"Tiramisu",emoji:"🍰",cat:"sweet",desc:"Kaffee meets Creme",tag:"creamy",brand:"Starbuzz",glow:"#a0522d"},
+        {id:"milkshake",name:"Milkshake",emoji:"🥛",cat:"sweet",desc:"Cremig smooth",tag:"creamy",brand:"Adalya",glow:"#dfe6e9"},
+        {id:"waffle",name:"Waffel",emoji:"🧇",cat:"sweet",desc:"Warm suess",tag:"sweet",brand:"XRacher",glow:"#d4a259"},
+        {id:"cinnamon",name:"Zimt",emoji:"🫙",cat:"sweet",desc:"Wuerzige Waerme",tag:"spicy",brand:"Al Fakher",glow:"#d35400"},
+        {id:"nutella",name:"Nutella",emoji:"🍫",cat:"sweet",desc:"Haselnuss-Schoko",tag:"creamy",brand:"Adalya",glow:"#6F4E37"},
+        {id:"popcorn",name:"Popcorn",emoji:"🍿",cat:"sweet",desc:"Suess-salzig",tag:"sweet",brand:"XRacher",glow:"#f9ca24"},
+        // EXOTIC
+        {id:"coconut",name:"Kokos",emoji:"🥥",cat:"exotic",desc:"Tropical vibes",tag:"exotic",brand:"Fumari",glow:"#dfe6e9"},
+        {id:"lychee",name:"Litschi",emoji:"🌸",cat:"exotic",desc:"Blumig suess",tag:"exotic",brand:"Adalya",glow:"#fd79a8"},
+        {id:"guava",name:"Guave",emoji:"🍈",cat:"exotic",desc:"Tropisch herb",tag:"exotic",brand:"Fumari",glow:"#55efc4"},
+        {id:"dragon",name:"Drachenfrucht",emoji:"🐉",cat:"exotic",desc:"Exotisch mild",tag:"exotic",brand:"Social Smoke",glow:"#e056a0"},
+        {id:"rose",name:"Rose",emoji:"🌹",cat:"exotic",desc:"Blumig elegant",tag:"exotic",brand:"Al Fakher",glow:"#e84393"},
+        {id:"jasmine",name:"Jasmin",emoji:"🌼",cat:"exotic",desc:"Blumig zart",tag:"exotic",brand:"Al Fakher",glow:"#ffeaa7"},
+        {id:"papaya",name:"Papaya",emoji:"🍈",cat:"exotic",desc:"Tropical suess",tag:"exotic",brand:"Starbuzz",glow:"#f39c12"},
+        {id:"starfruit",name:"Sternfrucht",emoji:"⭐",cat:"exotic",desc:"Mild exotisch",tag:"exotic",brand:"Fumari",glow:"#fdcb6e"},
+        {id:"hibiscus",name:"Hibiskus",emoji:"🌺",cat:"exotic",desc:"Blumig herb",tag:"exotic",brand:"Social Smoke",glow:"#e056a0"},
+        {id:"cardamom",name:"Kardamom",emoji:"🫙",cat:"exotic",desc:"Orientalisch",tag:"spicy",brand:"Al Fakher",glow:"#6c5ce7"},
+        {id:"chai",name:"Chai",emoji:"🍵",cat:"exotic",desc:"Gewuerz-Tee",tag:"spicy",brand:"Starbuzz",glow:"#d35400"},
+        {id:"turkish-coffee",name:"Tuerkischer Kaffee",emoji:"☕",cat:"exotic",desc:"Stark & aromatisch",tag:"classic",brand:"Al Fakher",glow:"#6F4E37"},
+        // CLASSIC
+        {id:"doppelapfel",name:"Doppelapfel",emoji:"🍎",cat:"classic",desc:"DER Klassiker",tag:"classic",brand:"Al Fakher",glow:"#c0392b"},
+        {id:"traube-minze",name:"Traube-Minze",emoji:"🍇",cat:"classic",desc:"Beliebteste Kombi",tag:"classic",brand:"Al Fakher",glow:"#9b59b6"},
+        {id:"love66",name:"Love 66",emoji:"💜",cat:"classic",desc:"Legende",tag:"classic",brand:"Adalya",glow:"#6c5ce7"},
+        {id:"blue-mist",name:"Blue Mist",emoji:"💙",cat:"classic",desc:"Blaubeere + Minze",tag:"classic",brand:"Starbuzz",glow:"#74b9ff"},
+        {id:"code69",name:"Code 69",emoji:"🔢",cat:"classic",desc:"Maracuja Mix",tag:"classic",brand:"Starbuzz",glow:"#e056a0"},
+        {id:"lady-killer",name:"Lady Killer",emoji:"💋",cat:"classic",desc:"Frucht-Bombe",tag:"classic",brand:"Adalya",glow:"#ff6b6b"},
+        {id:"fresh-lemon",name:"Frische Zitrone",emoji:"🍋",cat:"classic",desc:"Ewig gut",tag:"classic",brand:"Al Fakher",glow:"#f1c40f"},
+        {id:"pirate",name:"Pirates Cave",emoji:"🏴‍☠️",cat:"classic",desc:"Mysterioes fruchtig",tag:"classic",brand:"Starbuzz",glow:"#2d3436"},
+        // DRINKS
+        {id:"cola",name:"Cola",emoji:"🥤",cat:"drinks",desc:"Cola Geschmack",tag:"sweet",brand:"XRacher",glow:"#6F4E37"},
+        {id:"energy",name:"Energy Drink",emoji:"⚡",cat:"drinks",desc:"Red Bull Vibes",tag:"sweet",brand:"Adalya",glow:"#00b894"},
+        {id:"mojito",name:"Mojito",emoji:"🍹",cat:"drinks",desc:"Limette + Minze",tag:"fresh",brand:"Social Smoke",glow:"#55efc4"},
+        {id:"pina-colada",name:"Pina Colada",emoji:"🍹",cat:"drinks",desc:"Kokos + Ananas",tag:"exotic",brand:"Starbuzz",glow:"#ffeaa7"},
+        {id:"sex-beach",name:"Sex on the Beach",emoji:"🏖️",cat:"drinks",desc:"Cocktail Klassiker",tag:"fruity",brand:"Adalya",glow:"#ff7979"},
+        {id:"ice-tea",name:"Eistee",emoji:"🧊",cat:"drinks",desc:"Pfirsich Eistee",tag:"fresh",brand:"XRacher",glow:"#fdcb6e"},
+        {id:"lemonade",name:"Limonade",emoji:"🍋",cat:"drinks",desc:"Hausgemacht",tag:"sour",brand:"Fumari",glow:"#f1c40f"},
+        {id:"champagne",name:"Champagner",emoji:"🍾",cat:"drinks",desc:"Prickelnd suess",tag:"exotic",brand:"Starbuzz",glow:"#ffeaa7"},
     ];
 
-    // ========== NAV ==========
-    var navbar = document.getElementById("navbar");
-    window.addEventListener("scroll", function(){
-        navbar.classList.toggle("scrolled", window.scrollY > 50);
-    });
-    var hamburger = document.getElementById("hamburger");
-    var mobileMenu = document.getElementById("mobileMenu");
-    hamburger.addEventListener("click", function(){
-        hamburger.classList.toggle("active");
-        mobileMenu.classList.toggle("active");
-        document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
-    });
-    var mLinks = document.querySelectorAll(".mobile-link");
-    for(var i = 0; i < mLinks.length; i++){
-        mLinks[i].addEventListener("click", function(){
-            hamburger.classList.remove("active");
-            mobileMenu.classList.remove("active");
-            document.body.style.overflow = "";
+    var EXTRAS = [
+        {id:"ice-hose",name:"Ice-Schlauch",emoji:"🧊",price:0},
+        {id:"double-coal",name:"Extra Kohle",emoji:"🔥",price:0},
+        {id:"fruit-bowl",name:"Obst-Kopf",emoji:"🍎",price:2},
+        {id:"led",name:"LED Base",emoji:"💡",price:0},
+        {id:"milk",name:"Milch statt Wasser",emoji:"🥛",price:0},
+        {id:"molasses",name:"Extra Molasse",emoji:"🍯",price:1},
+        {id:"ice-cubes",name:"Eiswuerfel im Glas",emoji:"🧊",price:0},
+        {id:"diffuser",name:"Diffusor",emoji:"🫧",price:0},
+    ];
+
+    var COMBOS = [
+        {name:"Andrei's Special",emoji:"🫅🔥",flavors:["watermelon","mint","ice"],desc:"Wassermelone Minze Ice – Signature Mix.",badge:"andrei"},
+        {name:"Tropical Paradise",emoji:"🌴🥥",flavors:["mango","coconut","pineapple"],desc:"Karibik-Feeling. Suess & exotisch.",badge:"popular"},
+        {name:"Berry Blast",emoji:"🫐💥",flavors:["blueberry","raspberry","ice"],desc:"Beerenbombe mit Ice Kick.",badge:"popular"},
+        {name:"Classic OG",emoji:"🍇🌿",flavors:["grape","mint"],desc:"Traube-Minze. Die Nummer 1.",badge:"popular"},
+        {name:"Love Clouds",emoji:"💜☁️",flavors:["love66","vanilla"],desc:"Love 66 meets Vanille.",badge:"new"},
+        {name:"Winter Spice",emoji:"🫙❄️",flavors:["cinnamon","apple-green","ice"],desc:"Wie Gluehwein zum Rauchen.",badge:"new"},
+        {name:"Citrus Storm",emoji:"🍋🍊",flavors:["lemon","orange","menthol"],desc:"Zitrus-Explosion.",badge:"popular"},
+        {name:"Double Apple OG",emoji:"🍎🍏",flavors:["doppelapfel","mint"],desc:"Doppelapfel mit Minze.",badge:"popular"},
+        {name:"Cocktail Hour",emoji:"🍹🏖️",flavors:["pina-colada","sex-beach"],desc:"Cocktails zum Rauchen.",badge:"new"},
+        {name:"Dark Berry",emoji:"🫐🍫",flavors:["blackberry","cherry","chocolate"],desc:"Dunkle Beerenschoko.",badge:"new"},
+    ];
+
+    var CATS=[{id:"all",name:"Alle"},{id:"fruity",name:"🍉 Fruchtig"},{id:"fresh",name:"🧊 Frisch"},{id:"sweet",name:"🍯 Suess"},{id:"exotic",name:"🌴 Exotisch"},{id:"classic",name:"⭐ Klassiker"},{id:"drinks",name:"🍹 Drinks"}];
+
+    var selectedFlavors=[];var selectedExtras=[];var currentMix="normal";var activeCat="all";var selectedType=null;
+
+    // ===== NAV =====
+    var navbar=document.getElementById("navbar");
+    window.addEventListener("scroll",function(){navbar.classList.toggle("scrolled",window.scrollY>50);});
+    var hamburger=document.getElementById("hamburger"),mobileMenu=document.getElementById("mobileMenu");
+    hamburger.addEventListener("click",function(){hamburger.classList.toggle("active");mobileMenu.classList.toggle("active");document.body.style.overflow=mobileMenu.classList.contains("active")?"hidden":"";});
+    document.querySelectorAll(".mobile-link").forEach(function(ml){ml.addEventListener("click",function(){hamburger.classList.remove("active");mobileMenu.classList.remove("active");document.body.style.overflow="";});});
+    var dd=document.getElementById("eventsDropdown"),ddT=null;
+    if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},200);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
+
+    // ===== ADMIN =====
+    (function(){var PW="pocci4admin";var t=document.getElementById("adminTrigger");var o=document.getElementById("adminOverlay");var i=document.getElementById("adminPwInput");var c=document.getElementById("adminCancel");var s=document.getElementById("adminSubmit");var e=document.getElementById("adminError");t.addEventListener("click",function(){if(sessionStorage.getItem("pocci4admin")==="true"){window.location.href="admin.html";return;}o.classList.add("active");setTimeout(function(){i.focus();},100);});c.addEventListener("click",function(){o.classList.remove("active");i.value="";e.style.display="none";});o.addEventListener("click",function(ev){if(ev.target===o){o.classList.remove("active");i.value="";e.style.display="none";}});function tryLogin(){if(i.value===PW){sessionStorage.setItem("pocci4admin","true");window.location.href="admin.html";}else{e.style.display="block";i.value="";i.focus();}}s.addEventListener("click",tryLogin);i.addEventListener("keydown",function(ev){if(ev.key==="Enter")tryLogin();});})();
+
+    // ===== SMOKE EFFECTS =====
+    var smokeC=document.getElementById("smokeContainer");
+
+    function spawnSmoke(x,y,color){
+        for(var i=0;i<6;i++){
+            var p=document.createElement("div");p.className="smoke-puff";
+            var size=Math.random()*30+15;
+            var dx=(Math.random()-0.5)*120;
+            var dy=-(Math.random()*200+80);
+            var dur=Math.random()*1.5+2;
+            p.style.cssText="left:"+(x-size/2)+"px;top:"+(y-size/2)+"px;width:"+size+"px;height:"+size+"px;background:"+color+";opacity:.5;--dx:"+dx+"px;--dy:"+dy+"px;--dur:"+dur+"s;";
+            smokeC.appendChild(p);
+            (function(el){setTimeout(function(){el.remove();},dur*1000+100);})(p);
+        }
+        // Smoke ring
+        var ring=document.createElement("div");ring.className="smoke-ring";
+        ring.style.cssText="left:"+(x-20)+"px;top:"+(y-20)+"px;width:40px;height:40px;border-color:"+color+";";
+        smokeC.appendChild(ring);
+        setTimeout(function(){ring.remove();},2000);
+    }
+
+    function spawnFlavorBurst(x,y,emoji){
+        for(var i=0;i<4;i++){
+            var el=document.createElement("div");el.className="flavor-burst";el.textContent=emoji;
+            var bx=(Math.random()-0.5)*100;
+            var by=-(Math.random()*120+40);
+            el.style.cssText="left:"+x+"px;top:"+y+"px;--bx:"+bx+"px;--by:"+by+"px;--bx2:"+(bx*1.5)+"px;--by2:"+(by*1.5)+"px;font-size:"+(Math.random()*1+1)+"rem;";
+            smokeC.appendChild(el);
+            (function(e){setTimeout(function(){e.remove();},1500);})(el);
+        }
+    }
+
+    function spawnBigSmoke(){
+        var cx=window.innerWidth/2;var cy=window.innerHeight/2;
+        for(var i=0;i<15;i++){
+            setTimeout(function(){
+                var p=document.createElement("div");p.className="smoke-puff";
+                var size=Math.random()*60+30;
+                var x=cx+(Math.random()-0.5)*300;
+                var y=cy+(Math.random()-0.5)*200;
+                var dx=(Math.random()-0.5)*200;
+                var dy=-(Math.random()*300+100);
+                var dur=Math.random()*2+2.5;
+                p.style.cssText="left:"+x+"px;top:"+y+"px;width:"+size+"px;height:"+size+"px;background:rgba(139,92,246,.3);--dx:"+dx+"px;--dy:"+dy+"px;--dur:"+dur+"s;filter:blur(15px);";
+                smokeC.appendChild(p);
+                (function(el){setTimeout(function(){el.remove();},dur*1000+100);})(p);
+            },i*100);
+        }
+    }
+
+    // ===== TYPE SELECTION =====
+    document.querySelectorAll(".type-card").forEach(function(card){
+        card.addEventListener("click",function(){
+            document.querySelectorAll(".type-card").forEach(function(c){c.classList.remove("selected");});
+            this.classList.add("selected");
+            selectedType=this.getAttribute("data-type");
+            document.getElementById("typeRequired").classList.remove("show");
+            var rect=this.getBoundingClientRect();
+            spawnSmoke(rect.left+rect.width/2,rect.top+rect.height/2,selectedType==="kohle"?"rgba(255,107,107,.4)":"rgba(69,123,157,.4)");
+            updateBuilder();
         });
-    }
-    var dd = document.getElementById("eventsDropdown"), ddT = null;
-    if(dd){
-        dd.addEventListener("mouseenter", function(){ ddT = setTimeout(function(){ dd.classList.add("dropdown-visible"); }, 200); });
-        dd.addEventListener("mouseleave", function(){ clearTimeout(ddT); setTimeout(function(){ dd.classList.remove("dropdown-visible"); }, 300); });
-    }
-
-    // ========== LOAD EVENTS ==========
-    function loadEvents(cb){
-        db.collection("events").orderBy("date","asc").get().then(function(snap){
-            events = [];
-            snap.forEach(function(doc){
-                var d = doc.data();
-                d.id = doc.id;
-                if(!d.attendees) d.attendees = [];
-                events.push(d);
-            });
-            futureEvents = events.filter(function(e){
-                return new Date(e.date) >= new Date(today.toDateString());
-            });
-            if(cb) cb();
-        }).catch(function(err){
-            console.error("Error:", err);
-            events = [];
-            futureEvents = [];
-            if(cb) cb();
-        });
-    }
-
-    function countAttending(ev){
-        var t = 0;
-        var a = ev.attendees || [];
-        for(var i = 0; i < a.length; i++) t += (a[i].persons || 1);
-        return t;
-    }
-
-    // ========== COUNTDOWN ==========
-    function renderCountdown(){
-        var container = document.getElementById("countdownContent");
-        var dotsContainer = document.getElementById("cdDots");
-        if(!futureEvents.length){
-            container.innerHTML = "<div style=\"text-align:center;padding:2rem\"><div style=\"font-size:2.5rem;margin-bottom:.75rem\">🎉</div><p style=\"font-size:1rem;font-weight:700;margin-bottom:.5rem\">Aktuell keine Events geplant</p><p style=\"font-size:.85rem;color:var(--color-gray)\">Bald kommt was neues!</p><a href=\"events.html#vorschlag\" class=\"btn btn-primary\" style=\"margin-top:1rem\">Event vorschlagen</a></div>";
-            dotsContainer.innerHTML = "";
-            return;
-        }
-        if(cdIndex >= futureEvents.length) cdIndex = 0;
-        if(cdIndex < 0) cdIndex = futureEvents.length - 1;
-        var e = futureEvents[cdIndex];
-        var attending = countAttending(e);
-        var pct = e.capacity > 0 ? Math.round((attending / e.capacity) * 100) : 0;
-        var catColor = catColors[e.category] || catColors.other;
-        container.innerHTML =
-            "<div class=\"countdown-emoji\">" + e.emoji + "</div>" +
-            "<span class=\"countdown-event-cat\" style=\"background:" + catColor + "\">" + (catNames[e.category] || "Event") + "</span>" +
-            "<div class=\"countdown-event-name\">" + esc(e.title) + "</div>" +
-            "<div class=\"countdown-event-date\">📅 " + formatDate(e.date) + " &bull; 🕐 " + e.time + " Uhr</div>" +
-            "<div class=\"countdown-grid\" id=\"cdGrid\"></div>" +
-            "<div class=\"countdown-capacity\"><div class=\"countdown-capacity-bar\"><div class=\"countdown-capacity-fill\" style=\"width:" + pct + "%\"></div></div><div class=\"countdown-capacity-text\"><span>👥 " + attending + "/" + e.capacity + " Plaetze</span><span>" + pct + "%</span></div></div>" +
-            "<div class=\"countdown-actions\"><a href=\"event-detail.html?id=" + e.id + "\" class=\"btn btn-primary\">Details ansehen</a><a href=\"events.html\" class=\"btn btn-outline\">Alle Events</a></div>";
-        var dotsHtml = "";
-        for(var i = 0; i < Math.min(futureEvents.length, 8); i++){
-            dotsHtml += "<div class=\"countdown-dot" + (i === cdIndex ? " active" : "") + "\" data-idx=\"" + i + "\"></div>";
-        }
-        dotsContainer.innerHTML = dotsHtml;
-        var dots = dotsContainer.querySelectorAll(".countdown-dot");
-        for(var i = 0; i < dots.length; i++){
-            dots[i].addEventListener("click", function(){
-                cdIndex = parseInt(this.getAttribute("data-idx"));
-                renderCountdown();
-            });
-        }
-        startCountdownTimer(e);
-    }
-
-    function startCountdownTimer(e){
-        if(cdInterval) clearInterval(cdInterval);
-        var target = new Date(e.date + "T" + (e.time || "20:00") + ":00");
-        function updateTimer(){
-            var now = new Date();
-            var diff = target - now;
-            var grid = document.getElementById("cdGrid");
-            if(!grid) return;
-            if(diff <= 0){
-                grid.innerHTML = "<div style=\"text-align:center;width:100%\"><span style=\"font-size:1.2rem;font-weight:800;color:var(--color-primary)\">🎉 Jetzt live!</span></div>";
-                return;
-            }
-            var days = Math.floor(diff / 86400000);
-            var hours = Math.floor((diff % 86400000) / 3600000);
-            var mins = Math.floor((diff % 3600000) / 60000);
-            var secs = Math.floor((diff % 60000) / 1000);
-            grid.innerHTML =
-                "<div class=\"countdown-item\"><span class=\"countdown-number\">" + pad(days) + "</span><span class=\"countdown-label\">Tage</span></div>" +
-                "<span class=\"countdown-separator\">:</span>" +
-                "<div class=\"countdown-item\"><span class=\"countdown-number\">" + pad(hours) + "</span><span class=\"countdown-label\">Std</span></div>" +
-                "<span class=\"countdown-separator\">:</span>" +
-                "<div class=\"countdown-item\"><span class=\"countdown-number\">" + pad(mins) + "</span><span class=\"countdown-label\">Min</span></div>" +
-                "<span class=\"countdown-separator\">:</span>" +
-                "<div class=\"countdown-item\"><span class=\"countdown-number\">" + pad(secs) + "</span><span class=\"countdown-label\">Sek</span></div>";
-        }
-        updateTimer();
-        cdInterval = setInterval(updateTimer, 1000);
-    }
-
-    document.getElementById("cdPrev").addEventListener("click", function(){
-        cdIndex--;
-        renderCountdown();
-    });
-    document.getElementById("cdNext").addEventListener("click", function(){
-        cdIndex++;
-        renderCountdown();
     });
 
-    // ========== MINI CALENDAR ==========
-    function renderMiniCal(){
-        document.getElementById("mcMonth").textContent = monthNames[mcMonth] + " " + mcYear;
-        var dc = document.getElementById("mcDays");
-        dc.innerHTML = "";
-        var first = new Date(mcYear, mcMonth, 1);
-        var last = new Date(mcYear, mcMonth + 1, 0);
-        var start = first.getDay() === 0 ? 6 : first.getDay() - 1;
-        var prevLast = new Date(mcYear, mcMonth, 0).getDate();
-        for(var i = start - 1; i >= 0; i--){
-            dc.innerHTML += "<div class=\"mini-cal-day other\">" + (prevLast - i) + "</div>";
-        }
-        for(var d = 1; d <= last.getDate(); d++){
-            var dateStr = mcYear + "-" + String(mcMonth + 1).padStart(2,"0") + "-" + String(d).padStart(2,"0");
-            var dayEv = events.filter(function(e){ return e.date === dateStr; });
-            var isToday = today.getDate() === d && today.getMonth() === mcMonth && today.getFullYear() === mcYear;
-            var cls = "mini-cal-day current";
-            if(isToday) cls += " today";
-            if(dayEv.length) cls += " has-event cat-" + dayEv[0].category;
-            var el = document.createElement("div");
-            el.className = cls;
-            el.textContent = d;
-            if(dayEv.length){
-                (function(ev){
-                    el.addEventListener("click", function(){
-                        window.location.href = "event-detail.html?id=" + ev.id;
-                    });
-                })(dayEv[0]);
-            }
-            dc.appendChild(el);
-        }
-        var total = dc.children.length;
-        for(var i = 1; i <= 42 - total; i++){
-            dc.innerHTML += "<div class=\"mini-cal-day other\">" + i + "</div>";
-        }
-        renderUpcoming();
+    // ===== CATEGORY TABS =====
+    function renderCatTabs(){
+        var html="";for(var i=0;i<CATS.length;i++){html+='<button class="cat-tab'+(CATS[i].id===activeCat?' active':'')+'" data-cat="'+CATS[i].id+'">'+CATS[i].name+'</button>';}
+        document.getElementById("catTabs").innerHTML=html;
+        document.querySelectorAll(".cat-tab").forEach(function(tab){tab.addEventListener("click",function(){activeCat=this.getAttribute("data-cat");document.querySelectorAll(".cat-tab").forEach(function(t){t.classList.remove("active");});this.classList.add("active");renderFlavorGrid();});});
     }
 
-    function renderUpcoming(){
-        var container = document.getElementById("mcUpcoming");
-        var upcoming = futureEvents.slice(0, 4);
-        if(!upcoming.length){
-            container.innerHTML = "<div class=\"mini-cal-upcoming-title\">Naechste Events</div><p style=\"font-size:.8rem;color:var(--color-gray)\">Keine Events geplant.</p>";
-            return;
+    // ===== FLAVOR GRID =====
+    function renderFlavorGrid(){
+        var filtered=activeCat==="all"?FLAVORS:FLAVORS.filter(function(f){return f.cat===activeCat;});
+        var html="";
+        for(var i=0;i<filtered.length;i++){
+            var f=filtered[i];var isSel=selectedFlavors.indexOf(f.id)!==-1;
+            html+='<div class="flavor-card'+(isSel?' selected':'')+'" data-id="'+f.id+'" style="--glow-color:'+(f.glow||'#8B5CF6')+'">';
+            html+='<div class="flavor-emoji">'+f.emoji+'</div>';
+            html+='<div class="flavor-name">'+f.name+'</div>';
+            if(f.brand)html+='<div class="flavor-brand">'+f.brand+'</div>';
+            html+='<div class="flavor-desc">'+f.desc+'</div>';
+            html+='<span class="flavor-tag '+f.tag+'">'+f.tag+'</span>';
+            html+='</div>';
         }
-        var html = "<div class=\"mini-cal-upcoming-title\">Naechste Events</div>";
-        for(var i = 0; i < upcoming.length; i++){
-            var e = upcoming[i];
-            var catColor = catColors[e.category] || catColors.other;
-            html += "<a href=\"event-detail.html?id=" + e.id + "\" class=\"mini-cal-event\">" +
-                "<span class=\"mini-cal-event-emoji\">" + e.emoji + "</span>" +
-                "<div class=\"mini-cal-event-info\"><div class=\"mini-cal-event-name\">" + esc(e.title) + "</div><div class=\"mini-cal-event-date\">" + formatDateShort(e.date) + " &bull; " + e.time + "</div></div>" +
-                "<span class=\"mini-cal-event-badge\" style=\"background:" + catColor + "\">" + (catNames[e.category] || "").substring(0,5) + "</span></a>";
-        }
-        container.innerHTML = html;
-    }
-
-    document.getElementById("mcPrev").addEventListener("click", function(){
-        mcMonth--;
-        if(mcMonth < 0){ mcMonth = 11; mcYear--; }
-        renderMiniCal();
-    });
-    document.getElementById("mcNext").addEventListener("click", function(){
-        mcMonth++;
-        if(mcMonth > 11){ mcMonth = 0; mcYear++; }
-        renderMiniCal();
-    });
-
-    // ========== CREW CAROUSEL ==========
-    function renderCrewCarousel(){
-        var track = document.getElementById("crewTrack");
-        track.innerHTML = "";
-        for(var i = 0; i < crewData.length; i++){
-            var c = crewData[i];
-            var traitsHtml = "";
-            for(var t = 0; t < c.traits.length; t++){
-                traitsHtml += "<span class=\"crew-trait\">" + c.traits[t] + "</span>";
-            }
-            var card = document.createElement("div");
-            card.className = "crew-card";
-
-            var accent = document.createElement("div");
-            accent.className = "crew-card-accent";
-            accent.style.background = c.color;
-            card.appendChild(accent);
-
-            var avatar = document.createElement("div");
-            avatar.className = "crew-avatar";
-            avatar.style.background = hexToRgba(c.color, .1);
-
-            if(c.img){
-                var img = document.createElement("img");
-                img.src = c.img;
-                img.alt = c.name;
-                var fallbackEmoji = c.emoji || "👤";
-                (function(imgEl, avatarEl, emoji){
-                    imgEl.onerror = function(){
-                        imgEl.style.display = "none";
-                        avatarEl.style.fontSize = "2.5rem";
-                        avatarEl.textContent = emoji;
-                    };
-                })(img, avatar, fallbackEmoji);
-                avatar.appendChild(img);
-            } else {
-                avatar.textContent = c.emoji || "👤";
-            }
-            card.appendChild(avatar);
-
-            var rest = document.createElement("div");
-            rest.innerHTML =
-                "<div class=\"crew-name\">" + c.name + "</div>" +
-                "<div class=\"crew-role\" style=\"background:" + hexToRgba(c.color, .12) + ";color:" + c.color + "\">" + c.role + "</div>" +
-                "<p class=\"crew-bio\">" + c.bio + "</p>" +
-                "<div class=\"crew-traits\">" + traitsHtml + "</div>" +
-                (c.ig ? "<a href=\"https://instagram.com/" + c.ig + "\" target=\"_blank\" style=\"display:inline-flex;align-items:center;gap:.3rem;margin-top:.75rem;font-size:.75rem;font-weight:600;color:" + c.color + "\">📸 @" + c.ig + "</a>" : "");
-
-            while(rest.firstChild){
-                card.appendChild(rest.firstChild);
-            }
-            track.appendChild(card);
-        }
-        initSwipe(track, "crewDots", crewData.length);
-    }
-
-    // ========== SWIPE ENGINE ==========
-    function initSwipe(track, dotsId, itemCount){
-        var isDragging = false;
-        var startX = 0;
-        var currentTranslate = 0;
-        var prevTranslate = 0;
-        var currentIdx = 0;
-        var autoSlideInterval = null;
-        var cardWidth = 0;
-        var maxIdx = 0;
-
-        function recalc(){
-            if(!track.children.length) return;
-            var card = track.children[0];
-            var gap = parseFloat(window.getComputedStyle(track).gap) || 0;
-            cardWidth = card.offsetWidth + gap;
-            var visibleCards = Math.floor(window.innerWidth / cardWidth);
-            maxIdx = Math.max(0, itemCount - visibleCards);
-        }
-
-        function goTo(idx){
-            recalc();
-            if(idx < 0) idx = 0;
-            if(idx > maxIdx) idx = 0;
-            currentIdx = idx;
-            currentTranslate = -currentIdx * cardWidth;
-            prevTranslate = currentTranslate;
-            track.style.transform = "translateX(" + currentTranslate + "px)";
-            track.classList.remove("grabbing");
-            updateDots();
-        }
-
-        function updateDots(){
-            if(!dotsId) return;
-            var dotsC = document.getElementById(dotsId);
-            if(!dotsC) return;
-            recalc();
-            var totalDots = maxIdx + 1;
-            if(totalDots < 2){ dotsC.innerHTML = ""; return; }
-            var html = "";
-            for(var i = 0; i < Math.min(totalDots, 10); i++){
-                html += "<div class=\"crew-scroll-dot" + (i === currentIdx ? " active" : "") + "\" data-i=\"" + i + "\"></div>";
-            }
-            dotsC.innerHTML = html;
-            var ds = dotsC.querySelectorAll(".crew-scroll-dot");
-            for(var i = 0; i < ds.length; i++){
-                ds[i].addEventListener("click", function(){
-                    goTo(parseInt(this.getAttribute("data-i")));
-                    resetAuto();
-                });
-            }
-        }
-
-        function onStart(e){
-            isDragging = true;
-            startX = getX(e);
-            track.classList.add("grabbing");
-            clearInterval(autoSlideInterval);
-        }
-        function onMove(e){
-            if(!isDragging) return;
-            var x = getX(e);
-            var diff = x - startX;
-            currentTranslate = prevTranslate + diff;
-            track.style.transform = "translateX(" + currentTranslate + "px)";
-        }
-        function onEnd(){
-            if(!isDragging) return;
-            isDragging = false;
-            var diff = currentTranslate - prevTranslate;
-            recalc();
-            if(Math.abs(diff) > cardWidth * 0.2){
-                if(diff < 0) currentIdx++;
-                else currentIdx--;
-            }
-            goTo(currentIdx);
-            resetAuto();
-        }
-        function getX(e){
-            return e.type.indexOf("touch") !== -1 ? e.touches[0].clientX : e.clientX;
-        }
-
-        track.addEventListener("mousedown", onStart);
-        track.addEventListener("mousemove", onMove);
-        track.addEventListener("mouseup", onEnd);
-        track.addEventListener("mouseleave", function(){ if(isDragging) onEnd(); });
-        track.addEventListener("touchstart", onStart, {passive:true});
-        track.addEventListener("touchmove", onMove, {passive:true});
-        track.addEventListener("touchend", onEnd);
-
-        function resetAuto(){
-            clearInterval(autoSlideInterval);
-            autoSlideInterval = setInterval(function(){
-                currentIdx++;
-                goTo(currentIdx);
-            }, 4000);
-        }
-
-        setTimeout(function(){
-            recalc();
-            goTo(0);
-            resetAuto();
-        }, 300);
-
-        window.addEventListener("resize", function(){ recalc(); goTo(currentIdx); });
-    }
-
-    // ========== GEBOTE EXPAND ==========
-    var geboteCards = document.querySelectorAll(".gebote-card");
-    for(var i = 0; i < geboteCards.length; i++){
-        (function(card){
-            card.addEventListener("click", function(){
-                var wasExpanded = card.classList.contains("expanded");
-                for(var j = 0; j < geboteCards.length; j++){
-                    geboteCards[j].classList.remove("expanded");
+        document.getElementById("flavorGrid").innerHTML=html;
+        document.querySelectorAll(".flavor-card").forEach(function(card){
+            card.addEventListener("click",function(e){
+                var id=this.getAttribute("data-id");var idx=selectedFlavors.indexOf(id);var f=findFlavor(id);
+                var rect=this.getBoundingClientRect();var cx=rect.left+rect.width/2;var cy=rect.top+rect.height/2;
+                if(idx!==-1){
+                    selectedFlavors.splice(idx,1);this.classList.remove("selected");
+                } else {
+                    if(selectedFlavors.length>=5){alert("Maximal 5 Geschmaecker!");return;}
+                    selectedFlavors.push(id);this.classList.add("selected");
+                    // SMOKE + BURST EFFECT
+                    if(f){
+                        spawnSmoke(cx,cy,f.glow||"rgba(139,92,246,.4)");
+                        spawnFlavorBurst(cx,cy,f.emoji);
+                    }
                 }
-                if(!wasExpanded) card.classList.add("expanded");
+                updateFloatingCount();
+                updateBuilder();
             });
-        })(geboteCards[i]);
-    }
-
-    // ========== HELPERS ==========
-    function pad(n){ return n < 10 ? "0" + n : n; }
-    function esc(s){ if(!s) return ""; return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-    function formatDate(ds){
-        if(!ds) return "";
-        var p = ds.split("-");
-        if(p.length === 3) return parseInt(p[2]) + ". " + monthNames[parseInt(p[1])-1] + " " + p[0];
-        return ds;
-    }
-    function formatDateShort(ds){
-        if(!ds) return "";
-        var p = ds.split("-");
-        if(p.length === 3) return parseInt(p[2]) + "." + p[1] + ".";
-        return ds;
-    }
-    function hexToRgba(hex, alpha){
-        var r = 0, g = 0, b = 0;
-        if(hex.length === 4){
-            r = parseInt(hex[1]+hex[1],16);
-            g = parseInt(hex[2]+hex[2],16);
-            b = parseInt(hex[3]+hex[3],16);
-        } else if(hex.length === 7){
-            r = parseInt(hex.substring(1,3),16);
-            g = parseInt(hex.substring(3,5),16);
-            b = parseInt(hex.substring(5,7),16);
-        }
-        return "rgba("+r+","+g+","+b+","+alpha+")";
-    }
-
-    // ========== INIT ==========
-    loadEvents(function(){
-        renderCountdown();
-        renderMiniCal();
-    });
-    renderCrewCarousel();
-
-    // ========== REVEAL ==========
-    var ro = new IntersectionObserver(function(entries){
-        for(var i = 0; i < entries.length; i++){
-            if(entries[i].isIntersecting){
-                (function(el, idx){
-                    setTimeout(function(){ el.classList.add("visible"); }, idx * 80);
-                })(entries[i].target, i);
-                ro.unobserve(entries[i].target);
-            }
-        }
-    }, {threshold: .1});
-    var revEls = document.querySelectorAll(".reveal");
-    for(var i = 0; i < revEls.length; i++) ro.observe(revEls[i]);
-
-    // ========== PARALLAX ==========
-    window.addEventListener("scroll", function(){
-        var shapes = document.querySelectorAll(".bg-shape");
-        for(var i = 0; i < shapes.length; i++){
-            var speed = (i + 1) * 0.012;
-            var rot = window.scrollY * 0.008 * (i % 2 === 0 ? 1 : -1);
-            shapes[i].style.transform = "translateY(" + (window.scrollY * speed) + "px) rotate(" + rot + "deg)";
-        }
-    });
-
-})();
-</script>
-
-    <!-- ADMIN MODAL -->
-<div class="admin-modal-overlay" id="adminOverlay">
-    <div class="admin-modal">
-        <h3>🔐 Admin Zugang</h3>
-        <p>Passwort eingeben um zum Admin Panel zu gelangen.</p>
-        <input type="password" id="adminPwInput" placeholder="Passwort">
-        <div class="admin-modal-btns">
-            <button class="btn btn-outline" id="adminCancel">Abbrechen</button>
-            <button class="btn btn-primary" id="adminSubmit">Login</button>
-        </div>
-        <div class="admin-error" id="adminError">Falsches Passwort!</div>
-    </div>
-</div>
-<script>
-(function(){
-    var ADMIN_PW = "pocci4admin";
-    var trigger = document.getElementById("adminTrigger");
-    var overlay = document.getElementById("adminOverlay");
-    var input = document.getElementById("adminPwInput");
-    var cancel = document.getElementById("adminCancel");
-    var submit = document.getElementById("adminSubmit");
-    var error = document.getElementById("adminError");
-    if(trigger){
-        trigger.addEventListener("click", function(){
-            if(sessionStorage.getItem("pocci4admin") === "true"){
-                window.location.href = "admin.html";
-                return;
-            }
-            overlay.classList.add("active");
-            setTimeout(function(){ input.focus(); }, 100);
         });
     }
-    if(cancel) cancel.addEventListener("click", function(){
-        overlay.classList.remove("active");
-        input.value = "";
-        error.style.display = "none";
-    });
-    if(overlay) overlay.addEventListener("click", function(e){
-        if(e.target === overlay){
-            overlay.classList.remove("active");
-            input.value = "";
-            error.style.display = "none";
-        }
-    });
-    function tryLogin(){
-        if(input.value === ADMIN_PW){
-            sessionStorage.setItem("pocci4admin", "true");
-            window.location.href = "admin.html";
+
+    // ===== FLOATING COUNT =====
+    function updateFloatingCount(){
+        var el=document.getElementById("flavorCount");
+        if(selectedFlavors.length>0){
+            el.classList.add("visible");
+            document.getElementById("flavorCountText").textContent=selectedFlavors.length+" ausgewaehlt";
         } else {
-            error.style.display = "block";
-            input.value = "";
-            input.focus();
+            el.classList.remove("visible");
         }
     }
-    if(submit) submit.addEventListener("click", tryLogin);
-    if(input) input.addEventListener("keydown", function(e){
-        if(e.key === "Enter") tryLogin();
+    document.getElementById("flavorCount").addEventListener("click",function(){
+        document.getElementById("builderSection").scrollIntoView({behavior:"smooth",block:"start"});
     });
+
+    // ===== EXTRAS =====
+    function renderExtras(){
+        var html="";for(var i=0;i<EXTRAS.length;i++){var ex=EXTRAS[i];html+='<div class="extra-card" data-id="'+ex.id+'"><div class="extra-emoji">'+ex.emoji+'</div><div class="extra-name">'+ex.name+'</div><div class="extra-price">'+(ex.price>0?'+'+ex.price+' EUR':'Kostenlos')+'</div></div>';}
+        document.getElementById("extrasGrid").innerHTML=html;
+        document.querySelectorAll(".extra-card").forEach(function(card){card.addEventListener("click",function(){var id=this.getAttribute("data-id");var idx=selectedExtras.indexOf(id);if(idx!==-1){selectedExtras.splice(idx,1);this.classList.remove("selected");}else{selectedExtras.push(id);this.classList.add("selected");}updateBuilder();});});
+    }
+
+    // ===== MIX =====
+    document.querySelectorAll(".mix-option").forEach(function(btn){btn.addEventListener("click",function(){document.querySelectorAll(".mix-option").forEach(function(b){b.classList.remove("active");});this.classList.add("active");currentMix=this.getAttribute("data-mix");updateBuilder();});});
+
+    // ===== UPDATE BUILDER =====
+    function updateBuilder(){
+        // Type display
+        var typeHtml="";
+        if(selectedType){
+            var typeName=selectedType==="kohle"?"🔥 Klassische Kohle":"⚡ E-Shisha";
+            typeHtml='<div class="type-display '+(selectedType)+'">'+typeName+'</div>';
+            document.getElementById("stepType").classList.add("done");document.getElementById("stepType").textContent="✓";
+        } else {
+            typeHtml='<div class="no-selection">Oben auswaehlen...</div>';
+            document.getElementById("stepType").classList.remove("done");document.getElementById("stepType").textContent="1";
+        }
+        document.getElementById("typeDisplay").innerHTML=typeHtml;
+
+        // Flavor chips
+        var chipHtml="";
+        if(selectedFlavors.length===0){chipHtml='<div class="no-selection">Waehle oben deine Geschmaecker aus...</div>';document.getElementById("stepFlavors").classList.remove("done");document.getElementById("stepFlavors").textContent="2";}
+        else{
+            for(var i=0;i<selectedFlavors.length;i++){var f=findFlavor(selectedFlavors[i]);if(f)chipHtml+='<span class="selected-chip">'+f.emoji+' '+f.name+'<button data-remove="'+f.id+'">✕</button></span>';}
+            document.getElementById("stepFlavors").classList.add("done");document.getElementById("stepFlavors").textContent="✓";
+        }
+        document.getElementById("selectedFlavors").innerHTML=chipHtml;
+        document.querySelectorAll(".selected-chip button").forEach(function(btn){btn.addEventListener("click",function(e){e.stopPropagation();var id=this.getAttribute("data-remove");var idx=selectedFlavors.indexOf(id);if(idx!==-1)selectedFlavors.splice(idx,1);renderFlavorGrid();updateFloatingCount();updateBuilder();});});
+
+        // Summary
+        var extrasTotal=0;var extraNames=[];
+        for(var i=0;i<selectedExtras.length;i++){var ex=findExtra(selectedExtras[i]);if(ex){extrasTotal+=ex.price;extraNames.push(ex.emoji+" "+ex.name);}}
+        var flavorNames=[];for(var i=0;i<selectedFlavors.length;i++){var f=findFlavor(selectedFlavors[i]);if(f)flavorNames.push(f.emoji+" "+f.name);}
+        var mixNames={normal:"Normal",stark:"💪 Stark",leicht:"🌿 Leicht",doppelt:"🔥 Doppelkopf"};
+        var basePrice=currentMix==="doppelt"?2:0;var total=basePrice+extrasTotal;
+
+        var sh='<div class="summary-row"><span class="summary-label">Typ</span><span class="summary-value">'+(selectedType==="kohle"?"🔥 Kohle":selectedType==="eshisha"?"⚡ E-Shisha":"–")+'</span></div>';
+        sh+='<div class="summary-row"><span class="summary-label">Geschmaecker</span><span class="summary-value">'+(flavorNames.length?flavorNames.join(", "):"–")+'</span></div>';
+        sh+='<div class="summary-row"><span class="summary-label">Mix</span><span class="summary-value">'+(mixNames[currentMix]||"Normal")+'</span></div>';
+        if(extraNames.length)sh+='<div class="summary-row"><span class="summary-label">Extras</span><span class="summary-value">'+extraNames.join(", ")+'</span></div>';
+        sh+='<div class="summary-row summary-total"><span class="summary-label">Shisha-Kasse</span><span class="summary-value">'+(total>0?total.toFixed(2).replace(".",",")+" EUR":"Kasse / Free")+'</span></div>';
+        document.getElementById("orderSummary").innerHTML=sh;
+
+        document.getElementById("orderSubmit").disabled=selectedFlavors.length===0;
+    }
+
+    // ===== COMBOS =====
+    function renderCombos(){
+        var html="";for(var i=0;i<COMBOS.length;i++){var c=COMBOS[i];var fl=[];for(var j=0;j<c.flavors.length;j++){var f=findFlavor(c.flavors[j]);if(f)fl.push(f.name);}
+        var badge=c.badge==="popular"?'<span class="combo-badge popular">🔥 Beliebt</span>':c.badge==="new"?'<span class="combo-badge new">✨ Neu</span>':c.badge==="andrei"?'<span class="combo-badge andrei">🫅 Andrei</span>':"";
+        html+='<div class="combo-card" data-combo="'+i+'">'+badge+'<div class="combo-emojis">'+c.emoji+'</div><div class="combo-name">'+c.name+'</div><div class="combo-flavors">'+fl.join(" + ")+'</div><div class="combo-desc">'+c.desc+'</div><button class="combo-order-btn" data-combo="'+i+'">💨 Bestellen</button></div>';}
+        document.getElementById("combosGrid").innerHTML=html;
+        document.querySelectorAll(".combo-order-btn").forEach(function(btn){btn.addEventListener("click",function(e){e.stopPropagation();var idx=parseInt(this.getAttribute("data-combo"));selectedFlavors=COMBOS[idx].flavors.slice();renderFlavorGrid();updateFloatingCount();updateBuilder();
+        var rect=this.getBoundingClientRect();spawnSmoke(rect.left+rect.width/2,rect.top,"rgba(139,92,246,.4)");
+        document.getElementById("builderSection").scrollIntoView({behavior:"smooth",block:"start"});});});
+    }
+
+    // ===== SUBMIT =====
+    document.getElementById("orderSubmit").addEventListener("click",function(){
+        var name=document.getElementById("orderName").value.trim();
+        var errEl=document.getElementById("builderError");
+        errEl.classList.remove("show");
+
+        if(!selectedType){
+            errEl.textContent="⚠️ Bitte waehle zuerst Kohle oder E-Shisha!";errEl.classList.add("show");
+            document.getElementById("typeRequired").classList.add("show");
+            document.getElementById("typeSection").scrollIntoView({behavior:"smooth",block:"center"});return;
+        }
+        if(selectedFlavors.length===0){errEl.textContent="⚠️ Waehle mindestens einen Geschmack!";errEl.classList.add("show");return;}
+        if(!name){errEl.textContent="⚠️ Bitte gib deinen Namen ein!";errEl.classList.add("show");document.getElementById("orderName").focus();return;}
+
+        var flavorNames=[];for(var i=0;i<selectedFlavors.length;i++){var f=findFlavor(selectedFlavors[i]);if(f)flavorNames.push(f.name);}
+        var extraNames=[];var extrasTotal=0;for(var i=0;i<selectedExtras.length;i++){var ex=findExtra(selectedExtras[i]);if(ex){extraNames.push(ex.name);extrasTotal+=ex.price;}}
+        var basePrice=currentMix==="doppelt"?2:0;
+
+        db.collection("shisha_orders").add({
+            name:name,type:selectedType,flavors:flavorNames,flavorIds:selectedFlavors.slice(),
+            mix:currentMix,extras:extraNames,extraIds:selectedExtras.slice(),
+            note:document.getElementById("orderNote").value.trim(),
+            total:basePrice+extrasTotal,status:"neu",
+            createdAt:firebase.firestore.FieldValue.serverTimestamp()
+        }).then(function(){
+            document.getElementById("builderFormWrap").style.display="none";
+            var s=document.getElementById("orderSuccess");s.classList.add("show");s.style.display="";
+            document.getElementById("orderSuccessText").innerHTML="<strong>"+esc(name)+"</strong>, deine "+(selectedType==="kohle"?"🔥 Kohle":"⚡ E")+"−Shisha wird gebaut!<br>"+flavorNames.join(" + ")+" ("+currentMix+")<br>Andrei kuemmert sich drum. 🫅💨";
+            spawnBigSmoke();launchConfetti();
+        }).catch(function(err){console.error(err);alert("Fehler!");});
+    });
+
+    document.getElementById("orderNewBtn").addEventListener("click",function(){
+        selectedFlavors=[];selectedExtras=[];currentMix="normal";selectedType=null;
+        document.getElementById("orderName").value="";document.getElementById("orderNote").value="";
+        document.getElementById("builderFormWrap").style.display="block";
+        document.getElementById("orderSuccess").classList.remove("show");document.getElementById("orderSuccess").style.display="none";
+        document.querySelectorAll(".mix-option").forEach(function(b){b.classList.remove("active");});
+        document.querySelector('.mix-option[data-mix="normal"]').classList.add("active");
+        document.querySelectorAll(".type-card").forEach(function(c){c.classList.remove("selected");});
+        document.getElementById("builderError").classList.remove("show");
+        document.getElementById("flavorCount").classList.remove("visible");
+        renderFlavorGrid();renderExtras();updateBuilder();window.scrollTo({top:0,behavior:"smooth"});
+    });
+
+    // ===== HELPERS =====
+    function findFlavor(id){for(var i=0;i<FLAVORS.length;i++){if(FLAVORS[i].id===id)return FLAVORS[i];}return null;}
+    function findExtra(id){for(var i=0;i<EXTRAS.length;i++){if(EXTRAS[i].id===id)return EXTRAS[i];}return null;}
+    function esc(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+    function launchConfetti(){var c=document.getElementById("confettiContainer");var colors=["#8B5CF6","#A78BFA","#C03A2B","#E8501E","#C4A882","#FF6B6B","#FFD93D"];for(var i=0;i<50;i++){var p=document.createElement("div");var sz=Math.random()*8+5;var isCir=Math.random()>.5;p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"3px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.3)+"s;pointer-events:none;";c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4000);})(p);}}
+    var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";document.head.appendChild(cs);
+
+    var ro=new IntersectionObserver(function(entries){for(var i=0;i<entries.length;i++){if(entries[i].isIntersecting){(function(el,idx){setTimeout(function(){el.classList.add("visible");},idx*80);})(entries[i].target,i);ro.unobserve(entries[i].target);}}},{threshold:.1});
+    document.querySelectorAll(".reveal").forEach(function(el){ro.observe(el);});
+
+    window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";}});
+
+    renderCatTabs();renderFlavorGrid();renderExtras();renderCombos();updateBuilder();
 })();
-</script>
-    
+    </script>
 </body>
 </html>
