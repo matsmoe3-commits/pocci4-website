@@ -12,8 +12,6 @@
         html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased}
         body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;min-height:100vh}
         a{text-decoration:none;color:inherit}
-
-        /* NAVBAR */
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(26,26,26,.95);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid rgba(255,255,255,.08)}
         .nav-container{max-width:1400px;margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
         .nav-logo img{height:48px;filter:brightness(0) invert(1)}
@@ -22,20 +20,16 @@
         .nav-center-link:hover{color:rgba(255,255,255,.8)}
         .nav-center-link.active{background:var(--color-primary);color:#fff}
         .nav-right{display:flex;align-items:center;gap:.75rem}
-        .nav-back{padding:7px 16px;border-radius:50px;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.5);transition:var(--transition-fast);border:1px solid rgba(255,255,255,.12);background:none}
+        .nav-back{padding:7px 16px;border-radius:50px;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.5);transition:var(--transition-fast);border:1px solid rgba(255,255,255,.12);background:none;text-decoration:none}
         .nav-back:hover{color:#fff;border-color:rgba(255,255,255,.3)}
         .nav-admin-badge{padding:5px 12px;border-radius:50px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;background:var(--color-primary);color:#fff}
         .logout-btn{padding:7px 16px;border-radius:50px;font-size:.78rem;font-weight:600;border:1px solid rgba(255,255,255,.12);background:none;cursor:pointer;font-family:var(--font-main);color:rgba(255,255,255,.5);transition:var(--transition-fast)}
         .logout-btn:hover{border-color:#C03A2B;color:#C03A2B}
-
-        /* LAYOUT */
         .admin-wrapper{max-width:1400px;margin:0 auto;padding:calc(var(--nav-height) + 2rem) 1.25rem 4rem}
         .admin-header{margin-bottom:2rem;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem}
         .admin-header h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;letter-spacing:-.03em}
         .admin-header p{color:var(--color-text-light);font-size:.9rem}
         .header-actions{display:flex;gap:.5rem}
-
-        /* BUTTONS */
         .btn{padding:10px 22px;border-radius:50px;font-size:.82rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth);font-family:var(--font-main);border:none;display:inline-flex;align-items:center;gap:.5rem}
         .btn-primary{background:var(--color-primary);color:#fff}
         .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,58,43,.25)}
@@ -44,17 +38,12 @@
         .btn-danger{background:transparent;border:1.5px solid var(--color-border);color:var(--color-gray)}
         .btn-danger:hover{border-color:var(--color-primary);color:var(--color-primary);background:rgba(192,58,43,.05)}
         .btn-sm{padding:7px 16px;font-size:.75rem}
-        .btn-icon{width:36px;height:36px;padding:0;justify-content:center;border-radius:10px}
-
-        /* STAT CARDS */
         .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
         .stat-card{background:var(--color-white);border-radius:20px;padding:1.5rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
         .stat-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
         .stat-icon{font-size:1.6rem;margin-bottom:.6rem}
         .stat-value{font-size:1.8rem;font-weight:900;letter-spacing:-.03em;line-height:1}
         .stat-label{font-size:.7rem;font-weight:600;color:var(--color-gray);text-transform:uppercase;letter-spacing:.08em;margin-top:.35rem}
-
-        /* PANELS */
         .panel{background:var(--color-white);border-radius:24px;border:1px solid var(--color-border);overflow:hidden;margin-bottom:1.5rem}
         .panel-header{padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-border);flex-wrap:wrap;gap:.75rem}
         .panel-header h3{font-size:1rem;font-weight:800;display:flex;align-items:center;gap:.5rem}
@@ -63,12 +52,8 @@
         .panel-search{padding:8px 16px;border:1.5px solid var(--color-border);border-radius:50px;font-size:.8rem;font-family:var(--font-main);outline:none;transition:var(--transition-fast);width:220px}
         .panel-search:focus{border-color:var(--color-primary)}
         .panel-list{max-height:550px;overflow-y:auto}
-
-        /* SECTIONS - hide/show */
         .admin-section{display:none}
         .admin-section.active{display:block}
-
-        /* === ORDERS === */
         .order-row{display:grid;grid-template-columns:140px 1fr auto auto auto;gap:1.25rem;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.4);transition:var(--transition-fast)}
         .order-row:hover{background:var(--color-bg)}
         .order-row:last-child{border-bottom:none}
@@ -86,8 +71,6 @@
         .status-btn.done{background:var(--color-green-light);color:var(--color-green);border-color:transparent;pointer-events:none}
         .del-btn{padding:6px 10px;border-radius:50px;font-size:.7rem;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;transition:var(--transition-fast);color:var(--color-gray)}
         .del-btn:hover{border-color:var(--color-primary);color:var(--color-primary)}
-
-        /* === EVENTS === */
         .event-row{display:grid;grid-template-columns:auto 50px 1fr auto auto;gap:1.25rem;align-items:center;padding:1.15rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.4);transition:var(--transition-fast)}
         .event-row:hover{background:var(--color-bg)}
         .event-row:last-child{border-bottom:none}
@@ -100,46 +83,37 @@
         .event-status-live{padding:4px 10px;border-radius:50px;font-size:.65rem;font-weight:700;background:var(--color-green-light);color:var(--color-green)}
         .event-status-draft{padding:4px 10px;border-radius:50px;font-size:.65rem;font-weight:700;background:var(--color-yellow-light);color:var(--color-yellow)}
         .event-status-past{padding:4px 10px;border-radius:50px;font-size:.65rem;font-weight:700;background:var(--color-bg);color:var(--color-gray)}
-
-        /* === MODAL === */
         .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center;padding:1rem}
         .modal-overlay.active{display:flex}
         .modal{background:var(--color-white);border-radius:24px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 25px 80px rgba(0,0,0,.2)}
-        .modal-header{padding:1.5rem 2rem;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between}
+        .modal-header{padding:1.5rem 2rem;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--color-white);z-index:1;border-radius:24px 24px 0 0}
         .modal-header h3{font-size:1.15rem;font-weight:800}
         .modal-close{width:32px;height:32px;border-radius:50%;border:none;background:var(--color-bg);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:var(--transition-fast)}
         .modal-close:hover{background:var(--color-text);color:#fff}
         .modal-body{padding:2rem}
-        .modal-footer{padding:1.25rem 2rem;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:.5rem}
-
-        /* FORM */
+        .modal-footer{padding:1.25rem 2rem;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:.5rem;position:sticky;bottom:0;background:var(--color-white);border-radius:0 0 24px 24px}
         .form-group{margin-bottom:1.25rem}
         .form-label{display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.5rem}
         .form-input,.form-textarea,.form-select{width:100%;padding:12px 16px;border:1.5px solid var(--color-border);border-radius:14px;font-family:var(--font-main);font-size:.88rem;outline:none;transition:var(--transition-fast);background:var(--color-white);color:var(--color-text)}
         .form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--color-primary)}
         .form-textarea{min-height:100px;resize:vertical}
         .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-        .form-hint{font-size:.7rem;color:var(--color-gray);margin-top:.35rem}
         .form-toggle{display:flex;align-items:center;gap:.75rem;cursor:pointer}
         .form-toggle input{display:none}
-        .toggle-track{width:44px;height:24px;border-radius:12px;background:var(--color-border);position:relative;transition:var(--transition-fast)}
+        .toggle-track{width:44px;height:24px;border-radius:12px;background:var(--color-border);position:relative;transition:var(--transition-fast);flex-shrink:0}
         .toggle-track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:var(--transition-fast);box-shadow:0 1px 3px rgba(0,0,0,.15)}
         .form-toggle input:checked+.toggle-track{background:var(--color-green)}
         .form-toggle input:checked+.toggle-track::after{left:23px}
         .toggle-label{font-size:.85rem;font-weight:600}
-
-        /* === GAME STATS === */
         .game-row{display:grid;grid-template-columns:auto 1fr repeat(3,80px) auto;gap:1rem;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.4);transition:var(--transition-fast)}
         .game-row:hover{background:var(--color-bg)}
         .game-row:last-child{border-bottom:none}
         .game-rank{font-size:1.2rem;font-weight:900;min-width:30px;text-align:center}
         .game-player{display:flex;align-items:center;gap:.75rem}
-        .game-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#fff}
+        .game-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#fff;flex-shrink:0}
         .game-name{font-size:.9rem;font-weight:700}
         .game-stat{text-align:center;font-weight:800;font-size:.95rem}
         .game-stat-label{font-size:.6rem;color:var(--color-gray);font-weight:600;text-transform:uppercase}
-
-        /* === CONTENT MANAGER (WG MEMBERS, GALLERY, etc) === */
         .content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
         .content-card{background:var(--color-white);border-radius:20px;padding:1.5rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
         .content-card:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.06)}
@@ -149,8 +123,6 @@
         .content-card-sub{font-size:.73rem;color:var(--color-gray)}
         .content-card-body{font-size:.82rem;color:var(--color-text-light);line-height:1.6}
         .content-card-footer{display:flex;gap:.5rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--color-border)}
-
-        /* BESTSELLER */
         .best-row{display:grid;grid-template-columns:40px 40px 1fr auto auto;gap:1rem;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.4)}
         .best-row:last-child{border-bottom:none}
         .best-rank{font-size:1.2rem;font-weight:900;text-align:center}
@@ -159,33 +131,26 @@
         .best-qty{font-weight:900;font-size:1rem;text-align:center}
         .best-rev{font-weight:900;font-size:1rem;text-align:right}
         .best-sub{font-size:.6rem;color:var(--color-gray);font-weight:600}
-
-        /* EMPTY */
         .empty-state{text-align:center;padding:3.5rem 2rem;color:var(--color-gray)}
         .empty-state-icon{font-size:3rem;margin-bottom:.75rem}
         .empty-state h3{font-size:1.1rem;font-weight:700;color:var(--color-text);margin-bottom:.4rem}
         .empty-state p{font-size:.85rem}
-
-        /* LOADING */
         .loading{text-align:center;padding:3rem;color:var(--color-gray)}
         .loading-spinner{width:28px;height:28px;border:3px solid var(--color-border);border-top-color:var(--color-primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto .75rem}
         @keyframes spin{to{transform:rotate(360deg)}}
-
-        /* TOAST */
         .toast-container{position:fixed;bottom:2rem;right:2rem;z-index:3000;display:flex;flex-direction:column;gap:.5rem}
         .toast{padding:14px 20px;border-radius:14px;background:var(--color-text);color:#fff;font-size:.85rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);transform:translateX(120%);transition:transform .4s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:.5rem}
         .toast.show{transform:translateX(0)}
         .toast.success{background:var(--color-green)}
         .toast.error{background:var(--color-primary)}
-
-        /* RESPONSIVE */
+        .member-block,.social-block,.gallery-block{padding:1rem;background:var(--color-bg);border-radius:14px;margin-bottom:.75rem}
         @media(max-width:1024px){
             .stats-grid{grid-template-columns:repeat(2,1fr)}
             .nav-center{display:none}
             .order-row{grid-template-columns:1fr;gap:.6rem}
-            .event-row{grid-template-columns:auto 40px 1fr auto;gap:.75rem}
-            .event-row .event-actions{grid-column:1/-1;justify-self:end}
-            .game-row{grid-template-columns:auto 1fr repeat(3,60px) auto;gap:.5rem}
+            .event-row{grid-template-columns:1fr;gap:.6rem}
+            .game-row{grid-template-columns:auto 1fr auto;gap:.5rem}
+            .game-row .game-stat:not(:last-of-type){display:none}
         }
         @media(max-width:768px){
             :root{--nav-height:68px}
@@ -195,9 +160,6 @@
             .panel-search{width:100%}
             .form-row{grid-template-columns:1fr}
             .admin-header{flex-direction:column;align-items:stretch}
-            .event-row{grid-template-columns:1fr;gap:.6rem}
-            .game-row{grid-template-columns:auto 1fr auto;gap:.5rem}
-            .game-row .game-stat:not(:last-of-type){display:none}
             .best-row{grid-template-columns:30px 30px 1fr auto}
             .best-rev{display:none}
         }
@@ -207,23 +169,18 @@
             .content-grid{grid-template-columns:1fr}
             .nav-admin-badge{display:none}
         }
-
-        /* Mobile nav tabs */
         .mobile-admin-tabs{display:none;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 1rem;margin-bottom:1.5rem;gap:.4rem}
         .mobile-admin-tabs .admin-mtab{padding:8px 16px;border-radius:50px;font-size:.75rem;font-weight:700;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:1.5px solid var(--color-border);background:var(--color-white);font-family:var(--font-main);white-space:nowrap;flex-shrink:0}
         .mobile-admin-tabs .admin-mtab.active{background:var(--color-text);color:#fff;border-color:var(--color-text)}
-        @media(max-width:1024px){
-            .mobile-admin-tabs{display:flex}
-        }
+        @media(max-width:1024px){.mobile-admin-tabs{display:flex}}
     </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
     <div class="nav-container">
         <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
-        <div class="nav-center" id="navTabs">
+        <div class="nav-center">
             <button class="nav-center-link active" data-section="dashboard">📊 Dashboard</button>
             <button class="nav-center-link" data-section="orders">📦 Bestellungen</button>
             <button class="nav-center-link" data-section="events">📅 Events</button>
@@ -238,7 +195,6 @@
     </div>
 </nav>
 
-<!-- MOBILE TABS -->
 <div class="mobile-admin-tabs" id="mobileTabs" style="margin-top:calc(var(--nav-height) + 1rem)">
     <button class="admin-mtab active" data-section="dashboard">📊 Dashboard</button>
     <button class="admin-mtab" data-section="orders">📦 Bestellungen</button>
@@ -247,127 +203,65 @@
     <button class="admin-mtab" data-section="content">✏️ Content</button>
 </div>
 
-<!-- TOAST -->
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- MAIN -->
 <div class="admin-wrapper">
 
-    <!-- ============ DASHBOARD ============ -->
+    <!-- DASHBOARD -->
     <div class="admin-section active" id="sec-dashboard">
-        <div class="admin-header">
-            <div><h1>Dashboard 📊</h1><p>Alles auf einen Blick.</p></div>
-        </div>
+        <div class="admin-header"><div><h1>Dashboard 📊</h1><p>Alles auf einen Blick.</p></div></div>
         <div class="stats-grid">
             <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-value" id="statOrders">-</div><div class="stat-label">Bestellungen</div></div>
             <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-value" id="statRevenue">-</div><div class="stat-label">Umsatz (EUR)</div></div>
             <div class="stat-card"><div class="stat-icon">🛒</div><div class="stat-value" id="statItems">-</div><div class="stat-label">Artikel verkauft</div></div>
             <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-value" id="statEvents">-</div><div class="stat-label">Events</div></div>
         </div>
-
-        <!-- Recent Orders -->
-        <div class="panel">
-            <div class="panel-header"><h3>Letzte Bestellungen</h3><a href="#" class="btn btn-sm btn-outline" id="goToOrders">Alle anzeigen →</a></div>
-            <div class="panel-list" id="recentOrdersList" style="max-height:300px"></div>
-        </div>
-
-        <!-- Upcoming Events -->
-        <div class="panel">
-            <div class="panel-header"><h3>Nächste Events</h3><a href="#" class="btn btn-sm btn-outline" id="goToEvents">Alle anzeigen →</a></div>
-            <div class="panel-list" id="upcomingEventsList" style="max-height:300px"></div>
-        </div>
-
-        <!-- Bestsellers -->
-        <div class="panel">
-            <div class="panel-header"><h3>🏆 Top Produkte</h3></div>
-            <div class="panel-list" id="bestsellerList"></div>
-        </div>
+        <div class="panel"><div class="panel-header"><h3>Letzte Bestellungen</h3><button class="btn btn-sm btn-outline" id="goToOrders">Alle anzeigen →</button></div><div class="panel-list" id="recentOrdersList" style="max-height:300px"></div></div>
+        <div class="panel"><div class="panel-header"><h3>Nächste Events</h3><button class="btn btn-sm btn-outline" id="goToEvents">Alle anzeigen →</button></div><div class="panel-list" id="upcomingEventsList" style="max-height:300px"></div></div>
+        <div class="panel"><div class="panel-header"><h3>🏆 Top Produkte</h3></div><div class="panel-list" id="bestsellerList"></div></div>
     </div>
 
-    <!-- ============ ORDERS ============ -->
+    <!-- ORDERS -->
     <div class="admin-section" id="sec-orders">
-        <div class="admin-header">
-            <div><h1>Bestellungen 📦</h1><p>Alle Shop-Bestellungen verwalten.</p></div>
-        </div>
+        <div class="admin-header"><div><h1>Bestellungen 📦</h1><p>Alle Shop-Bestellungen verwalten.</p></div></div>
         <div class="panel">
-            <div class="panel-header">
-                <div style="display:flex;align-items:center;gap:.75rem"><h3>Alle Bestellungen</h3><span class="panel-badge" id="ordersCount">0</span></div>
-                <input type="text" class="panel-search" id="ordersSearch" placeholder="🔍 Suchen...">
-            </div>
+            <div class="panel-header"><div style="display:flex;align-items:center;gap:.75rem"><h3>Alle Bestellungen</h3><span class="panel-badge" id="ordersCount">0</span></div><input type="text" class="panel-search" id="ordersSearch" placeholder="🔍 Suchen..."></div>
             <div class="panel-list" id="ordersList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
         </div>
     </div>
 
-    <!-- ============ EVENTS ============ -->
+    <!-- EVENTS -->
     <div class="admin-section" id="sec-events">
-        <div class="admin-header">
-            <div><h1>Events 📅</h1><p>Events erstellen, bearbeiten und verwalten.</p></div>
-            <div class="header-actions"><button class="btn btn-primary" id="addEventBtn">+ Neues Event</button></div>
-        </div>
+        <div class="admin-header"><div><h1>Events 📅</h1><p>Events erstellen, bearbeiten und verwalten.</p></div><div class="header-actions"><button class="btn btn-primary" id="addEventBtn">+ Neues Event</button></div></div>
         <div class="panel">
-            <div class="panel-header">
-                <div style="display:flex;align-items:center;gap:.75rem"><h3>Alle Events</h3><span class="panel-badge" id="eventsCount">0</span></div>
-                <input type="text" class="panel-search" id="eventsSearch" placeholder="🔍 Event suchen...">
-            </div>
+            <div class="panel-header"><div style="display:flex;align-items:center;gap:.75rem"><h3>Alle Events</h3><span class="panel-badge" id="eventsCount">0</span></div><input type="text" class="panel-search" id="eventsSearch" placeholder="🔍 Event suchen..."></div>
             <div class="panel-list" id="eventsList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
         </div>
     </div>
 
-    <!-- ============ GAME STATS ============ -->
+    <!-- GAME STATS -->
     <div class="admin-section" id="sec-gamestats">
-        <div class="admin-header">
-            <div><h1>Game Statistik 🏆</h1><p>Spieler und Scores verwalten.</p></div>
-            <div class="header-actions">
-                <button class="btn btn-outline" id="addPlayerBtn">+ Spieler</button>
-                <button class="btn btn-primary" id="addGameBtn">+ Spiel eintragen</button>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="panel-header"><h3>Leaderboard</h3><span class="panel-badge" id="playersCount">0</span></div>
-            <div class="panel-list" id="gameStatsList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
-        </div>
-        <div class="panel" style="margin-top:1rem">
-            <div class="panel-header"><h3>Letzte Spiele</h3></div>
-            <div class="panel-list" id="recentGamesList" style="max-height:400px"></div>
-        </div>
+        <div class="admin-header"><div><h1>Game Statistik 🏆</h1><p>Spieler und Scores verwalten.</p></div><div class="header-actions"><button class="btn btn-outline" id="addPlayerBtn">+ Spieler</button><button class="btn btn-primary" id="addGameBtn">+ Spiel eintragen</button></div></div>
+        <div class="panel"><div class="panel-header"><h3>Leaderboard</h3><span class="panel-badge" id="playersCount">0</span></div><div class="panel-list" id="gameStatsList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div></div>
+        <div class="panel" style="margin-top:1rem"><div class="panel-header"><h3>Letzte Spiele</h3></div><div class="panel-list" id="recentGamesList" style="max-height:400px"></div></div>
     </div>
 
-    <!-- ============ CONTENT ============ -->
+    <!-- CONTENT -->
     <div class="admin-section" id="sec-content">
-        <div class="admin-header">
-            <div><h1>Content ✏️</h1><p>WG-Infos, Texte und sonstigen Content verwalten.</p></div>
-        </div>
+        <div class="admin-header"><div><h1>Content ✏️</h1><p>WG-Infos, Texte und sonstigen Content verwalten.</p></div></div>
         <div class="content-grid">
-            <div class="content-card">
-                <div class="content-card-header"><div class="content-card-emoji">🏠</div><div><div class="content-card-title">WG Mitglieder</div><div class="content-card-sub">Namen, Bios, Socials</div></div></div>
-                <div class="content-card-body" id="membersPreview">Laden...</div>
-                <div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editMembersBtn">Bearbeiten</button></div>
-            </div>
-            <div class="content-card">
-                <div class="content-card-header"><div class="content-card-emoji">📝</div><div><div class="content-card-title">Homepage Texte</div><div class="content-card-sub">Hero, Taglines, About</div></div></div>
-                <div class="content-card-body" id="textsPreview">Laden...</div>
-                <div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editTextsBtn">Bearbeiten</button></div>
-            </div>
-            <div class="content-card">
-                <div class="content-card-header"><div class="content-card-emoji">🔗</div><div><div class="content-card-title">Social Links</div><div class="content-card-sub">Instagram, etc.</div></div></div>
-                <div class="content-card-body" id="socialsPreview">Laden...</div>
-                <div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editSocialsBtn">Bearbeiten</button></div>
-            </div>
-            <div class="content-card">
-                <div class="content-card-header"><div class="content-card-emoji">🎨</div><div><div class="content-card-title">Galerie</div><div class="content-card-sub">Bilder-URLs verwalten</div></div></div>
-                <div class="content-card-body" id="galleryPreview">Laden...</div>
-                <div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editGalleryBtn">Bearbeiten</button></div>
-            </div>
+            <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">🏠</div><div><div class="content-card-title">WG Mitglieder</div><div class="content-card-sub">Namen, Bios, Socials</div></div></div><div class="content-card-body" id="membersPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editMembersBtn">Bearbeiten</button></div></div>
+            <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">📝</div><div><div class="content-card-title">Homepage Texte</div><div class="content-card-sub">Hero, Taglines, About</div></div></div><div class="content-card-body" id="textsPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editTextsBtn">Bearbeiten</button></div></div>
+            <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">🔗</div><div><div class="content-card-title">Social Links</div><div class="content-card-sub">Instagram, etc.</div></div></div><div class="content-card-body" id="socialsPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editSocialsBtn">Bearbeiten</button></div></div>
+            <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">🎨</div><div><div class="content-card-title">Galerie</div><div class="content-card-sub">Bilder-URLs verwalten</div></div></div><div class="content-card-body" id="galleryPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editGalleryBtn">Bearbeiten</button></div></div>
         </div>
     </div>
 </div>
 
-<!-- ============ MODALS ============ -->
-
 <!-- EVENT MODAL -->
 <div class="modal-overlay" id="eventModal">
     <div class="modal">
-        <div class="modal-header"><h3 id="eventModalTitle">Neues Event</h3><button class="modal-close" id="eventModalClose">✕</button></div>
+        <div class="modal-header"><h3 id="eventModalTitle">Neues Event</h3><button class="modal-close" onclick="closeModal('eventModal')">✕</button></div>
         <div class="modal-body">
             <div class="form-group"><label class="form-label">Event Name</label><input type="text" class="form-input" id="evtName" placeholder="z.B. WG Party Vol. 5"></div>
             <div class="form-group"><label class="form-label">Emoji</label><input type="text" class="form-input" id="evtEmoji" placeholder="🎉" maxlength="4"></div>
@@ -379,120 +273,85 @@
             <div class="form-group"><label class="form-label">Beschreibung</label><textarea class="form-textarea" id="evtDesc" placeholder="Was erwartet die Gäste?"></textarea></div>
             <div class="form-row">
                 <div class="form-group"><label class="form-label">Kategorie</label>
-                    <select class="form-select" id="evtCategory">
-                        <option value="party">🎉 Party</option>
-                        <option value="gamenight">🎮 Game Night</option>
-                        <option value="dinner">🍕 Dinner</option>
-                        <option value="sport">⚽ Sport</option>
-                        <option value="other">✨ Sonstiges</option>
-                    </select>
+                    <select class="form-select" id="evtCategory"><option value="party">🎉 Party</option><option value="gamenight">🎮 Game Night</option><option value="dinner">🍕 Dinner</option><option value="sport">⚽ Sport</option><option value="other">✨ Sonstiges</option></select>
                 </div>
                 <div class="form-group"><label class="form-label">Max. Gäste</label><input type="number" class="form-input" id="evtMaxGuests" placeholder="0 = Unlimitiert" min="0"></div>
             </div>
-            <div class="form-group">
-                <label class="form-toggle"><input type="checkbox" id="evtPublished" checked><span class="toggle-track"></span><span class="toggle-label">Veröffentlicht</span></label>
-            </div>
+            <div class="form-group"><label class="form-toggle"><input type="checkbox" id="evtPublished" checked><span class="toggle-track"></span><span class="toggle-label">Veröffentlicht</span></label></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-outline" id="eventModalCancel">Abbrechen</button>
-            <button class="btn btn-primary" id="eventModalSave">Speichern</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('eventModal')">Abbrechen</button><button class="btn btn-primary" id="eventModalSave">Speichern</button></div>
     </div>
 </div>
 
 <!-- PLAYER MODAL -->
 <div class="modal-overlay" id="playerModal">
     <div class="modal">
-        <div class="modal-header"><h3 id="playerModalTitle">Neuer Spieler</h3><button class="modal-close" id="playerModalClose">✕</button></div>
+        <div class="modal-header"><h3 id="playerModalTitle">Neuer Spieler</h3><button class="modal-close" onclick="closeModal('playerModal')">✕</button></div>
         <div class="modal-body">
             <div class="form-group"><label class="form-label">Name</label><input type="text" class="form-input" id="plrName" placeholder="z.B. Mats"></div>
             <div class="form-row">
                 <div class="form-group"><label class="form-label">Emoji / Avatar</label><input type="text" class="form-input" id="plrEmoji" placeholder="😎" maxlength="4"></div>
-                <div class="form-group"><label class="form-label">Farbe (Hex)</label><input type="color" class="form-input" id="plrColor" value="#C03A2B" style="height:48px;padding:4px"></div>
+                <div class="form-group"><label class="form-label">Farbe</label><input type="color" class="form-input" id="plrColor" value="#C03A2B" style="height:48px;padding:4px"></div>
             </div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-outline" id="playerModalCancel">Abbrechen</button>
-            <button class="btn btn-primary" id="playerModalSave">Speichern</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('playerModal')">Abbrechen</button><button class="btn btn-primary" id="playerModalSave">Speichern</button></div>
     </div>
 </div>
 
 <!-- GAME MODAL -->
 <div class="modal-overlay" id="gameModal">
     <div class="modal">
-        <div class="modal-header"><h3>Spiel eintragen</h3><button class="modal-close" id="gameModalClose">✕</button></div>
+        <div class="modal-header"><h3>Spiel eintragen</h3><button class="modal-close" onclick="closeModal('gameModal')">✕</button></div>
         <div class="modal-body">
             <div class="form-group"><label class="form-label">Spiel</label>
-                <select class="form-select" id="gmType">
-                    <option value="flunkyball">🍺 Flunkyball</option>
-                    <option value="bierpong">🏓 Bierpong</option>
-                    <option value="catan">🏝️ Catan</option>
-                    <option value="mario-kart">🏎️ Mario Kart</option>
-                    <option value="other">🎮 Sonstiges</option>
-                </select>
+                <select class="form-select" id="gmType"><option value="flunkyball">🍺 Flunkyball</option><option value="bierpong">🏓 Bierpong</option><option value="catan">🏝️ Catan</option><option value="mario-kart">🏎️ Mario Kart</option><option value="other">🎮 Sonstiges</option></select>
             </div>
-            <div class="form-group"><label class="form-label">Gewinner</label><select class="form-select" id="gmWinner"></select></div>
+            <div class="form-group"><label class="form-label">Gewinner</label><select class="form-select" id="gmWinner"><option value="">-- Spieler wählen --</option></select></div>
             <div class="form-group"><label class="form-label">Datum</label><input type="date" class="form-input" id="gmDate"></div>
             <div class="form-group"><label class="form-label">Notizen (optional)</label><input type="text" class="form-input" id="gmNotes" placeholder="z.B. Episches Comeback"></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-outline" id="gameModalCancel">Abbrechen</button>
-            <button class="btn btn-primary" id="gameModalSave">Speichern</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('gameModal')">Abbrechen</button><button class="btn btn-primary" id="gameModalSave">Speichern</button></div>
     </div>
 </div>
 
 <!-- MEMBERS MODAL -->
 <div class="modal-overlay" id="membersModal">
     <div class="modal">
-        <div class="modal-header"><h3>WG Mitglieder</h3><button class="modal-close" id="membersModalClose">✕</button></div>
+        <div class="modal-header"><h3>WG Mitglieder</h3><button class="modal-close" onclick="closeModal('membersModal')">✕</button></div>
         <div class="modal-body" id="membersModalBody"></div>
-        <div class="modal-footer">
-            <button class="btn btn-outline" id="addMemberBtn">+ Mitglied</button>
-            <button class="btn btn-primary" id="membersModalSave">Speichern</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-outline" id="addMemberBtn">+ Mitglied</button><button class="btn btn-primary" id="membersModalSave">Speichern</button></div>
     </div>
 </div>
 
 <!-- TEXTS MODAL -->
 <div class="modal-overlay" id="textsModal">
     <div class="modal">
-        <div class="modal-header"><h3>Homepage Texte</h3><button class="modal-close" id="textsModalClose">✕</button></div>
+        <div class="modal-header"><h3>Homepage Texte</h3><button class="modal-close" onclick="closeModal('textsModal')">✕</button></div>
         <div class="modal-body">
             <div class="form-group"><label class="form-label">Hero Titel</label><input type="text" class="form-input" id="txtHero" placeholder="Die WG."></div>
             <div class="form-group"><label class="form-label">Hero Subtitle</label><input type="text" class="form-input" id="txtHeroSub" placeholder="Drei Leute, ein Zuhause."></div>
             <div class="form-group"><label class="form-label">About Text</label><textarea class="form-textarea" id="txtAbout" placeholder="Über die WG..."></textarea></div>
             <div class="form-group"><label class="form-label">Shop Disclaimer</label><input type="text" class="form-input" id="txtDisclaimer"></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-outline" id="textsModalCancel">Abbrechen</button>
-            <button class="btn btn-primary" id="textsModalSave">Speichern</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('textsModal')">Abbrechen</button><button class="btn btn-primary" id="textsModalSave">Speichern</button></div>
     </div>
 </div>
 
 <!-- SOCIALS MODAL -->
 <div class="modal-overlay" id="socialsModal">
     <div class="modal">
-        <div class="modal-header"><h3>Social Links</h3><button class="modal-close" id="socialsModalClose">✕</button></div>
+        <div class="modal-header"><h3>Social Links</h3><button class="modal-close" onclick="closeModal('socialsModal')">✕</button></div>
         <div class="modal-body" id="socialsModalBody"></div>
-        <div class="modal-footer">
-            <button class="btn btn-outline" id="addSocialBtn">+ Link</button>
-            <button class="btn btn-primary" id="socialsModalSave">Speichern</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-outline" id="addSocialBtn">+ Link</button><button class="btn btn-primary" id="socialsModalSave">Speichern</button></div>
     </div>
 </div>
 
 <!-- GALLERY MODAL -->
 <div class="modal-overlay" id="galleryModal">
     <div class="modal">
-        <div class="modal-header"><h3>Galerie</h3><button class="modal-close" id="galleryModalClose">✕</button></div>
+        <div class="modal-header"><h3>Galerie</h3><button class="modal-close" onclick="closeModal('galleryModal')">✕</button></div>
         <div class="modal-body" id="galleryModalBody"></div>
-        <div class="modal-footer">
-            <button class="btn btn-outline" id="addGalleryBtn">+ Bild URL</button>
-            <button class="btn btn-primary" id="galleryModalSave">Speichern</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-outline" id="addGalleryBtn">+ Bild</button><button class="btn btn-primary" id="galleryModalSave">Speichern</button></div>
     </div>
 </div>
 
