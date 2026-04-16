@@ -79,6 +79,7 @@
         .btn-outline:hover{background:var(--color-text);color:#fff;transform:translateY(-2px)}
         .btn-danger{background:transparent;color:var(--color-primary);border:1.5px solid var(--color-primary);padding:6px 14px;border-radius:10px;font-size:.7rem;font-weight:700;cursor:pointer;transition:var(--transition-fast);font-family:var(--font-main)}
         .btn-danger:hover{background:var(--color-primary);color:#fff}
+        .btn-sm{padding:10px 20px;font-size:.8rem}
         .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
         .section-title{font-size:clamp(1.8rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
 
@@ -165,10 +166,18 @@
         .event-card-footer{padding:0 1.5rem 1.5rem;display:flex;gap:.75rem}
         .btn-join{flex:1;padding:12px;border-radius:14px;font-family:var(--font-main);font-size:.85rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth);border:2px solid var(--color-primary);background:var(--color-primary);color:#fff;text-align:center}
         .btn-join:hover{background:var(--color-primary-hover);transform:translateY(-2px)}
-        .btn-join.joined{background:transparent;color:var(--color-primary)}
-        .btn-cal{width:44px;height:44px;border-radius:14px;border:2px solid var(--color-border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:var(--transition-fast)}
+        .btn-join.joined{background:transparent;color:var(--color-primary);cursor:default}
+        .btn-join.full{background:var(--color-gray);border-color:var(--color-gray);cursor:not-allowed;opacity:.6}
+        .btn-detail{padding:12px;border-radius:14px;border:2px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);font-size:.85rem;font-weight:600;transition:var(--transition-fast);color:var(--color-text-light)}
+        .btn-detail:hover{background:var(--color-text);color:#fff;border-color:var(--color-text)}
+        .btn-cal{width:44px;height:44px;border-radius:14px;border:2px solid var(--color-border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:var(--transition-fast);flex-shrink:0}
         .btn-cal:hover{background:var(--color-text);color:#fff;border-color:var(--color-text)}
         .no-events{text-align:center;padding:3rem;color:var(--color-gray);font-size:1.1rem}
+
+        /* ATTENDEES PREVIEW */
+        .attendees-preview{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+        .attendee-chip{padding:3px 10px;border-radius:50px;font-size:.65rem;font-weight:600;background:var(--color-bg);color:var(--color-text-light)}
+        .attendee-more{font-size:.65rem;color:var(--color-gray)}
 
         .stats-preview{padding:0 1.25rem 2rem;overflow:hidden}
         .stats-preview-container{max-width:700px;margin:0 auto;text-align:center;background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:3rem 2rem;border:1px solid rgba(255,255,255,.5)}
@@ -189,7 +198,7 @@
         .form-grid{display:grid;gap:1.25rem}
         .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
         .form-group{display:flex;flex-direction:column;gap:.5rem}
-        .form-label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray)}
+        .form-label{font-size:.75rem;font-weight:600;letter-spacing:.08em;color:var(--color-gray);text-transform:uppercase}
         .form-input,.form-select,.form-textarea{padding:14px 18px;border-radius:14px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;font-family:var(--font-main);font-size:.9rem;transition:var(--transition-fast);width:100%}
         .form-input::placeholder,.form-textarea::placeholder{color:rgba(255,255,255,.35)}
         .form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--color-primary);background:rgba(255,255,255,.12)}
@@ -205,14 +214,33 @@
         .form-success-title{font-size:1.3rem;font-weight:800;margin-bottom:.5rem}
         .form-success-text{color:var(--color-gray)}
 
+        /* JOIN MODAL */
+        .join-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:1500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth);padding:1.25rem}
+        .join-overlay.active{opacity:1;pointer-events:all}
+        .join-modal{background:var(--color-white);border-radius:24px;padding:2.5rem;max-width:420px;width:100%;transform:translateY(20px) scale(.95);transition:var(--transition-smooth);text-align:center}
+        .join-overlay.active .join-modal{transform:translateY(0) scale(1)}
+        .join-modal-emoji{font-size:3rem;margin-bottom:1rem}
+        .join-modal-title{font-size:1.3rem;font-weight:800;margin-bottom:.25rem}
+        .join-modal-event{font-size:.9rem;color:var(--color-primary);font-weight:600;margin-bottom:1.5rem}
+        .join-field{margin-bottom:1rem;text-align:left}
+        .join-field label{display:block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.4rem}
+        .join-field input{width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.9rem}
+        .join-field input:focus{outline:none;border-color:var(--color-primary);box-shadow:0 0 0 3px rgba(192,58,43,.1)}
+        .join-btns{display:flex;gap:.75rem;margin-top:1.5rem}
+        .join-btns button{flex:1;padding:14px;border-radius:14px;font-family:var(--font-main);font-size:.9rem;font-weight:700;cursor:pointer;transition:var(--transition-fast)}
+        .join-cancel{background:var(--color-bg);color:var(--color-text);border:none}
+        .join-cancel:hover{background:var(--color-border)}
+        .join-confirm{background:var(--color-primary);color:#fff;border:none}
+        .join-confirm:hover{background:var(--color-primary-hover)}
+        .join-error{color:var(--color-primary);font-size:.8rem;margin-top:.5rem;display:none}
+
+        /* ADMIN OVERLAY */
         .admin-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth);padding:1.25rem}
         .admin-overlay.active{opacity:1;pointer-events:all}
         .admin-modal{background:var(--color-white);border-radius:24px;padding:2.5rem;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(20px) scale(.95);transition:var(--transition-smooth);position:relative}
         .admin-overlay.active .admin-modal{transform:translateY(0) scale(1)}
         .admin-close{position:absolute;top:1rem;right:1rem;width:36px;height:36px;border-radius:50%;border:none;background:var(--color-bg);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:var(--transition-fast)}
         .admin-close:hover{background:var(--color-text);color:#fff}
-        .admin-modal-title{font-size:1.4rem;font-weight:800;margin-bottom:.5rem}
-        .admin-modal-subtitle{color:var(--color-text-light);font-size:.9rem;margin-bottom:2rem}
         .admin-login-view{text-align:center}
         .admin-login-icon{font-size:3rem;margin-bottom:1rem}
         .admin-login-title{font-size:1.3rem;font-weight:800;margin-bottom:.5rem}
@@ -238,6 +266,13 @@
         .admin-feedback.show{display:block}
         .admin-logout-btn{width:100%;padding:12px;border-radius:14px;border:1.5px solid var(--color-border);background:transparent;color:var(--color-text-light);font-family:var(--font-main);font-size:.8rem;font-weight:600;cursor:pointer;margin-top:1.5rem}
         .admin-danger-btn{width:100%;padding:12px;border-radius:14px;border:none;background:#E63946;color:#fff;font-family:var(--font-main);font-size:.8rem;font-weight:700;cursor:pointer;margin-top:.75rem}
+        .admin-modal-title{font-size:1.4rem;font-weight:800;margin-bottom:.5rem}
+        .admin-modal-subtitle{color:var(--color-text-light);font-size:.9rem;margin-bottom:2rem}
+
+        /* Game select conditional */
+        .game-select-row{display:none;margin-bottom:1rem}
+        .game-select-row.visible{display:block}
+        .location-row{margin-bottom:1rem}
 
         .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:1500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth);padding:1.25rem}
         .modal-overlay.active{opacity:1;pointer-events:all}
@@ -254,7 +289,6 @@
         .modal-actions .btn{flex:1}
 
         .loading-spinner{text-align:center;padding:3rem;color:var(--color-gray);font-size:.95rem}
-
         .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
 
         .footer{background:var(--color-text);color:#fff;padding:4rem 1.25rem 2rem}
@@ -284,7 +318,7 @@
             .calendar-event-title{font-size:.5rem}
             .proposal-container{padding:2.5rem 1.5rem}
             .footer-links-grid{grid-template-columns:1fr 1fr}
-            .modal,.admin-modal{padding:2rem 1.5rem}
+            .modal,.admin-modal,.join-modal{padding:2rem 1.5rem}
             .highlight-actions{flex-direction:column}.highlight-actions .btn{width:100%}
             .nav-dropdown{display:none!important}
         }
@@ -329,6 +363,29 @@
         <a href="#" class="mobile-link mobile-link-sub" id="mobileAdminLink">🔐 Admin</a>
     </div></div>
 
+    <!-- JOIN MODAL -->
+    <div class="join-overlay" id="joinOverlay">
+        <div class="join-modal">
+            <div class="join-modal-emoji">🎉</div>
+            <div class="join-modal-title">Ich bin dabei!</div>
+            <div class="join-modal-event" id="joinEventName"></div>
+            <div class="join-field">
+                <label>Dein Name</label>
+                <input type="text" id="joinName" placeholder="z.B. Max">
+            </div>
+            <div class="join-field">
+                <label>Anzahl Personen (inkl. dir)</label>
+                <input type="number" id="joinPersons" value="1" min="1" max="10">
+            </div>
+            <div class="join-error" id="joinError"></div>
+            <div class="join-btns">
+                <button class="join-cancel" id="joinCancel">Abbrechen</button>
+                <button class="join-confirm" id="joinConfirm">Anmelden! 🎉</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN OVERLAY -->
     <div class="admin-overlay" id="adminOverlay">
         <div class="admin-modal">
             <button class="admin-close" id="adminCloseBtn">&#10005;</button>
@@ -344,16 +401,60 @@
                 <div class="admin-modal-subtitle">Events verwalten.</div>
                 <div class="admin-tabs">
                     <button class="admin-tab active" data-tab="addEvent">📅 Event</button>
+                    <button class="admin-tab" data-tab="addAttendee">👥 Teilnehmer</button>
                     <button class="admin-tab" data-tab="manage">🗑️ Verwalten</button>
                 </div>
+                <!-- ADD EVENT TAB -->
                 <div class="admin-tab-content active" id="tab-addEvent">
                     <div class="admin-2col"><div class="admin-field"><label class="admin-label">Event-Name</label><input class="admin-input" id="aeName" placeholder="z.B. Catan Abend"></div><div class="admin-field"><label class="admin-label">Emoji</label><input class="admin-input" id="aeEmoji" placeholder="🎲"></div></div>
                     <div class="admin-2col"><div class="admin-field"><label class="admin-label">Datum</label><input type="date" class="admin-input" id="aeDate"></div><div class="admin-field"><label class="admin-label">Uhrzeit</label><input type="time" class="admin-input" id="aeTime" value="20:00"></div></div>
-                    <div class="admin-2col"><div class="admin-field"><label class="admin-label">Kategorie</label><select class="admin-select" id="aeCat"><option value="party">Party</option><option value="games" selected>Spieleabend</option><option value="drinks">Trinkabend</option><option value="film">Filmabend</option></select></div><div class="admin-field"><label class="admin-label">Max. Teilnehmer</label><input type="number" class="admin-input" id="aeCap" value="15"></div></div>
+                    <div class="admin-2col">
+                        <div class="admin-field"><label class="admin-label">Kategorie</label><select class="admin-select" id="aeCat"><option value="party">Party</option><option value="games" selected>Spieleabend</option><option value="drinks">Trinkabend</option><option value="film">Filmabend</option></select></div>
+                        <div class="admin-field"><label class="admin-label">Max. Teilnehmer</label><input type="number" class="admin-input" id="aeCap" value="15"></div>
+                    </div>
+                    <!-- GAME SELECT (nur bei Spieleabend) -->
+                    <div class="game-select-row" id="gameSelectRow">
+                        <div class="admin-field"><label class="admin-label">Spiel</label><select class="admin-select" id="aeGame">
+                            <option value="">Spiel waehlen...</option>
+                            <option value="Mario Kart">🏎️ Mario Kart</option>
+                            <option value="FIFA">⚽ FIFA</option>
+                            <option value="Poker">🃏 Poker</option>
+                            <option value="Beer Pong">🍺 Beer Pong</option>
+                            <option value="Siedler von Catan">🏗️ Siedler von Catan</option>
+                            <option value="UNO">🎴 UNO</option>
+                            <option value="Tischtennis">🏓 Tischtennis</option>
+                            <option value="Darts">🎯 Darts</option>
+                            <option value="Billard">🎱 Billard</option>
+                            <option value="Schach">♟️ Schach</option>
+                            <option value="Jenga">🧱 Jenga</option>
+                            <option value="Flunkyball">🍻 Flunkyball</option>
+                            <option value="Monopoly">💰 Monopoly</option>
+                            <option value="Dutch">🃏 Dutch</option>
+                            <option value="Sonstiges">🎲 Sonstiges</option>
+                        </select></div>
+                    </div>
+                    <!-- LOCATION -->
+                    <div class="location-row">
+                        <div class="admin-field"><label class="admin-label">Adresse / Location <span id="locationRequired" style="color:var(--color-primary);display:none">*Pflichtfeld</span></label><input class="admin-input" id="aeLocation" placeholder="Poccistrasse 4, 80336 Muenchen"></div>
+                    </div>
                     <div class="admin-field"><label class="admin-label">Beschreibung</label><input class="admin-input" id="aeDesc" placeholder="Kurze Beschreibung..."></div>
                     <button class="admin-action-btn" id="aeSubmit">Event erstellen</button>
                     <div class="admin-feedback" id="aeFeedback">Event erstellt!</div>
                 </div>
+                <!-- ADD ATTENDEE TAB -->
+                <div class="admin-tab-content" id="tab-addAttendee">
+                    <div class="admin-field">
+                        <label class="admin-label">Event waehlen</label>
+                        <select class="admin-select" id="aaEventSelect"><option value="">Lade Events...</option></select>
+                    </div>
+                    <div class="admin-2col">
+                        <div class="admin-field"><label class="admin-label">Name</label><input class="admin-input" id="aaName" placeholder="Name des Teilnehmers"></div>
+                        <div class="admin-field"><label class="admin-label">Anzahl Personen</label><input type="number" class="admin-input" id="aaPersons" value="1" min="1"></div>
+                    </div>
+                    <button class="admin-action-btn" id="aaSubmit">Teilnehmer hinzufuegen</button>
+                    <div class="admin-feedback" id="aaFeedback">Hinzugefuegt!</div>
+                </div>
+                <!-- MANAGE TAB -->
                 <div class="admin-tab-content" id="tab-manage">
                     <div class="admin-label" style="margin-bottom:1rem;font-size:.85rem;color:var(--color-text)">Events koennen direkt auf der Seite geloescht werden (roter Button).</div>
                     <button class="admin-danger-btn" id="deleteAllEventsBtn">Alle Events loeschen</button>
@@ -363,7 +464,8 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="eventModal"><div class="modal"><button class="modal-close" id="eventModalClose">&#10005;</button><div class="modal-emoji" id="modalEmoji"></div><h3 class="modal-title" id="modalTitle"></h3><div class="modal-meta" id="modalMeta"></div><p class="modal-desc" id="modalDesc"></p><div class="modal-actions"><button class="btn btn-primary" id="modalJoinBtn">Ich bin dabei!</button><button class="btn btn-outline" id="modalCalBtn">📅 Kalender</button></div></div></div>
+    <!-- EVENT QUICK MODAL -->
+    <div class="modal-overlay" id="eventModal"><div class="modal"><button class="modal-close" id="eventModalClose">&#10005;</button><div class="modal-emoji" id="modalEmoji"></div><h3 class="modal-title" id="modalTitle"></h3><div class="modal-meta" id="modalMeta"></div><p class="modal-desc" id="modalDesc"></p><div class="modal-actions"><button class="btn btn-primary" id="modalJoinBtn">Ich bin dabei!</button><a class="btn btn-outline" id="modalDetailBtn" href="#">Details &#8594;</a></div></div></div>
 
     <section class="page-hero reveal"><p class="section-overline">EVENTS</p><h1 class="page-hero-title">Was steht an?</h1><p class="page-hero-subtitle">Alle kommenden Events in der Poccistrasse auf einen Blick.</p></section>
 
@@ -375,26 +477,17 @@
 
     <section class="events-grid-section"><div class="events-grid-header reveal"><p class="section-overline">ALLE EVENTS</p><h2 class="section-title">Kommende Abende.</h2></div><div class="events-grid" id="eventsGrid"><div class="loading-spinner">Lade Events...</div></div></section>
 
-    <section class="stats-preview reveal">
-        <div class="stats-preview-container">
-            <p class="section-overline">SPIELESTATISTIKEN</p>
-            <h2 class="section-title" style="font-size:clamp(1.5rem,4vw,2.2rem)">Wer dominiert?</h2>
-            <div class="stats-preview-grid" id="statsPreviewGrid"><div class="loading-spinner">Lade Stats...</div></div>
-            <a href="stats.html" class="stats-preview-link">🏆 Alle Statistiken ansehen</a>
-        </div>
-    </section>
+    <section class="stats-preview reveal"><div class="stats-preview-container"><p class="section-overline">SPIELESTATISTIKEN</p><h2 class="section-title" style="font-size:clamp(1.5rem,4vw,2.2rem)">Wer dominiert?</h2><div class="stats-preview-grid" id="statsPreviewGrid"><div class="loading-spinner">Lade Stats...</div></div><a href="stats.html" class="stats-preview-link">🏆 Alle Statistiken ansehen</a></div></section>
 
     <section class="proposal-section" id="vorschlag"><div class="proposal-container reveal"><div class="proposal-header"><p class="section-overline">DEINE IDEE</p><h2 class="section-title">Event vorschlagen.</h2><p class="proposal-subtitle">Du hast eine Idee fuer den naechsten Abend? Schlag es vor!</p></div><form id="proposalForm" class="form-grid"><div class="form-group"><label class="form-label">Dein Name</label><input type="text" class="form-input" placeholder="Max" required id="propName"></div><div class="form-row"><div class="form-group"><label class="form-label">Event-Typ</label><select class="form-select" required id="propType"><option value="" disabled selected>Waehle...</option><option value="party">Party</option><option value="games">Spieleabend</option><option value="drinks">Trinkabend</option><option value="film">Filmabend</option><option value="other">Sonstiges</option></select></div><div class="form-group"><label class="form-label">Wunschdatum</label><input type="date" class="form-input" required id="propDate"></div></div><div class="form-group"><label class="form-label">Deine Nachricht</label><textarea class="form-textarea" placeholder="Was schwebt dir vor?" id="propMsg"></textarea></div><div class="form-submit-row"><button type="submit" class="btn-submit">Vorschlag senden</button></div></form><div class="form-success" id="formSuccess"><div class="form-success-icon">🎉</div><div class="form-success-title">Vorschlag gesendet!</div><div class="form-success-text">Wir schauen uns deine Idee an. Danke!</div></div></div></section>
 
     <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a><a href="#vorschlag">Event vorschlagen</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p></div></div></footer>
 
-    <!-- FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
     <script>
     (function(){
-        // FIREBASE INIT
         var firebaseConfig = {
             apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
             authDomain: "pocci4-a24e5.firebaseapp.com",
@@ -403,10 +496,11 @@
             messagingSenderId: "518621760671",
             appId: "1:518621760671:web:90ad7c1bae464f313066aa"
         };
-        firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
 
         var ADMIN_PW = "pocci2025";
+        var DEFAULT_LOCATION = "Poccistrasse 4, 80336 Muenchen";
         var catColors = {party:"#C03A2B",games:"#1A1A1A",drinks:"#C4A882",film:"#457B9D",other:"#6B6B6B"};
         var catNames = {party:"Party",games:"Spieleabend",drinks:"Trinkabend",film:"Filmabend",other:"Sonstiges"};
         var catEmojis = {party:"🎉",games:"🎲",drinks:"🍻",film:"🎬",other:"💡"};
@@ -417,14 +511,18 @@
         var activeFilter = "all";
         var isAdmin = localStorage.getItem("pocci4_admin") === "true";
         var events = [];
+        var joinTargetEventId = null;
+        var joinTargetBtn = null;
 
-        // LOAD EVENTS FROM FIRESTORE
+        // LOAD EVENTS
         function loadEvents(callback){
             db.collection("events").orderBy("date","asc").get().then(function(snapshot){
                 events = [];
                 snapshot.forEach(function(doc){
                     var data = doc.data();
                     data.id = doc.id;
+                    // Ensure attendees is array
+                    if (!data.attendees) data.attendees = [];
                     events.push(data);
                 });
                 if(callback) callback();
@@ -435,16 +533,34 @@
             });
         }
 
-        // LOAD STATS PREVIEW FROM FIRESTORE
+        // COUNT TOTAL ATTENDING
+        function countAttending(ev){
+            var total = 0;
+            var attendees = ev.attendees || [];
+            for(var i = 0; i < attendees.length; i++){
+                total += (attendees[i].persons || 1);
+            }
+            return total;
+        }
+
+        // CHECK IF USER ALREADY JOINED (by name in localStorage)
+        function hasJoined(eventId){
+            var joined = JSON.parse(localStorage.getItem("pocci4_joined") || "{}");
+            return !!joined[eventId];
+        }
+        function markJoined(eventId, name){
+            var joined = JSON.parse(localStorage.getItem("pocci4_joined") || "{}");
+            joined[eventId] = name;
+            localStorage.setItem("pocci4_joined", JSON.stringify(joined));
+        }
+
+        // LOAD STATS PREVIEW
         function loadStatsPreview(){
             db.collection("stats").get().then(function(snapshot){
                 var stats = [];
                 snapshot.forEach(function(doc){ stats.push(doc.data()); });
                 renderStatsPreview(stats);
-            }).catch(function(err){
-                console.error("Error loading stats:", err);
-                renderStatsPreview([]);
-            });
+            }).catch(function(err){ renderStatsPreview([]); });
         }
 
         // NAV
@@ -463,7 +579,7 @@
 
         function openAdmin(){
             document.getElementById("adminOverlay").classList.add("active");document.body.style.overflow="hidden";
-            if(isAdmin){document.getElementById("adminLoginView").style.display="none";document.getElementById("adminPanelView").style.display="block";}
+            if(isAdmin){document.getElementById("adminLoginView").style.display="none";document.getElementById("adminPanelView").style.display="block";populateAdminEventSelect();}
             else{document.getElementById("adminLoginView").style.display="block";document.getElementById("adminPanelView").style.display="none";}
         }
         function closeAdmin(){document.getElementById("adminOverlay").classList.remove("active");document.body.style.overflow="";}
@@ -479,7 +595,7 @@
             if(document.getElementById("adminPwInput").value===ADMIN_PW){
                 isAdmin=true;localStorage.setItem("pocci4_admin","true");adminBtn.classList.add("logged-in");
                 document.getElementById("adminLoginView").style.display="none";document.getElementById("adminPanelView").style.display="block";
-                document.getElementById("adminError").style.display="none";renderAll();
+                document.getElementById("adminError").style.display="none";populateAdminEventSelect();renderAll();
             }else{document.getElementById("adminError").style.display="block";}
         }
         document.getElementById("logoutBtn").addEventListener("click",function(){isAdmin=false;localStorage.removeItem("pocci4_admin");adminBtn.classList.remove("logged-in");closeAdmin();renderAll();});
@@ -488,18 +604,42 @@
         var aTabs=document.querySelectorAll(".admin-tab");
         for(var i=0;i<aTabs.length;i++){aTabs[i].addEventListener("click",function(){for(var j=0;j<aTabs.length;j++){aTabs[j].classList.remove("active");document.getElementById("tab-"+aTabs[j].getAttribute("data-tab")).classList.remove("active");}this.classList.add("active");document.getElementById("tab-"+this.getAttribute("data-tab")).classList.add("active");});}
 
-        // ADD EVENT TO FIRESTORE
+        // CATEGORY CHANGE -> SHOW/HIDE GAME SELECT & LOCATION REQUIRED
+        var catSelect = document.getElementById("aeCat");
+        catSelect.addEventListener("change", function(){
+            var val = this.value;
+            var gameRow = document.getElementById("gameSelectRow");
+            var locReq = document.getElementById("locationRequired");
+            if(val === "games"){
+                gameRow.classList.add("visible");
+            } else {
+                gameRow.classList.remove("visible");
+            }
+            if(val === "party" || val === "drinks"){
+                locReq.style.display = "inline";
+            } else {
+                locReq.style.display = "none";
+            }
+        });
+        // Trigger initial
+        catSelect.dispatchEvent(new Event("change"));
+
+        // ADD EVENT
         document.getElementById("aeSubmit").addEventListener("click",function(){
-            var n=document.getElementById("aeName").value;
-            var em=document.getElementById("aeEmoji").value;
+            var n=document.getElementById("aeName").value.trim();
+            var em=document.getElementById("aeEmoji").value.trim();
             var d=document.getElementById("aeDate").value;
             var t=document.getElementById("aeTime").value;
             var c=document.getElementById("aeCat").value;
             var cap=parseInt(document.getElementById("aeCap").value)||15;
-            var desc=document.getElementById("aeDesc").value;
-            if(!n||!d)return;
+            var desc=document.getElementById("aeDesc").value.trim();
+            var loc=document.getElementById("aeLocation").value.trim();
+            var game=document.getElementById("aeGame").value;
 
-            db.collection("events").add({
+            if(!n||!d){alert("Name und Datum sind Pflichtfelder!");return;}
+            if((c==="party"||c==="drinks") && !loc){alert("Adresse ist Pflichtfeld fuer Partys und Trinkabende!");return;}
+
+            var eventData = {
                 title: n,
                 emoji: em || catEmojis[c],
                 date: d,
@@ -508,17 +648,82 @@
                 desc: desc,
                 capacity: cap,
                 attending: 0,
+                attendees: [],
+                location: loc || DEFAULT_LOCATION,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(function(){
+            };
+
+            if(c === "games" && game){
+                eventData.game = game;
+            }
+
+            db.collection("events").add(eventData).then(function(){
                 document.getElementById("aeName").value="";
                 document.getElementById("aeDesc").value="";
+                document.getElementById("aeLocation").value="";
                 var fb=document.getElementById("aeFeedback");fb.classList.add("show");setTimeout(function(){fb.classList.remove("show");},3000);
-                loadEvents(function(){renderAll();});
+                loadEvents(function(){renderAll();populateAdminEventSelect();});
             }).catch(function(err){
                 console.error("Error adding event:", err);
                 alert("Fehler beim Erstellen!");
             });
         });
+
+        // POPULATE ADMIN EVENT SELECT
+        function populateAdminEventSelect(){
+            var sel = document.getElementById("aaEventSelect");
+            sel.innerHTML = "<option value=\"\">Event waehlen...</option>";
+            for(var i = 0; i < events.length; i++){
+                var e = events[i];
+                sel.innerHTML += "<option value=\"" + e.id + "\">" + e.emoji + " " + e.title + " (" + e.date + ")</option>";
+            }
+        }
+
+        // ADMIN ADD ATTENDEE
+        document.getElementById("aaSubmit").addEventListener("click", function(){
+            var eventId = document.getElementById("aaEventSelect").value;
+            var name = document.getElementById("aaName").value.trim();
+            var persons = parseInt(document.getElementById("aaPersons").value) || 1;
+
+            if(!eventId || !name){alert("Bitte Event und Name angeben!");return;}
+
+            // Find event
+            var ev = null;
+            for(var i = 0; i < events.length; i++){
+                if(events[i].id === eventId){ ev = events[i]; break; }
+            }
+            if(!ev){alert("Event nicht gefunden!");return;}
+
+            // Check duplicate
+            var attendees = ev.attendees || [];
+            for(var i = 0; i < attendees.length; i++){
+                if(attendees[i].name.toLowerCase() === name.toLowerCase()){
+                    alert("Diese Person ist bereits angemeldet!");
+                    return;
+                }
+            }
+
+            attendees.push({name: name, persons: persons});
+            var newAttending = countAttendingFromArray(attendees);
+
+            db.collection("events").doc(eventId).update({
+                attendees: attendees,
+                attending: newAttending
+            }).then(function(){
+                document.getElementById("aaName").value = "";
+                var fb=document.getElementById("aaFeedback");fb.classList.add("show");setTimeout(function(){fb.classList.remove("show");},3000);
+                loadEvents(function(){renderAll();});
+            }).catch(function(err){
+                console.error("Error:", err);
+                alert("Fehler!");
+            });
+        });
+
+        function countAttendingFromArray(arr){
+            var t = 0;
+            for(var i = 0; i < arr.length; i++) t += (arr[i].persons || 1);
+            return t;
+        }
 
         // DELETE ALL EVENTS
         document.getElementById("deleteAllEventsBtn").addEventListener("click",function(){
@@ -537,30 +742,111 @@
             if(!confirm("Event loeschen?"))return;
             db.collection("events").doc(id).delete().then(function(){
                 loadEvents(function(){renderAll();});
-            }).catch(function(err){
-                console.error("Error deleting:", err);
             });
         };
 
-        // JOIN EVENT (increment attending in Firestore)
-        window.joinEvent=function(btn, eventId){
-            if(btn.classList.contains("joined")){
-                btn.classList.remove("joined");btn.textContent="Ich bin dabei!";
-                if(eventId){
-                    db.collection("events").doc(eventId).update({
-                        attending: firebase.firestore.FieldValue.increment(-1)
-                    });
-                }
+        // JOIN EVENT - OPEN POPUP
+        window.openJoinPopup = function(eventId, btnEl){
+            if(hasJoined(eventId)){return;}
+
+            // Find event
+            var ev = null;
+            for(var i = 0; i < events.length; i++){
+                if(events[i].id === eventId){ ev = events[i]; break; }
+            }
+            if(!ev) return;
+
+            // Check capacity
+            var currentCount = countAttending(ev);
+            if(currentCount >= ev.capacity){
+                alert("Dieses Event ist leider voll!");
                 return;
             }
-            btn.classList.add("joined");btn.textContent="Du bist dabei!";
-            launchConfetti();
-            if(eventId){
-                db.collection("events").doc(eventId).update({
-                    attending: firebase.firestore.FieldValue.increment(1)
-                });
-            }
+
+            joinTargetEventId = eventId;
+            joinTargetBtn = btnEl;
+            document.getElementById("joinEventName").textContent = ev.emoji + " " + ev.title;
+            document.getElementById("joinName").value = "";
+            document.getElementById("joinPersons").value = "1";
+            document.getElementById("joinError").style.display = "none";
+            document.getElementById("joinOverlay").classList.add("active");
+            document.body.style.overflow = "hidden";
+            setTimeout(function(){ document.getElementById("joinName").focus(); }, 200);
         };
+
+        // JOIN CANCEL
+        document.getElementById("joinCancel").addEventListener("click", function(){
+            document.getElementById("joinOverlay").classList.remove("active");
+            document.body.style.overflow = "";
+        });
+        document.getElementById("joinOverlay").addEventListener("click", function(e){
+            if(e.target === this){
+                this.classList.remove("active");
+                document.body.style.overflow = "";
+            }
+        });
+
+        // JOIN CONFIRM
+        document.getElementById("joinConfirm").addEventListener("click", function(){
+            var name = document.getElementById("joinName").value.trim();
+            var persons = parseInt(document.getElementById("joinPersons").value) || 1;
+            var errEl = document.getElementById("joinError");
+
+            if(!name){
+                errEl.textContent = "Bitte gib deinen Namen ein!";
+                errEl.style.display = "block";
+                return;
+            }
+            if(persons < 1 || persons > 10){
+                errEl.textContent = "Anzahl zwischen 1 und 10!";
+                errEl.style.display = "block";
+                return;
+            }
+
+            // Find event
+            var ev = null;
+            for(var i = 0; i < events.length; i++){
+                if(events[i].id === joinTargetEventId){ ev = events[i]; break; }
+            }
+            if(!ev){errEl.textContent="Event nicht gefunden!";errEl.style.display="block";return;}
+
+            // Check duplicate name
+            var attendees = ev.attendees || [];
+            for(var i = 0; i < attendees.length; i++){
+                if(attendees[i].name.toLowerCase() === name.toLowerCase()){
+                    errEl.textContent = "Du bist bereits angemeldet!";
+                    errEl.style.display = "block";
+                    return;
+                }
+            }
+
+            // Check capacity
+            var currentCount = countAttending(ev);
+            if(currentCount + persons > ev.capacity){
+                errEl.textContent = "Nicht genug Plaetze! Noch " + (ev.capacity - currentCount) + " frei.";
+                errEl.style.display = "block";
+                return;
+            }
+
+            // Save to Firestore
+            attendees.push({name: name, persons: persons});
+            var newAttending = countAttendingFromArray(attendees);
+
+            db.collection("events").doc(joinTargetEventId).update({
+                attendees: attendees,
+                attending: newAttending
+            }).then(function(){
+                markJoined(joinTargetEventId, name);
+                document.getElementById("joinOverlay").classList.remove("active");
+                document.body.style.overflow = "";
+                launchConfetti();
+                loadEvents(function(){renderAll();});
+            }).catch(function(err){
+                console.error("Error joining:", err);
+                errEl.textContent = "Fehler beim Anmelden!";
+                errEl.style.display = "block";
+            });
+        });
 
         // FILTERS
         var fTabs=document.querySelectorAll(".filter-tab");
@@ -571,10 +857,36 @@
             var sec=document.getElementById("highlightSection");
             var future=events.filter(function(e){return new Date(e.date)>=new Date(today.toDateString());}).sort(function(a,b){return new Date(a.date)-new Date(b.date);});
             if(!future.length){sec.innerHTML="<div style=\"text-align:center;padding:2rem;color:var(--color-gray)\">Keine kommenden Events.</div>";return;}
-            var e=future[0],d=new Date(e.date),pct=e.capacity>0?Math.round((e.attending/e.capacity)*100):0;
+            var e=future[0];
+            var attending = countAttending(e);
+            var pct=e.capacity>0?Math.round((attending/e.capacity)*100):0;
+            var loc = e.location || DEFAULT_LOCATION;
+            var joined = hasJoined(e.id);
+            var joinBtnText = joined ? "Du bist dabei! ✓" : "Ich bin dabei!";
+            var joinBtnClass = joined ? "btn btn-primary btn-join joined" : "btn btn-primary";
+            var joinOnclick = joined ? "" : "openJoinPopup('" + e.id + "',this)";
             var del=isAdmin?"<div class=\"highlight-delete\"><button class=\"btn-danger\" onclick=\"deleteEvent('"+e.id+"')\">Loeschen</button></div>":"";
-            sec.innerHTML="<div class=\"highlight-card\">"+del+"<div class=\"highlight-badge\"><span class=\"pulse-dot\"></span> Naechstes Event</div><div class=\"highlight-emoji\">"+e.emoji+"</div><h2 class=\"highlight-title\">"+e.title+"</h2><div class=\"highlight-meta\"><div class=\"highlight-meta-item\">📅 "+d.getDate()+". "+monthNames[d.getMonth()]+" "+d.getFullYear()+"</div><div class=\"highlight-meta-item\">🕐 "+e.time+" Uhr</div><div class=\"highlight-meta-item\">📍 Poccistrasse</div><div class=\"highlight-meta-item\">"+catEmojis[e.category]+" "+catNames[e.category]+"</div></div><div class=\"capacity-bar-container\"><div class=\"capacity-header\"><span class=\"capacity-count\">"+e.attending+"/"+e.capacity+" Plaetze</span><span class=\"capacity-label\">"+pct+"%</span></div><div class=\"capacity-bar\"><div class=\"capacity-fill\" style=\"--fill-width:"+pct+"%\"></div></div></div><div class=\"highlight-actions\"><button class=\"btn btn-primary\" onclick=\"joinEvent(this,'"+e.id+"')\">Ich bin dabei!</button><button class=\"btn btn-outline\" onclick=\"downloadICS('"+e.title.replace(/'/g,"")+"','"+e.date+"','"+e.time+"')\">📅 Kalender</button></div></div>";
+
+            var attendeesHtml = renderAttendeesPreview(e.attendees || []);
+
+            sec.innerHTML="<div class=\"highlight-card\">"+del+"<div class=\"highlight-badge\"><span class=\"pulse-dot\"></span> Naechstes Event</div><div class=\"highlight-emoji\">"+e.emoji+"</div><h2 class=\"highlight-title\">"+e.title+"</h2><div class=\"highlight-meta\"><div class=\"highlight-meta-item\">📅 "+formatDate(e.date)+"</div><div class=\"highlight-meta-item\">🕐 "+e.time+" Uhr</div><div class=\"highlight-meta-item\">📍 "+escapeHtml(loc)+"</div><div class=\"highlight-meta-item\">"+catEmojis[e.category]+" "+catNames[e.category]+"</div></div>"+attendeesHtml+"<div class=\"capacity-bar-container\"><div class=\"capacity-header\"><span class=\"capacity-count\">"+attending+"/"+e.capacity+" Plaetze</span><span class=\"capacity-label\">"+pct+"%</span></div><div class=\"capacity-bar\"><div class=\"capacity-fill\" style=\"--fill-width:"+pct+"%\"></div></div></div><div class=\"highlight-actions\"><button class=\""+joinBtnClass+"\" onclick=\""+joinOnclick+"\">"+joinBtnText+"</button><a href=\"event-detail.html?id="+e.id+"\" class=\"btn btn-outline\">Details &#8594;</a><button class=\"btn btn-outline\" onclick=\"downloadICS('"+e.title.replace(/'/g,"")+"','"+e.date+"','"+e.time+"')\">📅 Kalender</button></div></div>";
             setTimeout(function(){var fills=document.querySelectorAll(".capacity-fill");for(var i=0;i<fills.length;i++)fills[i].classList.add("animated");},500);
+        }
+
+        function renderAttendeesPreview(attendees){
+            if(!attendees || !attendees.length) return "";
+            var html = "<div class=\"attendees-preview\">";
+            var show = Math.min(attendees.length, 5);
+            for(var i = 0; i < show; i++){
+                html += "<span class=\"attendee-chip\">" + escapeHtml(attendees[i].name);
+                if(attendees[i].persons > 1) html += " +" + (attendees[i].persons - 1);
+                html += "</span>";
+            }
+            if(attendees.length > 5){
+                html += "<span class=\"attendee-more\">+" + (attendees.length - 5) + " weitere</span>";
+            }
+            html += "</div>";
+            return html;
         }
 
         // CALENDAR
@@ -613,10 +925,32 @@
             filtered=filtered.filter(function(e){return new Date(e.date)>=new Date(today.toDateString());}).sort(function(a,b){return new Date(a.date)-new Date(b.date);});
             if(!filtered.length){grid.innerHTML="<div class=\"no-events\">Keine Events geplant. <a href=\"#vorschlag\" style=\"color:var(--color-primary);font-weight:700;\">Schlag eins vor!</a></div>";return;}
             for(var i=0;i<filtered.length;i++){
-                var e=filtered[i],d=new Date(e.date),pct=e.capacity>0?Math.round((e.attending/e.capacity)*100):0;
+                var e=filtered[i];
+                var d=new Date(e.date);
+                var attending = countAttending(e);
+                var pct=e.capacity>0?Math.round((attending/e.capacity)*100):0;
+                var joined = hasJoined(e.id);
+                var isFull = attending >= e.capacity;
+                var loc = e.location || DEFAULT_LOCATION;
                 var del=isAdmin?"<div class=\"event-card-delete\"><button class=\"btn-danger\" onclick=\"deleteEvent('"+e.id+"')\">🗑️</button></div>":"";
+
+                var joinClass = "btn-join";
+                var joinText = "Ich bin dabei!";
+                var joinOnclick = "openJoinPopup('" + e.id + "',this)";
+                if(joined){
+                    joinClass = "btn-join joined";
+                    joinText = "Du bist dabei! ✓";
+                    joinOnclick = "";
+                } else if(isFull){
+                    joinClass = "btn-join full";
+                    joinText = "Ausgebucht";
+                    joinOnclick = "";
+                }
+
+                var attendeesHtml = renderAttendeesPreview(e.attendees || []);
+
                 var card=document.createElement("div");card.className="event-card";
-                card.innerHTML=del+"<div class=\"event-card-header\"><div class=\"event-card-date\"><span class=\"event-card-date-day\">"+d.getDate()+"</span><span class=\"event-card-date-month\">"+monthNames[d.getMonth()].substring(0,3).toUpperCase()+"</span></div><span class=\"event-card-category\" style=\"background:"+catColors[e.category]+"\">"+catNames[e.category]+"</span></div><div class=\"event-card-body\"><div class=\"event-card-emoji\">"+e.emoji+"</div><h3 class=\"event-card-title\">"+e.title+"</h3><p class=\"event-card-desc\">"+e.desc+"</p><div class=\"event-card-meta\"><span class=\"event-card-meta-item\">🕐 "+e.time+" Uhr</span><span class=\"event-card-meta-item\">📍 Poccistrasse</span></div><div class=\"event-card-capacity\"><div class=\"event-card-capacity-bar\"><div class=\"event-card-capacity-fill\" style=\"width:"+pct+"%;background:"+catColors[e.category]+"\"></div></div><div class=\"event-card-capacity-text\"><span>"+e.attending+"/"+e.capacity+"</span><span>"+pct+"%</span></div></div></div><div class=\"event-card-footer\"><button class=\"btn-join\" onclick=\"joinEvent(this,'"+e.id+"')\">Ich bin dabei!</button><button class=\"btn-cal\" onclick=\"downloadICS('"+e.title.replace(/'/g,"")+"','"+e.date+"','"+e.time+"')\">📅</button></div>";
+                card.innerHTML=del+"<div class=\"event-card-header\"><div class=\"event-card-date\"><span class=\"event-card-date-day\">"+d.getDate()+"</span><span class=\"event-card-date-month\">"+monthNames[d.getMonth()].substring(0,3).toUpperCase()+"</span></div><span class=\"event-card-category\" style=\"background:"+catColors[e.category]+"\">"+catNames[e.category]+"</span></div><div class=\"event-card-body\"><div class=\"event-card-emoji\">"+e.emoji+"</div><h3 class=\"event-card-title\">"+e.title+"</h3><p class=\"event-card-desc\">"+(e.desc||"")+"</p><div class=\"event-card-meta\"><span class=\"event-card-meta-item\">🕐 "+e.time+" Uhr</span><span class=\"event-card-meta-item\">📍 "+escapeHtml(loc.split(",")[0])+"</span></div>"+attendeesHtml+"<div class=\"event-card-capacity\"><div class=\"event-card-capacity-bar\"><div class=\"event-card-capacity-fill\" style=\"width:"+pct+"%;background:"+catColors[e.category]+"\"></div></div><div class=\"event-card-capacity-text\"><span>"+attending+"/"+e.capacity+"</span><span>"+pct+"%</span></div></div></div><div class=\"event-card-footer\"><button class=\""+joinClass+"\" onclick=\""+joinOnclick+"\">"+joinText+"</button><a href=\"event-detail.html?id="+e.id+"\" class=\"btn-detail\">Details</a><button class=\"btn-cal\" onclick=\"downloadICS('"+e.title.replace(/'/g,"")+"','"+e.date+"','"+e.time+"')\">📅</button></div>";
                 grid.appendChild(card);
             }
         }
@@ -633,21 +967,30 @@
 
         function renderAll(){renderHighlight();renderCalendar();renderEventCards();}
 
-        // INITIAL LOAD
-        loadEvents(function(){
-            renderAll();
-        });
+        loadEvents(function(){renderAll();});
         loadStatsPreview();
 
-        // EVENT MODAL
+        // EVENT MODAL (calendar click)
         window.openEventModal=function(e){
             var d=new Date(e.date);
+            var attending = countAttending(e);
+            var loc = e.location || DEFAULT_LOCATION;
             document.getElementById("modalEmoji").textContent=e.emoji;
             document.getElementById("modalTitle").textContent=e.title;
-            document.getElementById("modalDesc").textContent=e.desc;
-            document.getElementById("modalMeta").innerHTML="<div class=\"modal-meta-item\">📅 "+d.getDate()+". "+monthNames[d.getMonth()]+" "+d.getFullYear()+"</div><div class=\"modal-meta-item\">🕐 "+e.time+" Uhr</div><div class=\"modal-meta-item\">📍 Poccistrasse</div><div class=\"modal-meta-item\">👥 "+e.attending+"/"+e.capacity+" Plaetze</div>";
-            document.getElementById("modalJoinBtn").onclick=function(){joinEvent(this,e.id);closeEventModal();};
-            document.getElementById("modalCalBtn").onclick=function(){downloadICS(e.title,e.date,e.time);};
+            document.getElementById("modalDesc").textContent=e.desc||"";
+            document.getElementById("modalMeta").innerHTML="<div class=\"modal-meta-item\">📅 "+formatDate(e.date)+"</div><div class=\"modal-meta-item\">🕐 "+e.time+" Uhr</div><div class=\"modal-meta-item\">📍 "+escapeHtml(loc)+"</div><div class=\"modal-meta-item\">👥 "+attending+"/"+e.capacity+" Plaetze</div>";
+            var joined = hasJoined(e.id);
+            var joinBtn = document.getElementById("modalJoinBtn");
+            if(joined){
+                joinBtn.textContent = "Du bist dabei! ✓";
+                joinBtn.className = "btn btn-primary btn-join joined";
+                joinBtn.onclick = null;
+            } else {
+                joinBtn.textContent = "Ich bin dabei!";
+                joinBtn.className = "btn btn-primary";
+                joinBtn.onclick = function(){closeEventModal();openJoinPopup(e.id,null);};
+            }
+            document.getElementById("modalDetailBtn").href = "event-detail.html?id=" + e.id;
             document.getElementById("eventModal").classList.add("active");document.body.style.overflow="hidden";
         };
         function closeEventModal(){document.getElementById("eventModal").classList.remove("active");document.body.style.overflow="";}
@@ -661,14 +1004,13 @@
         // ICS
         window.downloadICS=function(title,date,time){var h=time.split(":")[0],m=time.split(":")[1];var s=date.replace(/-/g,"")+"T"+h+m+"00";var eH=String(Math.min(parseInt(h)+4,23)).padStart(2,"0");var en=date.replace(/-/g,"")+"T"+eH+m+"00";var ics="BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:"+s+"\nDTEND:"+en+"\nSUMMARY:"+title+"\nLOCATION:Poccistrasse Muenchen\nEND:VEVENT\nEND:VCALENDAR";var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));a.download=title.replace(/[^a-zA-Z0-9]/g,"_")+".ics";a.click();};
 
-        // PROPOSAL - SAVE TO FIRESTORE
+        // PROPOSAL
         document.getElementById("proposalForm").addEventListener("submit",function(e){
             e.preventDefault();
             var name=document.getElementById("propName").value;
             var type=document.getElementById("propType").value;
             var date=document.getElementById("propDate").value;
             var msg=document.getElementById("propMsg").value;
-
             db.collection("messages").add({
                 name: name,
                 subject: "Event-Vorschlag: " + type,
@@ -679,11 +1021,19 @@
                 document.getElementById("proposalForm").style.display="none";
                 document.getElementById("formSuccess").classList.add("show");
                 launchConfetti();
-            }).catch(function(err){
-                console.error("Error:", err);
-                alert("Fehler beim Senden!");
-            });
+            }).catch(function(err){ alert("Fehler beim Senden!"); });
         });
+
+        // HELPERS
+        function formatDate(dateStr){
+            var parts = dateStr.split("-");
+            if(parts.length === 3) return parseInt(parts[2]) + ". " + monthNames[parseInt(parts[1])-1] + " " + parts[0];
+            return dateStr;
+        }
+        function escapeHtml(str){
+            if(!str) return "";
+            return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+        }
 
         // REVEAL
         var ro=new IntersectionObserver(function(entries){for(var i=0;i<entries.length;i++){if(entries[i].isIntersecting){(function(el,idx){setTimeout(function(){el.classList.add("visible");},idx*80);})(entries[i].target,i);ro.unobserve(entries[i].target);}}},{threshold:.1});
