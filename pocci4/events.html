@@ -610,6 +610,7 @@ h+='<h2 class="highlight-title"><a href="event-detail.html?id='+e._id+'" style="
         // TEILNEHMEN BUTTON
         h+='<button class="btn btn-primary" onclick="openSignup(\''+e._id+'\')">🎟️ Teilnehmen'+(price>0?' · '+formatPrice(price):'')+'</button>';
         h+='<button class="btn btn-outline" onclick="downloadICS(\''+esc(e.name||"Event").replace(/'/g,"")+'\',\''+ds+'\',\''+(e.time||"20:00")+'\')">📅 Kalender</button>';
+        h+='<a href="event-detail.html?id='+e._id+'" class="btn btn-outline">📋 Mehr Details</a>';
         h+='</div></div>';
         sec.innerHTML=h;
     }
@@ -683,6 +684,7 @@ card.style.cursor="pointer";
             // TEILNEHMEN BUTTON
             h+='<button class="btn btn-primary btn-sm" data-signup-id="'+e._id+'">🎟️ Teilnehmen'+(price>0?' · '+formatPrice(price):'')+'</button>';
             h+='<button class="btn-cal" data-cal-name="'+esc(e.name||"Event")+'" data-cal-date="'+ds+'" data-cal-time="'+(e.time||"20:00")+'">📅</button>';
+            h+='<a href="event-detail.html?id='+e._id+'" class="btn btn-outline btn-sm">📋 Details</a>';
             h+='</div>';
             card.innerHTML=h;grid.appendChild(card);
         }
