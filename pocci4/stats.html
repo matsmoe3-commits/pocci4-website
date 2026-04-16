@@ -2,612 +2,342 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pocci⁴ – Game Statistik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>pocci4 - Game Statistik</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ====== RESET & BASE ====== */
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #F5F0EB;
-            color: #1A1A1A;
-            overflow-x: hidden;
-            min-height: 100vh;
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --color-primary:#C03A2B;--color-primary-light:#E8501E;--color-primary-hover:#A83225;
+            --color-bg:#F5F0EB;--color-bg-warm:#EDE5DB;--color-white:#FFFFFF;
+            --color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;
+            --color-sand:#C4A882;--color-border:#E0D6CC;
+            --font-main:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            --nav-height:80px;--section-padding:100px;--container-width:1240px;
+            --transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);
+            --transition-smooth:0.4s cubic-bezier(0.4,0,0.2,1);
         }
-        a { text-decoration: none; color: inherit; }
-        button { cursor: pointer; border: none; font-family: inherit; }
-        input, select, textarea { font-family: inherit; }
+        html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+        body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden}
+        a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
+        img{max-width:100%;height:auto;display:block}
 
-        /* ====== ANIMATED BG SHAPES ====== */
-        .bg-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .bg-shape {
-            position: absolute; border-radius: 50%; opacity: 0.08;
-            animation: floatShape 20s ease-in-out infinite;
-        }
-        .bg-shape:nth-child(1) { width: 400px; height: 400px; background: #C03A2B; top: -100px; right: -100px; animation-delay: 0s; }
-        .bg-shape:nth-child(2) { width: 300px; height: 300px; background: #C4A882; bottom: -50px; left: -50px; animation-delay: -5s; }
-        .bg-shape:nth-child(3) { width: 250px; height: 250px; background: #C03A2B; top: 50%; left: 60%; animation-delay: -10s; }
-        .bg-shape:nth-child(4) { width: 200px; height: 200px; background: #C4A882; top: 20%; left: 10%; animation-delay: -15s; }
-        @keyframes floatShape {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            25% { transform: translate(30px, -30px) rotate(5deg) scale(1.05); }
-            50% { transform: translate(-20px, 20px) rotate(-3deg) scale(0.95); }
-            75% { transform: translate(15px, -10px) rotate(3deg) scale(1.02); }
-        }
+        .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
+        .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
+        .bg-shape-1{width:700px;height:500px;background:#E0CEBB;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
+        .bg-shape-2{width:550px;height:650px;background:#D4C0AD;bottom:-20%;right:-10%;animation:m2 25s ease-in-out infinite}
+        .bg-shape-3{width:450px;height:400px;background:#C9B8A5;top:35%;left:45%;animation:m3 22s ease-in-out infinite}
+        .bg-shape-4{width:380px;height:480px;background:#D8C9B8;top:5%;right:15%;animation:m4 28s ease-in-out infinite;opacity:.3}
+        @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
+        @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
+        @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
+        @keyframes m4{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(-60px,50px) rotate(-10deg) scale(1.1)}}
 
-        /* ====== NAVBAR ====== */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(245, 240, 235, 0.85);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(192, 58, 43, 0.1);
-            padding: 0 2rem; height: 70px;
-            display: flex; align-items: center; justify-content: space-between;
-            transition: all 0.3s ease;
-        }
-        .navbar.scrolled {
-            background: rgba(245, 240, 235, 0.95);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-        }
-        .nav-logo { font-size: 1.5rem; font-weight: 800; color: #C03A2B; }
-        .nav-logo sup { font-size: 0.7em; }
-        .nav-links { display: flex; align-items: center; gap: 0.5rem; list-style: none; }
-        .nav-links a {
-            padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500;
-            font-size: 0.9rem; transition: all 0.2s ease; color: #1A1A1A;
-        }
-        .nav-links a:hover, .nav-links a.active { background: #C03A2B; color: #fff; }
+        .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
+        .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
+        .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
+        .nav-logo{display:flex;align-items:center;z-index:1001}
+        .nav-logo img{height:56px}
+        .nav-right{display:flex;align-items:center;gap:1rem}
+        .nav-links{display:flex;align-items:center;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+        .nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}
+        .nav-link:hover{color:var(--color-text);background:var(--color-bg)}
+        .nav-link.active{background:var(--color-text);color:var(--color-white)}
+        .nav-link-dropdown{position:relative}
+        .nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-5px);background:var(--color-white);border-radius:16px;padding:8px;box-shadow:0 10px 40px rgba(0,0,0,.1);border:1px solid var(--color-border);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;min-width:180px;z-index:100}
+        .nav-link-dropdown.dropdown-visible .nav-dropdown{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+        .nav-dropdown-item{display:flex;align-items:center;gap:.6rem;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);white-space:nowrap}
+        .nav-dropdown-item:hover{background:var(--color-bg);color:var(--color-primary)}
+        .nav-dropdown-item span{font-size:1rem}
+        .nav-admin-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--color-border);background:var(--color-white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:var(--transition-fast);position:relative}
+        .nav-admin-btn:hover{border-color:var(--color-text);background:var(--color-text);color:white}
+        .nav-admin-btn.logged-in{border-color:var(--color-primary);background:rgba(192,58,43,.1)}
+        .nav-admin-btn.logged-in::after{content:'';position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:#2D6A4F;border:2px solid white}
+        .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
+        .hamburger-line{width:24px;height:2px;background:var(--color-text);border-radius:2px;transition:var(--transition-smooth);transform-origin:center}
+        .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+        .hamburger.active .hamburger-line:nth-child(2){opacity:0}
+        .hamburger.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+        .mobile-menu{position:fixed;inset:0;background:rgba(245,240,235,.98);z-index:999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth)}
+        .mobile-menu.active{opacity:1;pointer-events:all}
+        .mobile-menu-content{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+        .mobile-link{font-size:2rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);transform:translateY(20px);opacity:0}
+        .mobile-menu.active .mobile-link{transform:translateY(0);opacity:1}
+        .mobile-menu.active .mobile-link:nth-child(1){transition-delay:.1s}
+        .mobile-menu.active .mobile-link:nth-child(2){transition-delay:.15s}
+        .mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s}
+        .mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}
+        .mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}
+        .mobile-menu.active .mobile-link:nth-child(6){transition-delay:.35s}
+        .mobile-link:hover,.mobile-link.active{color:var(--color-primary)}
+        .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
 
-        /* Events Dropdown */
-        .nav-dropdown { position: relative; }
-        .nav-dropdown .dropdown-menu {
-            position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);
-            border-radius: 12px; padding: 0.5rem; min-width: 180px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
-            opacity: 0; visibility: hidden; transition: all 0.3s ease;
-            pointer-events: none; margin-top: 0.5rem;
-        }
-        .nav-dropdown .dropdown-menu a {
-            display: block; padding: 0.6rem 1rem; border-radius: 8px;
-            font-size: 0.85rem; white-space: nowrap;
-        }
-        .nav-dropdown .dropdown-menu a:hover { background: #C03A2B; color: #fff; }
-        .nav-dropdown.show-dropdown .dropdown-menu {
-            opacity: 1; visibility: visible; pointer-events: auto;
-        }
+        .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
+        .section-title{font-size:clamp(1.8rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
+        .page-hero{padding:calc(var(--nav-height) + 4rem) 1.25rem 3rem;max-width:var(--container-width);margin:0 auto;text-align:center}
+        .page-hero-title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem}
+        .page-hero-subtitle{font-size:clamp(1rem,2vw,1.2rem);color:var(--color-text-light);max-width:550px;margin:0 auto}
 
-        /* Nav Admin Button */
-        .nav-admin-btn {
-            background: rgba(192,58,43,0.1); color: #C03A2B;
-            padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600;
-            font-size: 0.85rem; transition: all 0.2s ease; border: none;
-        }
-        .nav-admin-btn:hover { background: #C03A2B; color: #fff; }
+        /* OVERALL STATS */
+        .stats-overview{padding:0 1.25rem 3rem;max-width:var(--container-width);margin:0 auto}
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem}
+        .stat-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:20px;padding:2rem 1.5rem;text-align:center;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth)}
+        .stat-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
+        .stat-card-emoji{font-size:2.5rem;margin-bottom:.75rem}
+        .stat-card-number{font-size:2.5rem;font-weight:900;letter-spacing:-.04em;color:var(--color-primary);line-height:1}
+        .stat-card-label{font-size:.8rem;color:var(--color-gray);margin-top:.4rem}
 
-        /* Hamburger */
-        .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 0.5rem; }
-        .hamburger span { width: 24px; height: 2px; background: #1A1A1A; transition: all 0.3s ease; display: block; }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        /* FILTER */
+        .filter-section{padding:0 1.25rem 2rem;max-width:var(--container-width);margin:0 auto;display:flex;justify-content:center}
+        .filter-tabs{display:flex;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 2px 10px rgba(0,0,0,.04);flex-wrap:wrap;justify-content:center}
+        .filter-tab{padding:8px 18px;border-radius:50px;font-size:.8rem;font-weight:600;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:none;background:none;font-family:var(--font-main);display:flex;align-items:center;gap:.4rem}
+        .filter-tab:hover{color:var(--color-text);background:var(--color-bg)}
+        .filter-tab.active{background:var(--color-text);color:#fff}
 
-        /* Mobile Nav */
-        .mobile-nav {
-            display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0;
-            background: rgba(245,240,235,0.98); backdrop-filter: blur(20px);
-            z-index: 999; padding: 2rem; flex-direction: column; gap: 0.5rem;
-        }
-        .mobile-nav.active { display: flex; }
-        .mobile-nav a {
-            padding: 1rem; border-radius: 12px; font-weight: 600;
-            font-size: 1.1rem; transition: all 0.2s ease;
-        }
-        .mobile-nav a:hover, .mobile-nav a.active { background: #C03A2B; color: #fff; }
+        /* LEADERBOARDS */
+        .leaderboard-section{padding:0 1.25rem var(--section-padding);max-width:var(--container-width);margin:0 auto}
+        .leaderboard-header{text-align:center;margin-bottom:3rem}
+        .leaderboard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
+        .lb-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth)}
+        .lb-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
+        .lb-card-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+        .lb-card-emoji{font-size:2rem}
+        .lb-card-title{font-size:1.1rem;font-weight:800}
+        .lb-card-count{font-size:.75rem;color:var(--color-gray);margin-top:2px}
+        .lb-entry{display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--color-border)}
+        .lb-entry:last-child{border-bottom:none}
+        .lb-rank{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0}
+        .lb-rank-1{background:linear-gradient(135deg,#FFD700,#FFA500);color:#fff}
+        .lb-rank-2{background:linear-gradient(135deg,#C0C0C0,#A0A0A0);color:#fff}
+        .lb-rank-3{background:linear-gradient(135deg,#CD7F32,#A0522D);color:#fff}
+        .lb-rank-other{background:var(--color-bg);color:var(--color-gray)}
+        .lb-name{flex:1;font-weight:600;font-size:.9rem}
+        .lb-wins{background:rgba(192,58,43,.1);color:var(--color-primary);padding:.25rem .7rem;border-radius:50px;font-weight:700;font-size:.8rem}
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            .nav-admin-btn { display: none; }
-        }
+        /* HEAD TO HEAD */
+        .h2h-section{padding:0 1.25rem var(--section-padding);max-width:var(--container-width);margin:0 auto}
+        .h2h-header{text-align:center;margin-bottom:3rem}
+        .h2h-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+        .h2h-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2rem;text-align:center;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth)}
+        .h2h-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
+        .h2h-players{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1rem}
+        .h2h-player{font-weight:700;font-size:1rem}
+        .h2h-vs{color:var(--color-primary);font-weight:800;font-size:.85rem}
+        .h2h-score{font-size:2.5rem;font-weight:900;letter-spacing:-.04em;color:var(--color-primary);margin-bottom:.75rem}
+        .h2h-bar{height:8px;border-radius:4px;background:var(--color-bg-warm);overflow:hidden;display:flex}
+        .h2h-bar-left{background:var(--color-primary);height:100%;transition:width .8s ease;border-radius:4px 0 0 4px}
+        .h2h-bar-right{background:var(--color-sand);height:100%;transition:width .8s ease;border-radius:0 4px 4px 0}
 
-        /* ====== HERO ====== */
-        .hero {
-            padding: 120px 2rem 60px; text-align: center; position: relative; z-index: 1;
-        }
-        .hero-badge {
-            display: inline-block; background: rgba(192,58,43,0.1);
-            color: #C03A2B; padding: 0.4rem 1.2rem; border-radius: 50px;
-            font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem;
-            text-transform: uppercase; letter-spacing: 0.05em;
-        }
-        .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 1rem; }
-        .hero h1 span { color: #C03A2B; }
-        .hero p { font-size: 1.1rem; color: #666; max-width: 600px; margin: 0 auto; }
+        /* RECENT GAMES */
+        .recent-section{padding:0 1.25rem var(--section-padding);max-width:var(--container-width);margin:0 auto}
+        .recent-header{text-align:center;margin-bottom:3rem}
+        .recent-table-wrap{overflow-x:auto;background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03)}
+        .recent-table{width:100%;border-collapse:collapse}
+        .recent-table thead th{background:var(--color-text);color:#fff;padding:1rem 1.25rem;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;text-align:left}
+        .recent-table thead th:first-child{border-radius:24px 0 0 0}
+        .recent-table thead th:last-child{border-radius:0 24px 0 0}
+        .recent-table tbody tr{transition:var(--transition-fast)}
+        .recent-table tbody tr:hover{background:rgba(192,58,43,.03)}
+        .recent-table tbody td{padding:.85rem 1.25rem;border-bottom:1px solid var(--color-border);font-size:.9rem}
+        .recent-table tbody tr:last-child td{border-bottom:none}
+        .game-cell{display:flex;align-items:center;gap:.5rem}
+        .game-cell-emoji{font-size:1.3rem}
+        .winner-badge{display:inline-block;padding:.2rem .7rem;border-radius:50px;font-size:.8rem;font-weight:700;background:rgba(192,58,43,.1);color:var(--color-primary)}
+        .detail-badge{display:inline-block;padding:.15rem .5rem;border-radius:6px;font-size:.7rem;font-weight:600;background:var(--color-bg);color:var(--color-text-light);margin-left:.5rem}
+        .delete-btn{padding:.3rem .6rem;border-radius:8px;border:1.5px solid var(--color-primary);background:transparent;color:var(--color-primary);cursor:pointer;font-size:.7rem;font-weight:700;transition:var(--transition-fast);font-family:var(--font-main)}
+        .delete-btn:hover{background:var(--color-primary);color:#fff}
 
-        /* ====== SECTION ====== */
-        .section { padding: 4rem 2rem; position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
-        .section-title {
-            text-align: center; font-size: clamp(1.8rem, 4vw, 2.5rem);
-            font-weight: 800; margin-bottom: 0.5rem;
-        }
-        .section-title span { color: #C03A2B; }
-        .section-subtitle {
-            text-align: center; color: #666; font-size: 1rem; margin-bottom: 3rem;
-        }
+        /* ADMIN PANEL */
+        .admin-section{padding:0 1.25rem 3rem;max-width:800px;margin:0 auto;display:none}
+        .admin-section.active{display:block}
+        .admin-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2.5rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03)}
+        .admin-card h3{font-size:1.3rem;font-weight:800;margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
+        .admin-2col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .admin-field{margin-bottom:1rem}
+        .admin-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.4rem;display:block}
+        .admin-input,.admin-select{padding:12px 16px;border-radius:12px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.85rem;width:100%;background:var(--color-white)}
+        .admin-input:focus,.admin-select:focus{outline:none;border-color:var(--color-primary)}
+        .admin-select{appearance:none}
+        .admin-action-btn{width:100%;padding:14px;border-radius:14px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:.9rem;font-weight:700;cursor:pointer;transition:var(--transition-fast);margin-top:.5rem}
+        .admin-action-btn:hover{background:var(--color-primary-hover)}
+        .admin-feedback{text-align:center;padding:.75rem;font-weight:600;font-size:.9rem;color:#2D6A4F;display:none}
+        .admin-feedback.show{display:block}
 
-        /* ====== GLASS CARD ====== */
-        .glass-card {
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-            transition: all 0.3s ease;
-        }
-        .glass-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 48px rgba(0,0,0,0.1);
-        }
+        /* ADMIN OVERLAY */
+        .admin-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth);padding:1.25rem}
+        .admin-overlay.active{opacity:1;pointer-events:all}
+        .admin-modal{background:var(--color-white);border-radius:24px;padding:2.5rem;max-width:400px;width:100%;transform:translateY(20px) scale(.95);transition:var(--transition-smooth);text-align:center}
+        .admin-overlay.active .admin-modal{transform:translateY(0) scale(1)}
+        .admin-login-icon{font-size:3rem;margin-bottom:1rem}
+        .admin-login-title{font-size:1.3rem;font-weight:800;margin-bottom:.5rem}
+        .admin-login-text{color:var(--color-text-light);font-size:.9rem;margin-bottom:1.5rem}
+        .admin-pw-row{display:flex;gap:.75rem;max-width:300px;margin:0 auto}
+        .admin-pw-input{flex:1;padding:12px 18px;border-radius:14px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.9rem}
+        .admin-pw-input:focus{outline:none;border-color:var(--color-primary)}
+        .admin-pw-btn{padding:12px 20px;border-radius:14px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-weight:700;cursor:pointer}
+        .admin-error{color:var(--color-primary);font-size:.8rem;margin-top:.75rem;display:none}
 
-        /* ====== LEADERBOARD ====== */
-        .leaderboard-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem; margin-bottom: 3rem;
-        }
-        .leaderboard-card { padding: 2rem; }
-        .leaderboard-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .leaderboard-card h3 .emoji { font-size: 1.5rem; margin-right: 0.5rem; }
-        .leaderboard-entry {
-            display: flex; align-items: center; gap: 1rem;
-            padding: 0.8rem 0; border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        .leaderboard-entry:last-child { border-bottom: none; }
-        .leaderboard-rank {
-            width: 36px; height: 36px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 0.85rem; flex-shrink: 0;
-        }
-        .rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); color: #fff; }
-        .rank-2 { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); color: #fff; }
-        .rank-3 { background: linear-gradient(135deg, #CD7F32, #A0522D); color: #fff; }
-        .rank-other { background: rgba(0,0,0,0.08); color: #666; }
-        .leaderboard-name { flex: 1; font-weight: 600; font-size: 0.95rem; }
-        .leaderboard-wins {
-            background: rgba(192,58,43,0.1); color: #C03A2B;
-            padding: 0.3rem 0.8rem; border-radius: 50px; font-weight: 700; font-size: 0.85rem;
-        }
+        .empty-state{text-align:center;padding:4rem 2rem;color:var(--color-gray)}
+        .empty-state-emoji{font-size:3.5rem;margin-bottom:1rem}
+        .empty-state-title{font-size:1.2rem;font-weight:700;color:var(--color-text);margin-bottom:.5rem}
 
-        /* ====== OVERALL STATS ====== */
-        .overall-stats {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem; margin-bottom: 3rem;
-        }
-        .stat-card {
-            padding: 1.5rem; text-align: center;
-        }
-        .stat-card .stat-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
-        .stat-card .stat-number { font-size: 2.5rem; font-weight: 900; color: #C03A2B; }
-        .stat-card .stat-label { font-size: 0.85rem; color: #666; margin-top: 0.3rem; }
+        .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
 
-        /* ====== FILTER BAR ====== */
-        .filter-bar {
-            display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 2rem;
-        }
-        .filter-btn {
-            padding: 0.5rem 1.2rem; border-radius: 50px;
-            background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.1);
-            font-weight: 600; font-size: 0.85rem; transition: all 0.2s ease;
-        }
-        .filter-btn:hover, .filter-btn.active { background: #C03A2B; color: #fff; border-color: #C03A2B; }
+        .footer{background:var(--color-text);color:#fff;padding:4rem 1.25rem 2rem}
+        .footer-container{max-width:var(--container-width);margin:0 auto}
+        .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
+        .footer-logo{height:44px;filter:brightness(0) invert(1);margin-bottom:.75rem}
+        .footer-tagline{font-size:.85rem;color:var(--color-gray)}
+        .footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+        .footer-col h4{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--color-gray);margin-bottom:1rem}
+        .footer-col a{display:block;font-size:.9rem;color:rgba(255,255,255,.7);padding:.3rem 0}
+        .footer-col a:hover{color:#fff}
+        .footer-bottom{padding-top:2rem;text-align:center}
+        .footer-bottom p{font-size:.8rem;color:var(--color-gray)}
 
-        /* ====== RECENT GAMES TABLE ====== */
-        .recent-games { margin-top: 2rem; }
-        .games-table {
-            width: 100%; border-collapse: separate; border-spacing: 0;
-            overflow: hidden; border-radius: 16px;
-        }
-        .games-table thead th {
-            background: #C03A2B; color: #fff; padding: 1rem;
-            font-weight: 600; font-size: 0.85rem; text-transform: uppercase;
-            letter-spacing: 0.05em; text-align: left;
-        }
-        .games-table tbody tr {
-            transition: all 0.2s ease;
-        }
-        .games-table tbody tr:hover { background: rgba(192,58,43,0.05); }
-        .games-table tbody td {
-            padding: 0.8rem 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);
-            font-size: 0.9rem;
-        }
-        .games-table .game-emoji { font-size: 1.3rem; }
-        .winner-badge {
-            display: inline-block; background: rgba(192,58,43,0.1); color: #C03A2B;
-            padding: 0.2rem 0.7rem; border-radius: 50px; font-weight: 600; font-size: 0.8rem;
-        }
+        .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+        .reveal.visible{opacity:1;transform:translateY(0)}
 
-        /* Delete button in table */
-        .delete-stat-btn {
-            background: rgba(220,53,69,0.1); color: #dc3545;
-            border: none; padding: 0.3rem 0.6rem; border-radius: 6px;
-            font-size: 0.8rem; cursor: pointer; transition: all 0.2s ease;
-            display: none;
+        @media(max-width:1024px){:root{--section-padding:80px}.footer-top{grid-template-columns:1fr;gap:3rem}}
+        @media(max-width:768px){
+            :root{--section-padding:60px;--nav-height:68px}
+            .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
+            .leaderboard-grid{grid-template-columns:1fr}
+            .h2h-grid{grid-template-columns:1fr}
+            .stats-grid{grid-template-columns:repeat(2,1fr)}
+            .admin-2col{grid-template-columns:1fr}
+            .footer-links-grid{grid-template-columns:1fr 1fr}
+            .nav-dropdown{display:none!important}
         }
-        .admin-mode .delete-stat-btn { display: inline-block; }
-        .delete-stat-btn:hover { background: #dc3545; color: #fff; }
-
-        /* ====== ADMIN PANEL ====== */
-        .admin-panel {
-            display: none; margin-bottom: 3rem;
-        }
-        .admin-panel.active { display: block; }
-        .admin-panel .glass-card { padding: 2rem; }
-        .admin-panel h3 {
-            font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem;
-        }
-        .form-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem; margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            display: block; font-weight: 600; font-size: 0.85rem;
-            margin-bottom: 0.4rem; color: #333;
-        }
-        .form-group input, .form-group select {
-            width: 100%; padding: 0.7rem 1rem; border: 1px solid rgba(0,0,0,0.12);
-            border-radius: 10px; background: rgba(255,255,255,0.8);
-            font-size: 0.9rem; transition: all 0.2s ease;
-        }
-        .form-group input:focus, .form-group select:focus {
-            outline: none; border-color: #C03A2B;
-            box-shadow: 0 0 0 3px rgba(192,58,43,0.1);
-        }
-        .btn-primary {
-            background: #C03A2B; color: #fff; padding: 0.8rem 2rem;
-            border-radius: 12px; font-weight: 700; font-size: 0.95rem;
-            transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem;
-        }
-        .btn-primary:hover { background: #A52E22; transform: translateY(-2px); }
-
-        /* ====== MODAL ====== */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
-            z-index: 2000; align-items: center; justify-content: center;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal {
-            background: #fff; border-radius: 20px; padding: 2rem;
-            max-width: 400px; width: 90%; text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            animation: modalSlide 0.3s ease;
-        }
-        @keyframes modalSlide {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .modal h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
-        .modal input {
-            width: 100%; padding: 0.8rem 1rem; border: 1px solid rgba(0,0,0,0.12);
-            border-radius: 10px; font-size: 1rem; margin-bottom: 1rem; text-align: center;
-        }
-        .modal input:focus {
-            outline: none; border-color: #C03A2B;
-            box-shadow: 0 0 0 3px rgba(192,58,43,0.1);
-        }
-        .modal-btns { display: flex; gap: 0.5rem; justify-content: center; }
-        .modal-btns button {
-            padding: 0.6rem 1.5rem; border-radius: 10px; font-weight: 600; font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-        .btn-cancel { background: #eee; color: #666; }
-        .btn-cancel:hover { background: #ddd; }
-        .btn-confirm { background: #C03A2B; color: #fff; }
-        .btn-confirm:hover { background: #A52E22; }
-
-        /* ====== TOAST ====== */
-        .toast-container {
-            position: fixed; top: 80px; right: 1rem; z-index: 3000;
-            display: flex; flex-direction: column; gap: 0.5rem;
-        }
-        .toast {
-            background: #fff; padding: 1rem 1.5rem; border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            font-weight: 600; font-size: 0.9rem;
-            animation: toastSlide 0.3s ease;
-            display: flex; align-items: center; gap: 0.5rem;
-        }
-        .toast.success { border-left: 4px solid #27ae60; }
-        .toast.error { border-left: 4px solid #dc3545; }
-        .toast.info { border-left: 4px solid #C03A2B; }
-        @keyframes toastSlide {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        /* ====== EMPTY STATE ====== */
-        .empty-state {
-            text-align: center; padding: 3rem; color: #999;
-        }
-        .empty-state .empty-emoji { font-size: 3rem; margin-bottom: 1rem; }
-        .empty-state p { font-size: 1rem; }
-
-        /* ====== LOADING ====== */
-        .loading-spinner {
-            text-align: center; padding: 3rem;
-        }
-        .spinner {
-            width: 40px; height: 40px; border: 3px solid rgba(192,58,43,0.2);
-            border-top-color: #C03A2B; border-radius: 50%;
-            animation: spin 0.8s linear infinite; margin: 0 auto 1rem;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* ====== HEAD-TO-HEAD ====== */
-        .h2h-section { margin-top: 3rem; }
-        .h2h-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        .h2h-card { padding: 1.5rem; text-align: center; }
-        .h2h-players { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
-        .h2h-player { font-weight: 700; font-size: 1rem; }
-        .h2h-vs { color: #C03A2B; font-weight: 800; font-size: 0.85rem; }
-        .h2h-score { font-size: 2rem; font-weight: 900; color: #C03A2B; }
-        .h2h-bar {
-            height: 8px; border-radius: 4px; background: #eee; margin-top: 0.8rem; overflow: hidden;
-            display: flex;
-        }
-        .h2h-bar-fill-left {
-            background: #C03A2B; height: 100%; transition: width 0.5s ease;
-        }
-        .h2h-bar-fill-right {
-            background: #C4A882; height: 100%; transition: width 0.5s ease;
-        }
-
-        /* ====== FOOTER ====== */
-        .footer {
-            background: #1A1A1A; color: #fff; padding: 4rem 2rem 2rem;
-            position: relative; z-index: 1; margin-top: 4rem;
-        }
-        .footer-grid {
-            max-width: 1200px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem; margin-bottom: 3rem;
-        }
-        .footer h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
-        .footer h3 span { color: #C03A2B; }
-        .footer p, .footer a { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.8; }
-        .footer a:hover { color: #C03A2B; }
-        .footer-bottom {
-            text-align: center; padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.4); font-size: 0.8rem;
-        }
-        .connect-links { display: flex; flex-direction: column; gap: 0.3rem; }
-        .connect-links a {
-            display: flex; align-items: center; gap: 0.5rem;
-            padding: 0.3rem 0; transition: all 0.2s ease;
-        }
-
-        /* ====== REVEAL ON SCROLL ====== */
-        .reveal {
-            opacity: 0; transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        /* ====== KONFETTI ====== */
-        .konfetti-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 9999;
-        }
-
-        /* ====== RESPONSIVE ====== */
-        @media (max-width: 768px) {
-            .hero { padding: 100px 1.5rem 40px; }
-            .hero h1 { font-size: 2rem; }
-            .section { padding: 2rem 1rem; }
-            .leaderboard-grid { grid-template-columns: 1fr; }
-            .overall-stats { grid-template-columns: repeat(2, 1fr); }
-            .form-grid { grid-template-columns: 1fr; }
-            .games-table-wrapper { overflow-x: auto; }
-            .h2h-grid { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 480px) {
-            .overall-stats { grid-template-columns: 1fr; }
+        @media(max-width:480px){
+            .nav-logo img{height:38px}.page-hero-title{font-size:2rem}
+            .stats-grid{grid-template-columns:1fr}
+            .filter-tab{padding:6px 10px;font-size:.7rem}
+            .footer-links-grid{grid-template-columns:1fr}
+            .recent-table tbody td{padding:.6rem .75rem;font-size:.8rem}
+            .recent-table thead th{padding:.75rem;font-size:.65rem}
         }
     </style>
 </head>
 <body>
+    <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div><div class="bg-shape bg-shape-4"></div></div>
+    <div class="confetti-container" id="confettiContainer"></div>
 
-    <!-- BG Shapes -->
-    <div class="bg-shapes">
-        <div class="bg-shape"></div>
-        <div class="bg-shape"></div>
-        <div class="bg-shape"></div>
-        <div class="bg-shape"></div>
-    </div>
-
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <a href="index.html" class="nav-logo">pocci<sup>4</sup></a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li class="nav-dropdown" id="eventsDropdown">
-                <a href="events.html">Events</a>
-                <div class="dropdown-menu">
-                    <a href="events.html">🎉 Events</a>
-                    <a href="stats.html" class="active">🏆 Game Statistik</a>
-                </div>
-            </li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="kontakt.html">Kontakt</a></li>
-        </ul>
-        <button class="nav-admin-btn" id="adminToggleBtn" onclick="toggleAdmin()">🔐 Admin</button>
-        <button class="hamburger" id="hamburger" onclick="toggleMobile()">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
-
-    <!-- Mobile Nav -->
-    <div class="mobile-nav" id="mobileNav">
-        <a href="index.html">🏠 Home</a>
-        <a href="events.html">🎉 Events</a>
-        <a href="stats.html" class="active">🏆 Game Statistik</a>
-        <a href="shop.html">🛒 Shop</a>
-        <a href="kontakt.html">💬 Kontakt</a>
-        <a href="#" onclick="toggleAdmin(); return false;">🔐 Admin</a>
-    </div>
-
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- Admin Login Modal -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal">
-            <h3>🔐 Admin Login</h3>
-            <p style="color:#666; margin-bottom:1rem; font-size:0.9rem;">Passwort eingeben</p>
-            <input type="password" id="adminPasswordInput" placeholder="Passwort..." onkeydown="if(event.key==='Enter')confirmLogin()">
-            <div class="modal-btns">
-                <button class="btn-cancel" onclick="closeLoginModal()">Abbrechen</button>
-                <button class="btn-confirm" onclick="confirmLogin()">Login</button>
+    <nav class="navbar" id="navbar"><div class="nav-container">
+        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link active">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="kontakt.html" class="nav-link">Kontakt</a>
             </div>
+            <button class="nav-admin-btn" id="navAdminBtn">🔐</button>
+            <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+        </div>
+    </div></nav>
+
+    <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="events.html" class="mobile-link">Events</a>
+        <a href="stats.html" class="mobile-link mobile-link-sub active">🏆 Game Statistik</a>
+        <a href="shop.html" class="mobile-link">Shop</a>
+        <a href="kontakt.html" class="mobile-link">Kontakt</a>
+        <a href="#" class="mobile-link mobile-link-sub" id="mobileAdminLink">🔐 Admin</a>
+    </div></div>
+
+    <!-- ADMIN LOGIN OVERLAY -->
+    <div class="admin-overlay" id="adminOverlay">
+        <div class="admin-modal">
+            <div class="admin-login-icon">🔐</div>
+            <div class="admin-login-title">Admin Login</div>
+            <div class="admin-login-text">Passwort eingeben um Stats zu verwalten.</div>
+            <div class="admin-pw-row"><input type="password" class="admin-pw-input" id="adminPwInput" placeholder="Passwort"><button class="admin-pw-btn" id="adminPwBtn">&#8594;</button></div>
+            <div class="admin-error" id="adminError">Falsches Passwort.</div>
         </div>
     </div>
 
-    <!-- Konfetti Canvas -->
-    <canvas class="konfetti-canvas" id="konfettiCanvas"></canvas>
-
-    <!-- ====== HERO ====== -->
-    <section class="hero">
-        <div class="hero-badge">🏆 Game Statistik</div>
-        <h1>Wer ist der <span>Champion</span>?</h1>
-        <p>Alle Game-Ergebnisse der WG – Leaderboards, Head-to-Head und mehr.</p>
+    <!-- HERO -->
+    <section class="page-hero reveal">
+        <p class="section-overline">🏆 GAME STATISTIK</p>
+        <h1 class="page-hero-title">Wer ist der Champion?</h1>
+        <p class="page-hero-subtitle">Alle Game-Ergebnisse der WG - Leaderboards, Head-to-Head und detaillierte Stats.</p>
     </section>
 
-    <!-- ====== ADMIN PANEL ====== -->
-    <div class="section admin-panel" id="adminPanel">
-        <div class="glass-card">
+    <!-- ADMIN PANEL -->
+    <section class="admin-section" id="adminSection">
+        <div class="admin-card">
             <h3>🎮 Neues Spielergebnis eintragen</h3>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Spiel</label>
-                    <select id="gameSelect">
-                        <option value="">Spiel wählen...</option>
-                        <option value="Mario Kart">🏎️ Mario Kart</option>
-                        <option value="FIFA">⚽ FIFA</option>
-                        <option value="Poker">🃏 Poker</option>
-                        <option value="Beer Pong">🍺 Beer Pong</option>
-                        <option value="Siedler von Catan">🏗️ Siedler von Catan</option>
-                        <option value="UNO">🎴 UNO</option>
-                        <option value="Tischtennis">🏓 Tischtennis</option>
-                        <option value="Darts">🎯 Darts</option>
-                        <option value="Billard">🎱 Billard</option>
-                        <option value="Schach">♟️ Schach</option>
-                        <option value="Jenga">🧱 Jenga</option>
-                        <option value="Flunkyball">🍻 Flunkyball</option>
-                        <option value="Sonstiges">🎲 Sonstiges</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Gewinner</label>
-                    <select id="winnerSelect">
-                        <option value="">Gewinner wählen...</option>
-                        <option value="Andrei">Andrei</option>
-                        <option value="Georgie">Georgie</option>
-                        <option value="Mats">Mats</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Datum</label>
-                    <input type="date" id="gameDateInput">
-                </div>
+            <div class="admin-2col">
+                <div class="admin-field"><label class="admin-label">Spiel</label><select class="admin-select" id="addGame">
+                    <option value="">Spiel waehlen...</option>
+                    <option value="Mario Kart">🏎️ Mario Kart</option>
+                    <option value="FIFA">⚽ FIFA</option>
+                    <option value="Poker">🃏 Poker</option>
+                    <option value="Beer Pong">🍺 Beer Pong</option>
+                    <option value="Siedler von Catan">🏗️ Siedler von Catan</option>
+                    <option value="UNO">🎴 UNO</option>
+                    <option value="Tischtennis">🏓 Tischtennis</option>
+                    <option value="Darts">🎯 Darts</option>
+                    <option value="Billard">🎱 Billard</option>
+                    <option value="Schach">♟️ Schach</option>
+                    <option value="Jenga">🧱 Jenga</option>
+                    <option value="Flunkyball">🍻 Flunkyball</option>
+                    <option value="Monopoly">💰 Monopoly</option>
+                    <option value="Dutch">🃏 Dutch</option>
+                    <option value="Sonstiges">🎲 Sonstiges</option>
+                </select></div>
+                <div class="admin-field"><label class="admin-label">Gewinner</label><select class="admin-select" id="addWinner">
+                    <option value="">Gewinner waehlen...</option>
+                    <option value="Andrei">Andrei</option>
+                    <option value="Georgie">Georgie</option>
+                    <option value="Mats">Mats</option>
+                </select></div>
             </div>
-            <button class="btn-primary" onclick="addStat()">🏆 Ergebnis speichern</button>
-        </div>
-    </div>
-
-    <!-- ====== OVERALL STATS ====== -->
-    <section class="section reveal" id="overallSection">
-        <h2 class="section-title">Die <span>Zahlen</span></h2>
-        <p class="section-subtitle">Gesamtübersicht aller Games</p>
-        <div class="overall-stats" id="overallStats">
-            <div class="loading-spinner"><div class="spinner"></div><p style="color:#999;">Lade Statistiken...</p></div>
+            <div class="admin-field"><label class="admin-label">Datum</label><input type="date" class="admin-input" id="addDate"></div>
+            <button class="admin-action-btn" id="addStatBtn">🏆 Ergebnis speichern</button>
+            <div class="admin-feedback" id="addFeedback">Ergebnis gespeichert!</div>
         </div>
     </section>
 
-    <!-- ====== LEADERBOARD ====== -->
-    <section class="section reveal" id="leaderboardSection">
-        <h2 class="section-title">Leader<span>boards</span></h2>
-        <p class="section-subtitle">Rangliste nach Spiel</p>
-        <div class="filter-bar" id="filterBar">
-            <button class="filter-btn active" onclick="filterGame('all')">🏆 Alle</button>
-        </div>
-        <div class="leaderboard-grid" id="leaderboardGrid">
-            <div class="loading-spinner"><div class="spinner"></div><p style="color:#999;">Lade Leaderboards...</p></div>
+    <!-- OVERALL STATS -->
+    <section class="stats-overview reveal" id="overviewSection">
+        <div class="stats-grid" id="statsGrid"><div style="text-align:center;padding:2rem;color:var(--color-gray);grid-column:1/-1">Lade Statistiken...</div></div>
+    </section>
+
+    <!-- FILTER -->
+    <section class="filter-section reveal">
+        <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab active" data-filter="all">🏆 Alle</button>
         </div>
     </section>
 
-    <!-- ====== HEAD-TO-HEAD ====== -->
-    <section class="section reveal h2h-section" id="h2hSection">
-        <h2 class="section-title">Head-to-<span>Head</span></h2>
-        <p class="section-subtitle">Direktvergleich der WG-Bewohner</p>
-        <div class="h2h-grid" id="h2hGrid">
-            <div class="loading-spinner"><div class="spinner"></div></div>
-        </div>
+    <!-- LEADERBOARDS -->
+    <section class="leaderboard-section" id="leaderboardSection">
+        <div class="leaderboard-header reveal"><p class="section-overline">RANGLISTE</p><h2 class="section-title">Leaderboards.</h2></div>
+        <div class="leaderboard-grid" id="leaderboardGrid"></div>
     </section>
 
-    <!-- ====== RECENT GAMES ====== -->
-    <section class="section reveal recent-games" id="recentSection">
-        <h2 class="section-title">Letzte <span>Games</span></h2>
-        <p class="section-subtitle">Die neuesten Ergebnisse</p>
-        <div class="games-table-wrapper" id="recentGamesContainer">
-            <div class="loading-spinner"><div class="spinner"></div><p style="color:#999;">Lade Spiele...</p></div>
-        </div>
+    <!-- HEAD TO HEAD -->
+    <section class="h2h-section" id="h2hSection">
+        <div class="h2h-header reveal"><p class="section-overline">DIREKTVERGLEICH</p><h2 class="section-title">Head-to-Head.</h2></div>
+        <div class="h2h-grid" id="h2hGrid"></div>
     </section>
 
-    <!-- ====== FOOTER ====== -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div>
-                <h3>pocci<span>⁴</span></h3>
-                <p>Die legendärste WG Münchens. Seit Tag 1.</p>
-            </div>
-            <div>
-                <h3>Navigation</h3>
-                <div class="connect-links">
-                    <a href="index.html">Home</a>
-                    <a href="events.html">Events</a>
-                    <a href="stats.html">Game Statistik</a>
-                    <a href="shop.html">Shop</a>
-                    <a href="kontakt.html">Kontakt</a>
-                </div>
-            </div>
-            <div>
-                <h3>Connect</h3>
-                <div class="connect-links">
-                    <a href="https://instagram.com/mats.lm" target="_blank">📸 @mats.lm</a>
-                    <a href="https://instagram.com/georginaamarie" target="_blank">📸 @georginaamarie</a>
-                    <a href="https://instagram.com/andrei.ncu" target="_blank">📸 @andrei.ncu</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 pocci⁴ – Made with ❤️ in München</p>
-        </div>
-    </footer>
+    <!-- RECENT GAMES -->
+    <section class="recent-section" id="recentSection">
+        <div class="recent-header reveal"><p class="section-overline">LETZTE SPIELE</p><h2 class="section-title">Recent Games.</h2></div>
+        <div id="recentContainer"></div>
+    </section>
 
-    <!-- Firebase SDK -->
+    <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a><a href="events.html#vorschlag">Event vorschlagen</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p></div></div></footer>
+
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
     <script>
     (function(){
-        // ====== FIREBASE INIT ======
         var firebaseConfig = {
             apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
             authDomain: "pocci4-a24e5.firebaseapp.com",
@@ -616,582 +346,293 @@
             messagingSenderId: "518621760671",
             appId: "1:518621760671:web:90ad7c1bae464f313066aa"
         };
-
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
+        if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
 
-        // ====== GLOBALS ======
-        var isAdmin = localStorage.getItem('pocci4_admin') === 'true';
+        var ADMIN_PW = "pocci2025";
+        var GAME_EMOJIS = {"Mario Kart":"🏎️","FIFA":"⚽","Poker":"🃏","Beer Pong":"🍺","Siedler von Catan":"🏗️","UNO":"🎴","Tischtennis":"🏓","Darts":"🎯","Billard":"🎱","Schach":"♟️","Jenga":"🧱","Flunkyball":"🍻","Monopoly":"💰","Dutch":"🃏","Sonstiges":"🎲"};
+        var PLAYERS = ["Andrei","Georgie","Mats"];
+        var monthNames = ["Januar","Februar","Maerz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+        var isAdmin = localStorage.getItem("pocci4_admin") === "true";
         var allStats = [];
-        var currentFilter = 'all';
-        var PLAYERS = ['Andrei', 'Georgie', 'Mats'];
+        var currentFilter = "all";
 
-        var GAME_EMOJIS = {
-            'Mario Kart': '🏎️',
-            'FIFA': '⚽',
-            'Poker': '🃏',
-            'Beer Pong': '🍺',
-            'Siedler von Catan': '🏗️',
-            'UNO': '🎴',
-            'Tischtennis': '🏓',
-            'Darts': '🎯',
-            'Billard': '🎱',
-            'Schach': '♟️',
-            'Jenga': '🧱',
-            'Flunkyball': '🍻',
-            'Sonstiges': '🎲'
-        };
+        // NAV
+        var navbar=document.getElementById("navbar");
+        window.addEventListener("scroll",function(){navbar.classList.toggle("scrolled",window.scrollY>50);});
+        var hamburger=document.getElementById("hamburger"),mobileMenu=document.getElementById("mobileMenu");
+        hamburger.addEventListener("click",function(){hamburger.classList.toggle("active");mobileMenu.classList.toggle("active");document.body.style.overflow=mobileMenu.classList.contains("active")?"hidden":"";});
+        var ml=document.querySelectorAll(".mobile-link");for(var i=0;i<ml.length;i++)ml[i].addEventListener("click",function(){hamburger.classList.remove("active");mobileMenu.classList.remove("active");document.body.style.overflow="";});
+        var dd=document.getElementById("eventsDropdown"),ddT=null;
+        if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},2000);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
 
-        // ====== INIT ======
-        function init() {
-            updateAdminUI();
-            loadStats();
-            initNavScroll();
-            initDropdown();
-            initReveal();
-            setDefaultDate();
-        }
+        // ADMIN
+        var adminBtn=document.getElementById("navAdminBtn");
+        if(isAdmin){adminBtn.classList.add("logged-in");document.getElementById("adminSection").classList.add("active");}
 
-        function setDefaultDate() {
-            var dateInput = document.getElementById('gameDateInput');
-            if (dateInput) {
-                var today = new Date();
-                var y = today.getFullYear();
-                var m = (today.getMonth() + 1).toString();
-                if (m.length < 2) m = '0' + m;
-                var d = today.getDate().toString();
-                if (d.length < 2) d = '0' + d;
-                dateInput.value = y + '-' + m + '-' + d;
+        adminBtn.addEventListener("click",function(){
+            if(isAdmin){isAdmin=false;localStorage.removeItem("pocci4_admin");adminBtn.classList.remove("logged-in");document.getElementById("adminSection").classList.remove("active");renderRecentGames();return;}
+            document.getElementById("adminOverlay").classList.add("active");document.body.style.overflow="hidden";
+            document.getElementById("adminPwInput").value="";
+            setTimeout(function(){document.getElementById("adminPwInput").focus();},200);
+        });
+        document.getElementById("mobileAdminLink").addEventListener("click",function(e){
+            e.preventDefault();adminBtn.click();
+        });
+        document.getElementById("adminOverlay").addEventListener("click",function(e){
+            if(e.target===this){this.classList.remove("active");document.body.style.overflow="";}
+        });
+        document.getElementById("adminPwBtn").addEventListener("click",doLogin);
+        document.getElementById("adminPwInput").addEventListener("keydown",function(e){if(e.key==="Enter")doLogin();});
+        function doLogin(){
+            if(document.getElementById("adminPwInput").value===ADMIN_PW){
+                isAdmin=true;localStorage.setItem("pocci4_admin","true");
+                adminBtn.classList.add("logged-in");
+                document.getElementById("adminOverlay").classList.remove("active");
+                document.getElementById("adminSection").classList.add("active");
+                document.getElementById("adminError").style.display="none";
+                document.body.style.overflow="";
+                renderRecentGames();
+            } else {
+                document.getElementById("adminError").style.display="block";
             }
         }
 
-        // ====== LOAD STATS FROM FIRESTORE ======
-        function loadStats() {
-            db.collection('stats').orderBy('createdAt', 'desc').get()
-                .then(function(snapshot) {
-                    allStats = [];
-                    snapshot.forEach(function(doc) {
-                        var data = doc.data();
-                        data.id = doc.id;
-                        allStats.push(data);
-                    });
-                    renderAll();
-                })
-                .catch(function(err) {
-                    console.error('Error loading stats:', err);
-                    showToast('Fehler beim Laden der Statistiken', 'error');
-                });
+        // SET DEFAULT DATE
+        var today = new Date();
+        var y=today.getFullYear(),mo=String(today.getMonth()+1).padStart(2,"0"),da=String(today.getDate()).padStart(2,"0");
+        document.getElementById("addDate").value = y+"-"+mo+"-"+da;
+
+        // ADD STAT
+        document.getElementById("addStatBtn").addEventListener("click",function(){
+            var game=document.getElementById("addGame").value;
+            var winner=document.getElementById("addWinner").value;
+            var date=document.getElementById("addDate").value;
+            if(!game||!winner||!date){alert("Bitte alle Felder ausfuellen!");return;}
+            var emoji = GAME_EMOJIS[game]||"🎲";
+            db.collection("stats").add({
+                game:game,emoji:emoji,winner:winner,date:date,
+                createdAt:firebase.firestore.FieldValue.serverTimestamp()
+            }).then(function(){
+                document.getElementById("addGame").value="";
+                document.getElementById("addWinner").value="";
+                var fb=document.getElementById("addFeedback");fb.classList.add("show");setTimeout(function(){fb.classList.remove("show");},3000);
+                launchConfetti();
+                loadStats();
+            }).catch(function(err){console.error(err);alert("Fehler!");});
+        });
+
+        // DELETE STAT
+        window.deleteStat=function(id){
+            if(!confirm("Ergebnis loeschen?"))return;
+            db.collection("stats").doc(id).delete().then(function(){loadStats();});
+        };
+
+        // LOAD STATS
+        function loadStats(){
+            db.collection("stats").orderBy("createdAt","desc").get().then(function(snap){
+                allStats=[];
+                snap.forEach(function(doc){var d=doc.data();d.id=doc.id;allStats.push(d);});
+                renderAll();
+            }).catch(function(err){console.error(err);allStats=[];renderAll();});
         }
 
-        // ====== RENDER ALL ======
-        function renderAll() {
-            renderOverallStats();
+        // FILTER
+        window.setFilter=function(game){
+            currentFilter=game;
+            var tabs=document.querySelectorAll(".filter-tab");
+            for(var i=0;i<tabs.length;i++)tabs[i].classList.remove("active");
+            // Find and activate
+            for(var i=0;i<tabs.length;i++){
+                if(tabs[i].getAttribute("data-filter")===game)tabs[i].classList.add("active");
+            }
+            renderLeaderboards();
+            renderRecentGames();
+        };
+
+        // RENDER ALL
+        function renderAll(){
+            renderOverview();
             renderFilterBar();
             renderLeaderboards();
             renderH2H();
             renderRecentGames();
         }
 
-        // ====== OVERALL STATS ======
-        function renderOverallStats() {
-            var container = document.getElementById('overallStats');
-            var totalGames = allStats.length;
-
-            // Count wins per player
-            var wins = {};
-            for (var i = 0; i < PLAYERS.length; i++) {
-                wins[PLAYERS[i]] = 0;
-            }
-            for (var i = 0; i < allStats.length; i++) {
-                var w = allStats[i].winner;
-                if (wins[w] !== undefined) {
-                    wins[w]++;
-                }
-            }
-
-            // Find top player
-            var topPlayer = '';
-            var topWins = 0;
-            for (var p in wins) {
-                if (wins[p] > topWins) {
-                    topWins = wins[p];
-                    topPlayer = p;
-                }
-            }
-
-            // Unique games
-            var uniqueGames = {};
-            for (var i = 0; i < allStats.length; i++) {
-                uniqueGames[allStats[i].game] = true;
-            }
-            var gameCount = Object.keys(uniqueGames).length;
-
-            // Win streak (current)
-            var currentStreak = 0;
-            var streakPlayer = '';
-            if (allStats.length > 0) {
-                streakPlayer = allStats[0].winner;
-                for (var i = 0; i < allStats.length; i++) {
-                    if (allStats[i].winner === streakPlayer) {
-                        currentStreak++;
-                    } else {
-                        break;
-                    }
-                }
-            }
-
-            var html = '';
-            html += '<div class="glass-card stat-card">';
-            html += '<div class="stat-emoji">🎮</div>';
-            html += '<div class="stat-number">' + totalGames + '</div>';
-            html += '<div class="stat-label">Games gespielt</div>';
-            html += '</div>';
-
-            html += '<div class="glass-card stat-card">';
-            html += '<div class="stat-emoji">👑</div>';
-            html += '<div class="stat-number">' + (topPlayer || '—') + '</div>';
-            html += '<div class="stat-label">Meiste Siege (' + topWins + ')</div>';
-            html += '</div>';
-
-            html += '<div class="glass-card stat-card">';
-            html += '<div class="stat-emoji">🎯</div>';
-            html += '<div class="stat-number">' + gameCount + '</div>';
-            html += '<div class="stat-label">Verschiedene Spiele</div>';
-            html += '</div>';
-
-            html += '<div class="glass-card stat-card">';
-            html += '<div class="stat-emoji">🔥</div>';
-            html += '<div class="stat-number">' + currentStreak + '</div>';
-            html += '<div class="stat-label">Aktuelle Serie (' + (streakPlayer || '—') + ')</div>';
-            html += '</div>';
-
-            container.innerHTML = html;
+        function getFiltered(){
+            if(currentFilter==="all") return allStats;
+            return allStats.filter(function(s){return s.game===currentFilter;});
         }
 
-        // ====== FILTER BAR ======
-        function renderFilterBar() {
-            var container = document.getElementById('filterBar');
-            var games = {};
-            for (var i = 0; i < allStats.length; i++) {
-                games[allStats[i].game] = true;
-            }
-            var gameList = Object.keys(games).sort();
-
-            var html = '<button class="filter-btn ' + (currentFilter === 'all' ? 'active' : '') + '" onclick="filterGame(\'all\')">🏆 Alle</button>';
-            for (var i = 0; i < gameList.length; i++) {
-                var g = gameList[i];
-                var emoji = GAME_EMOJIS[g] || '🎲';
-                var activeClass = currentFilter === g ? 'active' : '';
-                html += '<button class="filter-btn ' + activeClass + '" onclick="filterGame(\'' + g.replace(/'/g, "\\'") + '\')">' + emoji + ' ' + g + '</button>';
-            }
-            container.innerHTML = html;
-        }
-
-        // ====== LEADERBOARDS ======
-        function renderLeaderboards() {
-            var container = document.getElementById('leaderboardGrid');
-            var filtered = currentFilter === 'all' ? allStats : allStats.filter(function(s) { return s.game === currentFilter; });
-
-            if (filtered.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div class="empty-emoji">🏆</div><p>Noch keine Spielergebnisse vorhanden.</p></div>';
+        // OVERVIEW
+        function renderOverview(){
+            var container=document.getElementById("statsGrid");
+            var total=allStats.length;
+            if(total===0){
+                container.innerHTML="<div class=\"empty-state\" style=\"grid-column:1/-1\"><div class=\"empty-state-emoji\">🎮</div><div class=\"empty-state-title\">Noch keine Spielergebnisse</div><p>Spielt erstmal was!</p></div>";
                 return;
             }
+            var wins={};
+            for(var i=0;i<PLAYERS.length;i++) wins[PLAYERS[i]]=0;
+            for(var i=0;i<allStats.length;i++){var w=allStats[i].winner;if(wins[w]!==undefined)wins[w]++;}
+            var topPlayer="",topWins=0;
+            for(var p in wins){if(wins[p]>topWins){topWins=wins[p];topPlayer=p;}}
+            var games={};
+            for(var i=0;i<allStats.length;i++) games[allStats[i].game]=true;
+            var gameCount=Object.keys(games).length;
+            // Streak
+            var streak=0,streakP="";
+            if(allStats.length>0){
+                streakP=allStats[0].winner;
+                for(var i=0;i<allStats.length;i++){if(allStats[i].winner===streakP)streak++;else break;}
+            }
+            container.innerHTML=
+                "<div class=\"stat-card\"><div class=\"stat-card-emoji\">🎮</div><div class=\"stat-card-number\">"+total+"</div><div class=\"stat-card-label\">Games gespielt</div></div>"+
+                "<div class=\"stat-card\"><div class=\"stat-card-emoji\">👑</div><div class=\"stat-card-number\">"+escapeHtml(topPlayer)+"</div><div class=\"stat-card-label\">Meiste Siege ("+topWins+")</div></div>"+
+                "<div class=\"stat-card\"><div class=\"stat-card-emoji\">🎯</div><div class=\"stat-card-number\">"+gameCount+"</div><div class=\"stat-card-label\">Verschiedene Spiele</div></div>"+
+                "<div class=\"stat-card\"><div class=\"stat-card-emoji\">🔥</div><div class=\"stat-card-number\">"+streak+"</div><div class=\"stat-card-label\">Aktuelle Serie ("+(streakP||"—")+")</div></div>";
+        }
 
-            // Group by game
-            var byGame = {};
-            for (var i = 0; i < filtered.length; i++) {
-                var g = filtered[i].game;
-                if (!byGame[g]) byGame[g] = [];
+        // FILTER BAR
+        function renderFilterBar(){
+            var container=document.getElementById("filterTabs");
+            var games={};
+            for(var i=0;i<allStats.length;i++) games[allStats[i].game]=true;
+            var list=Object.keys(games).sort();
+            var html="<button class=\"filter-tab "+(currentFilter==="all"?"active":"")+"\" data-filter=\"all\" onclick=\"setFilter('all')\">🏆 Alle</button>";
+            for(var i=0;i<list.length;i++){
+                var g=list[i];var emoji=GAME_EMOJIS[g]||"🎲";
+                html+="<button class=\"filter-tab "+(currentFilter===g?"active":"")+"\" data-filter=\""+g+"\" onclick=\"setFilter('"+g.replace(/'/g,"\\'")+"')\">"+emoji+" "+g+"</button>";
+            }
+            container.innerHTML=html;
+        }
+
+        // LEADERBOARDS
+        function renderLeaderboards(){
+            var container=document.getElementById("leaderboardGrid");
+            var filtered=getFiltered();
+            if(filtered.length===0){container.innerHTML="<div class=\"empty-state\"><div class=\"empty-state-emoji\">🏆</div><div class=\"empty-state-title\">Keine Ergebnisse</div></div>";return;}
+
+            var byGame={};
+            for(var i=0;i<filtered.length;i++){
+                var g=filtered[i].game;
+                if(!byGame[g]) byGame[g]=[];
                 byGame[g].push(filtered[i]);
             }
 
-            // Also render overall leaderboard
-            var html = '';
-
-            // Overall
-            if (currentFilter === 'all') {
-                html += renderLeaderboardCard('Gesamt', '🏆', filtered);
+            var html="";
+            // Overall (only if filter=all)
+            if(currentFilter==="all") html+=buildLBCard("Gesamt","🏆",filtered);
+            var gk=Object.keys(byGame).sort();
+            for(var i=0;i<gk.length;i++){
+                html+=buildLBCard(gk[i],GAME_EMOJIS[gk[i]]||"🎲",byGame[gk[i]]);
             }
-
-            var games = Object.keys(byGame).sort();
-            for (var i = 0; i < games.length; i++) {
-                var gameName = games[i];
-                var emoji = GAME_EMOJIS[gameName] || '🎲';
-                html += renderLeaderboardCard(gameName, emoji, byGame[gameName]);
-            }
-
-            container.innerHTML = html;
+            container.innerHTML=html;
         }
 
-        function renderLeaderboardCard(title, emoji, stats) {
-            var wins = {};
-            for (var i = 0; i < PLAYERS.length; i++) {
-                wins[PLAYERS[i]] = 0;
+        function buildLBCard(title,emoji,stats){
+            var wins={};
+            // Collect all unique players from stats
+            for(var i=0;i<stats.length;i++){
+                var w=stats[i].winner;
+                if(w) wins[w]=(wins[w]||0)+1;
             }
-            for (var i = 0; i < stats.length; i++) {
-                var w = stats[i].winner;
-                if (wins[w] !== undefined) {
-                    wins[w]++;
-                }
+            var sorted=Object.keys(wins).sort(function(a,b){return wins[b]-wins[a];});
+            var html="<div class=\"lb-card\"><div class=\"lb-card-header\"><span class=\"lb-card-emoji\">"+emoji+"</span><div><div class=\"lb-card-title\">"+escapeHtml(title)+"</div><div class=\"lb-card-count\">"+stats.length+" Runden</div></div></div>";
+            for(var i=0;i<sorted.length;i++){
+                var rankCls=i===0?"lb-rank-1":i===1?"lb-rank-2":i===2?"lb-rank-3":"lb-rank-other";
+                html+="<div class=\"lb-entry\"><div class=\"lb-rank "+rankCls+"\">"+(i+1)+"</div><span class=\"lb-name\">"+escapeHtml(sorted[i])+"</span><span class=\"lb-wins\">"+wins[sorted[i]]+"W</span></div>";
             }
-
-            // Sort by wins descending
-            var sorted = PLAYERS.slice().sort(function(a, b) { return wins[b] - wins[a]; });
-
-            var html = '<div class="glass-card leaderboard-card">';
-            html += '<h3><span class="emoji">' + emoji + '</span>' + title + '</h3>';
-
-            for (var i = 0; i < sorted.length; i++) {
-                var player = sorted[i];
-                var rankClass = i === 0 ? 'rank-1' : (i === 1 ? 'rank-2' : (i === 2 ? 'rank-3' : 'rank-other'));
-                html += '<div class="leaderboard-entry">';
-                html += '<div class="leaderboard-rank ' + rankClass + '">' + (i + 1) + '</div>';
-                html += '<div class="leaderboard-name">' + player + '</div>';
-                html += '<div class="leaderboard-wins">' + wins[player] + ' W</div>';
-                html += '</div>';
-            }
-
-            html += '</div>';
+            html+="</div>";
             return html;
         }
 
-        // ====== HEAD-TO-HEAD ======
-        function renderH2H() {
-            var container = document.getElementById('h2hGrid');
-            var matchups = [
-                ['Andrei', 'Georgie'],
-                ['Andrei', 'Mats'],
-                ['Georgie', 'Mats']
-            ];
-
-            var html = '';
-            for (var i = 0; i < matchups.length; i++) {
-                var p1 = matchups[i][0];
-                var p2 = matchups[i][1];
-                var p1Wins = 0;
-                var p2Wins = 0;
-                for (var j = 0; j < allStats.length; j++) {
-                    if (allStats[j].winner === p1) p1Wins++;
-                    if (allStats[j].winner === p2) p2Wins++;
+        // HEAD TO HEAD
+        function renderH2H(){
+            var container=document.getElementById("h2hGrid");
+            if(allStats.length===0){container.innerHTML="<div class=\"empty-state\"><div class=\"empty-state-emoji\">🤝</div><div class=\"empty-state-title\">Keine Daten</div></div>";return;}
+            var matchups=[["Andrei","Georgie"],["Andrei","Mats"],["Georgie","Mats"]];
+            var html="";
+            for(var m=0;m<matchups.length;m++){
+                var p1=matchups[m][0],p2=matchups[m][1];
+                var p1W=0,p2W=0;
+                for(var i=0;i<allStats.length;i++){
+                    if(allStats[i].winner===p1)p1W++;
+                    if(allStats[i].winner===p2)p2W++;
                 }
-                var total = p1Wins + p2Wins;
-                var p1Pct = total > 0 ? Math.round((p1Wins / total) * 100) : 50;
-                var p2Pct = 100 - p1Pct;
-
-                html += '<div class="glass-card h2h-card">';
-                html += '<div class="h2h-players">';
-                html += '<span class="h2h-player">' + p1 + '</span>';
-                html += '<span class="h2h-vs">VS</span>';
-                html += '<span class="h2h-player">' + p2 + '</span>';
-                html += '</div>';
-                html += '<div class="h2h-score">' + p1Wins + ' : ' + p2Wins + '</div>';
-                html += '<div class="h2h-bar">';
-                html += '<div class="h2h-bar-fill-left" style="width:' + p1Pct + '%"></div>';
-                html += '<div class="h2h-bar-fill-right" style="width:' + p2Pct + '%"></div>';
-                html += '</div>';
-                html += '</div>';
+                var total=p1W+p2W;
+                var p1Pct=total>0?Math.round((p1W/total)*100):50;
+                var p2Pct=100-p1Pct;
+                html+="<div class=\"h2h-card\"><div class=\"h2h-players\"><span class=\"h2h-player\">"+p1+"</span><span class=\"h2h-vs\">VS</span><span class=\"h2h-player\">"+p2+"</span></div><div class=\"h2h-score\">"+p1W+" : "+p2W+"</div><div class=\"h2h-bar\"><div class=\"h2h-bar-left\" style=\"width:"+p1Pct+"%\"></div><div class=\"h2h-bar-right\" style=\"width:"+p2Pct+"%\"></div></div></div>";
             }
-
-            if (allStats.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div class="empty-emoji">🤝</div><p>Noch keine Daten für Head-to-Head.</p></div>';
-            } else {
-                container.innerHTML = html;
-            }
+            container.innerHTML=html;
         }
 
-        // ====== RECENT GAMES ======
-        function renderRecentGames() {
-            var container = document.getElementById('recentGamesContainer');
-            var filtered = currentFilter === 'all' ? allStats : allStats.filter(function(s) { return s.game === currentFilter; });
+        // RECENT GAMES
+        function renderRecentGames(){
+            var container=document.getElementById("recentContainer");
+            var filtered=getFiltered();
+            if(filtered.length===0){container.innerHTML="<div class=\"empty-state\"><div class=\"empty-state-emoji\">📋</div><div class=\"empty-state-title\">Keine Spiele aufgezeichnet</div></div>";return;}
 
-            if (filtered.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div class="empty-emoji">📋</div><p>Noch keine Spiele aufgezeichnet.</p></div>';
-                return;
-            }
-
-            var adminClass = isAdmin ? ' admin-mode' : '';
-            var html = '<table class="games-table' + adminClass + '">';
-            html += '<thead><tr>';
-            html += '<th>Spiel</th><th>Gewinner</th><th>Datum</th>';
-            if (isAdmin) html += '<th>Aktion</th>';
-            html += '</tr></thead><tbody>';
-
-            var limit = Math.min(filtered.length, 20);
-            for (var i = 0; i < limit; i++) {
-                var s = filtered[i];
-                var emoji = s.emoji || GAME_EMOJIS[s.game] || '🎲';
-                var dateStr = s.date || '';
-                if (dateStr) {
-                    var parts = dateStr.split('-');
-                    if (parts.length === 3) {
-                        dateStr = parts[2] + '.' + parts[1] + '.' + parts[0];
+            var html="<div class=\"recent-table-wrap\"><table class=\"recent-table\"><thead><tr><th>Spiel</th><th>Gewinner</th><th>Details</th><th>Datum</th>"+(isAdmin?"<th></th>":"")+"</tr></thead><tbody>";
+            var limit=Math.min(filtered.length,25);
+            for(var i=0;i<limit;i++){
+                var s=filtered[i];
+                var emoji=s.emoji||GAME_EMOJIS[s.game]||"🎲";
+                var dateStr=formatDate(s.date||"");
+                var details="";
+                if(s.players && s.players.length>0){
+                    if(s.gameType==="maxProfit"){
+                        for(var j=0;j<s.players.length;j++){
+                            var p=s.players[j];
+                            var profit=((p.cashOut||0)-(p.buyIn||0));
+                            var sign=profit>=0?"+":"";
+                            details+=escapeHtml(p.name)+": "+sign+profit.toFixed(2)+"EUR ";
+                        }
+                    } else if(s.gameType==="maxPoints"||s.gameType==="minPoints"){
+                        for(var j=0;j<s.players.length;j++){
+                            var p=s.players[j];
+                            var pts=p.points||p.money||0;
+                            details+=escapeHtml(p.name)+": "+pts+"P ";
+                        }
                     }
                 }
-                html += '<tr>';
-                html += '<td><span class="game-emoji">' + emoji + '</span> ' + escapeHtml(s.game) + '</td>';
-                html += '<td><span class="winner-badge">🏆 ' + escapeHtml(s.winner) + '</span></td>';
-                html += '<td>' + dateStr + '</td>';
-                if (isAdmin) {
-                    html += '<td><button class="delete-stat-btn" style="display:inline-block" onclick="deleteStat(\'' + s.id + '\')">🗑️</button></td>';
-                }
-                html += '</tr>';
+                html+="<tr><td><div class=\"game-cell\"><span class=\"game-cell-emoji\">"+emoji+"</span>"+escapeHtml(s.game)+"</div></td>";
+                html+="<td><span class=\"winner-badge\">🏆 "+escapeHtml(s.winner)+"</span></td>";
+                html+="<td>"+(details?"<span class=\"detail-badge\">"+details.trim()+"</span>":"—")+"</td>";
+                html+="<td>"+dateStr+"</td>";
+                if(isAdmin) html+="<td><button class=\"delete-btn\" onclick=\"deleteStat('"+s.id+"')\">🗑️</button></td>";
+                html+="</tr>";
             }
-
-            html += '</tbody></table>';
-            container.innerHTML = html;
+            html+="</tbody></table></div>";
+            container.innerHTML=html;
         }
 
-        // ====== ADD STAT (ADMIN) ======
-        window.addStat = function() {
-            if (!isAdmin) return;
-
-            var gameSelect = document.getElementById('gameSelect');
-            var winnerSelect = document.getElementById('winnerSelect');
-            var dateInput = document.getElementById('gameDateInput');
-
-            var game = gameSelect.value;
-            var winner = winnerSelect.value;
-            var date = dateInput.value;
-
-            if (!game || !winner || !date) {
-                showToast('Bitte alle Felder ausfüllen!', 'error');
-                return;
-            }
-
-            var emoji = GAME_EMOJIS[game] || '🎲';
-
-            db.collection('stats').add({
-                game: game,
-                emoji: emoji,
-                winner: winner,
-                date: date,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(function() {
-                showToast('🏆 Ergebnis gespeichert!', 'success');
-                triggerKonfetti();
-                gameSelect.value = '';
-                winnerSelect.value = '';
-                setDefaultDate();
-                loadStats();
-            }).catch(function(err) {
-                console.error('Error adding stat:', err);
-                showToast('Fehler beim Speichern!', 'error');
-            });
-        };
-
-        // ====== DELETE STAT (ADMIN) ======
-        window.deleteStat = function(id) {
-            if (!isAdmin) return;
-            if (!confirm('Ergebnis wirklich löschen?')) return;
-
-            db.collection('stats').doc(id).delete()
-                .then(function() {
-                    showToast('Ergebnis gelöscht!', 'info');
-                    loadStats();
-                })
-                .catch(function(err) {
-                    console.error('Error deleting stat:', err);
-                    showToast('Fehler beim Löschen!', 'error');
-                });
-        };
-
-        // ====== FILTER ======
-        window.filterGame = function(game) {
-            currentFilter = game;
-            renderFilterBar();
-            renderLeaderboards();
-            renderRecentGames();
-        };
-
-        // ====== ADMIN ======
-        window.toggleAdmin = function() {
-            if (isAdmin) {
-                isAdmin = false;
-                localStorage.removeItem('pocci4_admin');
-                updateAdminUI();
-                showToast('Admin abgemeldet', 'info');
-                renderRecentGames();
-            } else {
-                document.getElementById('loginModal').classList.add('active');
-                document.getElementById('adminPasswordInput').value = '';
-                setTimeout(function() {
-                    document.getElementById('adminPasswordInput').focus();
-                }, 100);
-            }
-        };
-
-        window.confirmLogin = function() {
-            var pw = document.getElementById('adminPasswordInput').value;
-            if (pw === 'pocci2025') {
-                isAdmin = true;
-                localStorage.setItem('pocci4_admin', 'true');
-                closeLoginModal();
-                updateAdminUI();
-                showToast('🔓 Admin Modus aktiviert!', 'success');
-                renderRecentGames();
-            } else {
-                showToast('Falsches Passwort!', 'error');
-                document.getElementById('adminPasswordInput').value = '';
-            }
-        };
-
-        window.closeLoginModal = function() {
-            document.getElementById('loginModal').classList.remove('active');
-        };
-
-        function updateAdminUI() {
-            var panel = document.getElementById('adminPanel');
-            var btn = document.getElementById('adminToggleBtn');
-            if (isAdmin) {
-                panel.classList.add('active');
-                btn.textContent = '🔓 Logout';
-            } else {
-                panel.classList.remove('active');
-                btn.textContent = '🔐 Admin';
-            }
+        // HELPERS
+        function formatDate(ds){
+            if(!ds) return "";
+            var p=ds.split("-");
+            if(p.length===3) return parseInt(p[2])+"."+p[1]+"."+p[0];
+            return ds;
+        }
+        function escapeHtml(s){
+            if(!s) return "";
+            return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
         }
 
-        // ====== NAVBAR SCROLL ======
-        function initNavScroll() {
-            window.addEventListener('scroll', function() {
-                var navbar = document.getElementById('navbar');
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-        }
+        // CONFETTI
+        function launchConfetti(){var c=document.getElementById("confettiContainer");var colors=["#C03A2B","#E8501E","#C4A882","#457B9D","#FF6B6B","#FFD93D","#6BCB77"];for(var i=0;i<50;i++){var p=document.createElement("div");var sz=Math.random()*8+5;var isCir=Math.random()>.5;p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"3px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.3)+"s;pointer-events:none;";c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4000);})(p);}}
+        var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";document.head.appendChild(cs);
 
-        // ====== DROPDOWN ======
-        function initDropdown() {
-            var dropdown = document.getElementById('eventsDropdown');
-            var hoverTimer = null;
-            var leaveTimer = null;
+        // INIT
+        loadStats();
 
-            dropdown.addEventListener('mouseenter', function() {
-                clearTimeout(leaveTimer);
-                hoverTimer = setTimeout(function() {
-                    dropdown.classList.add('show-dropdown');
-                }, 2000);
-            });
+        // REVEAL
+        var ro=new IntersectionObserver(function(entries){for(var i=0;i<entries.length;i++){if(entries[i].isIntersecting){(function(el,idx){setTimeout(function(){el.classList.add("visible");},idx*80);})(entries[i].target,i);ro.unobserve(entries[i].target);}}},{threshold:.1});
+        var revEls=document.querySelectorAll(".reveal");for(var i=0;i<revEls.length;i++)ro.observe(revEls[i]);
 
-            dropdown.addEventListener('mouseleave', function() {
-                clearTimeout(hoverTimer);
-                leaveTimer = setTimeout(function() {
-                    dropdown.classList.remove('show-dropdown');
-                }, 300);
-            });
-        }
-
-        // ====== MOBILE NAV ======
-        window.toggleMobile = function() {
-            var hamburger = document.getElementById('hamburger');
-            var mobileNav = document.getElementById('mobileNav');
-            hamburger.classList.toggle('active');
-            mobileNav.classList.toggle('active');
-        };
-
-        // ====== REVEAL ON SCROLL ======
-        function initReveal() {
-            var reveals = document.querySelectorAll('.reveal');
-            var observer = new IntersectionObserver(function(entries) {
-                for (var i = 0; i < entries.length; i++) {
-                    if (entries[i].isIntersecting) {
-                        entries[i].target.classList.add('visible');
-                    }
-                }
-            }, { threshold: 0.1 });
-
-            for (var i = 0; i < reveals.length; i++) {
-                observer.observe(reveals[i]);
-            }
-        }
-
-        // ====== TOAST ======
-        function showToast(msg, type) {
-            var container = document.getElementById('toastContainer');
-            var toast = document.createElement('div');
-            toast.className = 'toast ' + (type || 'info');
-            toast.textContent = msg;
-            container.appendChild(toast);
-            setTimeout(function() {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100%)';
-                toast.style.transition = 'all 0.3s ease';
-                setTimeout(function() { toast.remove(); }, 300);
-            }, 3000);
-        }
-
-        // ====== KONFETTI ======
-        function triggerKonfetti() {
-            var canvas = document.getElementById('konfettiCanvas');
-            var ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            var particles = [];
-            var colors = ['#C03A2B', '#C4A882', '#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1'];
-
-            for (var i = 0; i < 150; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
-                    w: Math.random() * 10 + 5,
-                    h: Math.random() * 6 + 3,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    vx: (Math.random() - 0.5) * 4,
-                    vy: Math.random() * 3 + 2,
-                    rot: Math.random() * 360,
-                    rotSpeed: (Math.random() - 0.5) * 10
-                });
-            }
-
-            var frame = 0;
-            var maxFrames = 180;
-
-            function animate() {
-                if (frame >= maxFrames) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    return;
-                }
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (var i = 0; i < particles.length; i++) {
-                    var p = particles[i];
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.rot += p.rotSpeed;
-                    p.vy += 0.05;
-
-                    ctx.save();
-                    ctx.translate(p.x, p.y);
-                    ctx.rotate(p.rot * Math.PI / 180);
-                    ctx.fillStyle = p.color;
-                    ctx.globalAlpha = Math.max(0, 1 - (frame / maxFrames));
-                    ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-                    ctx.restore();
-                }
-                frame++;
-                requestAnimationFrame(animate);
-            }
-            animate();
-        }
-
-        // ====== HELPERS ======
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-        }
-
-        // ====== START ======
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
-
+        // PARALLAX
+        window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";}});
     })();
     </script>
 </body>
