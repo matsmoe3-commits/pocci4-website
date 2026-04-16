@@ -16,9 +16,12 @@
         .nav-container{max-width:1400px;margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
         .nav-logo img{height:48px;filter:brightness(0) invert(1)}
         .nav-center{display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);padding:5px;border-radius:50px}
-        .nav-center-link{padding:7px 16px;border-radius:50px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.5);transition:var(--transition-fast);cursor:pointer;border:none;background:none;font-family:var(--font-main)}
+        .nav-center-link{padding:7px 16px;border-radius:50px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.5);transition:var(--transition-fast);cursor:pointer;border:none;background:none;font-family:var(--font-main);position:relative}
         .nav-center-link:hover{color:rgba(255,255,255,.8)}
         .nav-center-link.active{background:var(--color-primary);color:#fff}
+        .nav-center-link .nav-badge{position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;border-radius:8px;background:var(--color-primary);color:#fff;font-size:.55rem;font-weight:800;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid rgba(26,26,26,.95)}
+        .nav-center-link .nav-badge.show{display:flex}
+        .nav-center-link.active .nav-badge{background:#fff;color:var(--color-primary)}
         .nav-right{display:flex;align-items:center;gap:.75rem}
         .nav-back{padding:7px 16px;border-radius:50px;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.5);transition:var(--transition-fast);border:1px solid rgba(255,255,255,.12);background:none;text-decoration:none}
         .nav-back:hover{color:#fff;border-color:rgba(255,255,255,.3)}
@@ -38,7 +41,7 @@
         .btn-danger{background:transparent;border:1.5px solid var(--color-border);color:var(--color-gray)}
         .btn-danger:hover{border-color:var(--color-primary);color:var(--color-primary);background:rgba(192,58,43,.05)}
         .btn-sm{padding:7px 16px;font-size:.75rem}
-        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+        .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
         .stat-card{background:var(--color-white);border-radius:20px;padding:1.5rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
         .stat-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
         .stat-icon{font-size:1.6rem;margin-bottom:.6rem}
@@ -48,6 +51,7 @@
         .panel-header{padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-border);flex-wrap:wrap;gap:.75rem}
         .panel-header h3{font-size:1rem;font-weight:800;display:flex;align-items:center;gap:.5rem}
         .panel-badge{font-size:.7rem;font-weight:700;color:var(--color-gray);background:var(--color-bg);padding:3px 10px;border-radius:50px}
+        .panel-badge.unread{background:var(--color-primary);color:#fff}
         .panel-body{padding:1.5rem}
         .panel-search{padding:8px 16px;border:1.5px solid var(--color-border);border-radius:50px;font-size:.8rem;font-family:var(--font-main);outline:none;transition:var(--transition-fast);width:220px}
         .panel-search:focus{border-color:var(--color-primary)}
@@ -144,6 +148,24 @@
         .toast.success{background:var(--color-green)}
         .toast.error{background:var(--color-primary)}
         .member-block,.social-block,.gallery-block{padding:1rem;background:var(--color-bg);border-radius:14px;margin-bottom:.75rem}
+        /* MESSAGE STYLES */
+        .msg-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:1.25rem;align-items:center;padding:1.15rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.4);transition:var(--transition-fast)}
+        .msg-row:hover{background:var(--color-bg)}
+        .msg-row:last-child{border-bottom:none}
+        .msg-row.unread{background:rgba(192,58,43,.03);border-left:3px solid var(--color-primary)}
+        .msg-avatar{width:42px;height:42px;border-radius:50%;background:var(--color-bg-warm);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;font-weight:800;color:var(--color-primary)}
+        .msg-sender{font-size:.9rem;font-weight:800}
+        .msg-subject{font-size:.78rem;font-weight:600;color:var(--color-text-light);margin-top:.1rem}
+        .msg-preview{font-size:.78rem;color:var(--color-gray);margin-top:.25rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .msg-time{font-size:.68rem;color:var(--color-gray);white-space:nowrap}
+        .msg-unread-dot{width:8px;height:8px;border-radius:50%;background:var(--color-primary);flex-shrink:0}
+        .msg-detail{padding:2rem}
+        .msg-detail-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--color-border)}
+        .msg-detail-avatar{width:50px;height:50px;border-radius:50%;background:var(--color-bg-warm);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;color:var(--color-primary);flex-shrink:0}
+        .msg-detail-name{font-size:1.1rem;font-weight:800}
+        .msg-detail-sub{font-size:.8rem;color:var(--color-gray)}
+        .msg-detail-subject{font-size:1rem;font-weight:700;margin-bottom:1rem;padding:10px 14px;background:var(--color-bg);border-radius:10px}
+        .msg-detail-body{font-size:.92rem;color:var(--color-text-light);line-height:1.8;white-space:pre-wrap;word-break:break-word}
         @media(max-width:1024px){
             .stats-grid{grid-template-columns:repeat(2,1fr)}
             .nav-center{display:none}
@@ -151,6 +173,8 @@
             .event-row{grid-template-columns:1fr;gap:.6rem}
             .game-row{grid-template-columns:auto 1fr auto;gap:.5rem}
             .game-row .game-stat:not(:last-of-type){display:none}
+            .msg-row{grid-template-columns:1fr auto;gap:.5rem}
+            .msg-row .msg-avatar{display:none}
         }
         @media(max-width:768px){
             :root{--nav-height:68px}
@@ -170,8 +194,10 @@
             .nav-admin-badge{display:none}
         }
         .mobile-admin-tabs{display:none;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 1rem;margin-bottom:1.5rem;gap:.4rem}
-        .mobile-admin-tabs .admin-mtab{padding:8px 16px;border-radius:50px;font-size:.75rem;font-weight:700;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:1.5px solid var(--color-border);background:var(--color-white);font-family:var(--font-main);white-space:nowrap;flex-shrink:0}
+        .mobile-admin-tabs .admin-mtab{padding:8px 16px;border-radius:50px;font-size:.75rem;font-weight:700;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:1.5px solid var(--color-border);background:var(--color-white);font-family:var(--font-main);white-space:nowrap;flex-shrink:0;position:relative}
         .mobile-admin-tabs .admin-mtab.active{background:var(--color-text);color:#fff;border-color:var(--color-text)}
+        .mobile-admin-tabs .admin-mtab .mtab-badge{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:8px;background:var(--color-primary);color:#fff;font-size:.55rem;font-weight:800;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--color-bg)}
+        .mobile-admin-tabs .admin-mtab .mtab-badge.show{display:flex}
         @media(max-width:1024px){.mobile-admin-tabs{display:flex}}
     </style>
 </head>
@@ -183,6 +209,7 @@
         <div class="nav-center">
             <button class="nav-center-link active" data-section="dashboard">📊 Dashboard</button>
             <button class="nav-center-link" data-section="orders">📦 Bestellungen</button>
+            <button class="nav-center-link" data-section="messages">📬 Nachrichten <span class="nav-badge" id="navMsgBadge">0</span></button>
             <button class="nav-center-link" data-section="events">📅 Events</button>
             <button class="nav-center-link" data-section="gamestats">🏆 Game Stats</button>
             <button class="nav-center-link" data-section="content">✏️ Content</button>
@@ -198,6 +225,7 @@
 <div class="mobile-admin-tabs" id="mobileTabs" style="margin-top:calc(var(--nav-height) + 1rem)">
     <button class="admin-mtab active" data-section="dashboard">📊 Dashboard</button>
     <button class="admin-mtab" data-section="orders">📦 Bestellungen</button>
+    <button class="admin-mtab" data-section="messages">📬 Nachrichten <span class="mtab-badge" id="mobileMsgBadge">0</span></button>
     <button class="admin-mtab" data-section="events">📅 Events</button>
     <button class="admin-mtab" data-section="gamestats">🏆 Game Stats</button>
     <button class="admin-mtab" data-section="content">✏️ Content</button>
@@ -214,8 +242,10 @@
             <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-value" id="statOrders">-</div><div class="stat-label">Bestellungen</div></div>
             <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-value" id="statRevenue">-</div><div class="stat-label">Umsatz (EUR)</div></div>
             <div class="stat-card"><div class="stat-icon">🛒</div><div class="stat-value" id="statItems">-</div><div class="stat-label">Artikel verkauft</div></div>
+            <div class="stat-card"><div class="stat-icon">📬</div><div class="stat-value" id="statMessages">-</div><div class="stat-label">Nachrichten</div></div>
             <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-value" id="statEvents">-</div><div class="stat-label">Events</div></div>
         </div>
+        <div class="panel"><div class="panel-header"><h3>📬 Neue Nachrichten</h3><button class="btn btn-sm btn-outline" id="goToMessages">Alle anzeigen →</button></div><div class="panel-list" id="recentMessagesList" style="max-height:300px"></div></div>
         <div class="panel"><div class="panel-header"><h3>Letzte Bestellungen</h3><button class="btn btn-sm btn-outline" id="goToOrders">Alle anzeigen →</button></div><div class="panel-list" id="recentOrdersList" style="max-height:300px"></div></div>
         <div class="panel"><div class="panel-header"><h3>Nächste Events</h3><button class="btn btn-sm btn-outline" id="goToEvents">Alle anzeigen →</button></div><div class="panel-list" id="upcomingEventsList" style="max-height:300px"></div></div>
         <div class="panel"><div class="panel-header"><h3>🏆 Top Produkte</h3></div><div class="panel-list" id="bestsellerList"></div></div>
@@ -227,6 +257,15 @@
         <div class="panel">
             <div class="panel-header"><div style="display:flex;align-items:center;gap:.75rem"><h3>Alle Bestellungen</h3><span class="panel-badge" id="ordersCount">0</span></div><input type="text" class="panel-search" id="ordersSearch" placeholder="🔍 Suchen..."></div>
             <div class="panel-list" id="ordersList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
+        </div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="admin-section" id="sec-messages">
+        <div class="admin-header"><div><h1>Nachrichten 📬</h1><p>Alle Kontakt-Nachrichten von der Website.</p></div><div class="header-actions"><button class="btn btn-outline" id="markAllReadBtn">✓ Alle gelesen</button></div></div>
+        <div class="panel">
+            <div class="panel-header"><div style="display:flex;align-items:center;gap:.75rem"><h3>Alle Nachrichten</h3><span class="panel-badge" id="messagesCount">0</span><span class="panel-badge unread" id="messagesUnread" style="display:none">0 ungelesen</span></div><input type="text" class="panel-search" id="messagesSearch" placeholder="🔍 Nachricht suchen..."></div>
+            <div class="panel-list" id="messagesList" style="max-height:700px"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
         </div>
     </div>
 
@@ -314,6 +353,18 @@
     </div>
 </div>
 
+<!-- MESSAGE DETAIL MODAL -->
+<div class="modal-overlay" id="messageModal">
+    <div class="modal">
+        <div class="modal-header"><h3>📬 Nachricht</h3><button class="modal-close" onclick="closeModal('messageModal')">✕</button></div>
+        <div class="modal-body" id="messageModalBody"></div>
+        <div class="modal-footer">
+            <button class="btn btn-danger btn-sm" id="msgDeleteBtn">🗑️ Löschen</button>
+            <button class="btn btn-outline" onclick="closeModal('messageModal')">Schließen</button>
+        </div>
+    </div>
+</div>
+
 <!-- MEMBERS MODAL -->
 <div class="modal-overlay" id="membersModal">
     <div class="modal">
@@ -360,7 +411,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
 <script>
-// closeModal muss global sein wegen onclick in HTML
 function closeModal(id){document.getElementById(id).classList.remove("active");document.body.style.overflow="";}
 function openModal(id){document.getElementById(id).classList.add("active");document.body.style.overflow="hidden";}
 
@@ -389,8 +439,8 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
         {id:15,title:"Georgies Notfallkit",emoji:"🧳",price:9.99}
     ];
 
-    var allOrders=[],allEvents=[],allPlayers=[],allGames=[];
-    var editingEventId=null,editingPlayerId=null;
+    var allOrders=[],allEvents=[],allPlayers=[],allGames=[],allMessages=[];
+    var editingEventId=null,editingPlayerId=null,viewingMsgId=null;
 
     // ===== HELPERS =====
     function toast(msg,type){
@@ -419,8 +469,32 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
         return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"})+" · "+d.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
     }
 
+    function fDateShort(ts){
+        if(!ts)return"-";
+        var d;
+        if(ts.seconds)d=new Date(ts.seconds*1000);
+        else return"-";
+        var now=new Date();
+        var diff=now.getTime()-d.getTime();
+        var mins=Math.floor(diff/60000);
+        if(mins<1)return"Gerade eben";
+        if(mins<60)return mins+" Min.";
+        var hrs=Math.floor(mins/60);
+        if(hrs<24)return hrs+" Std.";
+        var days=Math.floor(hrs/24);
+        if(days<7)return days+" Tag"+(days>1?"e":"");
+        return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"});
+    }
+
     function monthName(m){return["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"][m];}
     function todayStr(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+
+    function getInitials(name){
+        if(!name)return"?";
+        var parts=name.trim().split(/\s+/);
+        if(parts.length>=2)return(parts[0][0]+parts[1][0]).toUpperCase();
+        return name.substring(0,2).toUpperCase();
+    }
 
     // ===== NAVIGATION =====
     function switchSection(name){
@@ -437,9 +511,9 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     document.querySelectorAll(".admin-mtab").forEach(function(btn){btn.addEventListener("click",function(){switchSection(this.getAttribute("data-section"));});});
     document.getElementById("goToOrders").addEventListener("click",function(e){e.preventDefault();switchSection("orders");});
     document.getElementById("goToEvents").addEventListener("click",function(e){e.preventDefault();switchSection("events");});
+    document.getElementById("goToMessages").addEventListener("click",function(e){e.preventDefault();switchSection("messages");});
     document.getElementById("logoutBtn").addEventListener("click",function(){sessionStorage.removeItem("pocci4admin");window.location.href="shop.html";});
 
-    // Close modals on overlay click
     document.querySelectorAll(".modal-overlay").forEach(function(ov){
         ov.addEventListener("click",function(e){if(e.target===ov)closeModal(ov.id);});
     });
@@ -459,7 +533,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
             renderOrders(allOrders);renderRecentOrders();updateDashboard();renderBestsellers();
         },function(err){
             console.error("Orders:",err);
-            document.getElementById("ordersList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+err.message+'</p></div>';
+            document.getElementById("ordersList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+esc(err.message)+'</p></div>';
         });
     }
 
@@ -473,11 +547,11 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
             if(o.items&&o.items.length)for(var j=0;j<o.items.length;j++){emojis+=(o.items[j].emoji||"");names.push(o.items[j].qty+"x "+o.items[j].title);}
             else if(o.itemsSummary)names.push(o.itemsSummary);
             var done=o.status==="done";
-            h+='<div class="order-row"><div><div class="order-id">#'+o._id.substring(0,8).toUpperCase()+'</div><div class="order-date">'+fDate(o.createdAt)+'</div></div>';
+            h+='<div class="order-row"><div><div class="order-id">#'+esc(o._id.substring(0,8).toUpperCase())+'</div><div class="order-date">'+fDate(o.createdAt)+'</div></div>';
             h+='<div><div class="order-items-main">'+emojis+'</div><div class="order-items-detail">'+esc(names.join(", "))+'</div></div>';
             h+='<span class="order-method '+(o.paymentMethod==="paypal"?"method-paypal":"method-vor-ort")+'">'+(o.paymentMethod==="paypal"?"PayPal":"Vor Ort")+'</span>';
             h+='<div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+" €</div>";
-            h+='<div class="order-actions"><button class="status-btn'+(done?" done":"")+'" data-oid="'+o._id+'">'+(done?"✓ Erledigt":"Offen")+'</button><button class="del-btn" data-oid="'+o._id+'">🗑️</button></div></div>';
+            h+='<div class="order-actions"><button class="status-btn'+(done?" done":"")+'" data-oid="'+esc(o._id)+'">'+(done?"✓ Erledigt":"Offen")+'</button><button class="del-btn" data-oid="'+esc(o._id)+'">🗑️</button></div></div>';
         }
         c.innerHTML=h;
         c.querySelectorAll(".status-btn:not(.done)").forEach(function(btn){btn.addEventListener("click",function(){db.collection("orders").doc(this.getAttribute("data-oid")).update({status:"done"});toast("✓ Erledigt");});});
@@ -510,6 +584,158 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     });
 
     // ============================================================
+    //  MESSAGES
+    // ============================================================
+    function loadMessages(){
+        db.collection("messages").onSnapshot(function(snap){
+            allMessages=[];
+            snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allMessages.push(d);});
+            allMessages.sort(function(a,b){
+                var ta=a.createdAt?a.createdAt.seconds:0;
+                var tb=b.createdAt?b.createdAt.seconds:0;
+                return tb-ta;
+            });
+            renderMessages(allMessages);renderRecentMessages();updateDashboard();updateMsgBadges();
+        },function(err){
+            console.error("Messages:",err);
+            document.getElementById("messagesList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+esc(err.message)+'</p></div>';
+        });
+    }
+
+    function countUnread(){
+        var count=0;
+        for(var i=0;i<allMessages.length;i++){if(!allMessages[i].read)count++;}
+        return count;
+    }
+
+    function updateMsgBadges(){
+        var unread=countUnread();
+        // Nav badge
+        var navBadge=document.getElementById("navMsgBadge");
+        navBadge.textContent=unread;
+        navBadge.classList.toggle("show",unread>0);
+        // Mobile badge
+        var mobBadge=document.getElementById("mobileMsgBadge");
+        mobBadge.textContent=unread;
+        mobBadge.classList.toggle("show",unread>0);
+        // Panel unread badge
+        var unreadBadge=document.getElementById("messagesUnread");
+        if(unread>0){unreadBadge.textContent=unread+" ungelesen";unreadBadge.style.display="inline-block";}
+        else{unreadBadge.style.display="none";}
+    }
+
+    function renderMessages(messages){
+        var c=document.getElementById("messagesList");
+        document.getElementById("messagesCount").textContent=messages.length;
+        if(!messages.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📬</div><h3>Keine Nachrichten</h3><p>Sobald jemand über die Kontaktseite schreibt, erscheint es hier.</p></div>';return;}
+        var h="";
+        for(var i=0;i<messages.length;i++){
+            var m=messages[i];
+            var isUnread=!m.read;
+            h+='<div class="msg-row'+(isUnread?" unread":"")+'" data-msg-id="'+esc(m._id)+'" style="cursor:pointer">';
+            h+='<div class="msg-avatar">'+getInitials(m.name)+'</div>';
+            h+='<div><div class="msg-sender">'+esc(m.name||"Unbekannt")+'</div>';
+            h+='<div class="msg-subject">'+esc(m.subject||"Kein Betreff")+'</div>';
+            h+='<div class="msg-preview">'+esc(m.message||"")+'</div></div>';
+            h+='<div class="msg-time">'+fDateShort(m.createdAt)+'</div>';
+            h+='<div class="order-actions">'+(isUnread?'<div class="msg-unread-dot"></div>':'')+'<button class="del-btn" data-del-msg="'+esc(m._id)+'">🗑️</button></div>';
+            h+='</div>';
+        }
+        c.innerHTML=h;
+        // Click to open message
+        c.querySelectorAll(".msg-row").forEach(function(row){
+            row.addEventListener("click",function(e){
+                if(e.target.closest(".del-btn"))return;
+                var msgId=this.getAttribute("data-msg-id");
+                openMessage(msgId);
+            });
+        });
+        // Delete buttons
+        c.querySelectorAll("[data-del-msg]").forEach(function(btn){
+            btn.addEventListener("click",function(e){
+                e.stopPropagation();
+                if(confirm("Nachricht löschen?")){
+                    db.collection("messages").doc(this.getAttribute("data-del-msg")).delete();
+                    toast("Gelöscht","error");
+                }
+            });
+        });
+    }
+
+    function openMessage(id){
+        var msg=null;
+        for(var i=0;i<allMessages.length;i++){if(allMessages[i]._id===id){msg=allMessages[i];break;}}
+        if(!msg)return;
+        viewingMsgId=id;
+        // Mark as read
+        if(!msg.read){
+            db.collection("messages").doc(id).update({read:true}).catch(function(err){console.error(err);});
+        }
+        var body=document.getElementById("messageModalBody");
+        var h='<div class="msg-detail-header"><div class="msg-detail-avatar">'+getInitials(msg.name)+'</div><div><div class="msg-detail-name">'+esc(msg.name||"Unbekannt")+'</div><div class="msg-detail-sub">'+fDate(msg.createdAt)+'</div></div></div>';
+        if(msg.subject)h+='<div class="msg-detail-subject">📎 '+esc(msg.subject)+'</div>';
+        h+='<div class="msg-detail-body">'+esc(msg.message||"(Keine Nachricht)")+'</div>';
+        body.innerHTML=h;
+        openModal("messageModal");
+    }
+
+    document.getElementById("msgDeleteBtn").addEventListener("click",function(){
+        if(!viewingMsgId)return;
+        if(confirm("Nachricht löschen?")){
+            db.collection("messages").doc(viewingMsgId).delete();
+            closeModal("messageModal");
+            toast("Gelöscht","error");
+            viewingMsgId=null;
+        }
+    });
+
+    document.getElementById("markAllReadBtn").addEventListener("click",function(){
+        var batch=db.batch();
+        var count=0;
+        for(var i=0;i<allMessages.length;i++){
+            if(!allMessages[i].read){
+                batch.update(db.collection("messages").doc(allMessages[i]._id),{read:true});
+                count++;
+            }
+        }
+        if(count===0){toast("Alle bereits gelesen ✓");return;}
+        batch.commit().then(function(){toast(count+" als gelesen markiert ✓");}).catch(function(err){toast("Fehler","error");console.error(err);});
+    });
+
+    function renderRecentMessages(){
+        var c=document.getElementById("recentMessagesList");
+        var recent=allMessages.slice(0,5);
+        if(!recent.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📬</div><p>Noch keine Nachrichten.</p></div>';return;}
+        var h="";
+        for(var i=0;i<recent.length;i++){
+            var m=recent[i];
+            var isUnread=!m.read;
+            h+='<div class="msg-row'+(isUnread?" unread":"")+'" data-dash-msg="'+esc(m._id)+'" style="cursor:pointer;grid-template-columns:auto 1fr auto">';
+            h+='<div class="msg-avatar">'+getInitials(m.name)+'</div>';
+            h+='<div><div class="msg-sender">'+esc(m.name||"Unbekannt")+(isUnread?' <span style="color:var(--color-primary);font-size:.7rem">● NEU</span>':'')+'</div>';
+            h+='<div class="msg-preview">'+esc(m.message||"")+'</div></div>';
+            h+='<div class="msg-time">'+fDateShort(m.createdAt)+'</div>';
+            h+='</div>';
+        }
+        c.innerHTML=h;
+        c.querySelectorAll("[data-dash-msg]").forEach(function(row){
+            row.addEventListener("click",function(){
+                switchSection("messages");
+                var msgId=this.getAttribute("data-dash-msg");
+                setTimeout(function(){openMessage(msgId);},300);
+            });
+        });
+    }
+
+    document.getElementById("messagesSearch").addEventListener("input",function(){
+        var q=this.value.toLowerCase();
+        if(!q){renderMessages(allMessages);return;}
+        renderMessages(allMessages.filter(function(m){
+            return(m.name||"").toLowerCase().indexOf(q)!==-1||(m.subject||"").toLowerCase().indexOf(q)!==-1||(m.message||"").toLowerCase().indexOf(q)!==-1;
+        }));
+    });
+
+    // ============================================================
     //  EVENTS
     // ============================================================
     function loadEvents(){
@@ -520,7 +746,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
             renderEvents(allEvents);renderUpcomingEvents();updateDashboard();
         },function(err){
             console.error("Events:",err);
-            document.getElementById("eventsList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+err.message+'</p></div>';
+            document.getElementById("eventsList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+esc(err.message)+'</p></div>';
         });
     }
 
@@ -540,7 +766,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
             h+='<div class="event-emoji">'+(e.emoji||"📅")+'</div>';
             h+='<div><div class="event-title">'+esc(e.name||"Unbenannt")+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+esc(e.location):"")+(e.maxGuests?" · Max "+e.maxGuests+" Gäste":"")+'</div></div>';
             h+='<span class="'+(!isPublished?"event-status-draft":isPast?"event-status-past":"event-status-live")+'">'+(!isPublished?"Entwurf":isPast?"Vergangen":"Live")+'</span>';
-            h+='<div class="order-actions"><button class="btn btn-sm btn-outline" data-edit-evt="'+e._id+'">✏️</button><button class="del-btn" data-del-evt="'+e._id+'">🗑️</button></div></div>';
+            h+='<div class="order-actions"><button class="btn btn-sm btn-outline" data-edit-evt="'+esc(e._id)+'">✏️</button><button class="del-btn" data-del-evt="'+esc(e._id)+'">🗑️</button></div></div>';
         }
         c.innerHTML=h;
         c.querySelectorAll("[data-edit-evt]").forEach(function(btn){btn.addEventListener("click",function(){editEvent(this.getAttribute("data-edit-evt"));});});
@@ -604,39 +830,25 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     }
 
     document.getElementById("eventModalSave").addEventListener("click",function(){
-        var nameField=document.getElementById("evtName");
-        var nameVal=nameField.value.trim();
-
-        console.log("Save clicked, name field value:", nameVal);
-        console.log("Name field element:", nameField);
-
-        if(!nameVal){toast("Name ist Pflicht!","error");nameField.focus();return;}
-
+        var nameVal=document.getElementById("evtName").value.trim();
+        if(!nameVal){toast("Name ist Pflicht!","error");document.getElementById("evtName").focus();return;}
         var data={
-            name: nameVal,
-            emoji: document.getElementById("evtEmoji").value.trim()||"📅",
-            date: document.getElementById("evtDate").value||"",
-            time: document.getElementById("evtTime").value||"",
-            location: document.getElementById("evtLocation").value.trim()||"",
-            description: document.getElementById("evtDesc").value.trim()||"",
-            category: document.getElementById("evtCategory").value||"party",
-            maxGuests: parseInt(document.getElementById("evtMaxGuests").value)||0,
-            published: document.getElementById("evtPublished").checked,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            name:nameVal,
+            emoji:document.getElementById("evtEmoji").value.trim()||"📅",
+            date:document.getElementById("evtDate").value||"",
+            time:document.getElementById("evtTime").value||"",
+            location:document.getElementById("evtLocation").value.trim()||"",
+            description:document.getElementById("evtDesc").value.trim()||"",
+            category:document.getElementById("evtCategory").value||"party",
+            maxGuests:parseInt(document.getElementById("evtMaxGuests").value)||0,
+            published:document.getElementById("evtPublished").checked,
+            updatedAt:firebase.firestore.FieldValue.serverTimestamp()
         };
-
-        console.log("Saving data:", JSON.stringify(data));
-
         if(editingEventId){
-            db.collection("events").doc(editingEventId).update(data).then(function(){
-                toast("Event aktualisiert! ✓");closeModal("eventModal");
-            }).catch(function(err){console.error(err);toast("Fehler: "+err.message,"error");});
+            db.collection("events").doc(editingEventId).update(data).then(function(){toast("Event aktualisiert! ✓");closeModal("eventModal");}).catch(function(err){console.error(err);toast("Fehler: "+err.message,"error");});
         }else{
             data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
-            db.collection("events").add(data).then(function(docRef){
-                console.log("Event created with ID:", docRef.id);
-                toast("Event erstellt! 🎉");closeModal("eventModal");
-            }).catch(function(err){console.error(err);toast("Fehler: "+err.message,"error");});
+            db.collection("events").add(data).then(function(){toast("Event erstellt! 🎉");closeModal("eventModal");}).catch(function(err){console.error(err);toast("Fehler: "+err.message,"error");});
         }
     });
 
@@ -680,7 +892,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
             var rate=totalG>0?Math.round(w.total/totalG*100):0;
             h+='<div class="game-row"><div class="game-rank">'+medal+'</div><div class="game-player"><div class="game-avatar" style="background:'+(p.color||"#C03A2B")+'">'+(p.emoji||"😎")+'</div><div class="game-name">'+esc(p.name)+'</div></div>';
             h+='<div class="game-stat">'+w.total+'<div class="game-stat-label">Siege</div></div><div class="game-stat">'+rate+'%<div class="game-stat-label">Winrate</div></div><div class="game-stat">'+Object.keys(w.types).length+'<div class="game-stat-label">Spiele</div></div>';
-            h+='<div class="order-actions"><button class="btn btn-sm btn-outline" data-edit-plr="'+p._id+'">✏️</button><button class="del-btn" data-del-plr="'+p._id+'">🗑️</button></div></div>';
+            h+='<div class="order-actions"><button class="btn btn-sm btn-outline" data-edit-plr="'+esc(p._id)+'">✏️</button><button class="del-btn" data-del-plr="'+esc(p._id)+'">🗑️</button></div></div>';
         }
         c.innerHTML=h;
         c.querySelectorAll("[data-edit-plr]").forEach(function(btn){btn.addEventListener("click",function(){editPlayer(this.getAttribute("data-edit-plr"));});});
@@ -700,7 +912,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
             h+='<div><div style="font-weight:800;font-size:.9rem">'+esc(gl)+'</div><div class="order-date">'+esc(g.notes||"")+'</div></div>';
             h+='<div style="font-weight:700;font-size:.85rem">🏆 '+esc(winner?winner.name:"?")+'</div>';
             h+='<div class="order-date">'+(getDateStr(g.date)||fDate(g.createdAt))+'</div>';
-            h+='<button class="del-btn" data-del-game="'+g._id+'">🗑️</button></div>';
+            h+='<button class="del-btn" data-del-game="'+esc(g._id)+'">🗑️</button></div>';
         }
         c.innerHTML=h;
         c.querySelectorAll("[data-del-game]").forEach(function(btn){btn.addEventListener("click",function(){if(confirm("Spiel löschen?")){db.collection("games").doc(this.getAttribute("data-del-game")).delete();toast("Gelöscht","error");}});});
@@ -894,6 +1106,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
         document.getElementById("statOrders").textContent=allOrders.length;
         document.getElementById("statRevenue").textContent=rev.toFixed(2).replace(".",",");
         document.getElementById("statItems").textContent=items;
+        document.getElementById("statMessages").textContent=allMessages.length;
         document.getElementById("statEvents").textContent=allEvents.length;
     }
 
@@ -914,7 +1127,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     // ============================================================
     //  INIT
     // ============================================================
-    loadOrders();loadEvents();loadPlayers();loadMembers();loadTexts();loadSocials();loadGallery();
+    loadOrders();loadEvents();loadPlayers();loadMessages();loadMembers();loadTexts();loadSocials();loadGallery();
 
 })();
 </script>
