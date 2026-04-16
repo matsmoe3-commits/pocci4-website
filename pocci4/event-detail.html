@@ -202,6 +202,44 @@
             .detail-meta{flex-direction:column;align-items:center;gap:.75rem}
             .footer-links-grid{grid-template-columns:1fr}.btn{width:100%}
         }
+        /* === PAY / SEND MONEY === */
+.pay-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);margin-bottom:1.5rem}
+.pay-card h4{font-size:1rem;font-weight:800;margin-bottom:.25rem;display:flex;align-items:center;gap:.5rem}
+.pay-card-sub{font-size:.8rem;color:var(--color-gray);margin-bottom:1.25rem}
+.pay-presets{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap}
+.pay-preset{padding:7px 14px;border-radius:50px;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);font-size:.8rem;font-weight:600;transition:var(--transition-fast);color:var(--color-text)}
+.pay-preset:hover{border-color:var(--color-primary);color:var(--color-primary);background:rgba(192,58,43,.05)}
+.pay-preset.active{border-color:var(--color-primary);background:var(--color-primary);color:#fff}
+.pay-amount-wrap{display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem}
+.pay-amount-input{flex:1;padding:12px 14px;border:2px solid var(--color-border);border-radius:14px;font-family:var(--font-main);font-size:1.2rem;font-weight:800;outline:none;text-align:center;transition:var(--transition-fast)}
+.pay-amount-input:focus{border-color:var(--color-primary)}
+.pay-currency{font-size:1rem;font-weight:800;color:var(--color-gray)}
+.pay-field{margin-bottom:.75rem}
+.pay-field label{display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.3rem}
+.pay-field input,.pay-field select{width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.85rem;outline:none;transition:var(--transition-fast)}
+.pay-field input:focus,.pay-field select:focus{border-color:var(--color-primary)}
+.pay-field input::placeholder{color:var(--color-gray)}
+.pay-reason-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.75rem}
+.pay-reason-tag{padding:5px 12px;border-radius:50px;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);font-size:.72rem;font-weight:600;transition:var(--transition-fast);color:var(--color-text-light)}
+.pay-reason-tag:hover{border-color:var(--color-text);color:var(--color-text)}
+.pay-reason-tag.active{border-color:var(--color-text);background:var(--color-text);color:#fff}
+.pay-btn{width:100%;padding:14px;border-radius:50px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:.9rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth);display:flex;align-items:center;justify-content:center;gap:.5rem}
+.pay-btn:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
+.pay-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.pay-info{display:flex;align-items:center;gap:.4rem;padding:.6rem .75rem;background:var(--color-bg);border-radius:10px;font-size:.7rem;color:var(--color-text-light);margin-top:.75rem}
+.pay-info span{font-size:.9rem;flex-shrink:0}
+.pay-success{display:none;text-align:center;padding:1.25rem}
+.pay-success.show{display:block}
+.pay-success-icon{font-size:2.5rem;margin-bottom:.5rem}
+.pay-success-title{font-size:1rem;font-weight:800;margin-bottom:.2rem}
+.pay-success-text{font-size:.8rem;color:var(--color-gray);line-height:1.4}
+.pay-success-link{color:var(--color-primary);font-weight:700;text-decoration:underline;font-size:.8rem}
+.pay-or{text-align:center;font-size:.7rem;color:var(--color-gray);font-weight:600;margin:.4rem 0}
+.pay-btn-secondary{width:100%;padding:12px;border-radius:50px;border:2px solid var(--color-text);background:transparent;color:var(--color-text);font-family:var(--font-main);font-size:.85rem;font-weight:700;cursor:pointer;transition:var(--transition-fast);display:flex;align-items:center;justify-content:center;gap:.4rem}
+.pay-btn-secondary:hover{background:var(--color-text);color:#fff}
+/* Sticky join top */
+.sidebar-join-top{position:sticky;top:calc(var(--nav-height) + 1rem);z-index:10}
+@media(max-width:1024px){.sidebar-join-top{position:static}}
     </style>
 </head>
 <body>
@@ -487,7 +525,8 @@
         // SIDEBAR
         html += "<div class=\"detail-sidebar\">";
 
-        // Join card
+        // ===== JOIN CARD (OBEN, STICKY) =====
+        html += "<div class=\"sidebar-join-top\">";
         html += "<div class=\"sidebar-card\"><div class=\"join-actions\">";
         if(joined){
             html += "<button class=\"btn-join-big joined\">Du bist dabei! ✓</button>";
@@ -498,8 +537,68 @@
         }
         html += "<a href=\"#\" class=\"btn btn-outline btn-sm\" onclick=\"downloadICS('" + e.title.replace(/'/g,"") + "','" + e.date + "','" + e.time + "');return false;\">📅 Zum Kalender hinzufuegen</a>";
         html += "</div></div>";
+        html += "</div>"; // end sticky
 
-        // Event info card
+        // ===== GELD SENDEN / SCHULDEN =====
+        html += "<div class=\"pay-card\" id=\"payCard\">";
+        html += "<h4>💸 Geld senden</h4>";
+        html += "<p class=\"pay-card-sub\">Spielschulden, Getraenkekasse oder einfach so.</p>";
+
+        // Pay form
+        html += "<div id=\"payFormWrap\">";
+
+        // Reason tags
+        html += "<div class=\"pay-field\"><label>Grund</label></div>";
+        html += "<div class=\"pay-reason-tags\" id=\"payReasons\">";
+        if(isGame) html += "<button class=\"pay-reason-tag active\" data-reason=\"Spielschulden\">🃏 Spielschulden</button>";
+        html += "<button class=\"pay-reason-tag" + (!isGame?" active":"") + "\" data-reason=\"Getraenkekasse\">🍺 Getraenkekasse</button>";
+        html += "<button class=\"pay-reason-tag\" data-reason=\"Essensgeld\">🍕 Essensgeld</button>";
+        html += "<button class=\"pay-reason-tag\" data-reason=\"Spende\">🎁 Spende</button>";
+        html += "<button class=\"pay-reason-tag\" data-reason=\"Sonstiges\">✨ Sonstiges</button>";
+        html += "</div>";
+
+        // Amount presets
+        html += "<div class=\"pay-field\"><label>Betrag</label></div>";
+        html += "<div class=\"pay-presets\" id=\"payPresets\">";
+        html += "<button class=\"pay-preset\" data-amount=\"2\">2€</button>";
+        html += "<button class=\"pay-preset\" data-amount=\"5\">5€</button>";
+        html += "<button class=\"pay-preset active\" data-amount=\"10\">10€</button>";
+        html += "<button class=\"pay-preset\" data-amount=\"20\">20€</button>";
+        html += "<button class=\"pay-preset\" data-amount=\"50\">50€</button>";
+        html += "</div>";
+
+        // Custom amount
+        html += "<div class=\"pay-amount-wrap\">";
+        html += "<input type=\"number\" class=\"pay-amount-input\" id=\"payAmount\" value=\"10\" min=\"0.50\" step=\"0.50\" placeholder=\"0,00\">";
+        html += "<span class=\"pay-currency\">EUR</span>";
+        html += "</div>";
+
+        // Name
+        html += "<div class=\"pay-field\"><label>Dein Name</label>";
+        html += "<input type=\"text\" id=\"payName\" placeholder=\"z.B. Max\"></div>";
+
+        // Notiz
+        html += "<div class=\"pay-field\"><label>Notiz (optional)</label>";
+        html += "<input type=\"text\" id=\"payNote\" placeholder=\"z.B. Poker Schulden 16.04.\"></div>";
+
+        // PayPal Button
+        html += "<button class=\"pay-btn\" id=\"payPaypalBtn\">💳 Per PayPal senden</button>";
+        html += "<div class=\"pay-or\">oder</div>";
+        html += "<button class=\"pay-btn-secondary\" id=\"payBarBtn\">🏠 Bar vor Ort bezahlen</button>";
+
+        html += "<div class=\"pay-info\"><span>🔒</span><span>Du wirst zu PayPal weitergeleitet. Die Zahlung wird gespeichert.</span></div>";
+        html += "</div>"; // end payFormWrap
+
+        // Pay success
+        html += "<div class=\"pay-success\" id=\"paySuccess\">";
+        html += "<div class=\"pay-success-icon\" id=\"paySuccessIcon\">💳</div>";
+        html += "<div class=\"pay-success-title\" id=\"paySuccessTitle\">Zahlung vermerkt!</div>";
+        html += "<div class=\"pay-success-text\" id=\"paySuccessText\"></div>";
+        html += "</div>";
+
+        html += "</div>"; // end pay-card
+
+        // ===== EVENT INFO CARD =====
         html += "<div class=\"sidebar-card\"><h4>ℹ️ Event-Details</h4>";
         html += "<div style=\"font-size:.85rem;color:var(--color-text-light);line-height:2\">";
         html += "<div><strong>Datum:</strong> " + formatDate(e.date) + "</div>";
@@ -510,7 +609,7 @@
         html += "<div><strong>Max. Gaeste:</strong> " + e.capacity + "</div>";
         html += "</div></div>";
 
-        // Admin finish game
+        // ===== ADMIN FINISH GAME =====
         if(isGame){
             html += "<div class=\"sidebar-card\">";
             html += "<h4>🔐 Spiel beenden (Admin)</h4>";
@@ -554,10 +653,97 @@
                 if(e.key === "Enter") fgLoginBtn.click();
             });
         }
-
+// Bind pay system
+        bindPaySystem(e);
         initReveal();
     }
+// ========== PAY SYSTEM ==========
+    function bindPaySystem(ev){
+        var PAYPAL_LINK = "https://www.paypal.me/matsmoe32/";
+        var isGame = ev.category === "games";
+        var currentReason = isGame ? "Spielschulden" : "Getraenkekasse";
+        var currentAmount = 10;
 
+        var reasonBtns = document.querySelectorAll("#payReasons .pay-reason-tag");
+        for(var i = 0; i < reasonBtns.length; i++){
+            reasonBtns[i].addEventListener("click", function(){
+                for(var j = 0; j < reasonBtns.length; j++) reasonBtns[j].classList.remove("active");
+                this.classList.add("active");
+                currentReason = this.getAttribute("data-reason");
+            });
+        }
+
+        var presetBtns = document.querySelectorAll("#payPresets .pay-preset");
+        var amountInput = document.getElementById("payAmount");
+        for(var i = 0; i < presetBtns.length; i++){
+            presetBtns[i].addEventListener("click", function(){
+                for(var j = 0; j < presetBtns.length; j++) presetBtns[j].classList.remove("active");
+                this.classList.add("active");
+                currentAmount = parseFloat(this.getAttribute("data-amount"));
+                amountInput.value = currentAmount;
+            });
+        }
+        if(amountInput){
+            amountInput.addEventListener("input", function(){
+                currentAmount = parseFloat(this.value) || 0;
+                for(var j = 0; j < presetBtns.length; j++){
+                    presetBtns[j].classList.toggle("active", parseFloat(presetBtns[j].getAttribute("data-amount")) === currentAmount);
+                }
+            });
+        }
+
+        var paypalBtn = document.getElementById("payPaypalBtn");
+        if(paypalBtn){
+            paypalBtn.addEventListener("click", function(){
+                var name = (document.getElementById("payName").value || "").trim();
+                var note = (document.getElementById("payNote").value || "").trim();
+                var amount = parseFloat(amountInput.value) || 0;
+                if(amount < 0.5){ alert("Mindestbetrag: 0,50 EUR"); return; }
+                if(!name){ alert("Bitte Namen eingeben!"); return; }
+                db.collection("payments").add({
+                    eventId: ev.id, eventTitle: ev.title || "Event",
+                    name: name, amount: amount, reason: currentReason, note: note,
+                    method: "paypal", status: "wartet auf Zahlung",
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(function(){
+                    var paypalURL = PAYPAL_LINK + amount.toFixed(2) + "EUR";
+                    document.getElementById("payFormWrap").style.display = "none";
+                    var s = document.getElementById("paySuccess");
+                    s.classList.add("show");
+                    document.getElementById("paySuccessIcon").textContent = "💳";
+                    document.getElementById("paySuccessTitle").textContent = "Weiterleitung zu PayPal...";
+                    document.getElementById("paySuccessText").innerHTML = "Du wirst zu <strong>PayPal</strong> weitergeleitet um <strong>" + amount.toFixed(2).replace(".",",") + " EUR</strong> zu senden.<br><br>Falls sich nichts oeffnet: <a href='" + paypalURL + "' target='_blank' class='pay-success-link'>Hier klicken</a>";
+                    setTimeout(function(){ window.open(paypalURL, "_blank"); }, 1200);
+                    launchConfetti();
+                }).catch(function(err){ console.error("Pay error:", err); alert("Fehler!"); });
+            });
+        }
+
+        var barBtn = document.getElementById("payBarBtn");
+        if(barBtn){
+            barBtn.addEventListener("click", function(){
+                var name = (document.getElementById("payName").value || "").trim();
+                var note = (document.getElementById("payNote").value || "").trim();
+                var amount = parseFloat(amountInput.value) || 0;
+                if(amount < 0.5){ alert("Mindestbetrag: 0,50 EUR"); return; }
+                if(!name){ alert("Bitte Namen eingeben!"); return; }
+                db.collection("payments").add({
+                    eventId: ev.id, eventTitle: ev.title || "Event",
+                    name: name, amount: amount, reason: currentReason, note: note,
+                    method: "bar", status: "bar vor Ort",
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(function(){
+                    document.getElementById("payFormWrap").style.display = "none";
+                    var s = document.getElementById("paySuccess");
+                    s.classList.add("show");
+                    document.getElementById("paySuccessIcon").textContent = "🏠";
+                    document.getElementById("paySuccessTitle").textContent = "Notiert!";
+                    document.getElementById("paySuccessText").innerHTML = "<strong>" + esc(name) + "</strong> zahlt <strong>" + amount.toFixed(2).replace(".",",") + " EUR</strong> bar vor Ort.<br>Grund: " + esc(currentReason);
+                    launchConfetti();
+                }).catch(function(err){ console.error("Pay error:", err); alert("Fehler!"); });
+            });
+        }
+    }
     // ========== FINISH GAME FORM ==========
     function renderFinishGameForm(e){
         var gameName = e.game || "";
