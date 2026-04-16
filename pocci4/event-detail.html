@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>pocci4 - Event Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --color-primary:#C03A2B;--color-primary-light:#E8501E;--color-primary-hover:#A83225;
+            --color-bg:#F5F0EB;--color-bg-warm:#EDE5DB;--color-white:#FFFFFF;
+            --color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;
+            --color-sand:#C4A882;--color-border:#E0D6CC;
+            --cat-party:#C03A2B;--cat-games:#1A1A1A;--cat-drinks:#C4A882;--cat-film:#457B9D;--cat-other:#6B6B6B;
+            --font-main:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            --nav-height:80px;--section-padding:100px;--container-width:1240px;
+            --transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);
+            --transition-smooth:0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+        body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden}
+        a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
+        img{max-width:100%;height:auto;display:block}
+
+        .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
+        .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
+        .bg-shape-1{width:700px;height:500px;background:#E0CEBB;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
+        .bg-shape-2{width:550px;height:650px;background:#D4C0AD;bottom:-20%;right:-10%;animation:m2 25s ease-in-out infinite}
+        .bg-shape-3{width:450px;height:400px;background:#C9B8A5;top:35%;left:45%;animation:m3 22s ease-in-out infinite}
+        @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
+        @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
+        @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
+
+        .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
+        .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
+        .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
+        .nav-logo{display:flex;align-items:center;z-index:1001}
+        .nav-logo img{height:56px}
+        .nav-right{display:flex;align-items:center;gap:1rem}
+        .nav-links{display:flex;align-items:center;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+        .nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}
+        .nav-link:hover{color:var(--color-text);background:var(--color-bg)}
+        .nav-link.active{background:var(--color-text);color:var(--color-white)}
+        .nav-link-dropdown{position:relative}
+        .nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-5px);background:var(--color-white);border-radius:16px;padding:8px;box-shadow:0 10px 40px rgba(0,0,0,.1);border:1px solid var(--color-border);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;min-width:180px;z-index:100}
+        .nav-link-dropdown.dropdown-visible .nav-dropdown{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+        .nav-dropdown-item{display:flex;align-items:center;gap:.6rem;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);white-space:nowrap}
+        .nav-dropdown-item:hover{background:var(--color-bg);color:var(--color-primary)}
+        .nav-dropdown-item span{font-size:1rem}
+        .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
+        .hamburger-line{width:24px;height:2px;background:var(--color-text);border-radius:2px;transition:var(--transition-smooth);transform-origin:center}
+        .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+        .hamburger.active .hamburger-line:nth-child(2){opacity:0}
+        .hamburger.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+        .mobile-menu{position:fixed;inset:0;background:rgba(245,240,235,.98);z-index:999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth)}
+        .mobile-menu.active{opacity:1;pointer-events:all}
+        .mobile-menu-content{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+        .mobile-link{font-size:2rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);transform:translateY(20px);opacity:0}
+        .mobile-menu.active .mobile-link{transform:translateY(0);opacity:1}
+        .mobile-menu.active .mobile-link:nth-child(1){transition-delay:.1s}
+        .mobile-menu.active .mobile-link:nth-child(2){transition-delay:.15s}
+        .mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s}
+        .mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}
+        .mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}
+        .mobile-link:hover,.mobile-link.active{color:var(--color-primary)}
+        .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
+
+        .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
+        .section-title{font-size:clamp(1.8rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
+        .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;border-radius:50px;font-family:var(--font-main);font-size:.9rem;font-weight:600;cursor:pointer;transition:var(--transition-smooth);border:2px solid transparent;gap:.5rem}
+        .btn-primary{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
+        .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
+        .btn-outline{background:transparent;color:var(--color-text);border-color:var(--color-text)}
+        .btn-outline:hover{background:var(--color-text);color:#fff;transform:translateY(-2px)}
+        .btn-sm{padding:10px 20px;font-size:.8rem}
+        .btn-join-big{padding:16px 40px;border-radius:50px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:1rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth)}
+        .btn-join-big:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
+        .btn-join-big.joined{background:transparent;border:2px solid var(--color-primary);color:var(--color-primary);cursor:default}
+        .btn-join-big.full{background:var(--color-gray);cursor:not-allowed;opacity:.6}
+
+        /* BACK LINK */
+        .back-link{display:inline-flex;align-items:center;gap:.5rem;padding:calc(var(--nav-height) + 2rem) 0 0;font-size:.85rem;font-weight:600;color:var(--color-text-light);transition:var(--transition-fast)}
+        .back-link:hover{color:var(--color-primary)}
+
+        /* DETAIL LAYOUT */
+        .detail-page{max-width:var(--container-width);margin:0 auto;padding:0 1.25rem}
+        .detail-hero{padding:1.5rem 0 3rem;text-align:center}
+        .detail-emoji{font-size:5rem;margin-bottom:1rem;animation:emojiFloat 3s ease-in-out infinite}
+        @keyframes emojiFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        .detail-category{display:inline-block;padding:6px 16px;border-radius:50px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#fff;margin-bottom:1rem}
+        .detail-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem}
+        .detail-meta{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;margin-bottom:2rem;font-size:.95rem;color:var(--color-text-light)}
+        .detail-meta-item{display:flex;align-items:center;gap:.4rem}
+
+        .detail-grid{display:grid;grid-template-columns:1fr 380px;gap:2rem;padding-bottom:var(--section-padding);align-items:start}
+
+        /* LEFT COLUMN */
+        .detail-main{}
+        .detail-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2.5rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);margin-bottom:2rem}
+        .detail-card h3{font-size:1.2rem;font-weight:800;margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem}
+        .detail-desc{font-size:1rem;color:var(--color-text-light);line-height:1.8}
+
+        /* CAPACITY */
+        .capacity-big{margin-bottom:2rem}
+        .capacity-big-header{display:flex;justify-content:space-between;margin-bottom:.75rem}
+        .capacity-big-count{font-size:1.1rem;font-weight:800}
+        .capacity-big-pct{font-size:.9rem;color:var(--color-gray)}
+        .capacity-big-bar{width:100%;height:12px;background:var(--color-bg-warm);border-radius:10px;overflow:hidden}
+        .capacity-big-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--color-primary),var(--color-primary-light));transition:width 1.5s cubic-bezier(.4,0,.2,1)}
+
+        /* ATTENDEES */
+        .attendees-list{display:flex;flex-direction:column;gap:.5rem}
+        .attendee-row{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border-radius:12px;background:var(--color-bg);font-size:.9rem}
+        .attendee-name{font-weight:700}
+        .attendee-persons{font-size:.8rem;color:var(--color-gray)}
+        .no-attendees{text-align:center;padding:2rem;color:var(--color-gray);font-size:.9rem}
+
+        /* MAP */
+        .detail-map{border-radius:16px;overflow:hidden;margin-top:1rem;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+        .detail-map iframe{width:100%;height:250px;border:none;display:block}
+
+        /* RIGHT SIDEBAR */
+        .detail-sidebar{}
+        .sidebar-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);margin-bottom:1.5rem}
+        .sidebar-card h4{font-size:1rem;font-weight:800;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+
+        /* JOIN ACTIONS */
+        .join-actions{text-align:center}
+        .join-actions .btn-join-big{width:100%;margin-bottom:1rem}
+        .join-actions .btn{width:100%}
+
+        /* STATS SECTION (for games) */
+        .game-stats-section{margin-bottom:2rem}
+        .stat-row{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--color-border);font-size:.85rem}
+        .stat-row:last-child{border-bottom:none}
+        .stat-winner{font-weight:700;color:var(--color-primary)}
+        .stat-date{color:var(--color-gray);font-size:.8rem}
+        .leaderboard-mini{margin-top:1rem}
+        .lb-row{display:flex;align-items:center;gap:.75rem;padding:.5rem 0}
+        .lb-rank{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0}
+        .lb-rank-1{background:linear-gradient(135deg,#FFD700,#FFA500);color:#fff}
+        .lb-rank-2{background:linear-gradient(135deg,#C0C0C0,#A0A0A0);color:#fff}
+        .lb-rank-3{background:linear-gradient(135deg,#CD7F32,#A0522D);color:#fff}
+        .lb-rank-other{background:var(--color-bg);color:var(--color-gray)}
+        .lb-name{flex:1;font-weight:600;font-size:.9rem}
+        .lb-wins{font-weight:700;color:var(--color-primary);font-size:.85rem}
+
+        /* ADMIN FINISH GAME */
+        .finish-game-section{margin-top:2rem;padding-top:2rem;border-top:2px dashed var(--color-border)}
+        .finish-game-section h4{font-size:1rem;font-weight:800;margin-bottom:1rem;color:var(--color-primary)}
+        .fg-field{margin-bottom:.75rem}
+        .fg-field label{display:block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.3rem}
+        .fg-field input,.fg-field select{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.85rem}
+        .fg-field input:focus,.fg-field select:focus{outline:none;border-color:var(--color-primary)}
+        .fg-player-row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:.75rem;border-radius:12px;background:var(--color-bg);margin-bottom:.5rem}
+        .fg-player-name{font-weight:700;font-size:.85rem;padding:.5rem 0;grid-column:span 2}
+        .fg-player-row input{padding:8px 10px;border-radius:8px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.8rem}
+        .fg-player-row input:focus{outline:none;border-color:var(--color-primary)}
+        .fg-submit{width:100%;padding:14px;border-radius:14px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:.9rem;font-weight:700;cursor:pointer;transition:var(--transition-fast);margin-top:1rem}
+        .fg-submit:hover{background:var(--color-primary-hover)}
+        .fg-feedback{text-align:center;padding:.75rem;font-weight:600;font-size:.85rem;color:#2D6A4F;display:none}
+        .fg-feedback.show{display:block}
+
+        /* ADMIN PW INLINE */
+        .admin-pw-inline{display:flex;gap:.5rem;margin-bottom:1rem}
+        .admin-pw-inline input{flex:1;padding:10px 14px;border-radius:10px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.85rem}
+        .admin-pw-inline input:focus{outline:none;border-color:var(--color-primary)}
+        .admin-pw-inline button{padding:10px 16px;border-radius:10px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-weight:700;cursor:pointer;font-size:.8rem}
+
+        /* JOIN MODAL */
+        .join-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:1500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth);padding:1.25rem}
+        .join-overlay.active{opacity:1;pointer-events:all}
+        .join-modal{background:var(--color-white);border-radius:24px;padding:2.5rem;max-width:420px;width:100%;transform:translateY(20px) scale(.95);transition:var(--transition-smooth);text-align:center}
+        .join-overlay.active .join-modal{transform:translateY(0) scale(1)}
+        .join-modal-emoji{font-size:3rem;margin-bottom:1rem}
+        .join-modal-title{font-size:1.3rem;font-weight:800;margin-bottom:.25rem}
+        .join-modal-event{font-size:.9rem;color:var(--color-primary);font-weight:600;margin-bottom:1.5rem}
+        .join-field{margin-bottom:1rem;text-align:left}
+        .join-field label{display:block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.4rem}
+        .join-field input{width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.9rem}
+        .join-field input:focus{outline:none;border-color:var(--color-primary);box-shadow:0 0 0 3px rgba(192,58,43,.1)}
+        .join-btns{display:flex;gap:.75rem;margin-top:1.5rem}
+        .join-btns button{flex:1;padding:14px;border-radius:14px;font-family:var(--font-main);font-size:.9rem;font-weight:700;cursor:pointer;transition:var(--transition-fast)}
+        .join-cancel{background:var(--color-bg);color:var(--color-text);border:none}
+        .join-cancel:hover{background:var(--color-border)}
+        .join-confirm{background:var(--color-primary);color:#fff;border:none}
+        .join-confirm:hover{background:var(--color-primary-hover)}
+        .join-error{color:var(--color-primary);font-size:.8rem;margin-top:.5rem;display:none}
+
+        .loading-page{text-align:center;padding:calc(var(--nav-height) + 6rem) 2rem;color:var(--color-gray);font-size:1.1rem}
+        .loading-page .spinner{width:40px;height:40px;border:3px solid var(--color-border);border-top-color:var(--color-primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .error-page{text-align:center;padding:calc(var(--nav-height) + 6rem) 2rem}
+        .error-page h2{font-size:2rem;font-weight:900;margin-bottom:1rem}
+        .error-page p{color:var(--color-gray);margin-bottom:2rem}
+
+        .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
+
+        .footer{background:var(--color-text);color:#fff;padding:4rem 1.25rem 2rem}
+        .footer-container{max-width:var(--container-width);margin:0 auto}
+        .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
+        .footer-logo{height:44px;filter:brightness(0) invert(1);margin-bottom:.75rem}
+        .footer-tagline{font-size:.85rem;color:var(--color-gray)}
+        .footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+        .footer-col h4{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--color-gray);margin-bottom:1rem}
+        .footer-col a{display:block;font-size:.9rem;color:rgba(255,255,255,.7);padding:.3rem 0}
+        .footer-col a:hover{color:#fff}
+        .footer-bottom{padding-top:2rem;text-align:center}
+        .footer-bottom p{font-size:.8rem;color:var(--color-gray)}
+
+        .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+
+        @media(max-width:1024px){.detail-grid{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr;gap:3rem}}
+        @media(max-width:768px){
+            :root{--nav-height:68px}
+            .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
+            .detail-card{padding:2rem 1.5rem}
+            .sidebar-card{padding:1.5rem}
+            .detail-emoji{font-size:4rem}
+            .footer-links-grid{grid-template-columns:1fr 1fr}
+            .join-modal{padding:2rem 1.5rem}
+            .fg-player-row{grid-template-columns:1fr}
+            .nav-dropdown{display:none!important}
+        }
+        @media(max-width:480px){
+            .nav-logo img{height:38px}
+            .detail-title{font-size:1.8rem}
+            .detail-meta{flex-direction:column;align-items:center;gap:.75rem}
+            .footer-links-grid{grid-template-columns:1fr}
+            .btn{width:100%}
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div></div>
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <nav class="navbar" id="navbar"><div class="nav-container">
+        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link active">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="kontakt.html" class="nav-link">Kontakt</a>
+            </div>
+            <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
+        </div>
+    </div></nav>
+
+    <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="events.html" class="mobile-link active">Events</a>
+        <a href="stats.html" class="mobile-link mobile-link-sub">🏆 Game Statistik</a>
+        <a href="shop.html" class="mobile-link">Shop</a>
+        <a href="kontakt.html" class="mobile-link">Kontakt</a>
+    </div></div>
+
+    <!-- JOIN MODAL -->
+    <div class="join-overlay" id="joinOverlay">
+        <div class="join-modal">
+            <div class="join-modal-emoji">🎉</div>
+            <div class="join-modal-title">Ich bin dabei!</div>
+            <div class="join-modal-event" id="joinEventName"></div>
+            <div class="join-field"><label>Dein Name</label><input type="text" id="joinName" placeholder="z.B. Max"></div>
+            <div class="join-field"><label>Anzahl Personen (inkl. dir)</label><input type="number" id="joinPersons" value="1" min="1" max="10"></div>
+            <div class="join-error" id="joinError"></div>
+            <div class="join-btns"><button class="join-cancel" id="joinCancel">Abbrechen</button><button class="join-confirm" id="joinConfirm">Anmelden! 🎉</button></div>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="pageContent">
+        <div class="loading-page" id="loadingState"><div class="spinner"></div><p>Event wird geladen...</p></div>
+    </div>
+
+    <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a><a href="events.html#vorschlag">Event vorschlagen</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p></div></div></footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+    <script>
+    (function(){
+        var firebaseConfig = {
+            apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
+            authDomain: "pocci4-a24e5.firebaseapp.com",
+            projectId: "pocci4-a24e5",
+            storageBucket: "pocci4-a24e5.firebasestorage.app",
+            messagingSenderId: "518621760671",
+            appId: "1:518621760671:web:90ad7c1bae464f313066aa"
+        };
+        if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+
+        var ADMIN_PW = "pocci2025";
+        var DEFAULT_LOCATION = "Poccistrasse 4, 80336 Muenchen";
+        var catColors = {party:"#C03A2B",games:"#1A1A1A",drinks:"#C4A882",film:"#457B9D",other:"#6B6B6B"};
+        var catNames = {party:"Party",games:"Spieleabend",drinks:"Trinkabend",film:"Filmabend",other:"Sonstiges"};
+        var catEmojis = {party:"🎉",games:"🎲",drinks:"🍻",film:"🎬",other:"💡"};
+        var monthNames = ["Januar","Februar","Maerz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+        // Game types with special scoring
+        var GAME_EMOJIS = {"Mario Kart":"🏎️","FIFA":"⚽","Poker":"🃏","Beer Pong":"🍺","Siedler von Catan":"🏗️","UNO":"🎴","Tischtennis":"🏓","Darts":"🎯","Billard":"🎱","Schach":"♟️","Jenga":"🧱","Flunkyball":"🍻","Monopoly":"💰","Dutch":"🃏","Sonstiges":"🎲"};
+        var SPECIAL_GAMES = {
+            "Poker": {fields:["buyIn","cashOut"], labels:["Buy-In (EUR)","Cash-Out (EUR)"], winLogic:"maxProfit"},
+            "Siedler von Catan": {fields:["points"], labels:["Siegpunkte"], winLogic:"maxPoints"},
+            "Monopoly": {fields:["money"], labels:["Endvermoegen (EUR)"], winLogic:"maxPoints"},
+            "Dutch": {fields:["points"], labels:["Punkte"], winLogic:"minPoints"}
+        };
+
+        var currentEvent = null;
+        var currentStats = [];
+        var isAdminOnPage = false;
+
+        // GET EVENT ID FROM URL
+        var params = new URLSearchParams(window.location.search);
+        var eventId = params.get("id");
+
+        if(!eventId){
+            showError();
+            return;
+        }
+
+        // NAV
+        var navbar=document.getElementById("navbar");
+        window.addEventListener("scroll",function(){navbar.classList.toggle("scrolled",window.scrollY>50);});
+        var hamburger=document.getElementById("hamburger"),mobileMenu=document.getElementById("mobileMenu");
+        hamburger.addEventListener("click",function(){hamburger.classList.toggle("active");mobileMenu.classList.toggle("active");document.body.style.overflow=mobileMenu.classList.contains("active")?"hidden":"";});
+        var ml=document.querySelectorAll(".mobile-link");for(var i=0;i<ml.length;i++)ml[i].addEventListener("click",function(){hamburger.classList.remove("active");mobileMenu.classList.remove("active");document.body.style.overflow="";});
+        var dd=document.getElementById("eventsDropdown"),ddT=null;
+        if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},2000);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
+
+        // LOAD EVENT
+        loadEvent();
+
+        function loadEvent(){
+            db.collection("events").doc(eventId).get().then(function(doc){
+                if(!doc.exists){showError();return;}
+                currentEvent = doc.data();
+                currentEvent.id = doc.id;
+                if(!currentEvent.attendees) currentEvent.attendees = [];
+                document.title = "pocci4 - " + currentEvent.title;
+
+                // Load stats if game event
+                if(currentEvent.category === "games" && currentEvent.game){
+                    loadGameStats(currentEvent.game, function(stats){
+                        currentStats = stats;
+                        renderPage();
+                    });
+                } else if(currentEvent.category === "games"){
+                    // Match by title for "Sonstiges"
+                    loadGameStatsByTitle(currentEvent.title, function(stats){
+                        currentStats = stats;
+                        renderPage();
+                    });
+                } else {
+                    renderPage();
+                }
+            }).catch(function(err){
+                console.error("Error:", err);
+                showError();
+            });
+        }
+
+        function loadGameStats(gameName, cb){
+            db.collection("stats").where("game","==",gameName).orderBy("createdAt","desc").get().then(function(snap){
+                var stats = [];
+                snap.forEach(function(doc){ var d = doc.data(); d.id = doc.id; stats.push(d); });
+                cb(stats);
+            }).catch(function(){ cb([]); });
+        }
+
+        function loadGameStatsByTitle(title, cb){
+            db.collection("stats").orderBy("createdAt","desc").get().then(function(snap){
+                var stats = [];
+                snap.forEach(function(doc){
+                    var d = doc.data(); d.id = doc.id;
+                    if(d.game && d.game.toLowerCase().indexOf(title.toLowerCase()) !== -1) stats.push(d);
+                });
+                cb(stats);
+            }).catch(function(){ cb([]); });
+        }
+
+        function showError(){
+            document.getElementById("pageContent").innerHTML = "<div class=\"error-page\"><h2>Event nicht gefunden 😕</h2><p>Dieses Event existiert nicht oder wurde geloescht.</p><a href=\"events.html\" class=\"btn btn-primary\">Zurueck zu Events</a></div>";
+        }
+
+        // RENDER PAGE
+        function renderPage(){
+            var e = currentEvent;
+            var attending = countAttending(e);
+            var pct = e.capacity > 0 ? Math.round((attending/e.capacity)*100) : 0;
+            var loc = e.location || DEFAULT_LOCATION;
+            var joined = hasJoined(e.id);
+            var isFull = attending >= e.capacity;
+            var isGame = e.category === "games";
+            var gameName = e.game || e.title;
+
+            var html = "";
+            html += "<div class=\"detail-page\">";
+            html += "<a href=\"events.html\" class=\"back-link\">&#8592; Zurueck zu Events</a>";
+
+            // HERO
+            html += "<div class=\"detail-hero reveal\">";
+            html += "<div class=\"detail-emoji\">" + e.emoji + "</div>";
+            html += "<span class=\"detail-category\" style=\"background:" + (catColors[e.category]||catColors.other) + "\">" + (catNames[e.category]||"Event") + "</span>";
+            html += "<h1 class=\"detail-title\">" + escapeHtml(e.title) + "</h1>";
+            html += "<div class=\"detail-meta\">";
+            html += "<div class=\"detail-meta-item\">📅 " + formatDate(e.date) + "</div>";
+            html += "<div class=\"detail-meta-item\">🕐 " + e.time + " Uhr</div>";
+            html += "<div class=\"detail-meta-item\">📍 " + escapeHtml(loc) + "</div>";
+            html += "<div class=\"detail-meta-item\">👥 " + attending + "/" + e.capacity + " Plaetze</div>";
+            html += "</div></div>";
+
+            // GRID
+            html += "<div class=\"detail-grid\">";
+
+            // LEFT - MAIN
+            html += "<div class=\"detail-main\">";
+
+            // Description
+            if(e.desc){
+                html += "<div class=\"detail-card reveal\"><h3>📝 Beschreibung</h3><p class=\"detail-desc\">" + escapeHtml(e.desc) + "</p></div>";
+            }
+
+            // Capacity + Attendees
+            html += "<div class=\"detail-card reveal\"><h3>👥 Teilnehmer</h3>";
+            html += "<div class=\"capacity-big\"><div class=\"capacity-big-header\"><span class=\"capacity-big-count\">" + attending + " / " + e.capacity + " Plaetze belegt</span><span class=\"capacity-big-pct\">" + pct + "%</span></div>";
+            html += "<div class=\"capacity-big-bar\"><div class=\"capacity-big-fill\" id=\"capFill\" style=\"width:0%\"></div></div></div>";
+            if(e.attendees.length > 0){
+                html += "<div class=\"attendees-list\">";
+                for(var i = 0; i < e.attendees.length; i++){
+                    var a = e.attendees[i];
+                    html += "<div class=\"attendee-row\"><span class=\"attendee-name\">" + escapeHtml(a.name) + "</span><span class=\"attendee-persons\">" + a.persons + (a.persons > 1 ? " Personen" : " Person") + "</span></div>";
+                }
+                html += "</div>";
+            } else {
+                html += "<div class=\"no-attendees\">Noch keine Anmeldungen. Sei der Erste! 🚀</div>";
+            }
+            html += "</div>";
+
+            // MAP
+            html += "<div class=\"detail-card reveal\"><h3>📍 Location</h3>";
+            html += "<p style=\"font-size:.9rem;color:var(--color-text-light);margin-bottom:1rem\">" + escapeHtml(loc) + "</p>";
+            html += "<div class=\"detail-map\"><iframe src=\"https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=" + encodeURIComponent(loc) + "\" allowfullscreen loading=\"lazy\"></iframe></div>";
+            html += "<a href=\"https://www.google.com/maps/dir//" + encodeURIComponent(loc) + "\" target=\"_blank\" class=\"btn btn-outline btn-sm\" style=\"margin-top:1rem;width:100%\">🧭 Route planen</a>";
+            html += "</div>";
+
+            // GAME STATS (only for games)
+            if(isGame && currentStats.length > 0){
+                html += "<div class=\"detail-card reveal game-stats-section\"><h3>🏆 Bisherige " + escapeHtml(gameName) + " Ergebnisse</h3>";
+
+                // Mini leaderboard
+                var wins = {};
+                for(var i = 0; i < currentStats.length; i++){
+                    var w = currentStats[i].winner;
+                    if(w){ wins[w] = (wins[w]||0) + 1; }
+                }
+                var sorted = Object.keys(wins).sort(function(a,b){ return wins[b]-wins[a]; });
+                if(sorted.length > 0){
+                    html += "<div class=\"leaderboard-mini\">";
+                    for(var i = 0; i < Math.min(sorted.length,5); i++){
+                        var rankCls = i===0?"lb-rank-1":i===1?"lb-rank-2":i===2?"lb-rank-3":"lb-rank-other";
+                        html += "<div class=\"lb-row\"><div class=\"lb-rank " + rankCls + "\">" + (i+1) + "</div><span class=\"lb-name\">" + escapeHtml(sorted[i]) + "</span><span class=\"lb-wins\">" + wins[sorted[i]] + "W</span></div>";
+                    }
+                    html += "</div>";
+                }
+
+                // Recent results
+                html += "<h4 style=\"font-size:.85rem;font-weight:700;margin-top:1.5rem;margin-bottom:.75rem\">Letzte Ergebnisse</h4>";
+                var showCount = Math.min(currentStats.length, 8);
+                for(var i = 0; i < showCount; i++){
+                    var s = currentStats[i];
+                    html += "<div class=\"stat-row\"><span class=\"stat-winner\">🏆 " + escapeHtml(s.winner || "?") + "</span><span class=\"stat-date\">" + formatDate(s.date || "") + "</span></div>";
+                }
+                html += "</div>";
+            }
+
+            html += "</div>"; // end detail-main
+
+            // RIGHT - SIDEBAR
+            html += "<div class=\"detail-sidebar\">";
+
+            // Join card
+            html += "<div class=\"sidebar-card\"><div class=\"join-actions\">";
+            if(joined){
+                html += "<button class=\"btn-join-big joined\">Du bist dabei! ✓</button>";
+            } else if(isFull){
+                html += "<button class=\"btn-join-big full\">Ausgebucht</button>";
+            } else {
+                html += "<button class=\"btn-join-big\" id=\"joinBtn\">Ich bin dabei! 🎉</button>";
+            }
+            html += "<a href=\"#\" class=\"btn btn-outline btn-sm\" onclick=\"downloadICS('" + e.title.replace(/'/g,"") + "','" + e.date + "','" + e.time + "');return false;\">📅 Zum Kalender hinzufuegen</a>";
+            html += "</div></div>";
+
+            // Event info card
+            html += "<div class=\"sidebar-card\"><h4>ℹ️ Event-Details</h4>";
+            html += "<div style=\"font-size:.85rem;color:var(--color-text-light);line-height:2\">";
+            html += "<div><strong>Datum:</strong> " + formatDate(e.date) + "</div>";
+            html += "<div><strong>Uhrzeit:</strong> " + e.time + " Uhr</div>";
+            html += "<div><strong>Kategorie:</strong> " + (catNames[e.category]||"Event") + "</div>";
+            if(isGame && e.game) html += "<div><strong>Spiel:</strong> " + escapeHtml(e.game) + "</div>";
+            html += "<div><strong>Location:</strong> " + escapeHtml(loc) + "</div>";
+            html += "<div><strong>Max. Gaeste:</strong> " + e.capacity + "</div>";
+            html += "</div></div>";
+
+            // ADMIN - FINISH GAME (only for game events)
+            if(isGame){
+                html += "<div class=\"sidebar-card\">";
+                html += "<h4>🔐 Spiel beenden (Admin)</h4>";
+                html += "<div id=\"adminFinishLogin\">";
+                html += "<div class=\"admin-pw-inline\"><input type=\"password\" id=\"fgPassword\" placeholder=\"Admin-Passwort\"><button id=\"fgLoginBtn\">OK</button></div>";
+                html += "</div>";
+                html += "<div id=\"adminFinishPanel\" style=\"display:none\">";
+                html += renderFinishGameForm(e);
+                html += "</div>";
+                html += "</div>";
+            }
+
+            html += "</div>"; // end sidebar
+            html += "</div>"; // end grid
+            html += "</div>"; // end detail-page
+
+            document.getElementById("pageContent").innerHTML = html;
+
+            // ANIMATE CAPACITY BAR
+            setTimeout(function(){
+                var fill = document.getElementById("capFill");
+                if(fill) fill.style.width = pct + "%";
+            }, 500);
+
+            // BIND JOIN BUTTON
+            var joinBtn = document.getElementById("joinBtn");
+            if(joinBtn){
+                joinBtn.addEventListener("click", function(){ openJoinPopup(); });
+            }
+
+            // BIND ADMIN FINISH
+            var fgLoginBtn = document.getElementById("fgLoginBtn");
+            if(fgLoginBtn){
+                fgLoginBtn.addEventListener("click", function(){
+                    var pw = document.getElementById("fgPassword").value;
+                    if(pw === ADMIN_PW){
+                        isAdminOnPage = true;
+                        document.getElementById("adminFinishLogin").style.display = "none";
+                        document.getElementById("adminFinishPanel").style.display = "block";
+                        bindFinishGameForm();
+                    } else {
+                        alert("Falsches Passwort!");
+                    }
+                });
+                document.getElementById("fgPassword").addEventListener("keydown", function(e){
+                    if(e.key === "Enter") fgLoginBtn.click();
+                });
+            }
+
+            // REVEAL
+            initReveal();
+        }
+
+        // RENDER FINISH GAME FORM
+        function renderFinishGameForm(e){
+            var gameName = e.game || "";
+            var special = SPECIAL_GAMES[gameName];
+            var attendees = e.attendees || [];
+            var html = "";
+
+            if(attendees.length === 0){
+                return "<p style=\"font-size:.85rem;color:var(--color-gray)\">Keine Teilnehmer angemeldet. Fuege zuerst Teilnehmer hinzu.</p>";
+            }
+
+            if(special){
+                // SPECIAL GAME - per player inputs
+                html += "<p style=\"font-size:.8rem;color:var(--color-text-light);margin-bottom:1rem\">Trage die Ergebnisse fuer jeden Spieler ein:</p>";
+                for(var i = 0; i < attendees.length; i++){
+                    html += "<div class=\"fg-player-row\" data-player=\"" + escapeHtml(attendees[i].name) + "\">";
+                    html += "<div class=\"fg-player-name\">" + escapeHtml(attendees[i].name) + "</div>";
+                    for(var f = 0; f < special.fields.length; f++){
+                        html += "<div class=\"fg-field\"><label>" + special.labels[f] + "</label><input type=\"number\" class=\"fg-input\" data-field=\"" + special.fields[f] + "\" data-player=\"" + escapeHtml(attendees[i].name) + "\" step=\"0.01\" placeholder=\"0\"></div>";
+                    }
+                    html += "</div>";
+                }
+            } else {
+                // SIMPLE - just pick winner
+                html += "<div class=\"fg-field\"><label>Gewinner</label><select id=\"fgWinnerSelect\">";
+                html += "<option value=\"\">Waehle den Gewinner...</option>";
+                for(var i = 0; i < attendees.length; i++){
+                    html += "<option value=\"" + escapeHtml(attendees[i].name) + "\">" + escapeHtml(attendees[i].name) + "</option>";
+                }
+                html += "</select></div>";
+            }
+
+            html += "<button class=\"fg-submit\" id=\"fgSubmitBtn\">🏆 Spiel beenden & Stats speichern</button>";
+            html += "<div class=\"fg-feedback\" id=\"fgFeedback\">Ergebnis gespeichert!</div>";
+            return html;
+        }
+
+        // BIND FINISH GAME FORM
+        function bindFinishGameForm(){
+            var submitBtn = document.getElementById("fgSubmitBtn");
+            if(!submitBtn) return;
+
+            submitBtn.addEventListener("click", function(){
+                var e = currentEvent;
+                var gameName = e.game || e.title;
+                var special = SPECIAL_GAMES[gameName];
+                var emoji = GAME_EMOJIS[gameName] || "🎲";
+                var attendees = e.attendees || [];
+
+                var statData = {
+                    game: gameName,
+                    emoji: emoji,
+                    date: e.date,
+                    eventId: e.id,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                if(special){
+                    // Gather player data
+                    var players = [];
+                    var inputs = document.querySelectorAll(".fg-input");
+                    var playerData = {};
+                    for(var i = 0; i < inputs.length; i++){
+                        var pName = inputs[i].getAttribute("data-player");
+                        var field = inputs[i].getAttribute("data-field");
+                        var val = parseFloat(inputs[i].value) || 0;
+                        if(!playerData[pName]) playerData[pName] = {name: pName};
+                        playerData[pName][field] = val;
+                    }
+
+                    // Convert to array
+                    var playerArr = [];
+                    for(var k in playerData) playerArr.push(playerData[k]);
+
+                    // Determine winner
+                    var winner = "";
+                    if(special.winLogic === "maxProfit"){
+                        var maxProfit = -Infinity;
+                        for(var i = 0; i < playerArr.length; i++){
+                            var profit = (playerArr[i].cashOut || 0) - (playerArr[i].buyIn || 0);
+                            playerArr[i].profit = profit;
+                            if(profit > maxProfit){ maxProfit = profit; winner = playerArr[i].name; }
+                        }
+                    } else if(special.winLogic === "maxPoints"){
+                        var maxP = -Infinity;
+                        for(var i = 0; i < playerArr.length; i++){
+                            var pts = playerArr[i].points || playerArr[i].money || 0;
+                            if(pts > maxP){ maxP = pts; winner = playerArr[i].name; }
+                        }
+                    } else if(special.winLogic === "minPoints"){
+                        var minP = Infinity;
+                        for(var i = 0; i < playerArr.length; i++){
+                            var pts = playerArr[i].points || 0;
+                            if(pts < minP){ minP = pts; winner = playerArr[i].name; }
+                        }
+                    }
+
+                    statData.winner = winner;
+                    statData.players = playerArr;
+                    statData.gameType = special.winLogic;
+                } else {
+                    // Simple winner select
+                    var sel = document.getElementById("fgWinnerSelect");
+                    if(!sel || !sel.value){alert("Bitte Gewinner waehlen!");return;}
+                    statData.winner = sel.value;
+                }
+
+                // Save to Firestore
+                db.collection("stats").add(statData).then(function(){
+                    var fb = document.getElementById("fgFeedback");
+                    fb.classList.add("show");
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = "Gespeichert! ✓";
+                    submitBtn.style.background = "#2D6A4F";
+                    launchConfetti();
+                }).catch(function(err){
+                    console.error("Error saving stat:", err);
+                    alert("Fehler beim Speichern!");
+                });
+            });
+        }
+
+        // JOIN POPUP
+        function openJoinPopup(){
+            var e = currentEvent;
+            document.getElementById("joinEventName").textContent = e.emoji + " " + e.title;
+            document.getElementById("joinName").value = "";
+            document.getElementById("joinPersons").value = "1";
+            document.getElementById("joinError").style.display = "none";
+            document.getElementById("joinOverlay").classList.add("active");
+            document.body.style.overflow = "hidden";
+            setTimeout(function(){ document.getElementById("joinName").focus(); }, 200);
+        }
+
+        document.getElementById("joinCancel").addEventListener("click", function(){
+            document.getElementById("joinOverlay").classList.remove("active");
+            document.body.style.overflow = "";
+        });
+        document.getElementById("joinOverlay").addEventListener("click", function(e){
+            if(e.target === this){ this.classList.remove("active"); document.body.style.overflow = ""; }
+        });
+
+        document.getElementById("joinConfirm").addEventListener("click", function(){
+            var name = document.getElementById("joinName").value.trim();
+            var persons = parseInt(document.getElementById("joinPersons").value) || 1;
+            var errEl = document.getElementById("joinError");
+            var e = currentEvent;
+
+            if(!name){errEl.textContent="Bitte gib deinen Namen ein!";errEl.style.display="block";return;}
+            if(persons<1||persons>10){errEl.textContent="Anzahl zwischen 1 und 10!";errEl.style.display="block";return;}
+
+            var attendees = e.attendees || [];
+            for(var i = 0; i < attendees.length; i++){
+                if(attendees[i].name.toLowerCase() === name.toLowerCase()){
+                    errEl.textContent = "Du bist bereits angemeldet!";
+                    errEl.style.display = "block";
+                    return;
+                }
+            }
+
+            var currentCount = countAttending(e);
+            if(currentCount + persons > e.capacity){
+                errEl.textContent = "Nicht genug Plaetze! Noch " + (e.capacity - currentCount) + " frei.";
+                errEl.style.display = "block";
+                return;
+            }
+
+            attendees.push({name: name, persons: persons});
+            var newAttending = 0;
+            for(var i=0;i<attendees.length;i++) newAttending += (attendees[i].persons||1);
+
+            db.collection("events").doc(eventId).update({
+                attendees: attendees,
+                attending: newAttending
+            }).then(function(){
+                markJoined(eventId, name);
+                document.getElementById("joinOverlay").classList.remove("active");
+                document.body.style.overflow = "";
+                launchConfetti();
+                loadEvent(); // reload
+            }).catch(function(err){
+                errEl.textContent = "Fehler!";
+                errEl.style.display = "block";
+            });
+        });
+
+        // HELPERS
+        function countAttending(ev){
+            var t=0;var a=ev.attendees||[];
+            for(var i=0;i<a.length;i++) t+=(a[i].persons||1);
+            return t;
+        }
+        function hasJoined(eid){
+            var j=JSON.parse(localStorage.getItem("pocci4_joined")||"{}");
+            return !!j[eid];
+        }
+        function markJoined(eid,name){
+            var j=JSON.parse(localStorage.getItem("pocci4_joined")||"{}");
+            j[eid]=name;
+            localStorage.setItem("pocci4_joined",JSON.stringify(j));
+        }
+        function formatDate(ds){
+            if(!ds) return "";
+            var p=ds.split("-");
+            if(p.length===3) return parseInt(p[2])+". "+monthNames[parseInt(p[1])-1]+" "+p[0];
+            return ds;
+        }
+        function escapeHtml(s){
+            if(!s) return "";
+            return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+        }
+
+        // ICS
+        window.downloadICS=function(title,date,time){
+            var h=time.split(":")[0],m=time.split(":")[1];
+            var s=date.replace(/-/g,"")+"T"+h+m+"00";
+            var eH=String(Math.min(parseInt(h)+4,23)).padStart(2,"0");
+            var en=date.replace(/-/g,"")+"T"+eH+m+"00";
+            var ics="BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:"+s+"\nDTEND:"+en+"\nSUMMARY:"+title+"\nLOCATION:Poccistrasse Muenchen\nEND:VEVENT\nEND:VCALENDAR";
+            var a=document.createElement("a");
+            a.href=URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));
+            a.download=title.replace(/[^a-zA-Z0-9]/g,"_")+".ics";
+            a.click();
+        };
+
+        // CONFETTI
+        function launchConfetti(){
+            var c=document.getElementById("confettiContainer");
+            var colors=["#C03A2B","#E8501E","#C4A882","#457B9D","#FF6B6B","#FFD93D","#6BCB77"];
+            for(var i=0;i<50;i++){
+                var p=document.createElement("div");var sz=Math.random()*8+5;var isCir=Math.random()>.5;
+                p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"3px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.3)+"s;pointer-events:none;";
+                c.appendChild(p);
+                (function(el){setTimeout(function(){el.remove();},4000);})(p);
+            }
+        }
+        var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";document.head.appendChild(cs);
+
+        // REVEAL
+        function initReveal(){
+            var ro=new IntersectionObserver(function(entries){
+                for(var i=0;i<entries.length;i++){
+                    if(entries[i].isIntersecting){
+                        (function(el,idx){setTimeout(function(){el.classList.add("visible");},idx*80);})(entries[i].target,i);
+                        ro.unobserve(entries[i].target);
+                    }
+                }
+            },{threshold:.1});
+            var revEls=document.querySelectorAll(".reveal");
+            for(var i=0;i<revEls.length;i++) ro.observe(revEls[i]);
+        }
+
+        // PARALLAX
+        window.addEventListener("scroll",function(){
+            var shapes=document.querySelectorAll(".bg-shape");
+            for(var i=0;i<shapes.length;i++){
+                shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";
+            }
+        });
+    })();
+    </script>
+</body>
+</html>
