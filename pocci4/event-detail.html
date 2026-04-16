@@ -33,6 +33,19 @@
         @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
         @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
 
+        .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
+.admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
+.admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+.admin-modal-overlay.active{display:flex}
+.admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+.admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
+.admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
+.admin-modal input:focus{border-color:var(--color-primary)}
+.admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
+.admin-modal-btns .btn{flex:1;padding:10px 16px;font-size:.85rem}
+.admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
+        
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
         .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
         .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
@@ -247,6 +260,7 @@
                 <a href="shop.html" class="nav-link">Shop</a>
                 <a href="kontakt.html" class="nav-link">Kontakt</a>
             </div>
+            <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
             <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
         </div>
     </div></nav>
@@ -799,6 +813,66 @@
         }
         var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";document.head.appendChild(cs);
 
+        <div class="admin-modal-overlay" id="adminOverlay">
+    <div class="admin-modal">
+        <h3>🔐 Admin Zugang</h3>
+        <p>Passwort eingeben um zum Admin Panel zu gelangen.</p>
+        <input type="password" id="adminPwInput" placeholder="Passwort">
+        <div class="admin-modal-btns">
+            <button class="btn btn-outline" id="adminCancel">Abbrechen</button>
+            <button class="btn btn-primary" id="adminSubmit">Login</button>
+        </div>
+        <div class="admin-error" id="adminError">Falsches Passwort!</div>
+    </div>
+</div>
+<script>
+(function(){
+    var ADMIN_PW = "pocci4admin";
+    var trigger = document.getElementById("adminTrigger");
+    var overlay = document.getElementById("adminOverlay");
+    var input = document.getElementById("adminPwInput");
+    var cancel = document.getElementById("adminCancel");
+    var submit = document.getElementById("adminSubmit");
+    var error = document.getElementById("adminError");
+    if(trigger){
+        trigger.addEventListener("click", function(){
+            if(sessionStorage.getItem("pocci4admin") === "true"){
+                window.location.href = "admin.html";
+                return;
+            }
+            overlay.classList.add("active");
+            setTimeout(function(){ input.focus(); }, 100);
+        });
+    }
+    if(cancel) cancel.addEventListener("click", function(){
+        overlay.classList.remove("active");
+        input.value = "";
+        error.style.display = "none";
+    });
+    if(overlay) overlay.addEventListener("click", function(e){
+        if(e.target === overlay){
+            overlay.classList.remove("active");
+            input.value = "";
+            error.style.display = "none";
+        }
+    });
+    function tryLogin(){
+        if(input.value === ADMIN_PW){
+            sessionStorage.setItem("pocci4admin", "true");
+            window.location.href = "admin.html";
+        } else {
+            error.style.display = "block";
+            input.value = "";
+            input.focus();
+        }
+    }
+    if(submit) submit.addEventListener("click", tryLogin);
+    if(input) input.addEventListener("keydown", function(e){
+        if(e.key === "Enter") tryLogin();
+    });
+})();
+</script>
+    
         // REVEAL
         function initReveal(){
             var ro=new IntersectionObserver(function(entries){
