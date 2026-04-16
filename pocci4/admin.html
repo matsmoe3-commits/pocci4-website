@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>pocci4 - Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--color-primary:#C03A2B;--color-primary-light:#E8501E;--color-primary-hover:#A83225;--color-bg:#F5F0EB;--color-bg-warm:#EDE5DB;--color-white:#FFFFFF;--color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;--color-sand:#C4A882;--color-border:#E0D6CC;--color-green:#2D6A4F;--color-green-light:#D4EDDA;--color-yellow:#B8860B;--color-yellow-light:#FFF3CD;--font-main:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--nav-height:80px;--transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);--transition-smooth:0.4s cubic-bezier(0.4,0,0.2,1)}
+        html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased}
+        body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;min-height:100vh}
+        a{text-decoration:none;color:inherit}
+
+        /* NAVBAR */
+        .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.9);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid var(--color-border)}
+        .nav-container{max-width:1240px;margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
+        .nav-logo img{height:56px}
+        .nav-right{display:flex;align-items:center;gap:1rem}
+        .nav-back{padding:8px 20px;border-radius:50px;font-size:.85rem;font-weight:600;color:var(--color-text-light);transition:var(--transition-fast);background:var(--color-white);border:1.5px solid var(--color-border)}
+        .nav-back:hover{border-color:var(--color-text);color:var(--color-text)}
+        .nav-admin-badge{padding:6px 14px;border-radius:50px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;background:var(--color-primary);color:#fff}
+        .logout-btn{padding:8px 18px;border-radius:50px;font-size:.8rem;font-weight:600;border:1.5px solid var(--color-border);background:var(--color-white);cursor:pointer;transition:var(--transition-fast);font-family:var(--font-main);color:var(--color-text-light)}
+        .logout-btn:hover{border-color:var(--color-primary);color:var(--color-primary)}
+
+        /* LAYOUT */
+        .admin-wrapper{max-width:1240px;margin:0 auto;padding:calc(var(--nav-height) + 2rem) 1.25rem 4rem}
+        .admin-header{margin-bottom:2.5rem}
+        .admin-header h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;letter-spacing:-.03em;margin-bottom:.5rem}
+        .admin-header p{color:var(--color-text-light);font-size:1rem}
+
+        /* STAT CARDS */
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+        .stat-card{background:var(--color-white);border-radius:20px;padding:1.5rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
+        .stat-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
+        .stat-icon{font-size:1.8rem;margin-bottom:.75rem}
+        .stat-value{font-size:2rem;font-weight:900;letter-spacing:-.03em;line-height:1}
+        .stat-label{font-size:.75rem;font-weight:600;color:var(--color-gray);text-transform:uppercase;letter-spacing:.08em;margin-top:.4rem}
+        .stat-change{display:inline-flex;align-items:center;gap:.25rem;font-size:.7rem;font-weight:700;margin-top:.5rem;padding:3px 8px;border-radius:50px}
+        .stat-change.up{background:var(--color-green-light);color:var(--color-green)}
+        .stat-change.neutral{background:var(--color-yellow-light);color:var(--color-yellow)}
+
+        /* TABS */
+        .admin-tabs{display:flex;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 2px 10px rgba(0,0,0,.04);margin-bottom:2rem;width:fit-content}
+        .admin-tab{padding:10px 22px;border-radius:50px;font-size:.85rem;font-weight:600;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:none;background:none;font-family:var(--font-main)}
+        .admin-tab:hover{color:var(--color-text);background:var(--color-bg)}
+        .admin-tab.active{background:var(--color-text);color:#fff}
+
+        /* TAB CONTENT */
+        .tab-content{display:none}
+        .tab-content.active{display:block}
+
+        /* ORDERS TABLE */
+        .orders-panel{background:var(--color-white);border-radius:24px;border:1px solid var(--color-border);overflow:hidden}
+        .orders-header{padding:1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-border)}
+        .orders-header h3{font-size:1.1rem;font-weight:800}
+        .orders-count{font-size:.75rem;font-weight:600;color:var(--color-gray);background:var(--color-bg);padding:4px 12px;border-radius:50px}
+        .orders-search{padding:8px 16px;border:1.5px solid var(--color-border);border-radius:50px;font-size:.8rem;font-family:var(--font-main);outline:none;transition:var(--transition-fast);width:220px}
+        .orders-search:focus{border-color:var(--color-primary)}
+        .orders-list{max-height:600px;overflow-y:auto}
+        .order-row{display:grid;grid-template-columns:auto 1fr auto auto auto;gap:1.5rem;align-items:center;padding:1.25rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.5);transition:var(--transition-fast)}
+        .order-row:hover{background:var(--color-bg)}
+        .order-row:last-child{border-bottom:none}
+        .order-number{font-size:.7rem;font-weight:700;color:var(--color-gray);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+        .order-items{display:flex;flex-direction:column;gap:.25rem}
+        .order-items-main{font-size:.9rem;font-weight:700}
+        .order-items-detail{font-size:.75rem;color:var(--color-text-light)}
+        .order-method{padding:4px 12px;border-radius:50px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+        .method-paypal{background:#FFF0D4;color:#B8860B}
+        .method-vor-ort{background:#E0F0FF;color:#2563EB}
+        .order-total{font-size:1rem;font-weight:900;white-space:nowrap}
+        .order-date{font-size:.75rem;color:var(--color-gray);white-space:nowrap}
+        .order-status{display:flex;align-items:center;gap:.5rem}
+        .status-dot{width:8px;height:8px;border-radius:50%}
+        .status-dot.pending{background:var(--color-yellow)}
+        .status-dot.done{background:var(--color-green)}
+        .order-status-btn{padding:6px 14px;border-radius:50px;font-size:.7rem;font-weight:700;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);transition:var(--transition-fast);color:var(--color-text-light)}
+        .order-status-btn:hover{border-color:var(--color-green);color:var(--color-green)}
+        .order-status-btn.done{background:var(--color-green-light);color:var(--color-green);border-color:var(--color-green-light);pointer-events:none}
+        .order-delete-btn{padding:6px 12px;border-radius:50px;font-size:.7rem;font-weight:700;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);transition:var(--transition-fast);color:var(--color-gray)}
+        .order-delete-btn:hover{border-color:var(--color-primary);color:var(--color-primary);background:rgba(192,58,43,.05)}
+
+        /* EMPTY STATE */
+        .empty-state{text-align:center;padding:4rem 2rem;color:var(--color-gray)}
+        .empty-state-icon{font-size:3.5rem;margin-bottom:1rem}
+        .empty-state h3{font-size:1.2rem;font-weight:700;color:var(--color-text);margin-bottom:.5rem}
+        .empty-state p{font-size:.9rem}
+
+        /* PRODUCTS ADMIN */
+        .products-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+        .product-admin-card{background:var(--color-white);border-radius:20px;padding:1.5rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
+        .product-admin-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
+        .product-admin-top{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+        .product-admin-emoji{font-size:2.5rem}
+        .product-admin-info{flex:1}
+        .product-admin-title{font-size:.95rem;font-weight:800}
+        .product-admin-cat{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray)}
+        .product-admin-stats{display:flex;gap:1rem;padding-top:1rem;border-top:1px solid var(--color-border)}
+        .product-admin-stat{flex:1;text-align:center}
+        .product-admin-stat-val{font-size:1.1rem;font-weight:900}
+        .product-admin-stat-label{font-size:.65rem;color:var(--color-gray);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+
+        /* LOADING */
+        .loading{text-align:center;padding:3rem;color:var(--color-gray)}
+        .loading-spinner{width:32px;height:32px;border:3px solid var(--color-border);border-top-color:var(--color-primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        /* RESPONSIVE */
+        @media(max-width:1024px){
+            .stats-grid{grid-template-columns:repeat(2,1fr)}
+            .order-row{grid-template-columns:1fr;gap:.75rem;padding:1.25rem}
+        }
+        @media(max-width:768px){
+            :root{--nav-height:68px}
+            .nav-logo img{height:44px}
+            .stats-grid{grid-template-columns:1fr 1fr}
+            .admin-tabs{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+            .orders-header{flex-direction:column;gap:1rem;align-items:stretch}
+            .orders-search{width:100%}
+            .order-row{grid-template-columns:1fr auto}
+            .order-number{grid-column:1/-1}
+            .order-items{grid-column:1/-1}
+        }
+        @media(max-width:480px){
+            .nav-logo img{height:38px}
+            .stats-grid{grid-template-columns:1fr}
+            .nav-back span{display:none}
+            .products-admin-grid{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+        <div class="nav-right">
+            <a href="shop.html" class="nav-back">← <span>Zurück zum Shop</span></a>
+            <div class="nav-admin-badge">Admin</div>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN -->
+<div class="admin-wrapper">
+    <div class="admin-header">
+        <h1>Admin Panel 🛠️</h1>
+        <p>Bestellungen verwalten, Stats checken, Boss sein.</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-value" id="statOrders">-</div>
+            <div class="stat-label">Bestellungen</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value" id="statRevenue">-</div>
+            <div class="stat-label">Umsatz (EUR)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🛒</div>
+            <div class="stat-value" id="statItems">-</div>
+            <div class="stat-label">Artikel verkauft</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value" id="statAvg">-</div>
+            <div class="stat-label">Ø Bestellwert</div>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="orders">📦 Bestellungen</button>
+        <button class="admin-tab" data-tab="products">🏷️ Produkte</button>
+        <button class="admin-tab" data-tab="analytics">📈 Bestseller</button>
+    </div>
+
+    <!-- TAB: ORDERS -->
+    <div class="tab-content active" id="tab-orders">
+        <div class="orders-panel">
+            <div class="orders-header">
+                <div style="display:flex;align-items:center;gap:.75rem">
+                    <h3>Alle Bestellungen</h3>
+                    <span class="orders-count" id="ordersCount">0</span>
+                </div>
+                <input type="text" class="orders-search" id="ordersSearch" placeholder="🔍 Suchen...">
+            </div>
+            <div class="orders-list" id="ordersList">
+                <div class="loading"><div class="loading-spinner"></div>Bestellungen laden...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: PRODUCTS -->
+    <div class="tab-content" id="tab-products">
+        <div class="products-admin-grid" id="productsAdminGrid"></div>
+    </div>
+
+    <!-- TAB: ANALYTICS / BESTSELLER -->
+    <div class="tab-content" id="tab-analytics">
+        <div class="orders-panel">
+            <div class="orders-header">
+                <h3>🏆 Bestseller Ranking</h3>
+            </div>
+            <div id="bestsellerList" style="padding:1rem"></div>
+        </div>
+    </div>
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script>
+(function(){
+    // AUTH CHECK
+    if(sessionStorage.getItem("pocci4admin") !== "true"){
+        window.location.href = "shop.html";
+        return;
+    }
+
+    // FIREBASE
+    var firebaseConfig = {apiKey:"AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",authDomain:"pocci4-a24e5.firebaseapp.com",projectId:"pocci4-a24e5",storageBucket:"pocci4-a24e5.firebasestorage.app",messagingSenderId:"518621760671",appId:"1:518621760671:web:90ad7c1bae464f313066aa"};
+    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+
+    // PRODUCTS (same as shop)
+    var products = [
+        {id:1,title:"Immobilienbewertung by Mats",emoji:"🏠",price:49.99,category:"services"},
+        {id:2,title:"Trainingsplan by Andrei",emoji:"💪",price:29.99,category:"services"},
+        {id:3,title:"Zweitmeinung by Georgie",emoji:"🩺",price:14.99,category:"services"},
+        {id:4,title:"Excel deines Lebens",emoji:"📊",price:19.99,category:"services"},
+        {id:5,title:"Flunkyball-Pokal",emoji:"🏆",price:0,category:"trophies"},
+        {id:6,title:"Goldener Bierpong-Ball",emoji:"🥇",price:9.99,category:"trophies"},
+        {id:7,title:"Catan-Dominanz-Plakette",emoji:"🏝️",price:0,category:"trophies"},
+        {id:8,title:"Abend mit dem Tank",emoji:"🍗",price:24.99,category:"experiences"},
+        {id:9,title:"Strategie-Coaching Georgie",emoji:"♟️",price:19.99,category:"experiences"},
+        {id:10,title:"Justus-for-a-Day",emoji:"🎩",price:34.99,category:"experiences"},
+        {id:11,title:"VIP Hausparty-Experience",emoji:"🎉",price:59.99,category:"experiences"},
+        {id:12,title:"pocci4 Bierglas",emoji:"🍺",price:12.99,category:"merch"},
+        {id:13,title:"Naturally T-Shirt",emoji:"👕",price:24.99,category:"merch"},
+        {id:14,title:"Andreis Protein-Shaker",emoji:"🥤",price:14.99,category:"merch"},
+        {id:15,title:"Georgies Notfallkit",emoji:"🧳",price:9.99,category:"merch"}
+    ];
+
+    var allOrders = [];
+
+    // LOGOUT
+    document.getElementById("logoutBtn").addEventListener("click", function(){
+        sessionStorage.removeItem("pocci4admin");
+        window.location.href = "shop.html";
+    });
+
+    // TABS
+    var tabs = document.querySelectorAll(".admin-tab");
+    for(var i = 0; i < tabs.length; i++){
+        tabs[i].addEventListener("click", function(){
+            for(var j = 0; j < tabs.length; j++) tabs[j].classList.remove("active");
+            this.classList.add("active");
+            var target = this.getAttribute("data-tab");
+            var contents = document.querySelectorAll(".tab-content");
+            for(var k = 0; k < contents.length; k++){
+                contents[k].classList.toggle("active", contents[k].id === "tab-" + target);
+            }
+        });
+    }
+
+    // LOAD ORDERS FROM FIRESTORE
+    function loadOrders(){
+        db.collection("orders").orderBy("createdAt", "desc").onSnapshot(function(snapshot){
+            allOrders = [];
+            snapshot.forEach(function(doc){
+                var data = doc.data();
+                data._id = doc.id;
+                allOrders.push(data);
+            });
+            renderOrders(allOrders);
+            updateStats(allOrders);
+            renderBestsellers(allOrders);
+            renderProductStats(allOrders);
+        }, function(err){
+            console.error("Firestore error:", err);
+            document.getElementById("ordersList").innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler beim Laden</h3><p>' + err.message + '</p></div>';
+        });
+    }
+
+    // RENDER ORDERS
+    function renderOrders(orders){
+        var container = document.getElementById("ordersList");
+        document.getElementById("ordersCount").textContent = orders.length;
+
+        if(orders.length === 0){
+            container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><h3>Keine Bestellungen</h3><p>Sobald jemand bestellt, taucht es hier auf.</p></div>';
+            return;
+        }
+
+        var html = "";
+        for(var i = 0; i < orders.length; i++){
+            var o = orders[i];
+            var date = o.createdAt ? new Date(o.createdAt.seconds * 1000) : new Date();
+            var dateStr = date.toLocaleDateString("de-DE", {day:"2-digit",month:"2-digit",year:"numeric"}) + " · " + date.toLocaleTimeString("de-DE", {hour:"2-digit",minute:"2-digit"});
+            var methodClass = o.paymentMethod === "paypal" ? "method-paypal" : "method-vor-ort";
+            var methodLabel = o.paymentMethod === "paypal" ? "PayPal" : "Vor Ort";
+            var isDone = o.status === "done";
+            var statusBtnClass = isDone ? "order-status-btn done" : "order-status-btn";
+            var statusBtnText = isDone ? "✓ Erledigt" : "Offen";
+            var statusDotClass = isDone ? "status-dot done" : "status-dot pending";
+
+            // items display
+            var emojis = "";
+            var itemNames = [];
+            if(o.items && o.items.length){
+                for(var j = 0; j < o.items.length; j++){
+                    emojis += o.items[j].emoji || "";
+                    itemNames.push(o.items[j].qty + "x " + o.items[j].title);
+                }
+            } else if(o.itemsSummary){
+                itemNames.push(o.itemsSummary);
+            }
+
+            html += '<div class="order-row" data-id="' + o._id + '">';
+            html += '<div class="order-number">#' + o._id.substring(0,8).toUpperCase() + '<br><span class="order-date">' + dateStr + '</span></div>';
+            html += '<div class="order-items"><div class="order-items-main">' + emojis + '</div><div class="order-items-detail">' + itemNames.join(", ") + '</div></div>';
+            html += '<span class="order-method ' + methodClass + '">' + methodLabel + '</span>';
+            html += '<div class="order-total">' + (o.total || 0).toFixed(2).replace(".",",") + ' €</div>';
+            html += '<div class="order-status"><span class="' + statusDotClass + '"></span><button class="' + statusBtnClass + '" data-id="' + o._id + '">' + statusBtnText + '</button><button class="order-delete-btn" data-id="' + o._id + '">🗑️</button></div>';
+            html += '</div>';
+        }
+        container.innerHTML = html;
+
+        // Status toggle
+        var statusBtns = container.querySelectorAll(".order-status-btn:not(.done)");
+        for(var s = 0; s < statusBtns.length; s++){
+            statusBtns[s].addEventListener("click", function(){
+                var id = this.getAttribute("data-id");
+                db.collection("orders").doc(id).update({status: "done"});
+            });
+        }
+
+        // Delete
+        var delBtns = container.querySelectorAll(".order-delete-btn");
+        for(var d = 0; d < delBtns.length; d++){
+            delBtns[d].addEventListener("click", function(){
+                var id = this.getAttribute("data-id");
+                if(confirm("Bestellung wirklich löschen?")){
+                    db.collection("orders").doc(id).delete();
+                }
+            });
+        }
+    }
+
+    // SEARCH
+    document.getElementById("ordersSearch").addEventListener("input", function(){
+        var q = this.value.toLowerCase();
+        if(!q){
+            renderOrders(allOrders);
+            return;
+        }
+        var filtered = allOrders.filter(function(o){
+            var text = (o.itemsSummary || "") + " " + (o.paymentMethod || "") + " " + o._id;
+            if(o.items){
+                for(var i = 0; i < o.items.length; i++) text += " " + o.items[i].title;
+            }
+            return text.toLowerCase().indexOf(q) !== -1;
+        });
+        renderOrders(filtered);
+    });
+
+    // UPDATE STATS
+    function updateStats(orders){
+        var totalRevenue = 0;
+        var totalItems = 0;
+        for(var i = 0; i < orders.length; i++){
+            totalRevenue += orders[i].total || 0;
+            if(orders[i].items){
+                for(var j = 0; j < orders[i].items.length; j++){
+                    totalItems += orders[i].items[j].qty || 0;
+                }
+            }
+        }
+        var avg = orders.length > 0 ? totalRevenue / orders.length : 0;
+
+        document.getElementById("statOrders").textContent = orders.length;
+        document.getElementById("statRevenue").textContent = totalRevenue.toFixed(2).replace(".",",");
+        document.getElementById("statItems").textContent = totalItems;
+        document.getElementById("statAvg").textContent = avg.toFixed(2).replace(".",",");
+    }
+
+    // BESTSELLERS
+    function renderBestsellers(orders){
+        var counts = {};
+        for(var i = 0; i < orders.length; i++){
+            if(!orders[i].items) continue;
+            for(var j = 0; j < orders[i].items.length; j++){
+                var item = orders[i].items[j];
+                var id = item.id || item.title;
+                if(!counts[id]) counts[id] = {title: item.title, emoji: item.emoji || "", qty: 0, revenue: 0};
+                counts[id].qty += item.qty || 0;
+                counts[id].revenue += (item.price || 0) * (item.qty || 0);
+            }
+        }
+
+        var sorted = Object.keys(counts).map(function(k){ return counts[k]; });
+        sorted.sort(function(a,b){ return b.qty - a.qty; });
+
+        var container = document.getElementById("bestsellerList");
+        if(sorted.length === 0){
+            container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>Noch keine Daten</h3><p>Bestseller werden aus den Bestellungen berechnet.</p></div>';
+            return;
+        }
+
+        var html = "";
+        for(var i = 0; i < sorted.length; i++){
+            var s = sorted[i];
+            var medal = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : (i+1) + ".";
+            html += '<div class="order-row" style="grid-template-columns:auto auto 1fr auto auto">';
+            html += '<div style="font-size:1.3rem;font-weight:900;min-width:35px;text-align:center">' + medal + '</div>';
+            html += '<div style="font-size:1.8rem">' + s.emoji + '</div>';
+            html += '<div><div style="font-weight:800;font-size:.95rem">' + s.title + '</div></div>';
+            html += '<div style="text-align:center"><div style="font-weight:900;font-size:1.1rem">' + s.qty + 'x</div><div style="font-size:.65rem;color:var(--color-gray)">verkauft</div></div>';
+            html += '<div style="text-align:right"><div style="font-weight:900;font-size:1.1rem">' + s.revenue.toFixed(2).replace(".",",") + ' €</div><div style="font-size:.65rem;color:var(--color-gray)">Umsatz</div></div>';
+            html += '</div>';
+        }
+        container.innerHTML = html;
+    }
+
+    // PRODUCT STATS
+    function renderProductStats(orders){
+        var counts = {};
+        for(var i = 0; i < orders.length; i++){
+            if(!orders[i].items) continue;
+            for(var j = 0; j < orders[i].items.length; j++){
+                var item = orders[i].items[j];
+                var id = item.id;
+                if(!counts[id]) counts[id] = {qty:0, revenue:0};
+                counts[id].qty += item.qty || 0;
+                counts[id].revenue += (item.price || 0) * (item.qty || 0);
+            }
+        }
+
+        var grid = document.getElementById("productsAdminGrid");
+        var html = "";
+        for(var i = 0; i < products.length; i++){
+            var p = products[i];
+            var c = counts[p.id] || {qty:0, revenue:0};
+            html += '<div class="product-admin-card">';
+            html += '<div class="product-admin-top"><div class="product-admin-emoji">' + p.emoji + '</div>';
+            html += '<div class="product-admin-info"><div class="product-admin-title">' + p.title + '</div>';
+            html += '<div class="product-admin-cat">' + p.category + ' · ' + (p.price === 0 ? "Trophäe" : p.price.toFixed(2).replace(".",",") + " €") + '</div></div></div>';
+            html += '<div class="product-admin-stats">';
+            html += '<div class="product-admin-stat"><div class="product-admin-stat-val">' + c.qty + '</div><div class="product-admin-stat-label">Verkauft</div></div>';
+            html += '<div class="product-admin-stat"><div class="product-admin-stat-val">' + c.revenue.toFixed(2).replace(".",",") + ' €</div><div class="product-admin-stat-label">Umsatz</div></div>';
+            html += '</div></div>';
+        }
+        grid.innerHTML = html;
+    }
+
+    // INIT
+    loadOrders();
+
+})();
+</script>
+</body>
+</html>
