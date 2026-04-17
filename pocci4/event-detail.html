@@ -276,435 +276,456 @@
 
     <script>
     (function(){
-        var firebaseConfig = {
-            apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
-            authDomain: "pocci4-a24e5.firebaseapp.com",
-            projectId: "pocci4-a24e5",
-            storageBucket: "pocci4-a24e5.firebasestorage.app",
-            messagingSenderId: "518621760671",
-            appId: "1:518621760671:web:90ad7c1bae464f313066aa"
-        };
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
+    var firebaseConfig = {
+        apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
+        authDomain: "pocci4-a24e5.firebaseapp.com",
+        projectId: "pocci4-a24e5",
+        storageBucket: "pocci4-a24e5.firebasestorage.app",
+        messagingSenderId: "518621760671",
+        appId: "1:518621760671:web:90ad7c1bae464f313066aa"
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
 
-        var ADMIN_PW = "pocci2025";
-        var DEFAULT_LOCATION = "Poccistrasse 4, 80336 Muenchen";
-        var catColors = { party: "#C03A2B", games: "#1A1A1A", drinks: "#C4A882", film: "#457B9D", other: "#6B6B6B" };
-        var catNames = { party: "Party", games: "Spieleabend", drinks: "Trinkabend", film: "Filmabend", other: "Sonstiges" };
-        var monthNames = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-        var GAME_EMOJIS = {
-            "Mario Kart": "🏎️", "FIFA": "⚽", "Poker": "🃏", "Beer Pong": "🍺",
-            "Siedler von Catan": "🏗️", "UNO": "🎴", "Tischtennis": "🏓", "Darts": "🎯",
-            "Billard": "🎱", "Schach": "♟️", "Jenga": "🧱", "Flunkyball": "🍻",
-            "Monopoly": "💰", "Dutch": "🃏", "Sonstiges": "🎲"
-        };
-        var SPECIAL_GAMES = {
-            "Poker": { fields: ["buyIn", "cashOut"], labels: ["Buy-In (EUR)", "Cash-Out (EUR)"], winLogic: "maxProfit" },
-            "Siedler von Catan": { fields: ["points"], labels: ["Siegpunkte"], winLogic: "maxPoints" },
-            "Monopoly": { fields: ["money"], labels: ["Endvermoegen (EUR)"], winLogic: "maxPoints" },
-            "Dutch": { fields: ["points"], labels: ["Punkte"], winLogic: "minPoints" }
-        };
+    // ===== TELEGRAM NOTIFICATION SYSTEM =====
+    var TELEGRAM_BOT_TOKEN = "7866727707:AAEkLGOuSUGIGNjSmJmGLSCG7VU0mSi04IU";
+    var TELEGRAM_CHAT_ID = "-4930026015";
+    function sendTelegram(message) {
+        fetch("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: "Markdown" })
+        }).then(function(r) { console.log("TG sent:", r.ok); })
+          .catch(function(e) { console.warn("TG fail:", e); });
+    }
 
-        var currentEvent = null;
-        var currentStats = [];
-        var isAdminOnPage = false;
+    var ADMIN_PW = "pocci2025";
+    var DEFAULT_LOCATION = "Poccistrasse 4, 80336 Muenchen";
+    var catColors = { party: "#C03A2B", games: "#1A1A1A", drinks: "#C4A882", film: "#457B9D", other: "#6B6B6B" };
+    var catNames = { party: "Party", games: "Spieleabend", drinks: "Trinkabend", film: "Filmabend", other: "Sonstiges" };
+    var monthNames = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+    var GAME_EMOJIS = {
+        "Mario Kart": "🏎️", "FIFA": "⚽", "Poker": "🃏", "Beer Pong": "🍺",
+        "Siedler von Catan": "🏗️", "UNO": "🎴", "Tischtennis": "🏓", "Darts": "🎯",
+        "Billard": "🎱", "Schach": "♟️", "Jenga": "🧱", "Flunkyball": "🍻",
+        "Monopoly": "💰", "Dutch": "🃏", "Sonstiges": "🎲"
+    };
+    var SPECIAL_GAMES = {
+        "Poker": { fields: ["buyIn", "cashOut"], labels: ["Buy-In (EUR)", "Cash-Out (EUR)"], winLogic: "maxProfit" },
+        "Siedler von Catan": { fields: ["points"], labels: ["Siegpunkte"], winLogic: "maxPoints" },
+        "Monopoly": { fields: ["money"], labels: ["Endvermoegen (EUR)"], winLogic: "maxPoints" },
+        "Dutch": { fields: ["points"], labels: ["Punkte"], winLogic: "minPoints" }
+    };
 
-        var params = new URLSearchParams(window.location.search);
-        var eventId = params.get("id");
-        if (!eventId) { showError(); return; }
+    var currentEvent = null;
+    var currentStats = [];
+    var isAdminOnPage = false;
 
-        /* ===== NAV ===== */
-        var navbar = document.getElementById("navbar");
-        window.addEventListener("scroll", function () { navbar.classList.toggle("scrolled", window.scrollY > 50); });
-        var hamburger = document.getElementById("hamburger");
-        var mobileMenu = document.getElementById("mobileMenu");
-        hamburger.addEventListener("click", function () {
-            hamburger.classList.toggle("active"); mobileMenu.classList.toggle("active");
-            document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
+    var params = new URLSearchParams(window.location.search);
+    var eventId = params.get("id");
+    if (!eventId) { showError(); return; }
+
+    /* ===== NAV ===== */
+    var navbar = document.getElementById("navbar");
+    window.addEventListener("scroll", function () { navbar.classList.toggle("scrolled", window.scrollY > 50); });
+    var hamburger = document.getElementById("hamburger");
+    var mobileMenu = document.getElementById("mobileMenu");
+    hamburger.addEventListener("click", function () {
+        hamburger.classList.toggle("active"); mobileMenu.classList.toggle("active");
+        document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
+    });
+    var mobileLinks = document.querySelectorAll(".mobile-link");
+    for (var i = 0; i < mobileLinks.length; i++) {
+        mobileLinks[i].addEventListener("click", function () {
+            hamburger.classList.remove("active"); mobileMenu.classList.remove("active"); document.body.style.overflow = "";
         });
-        var mobileLinks = document.querySelectorAll(".mobile-link");
-        for (var i = 0; i < mobileLinks.length; i++) {
-            mobileLinks[i].addEventListener("click", function () {
-                hamburger.classList.remove("active"); mobileMenu.classList.remove("active"); document.body.style.overflow = "";
-            });
-        }
-        var dd = document.getElementById("eventsDropdown"), ddTimer = null;
-        if (dd) {
-            dd.addEventListener("mouseenter", function () { ddTimer = setTimeout(function () { dd.classList.add("dropdown-visible"); }, 200); });
-            dd.addEventListener("mouseleave", function () { clearTimeout(ddTimer); setTimeout(function () { dd.classList.remove("dropdown-visible"); }, 300); });
-        }
+    }
+    var dd = document.getElementById("eventsDropdown"), ddTimer = null;
+    if (dd) {
+        dd.addEventListener("mouseenter", function () { ddTimer = setTimeout(function () { dd.classList.add("dropdown-visible"); }, 200); });
+        dd.addEventListener("mouseleave", function () { clearTimeout(ddTimer); setTimeout(function () { dd.classList.remove("dropdown-visible"); }, 300); });
+    }
 
-        /* ===== ADMIN LOGIN ===== */
-        (function () {
-            var ADMIN_LOGIN_PW = "pocci4admin";
-            var trigger = document.getElementById("adminTrigger");
-            var overlay = document.getElementById("adminOverlay");
-            var input = document.getElementById("adminPwInput");
-            var cancel = document.getElementById("adminCancel");
-            var submit = document.getElementById("adminSubmit");
-            var error = document.getElementById("adminError");
-            function openM() { if (sessionStorage.getItem("pocci4admin") === "true") { window.location.href = "admin.html"; return; } overlay.classList.add("active"); setTimeout(function () { input.focus(); }, 100); }
-            function closeM() { overlay.classList.remove("active"); input.value = ""; error.style.display = "none"; }
-            function tryL() { if (input.value === ADMIN_LOGIN_PW) { sessionStorage.setItem("pocci4admin", "true"); window.location.href = "admin.html"; } else { error.style.display = "block"; input.value = ""; input.focus(); } }
-            if (trigger) trigger.addEventListener("click", openM);
-            if (cancel) cancel.addEventListener("click", closeM);
-            if (overlay) overlay.addEventListener("click", function (e) { if (e.target === overlay) closeM(); });
-            if (submit) submit.addEventListener("click", tryL);
-            if (input) input.addEventListener("keydown", function (e) { if (e.key === "Enter") tryL(); });
-        })();
-
-        /* FIX: Helper to normalize category from old values */
-        function normalizeCategory(cat) {
-            if (!cat) return "other";
-            if (cat === "gamenight") return "games";
-            if (cat === "dinner") return "drinks";
-            if (cat === "sport") return "other";
-            return cat;
-        }
-
-        /* ===== LOAD EVENT ===== */
-        loadEvent();
-
-        function loadEvent() {
-            db.collection("events").doc(eventId).get().then(function (doc) {
-                if (!doc.exists) { showError(); return; }
-                var data = doc.data();
-                data.id = doc.id;
-                data.attendees = data.attendees || [];
-
-                /* FIX: Fallback field names for compatibility with admin.html */
-                data.title = data.title || data.name || "Event";
-                data.desc = data.desc || data.description || "";
-                data.capacity = data.capacity || data.maxGuests || 20;
-                data.attending = data.attending || 0;
-                data.category = normalizeCategory(data.category);
-
-                currentEvent = data;
-
-                document.title = "pocci4 - " + (data.emoji || "") + " " + data.title;
-
-                if (data.category === "games") {
-                    var gameName = data.game || data.title;
-                    loadGameStats(gameName, function (stats) {
-                        currentStats = stats;
-                        renderPage();
-                    });
-                } else {
-                    currentStats = [];
-                    renderPage();
-                }
-            }).catch(function (err) {
-                console.error("Error loading event:", err);
-                showError();
-            });
-        }
-
-        function loadGameStats(gameName, cb) {
-            db.collection("stats").where("game", "==", gameName).orderBy("createdAt", "desc").get().then(function (snap) {
-                var stats = [];
-                snap.forEach(function (doc) { var d = doc.data(); d.id = doc.id; stats.push(d); });
-                cb(stats);
-            }).catch(function (err) {
-                console.warn("Stats query failed, trying fallback:", err);
-                db.collection("stats").get().then(function (snap) {
-                    var stats = [];
-                    snap.forEach(function (doc) { var d = doc.data(); d.id = doc.id; if (d.game === gameName) stats.push(d); });
-                    stats.sort(function (a, b) { var ta = a.createdAt ? a.createdAt.toMillis() : 0; var tb = b.createdAt ? b.createdAt.toMillis() : 0; return tb - ta; });
-                    cb(stats);
-                }).catch(function () { cb([]); });
-            });
-        }
-
-        function showError() {
-            document.getElementById("pageContent").innerHTML = '<div class="error-page"><h2>Event nicht gefunden 😕</h2><p>Dieses Event existiert nicht oder wurde geloescht.</p><a href="events.html" class="btn btn-primary">Zurueck zu Events</a></div>';
-        }
-
-        /* ===== RENDER PAGE ===== */
-        function renderPage() {
-            var e = currentEvent;
-            var attending = countAttending(e);
-            var pct = e.capacity > 0 ? Math.round((attending / e.capacity) * 100) : 0;
-            if (pct > 100) pct = 100;
-            var loc = e.location || DEFAULT_LOCATION;
-            var joined = hasJoined(e.id);
-            var isFull = attending >= e.capacity;
-            /* FIX: Use normalized category */
-            var cat = e.category;
-            var isGame = cat === "games";
-            var gameName = e.game || e.title;
-
-            var html = '';
-            html += '<div class="detail-page">';
-            html += '<a href="events.html" class="back-link">&#8592; Zurueck zu Events</a>';
-
-            /* HERO */
-            html += '<div class="detail-hero reveal">';
-            html += '<div class="detail-emoji">' + (e.emoji || "📅") + '</div>';
-            /* FIX: Use normalized cat for color/name */
-            html += '<span class="detail-category" style="background:' + (catColors[cat] || catColors.other) + '">' + (catNames[cat] || 'Event') + '</span>';
-            html += '<h1 class="detail-title">' + esc(e.title) + '</h1>';
-            html += '<div class="detail-meta">';
-            html += '<div class="detail-meta-item">📅 ' + formatDate(e.date) + '</div>';
-            html += '<div class="detail-meta-item">🕐 ' + (e.time || "20:00") + ' Uhr</div>';
-            html += '<div class="detail-meta-item">📍 ' + esc(loc) + '</div>';
-            html += '<div class="detail-meta-item">👥 ' + attending + '/' + e.capacity + ' Plaetze</div>';
-            html += '</div></div>';
-
-            /* GRID */
-            html += '<div class="detail-grid"><div class="detail-main">';
-
-            /* Description - FIX: uses e.desc which already has fallback */
-            if (e.desc) {
-                html += '<div class="detail-card reveal"><h3>📝 Beschreibung</h3><p class="detail-desc">' + esc(e.desc) + '</p></div>';
-            }
-
-            /* Attendees */
-            html += '<div class="detail-card reveal"><h3>👥 Teilnehmer</h3>';
-            html += '<div class="capacity-big"><div class="capacity-big-header"><span class="capacity-big-count">' + attending + ' / ' + e.capacity + ' Plaetze belegt</span><span class="capacity-big-pct">' + pct + '%</span></div>';
-            html += '<div class="capacity-big-bar"><div class="capacity-big-fill" id="capFill" style="width:0%"></div></div></div>';
-            if (e.attendees.length > 0) {
-                html += '<div class="attendees-list">';
-                for (var i = 0; i < e.attendees.length; i++) {
-                    var a = e.attendees[i];
-                    html += '<div class="attendee-row"><span class="attendee-name">' + esc(a.name) + '</span><span class="attendee-persons">' + a.persons + (a.persons > 1 ? ' Personen' : ' Person') + '</span></div>';
-                }
-                html += '</div>';
-            } else { html += '<div class="no-attendees">Noch keine Anmeldungen. Sei der Erste! 🚀</div>'; }
-            html += '</div>';
-
-            /* Map */
-            html += '<div class="detail-card reveal"><h3>📍 Location</h3><p style="font-size:.9rem;color:var(--color-text-light);margin-bottom:1rem">' + esc(loc) + '</p>';
-            html += '<div class="detail-map"><iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=' + encodeURIComponent(loc) + '" allowfullscreen loading="lazy"></iframe></div>';
-            html += '<a href="https://www.google.com/maps/dir//' + encodeURIComponent(loc) + '" target="_blank" class="btn btn-outline btn-sm" style="margin-top:1rem;width:100%">🧭 Route planen</a></div>';
-
-            /* Game Stats */
-            if (isGame && currentStats.length > 0) {
-                html += '<div class="detail-card reveal"><h3>🏆 Bisherige ' + esc(gameName) + ' Ergebnisse</h3>';
-                var wins = {};
-                for (var i = 0; i < currentStats.length; i++) { var w = currentStats[i].winner; if (w) wins[w] = (wins[w] || 0) + 1; }
-                var sorted = Object.keys(wins).sort(function (a, b) { return wins[b] - wins[a]; });
-                if (sorted.length > 0) {
-                    html += '<div class="leaderboard-mini">';
-                    for (var i = 0; i < Math.min(sorted.length, 5); i++) {
-                        var rankCls = i === 0 ? "lb-rank-1" : i === 1 ? "lb-rank-2" : i === 2 ? "lb-rank-3" : "lb-rank-other";
-                        html += '<div class="lb-row"><div class="lb-rank ' + rankCls + '">' + (i + 1) + '</div><span class="lb-name">' + esc(sorted[i]) + '</span><span class="lb-wins">' + wins[sorted[i]] + 'W</span></div>';
-                    }
-                    html += '</div>';
-                }
-                html += '<h4 style="font-size:.85rem;font-weight:700;margin-top:1.5rem;margin-bottom:.75rem">Letzte Ergebnisse</h4>';
-                var showCount = Math.min(currentStats.length, 8);
-                for (var i = 0; i < showCount; i++) {
-                    var s = currentStats[i];
-                    html += '<div class="stat-row"><span class="stat-winner">🏆 ' + esc(s.winner || '?') + '</span><span class="stat-date">' + formatDate(s.date || '') + '</span></div>';
-                }
-                html += '</div>';
-            }
-
-            html += '</div>'; // end detail-main
-
-            /* SIDEBAR */
-            html += '<div class="detail-sidebar">';
-
-            /* Join */
-            html += '<div class="sidebar-join-top"><div class="sidebar-card"><div class="join-actions">';
-            if (joined) html += '<button class="btn-join-big joined">Du bist dabei! ✓</button>';
-            else if (isFull) html += '<button class="btn-join-big full" disabled>Ausgebucht</button>';
-            else html += '<button class="btn-join-big" id="joinBtn">Ich bin dabei! 🎉</button>';
-            html += '<a href="#" class="btn btn-outline btn-sm" id="calBtn">📅 Zum Kalender hinzufuegen</a></div></div></div>';
-
-            /* Pay */
-            html += '<div class="pay-card" id="payCard"><h4>💸 Geld senden</h4><p class="pay-card-sub">Spielschulden, Getraenkekasse oder einfach so.</p>';
-            html += '<div id="payFormWrap">';
-            html += '<div class="pay-field"><label>Grund</label></div><div class="pay-reason-tags" id="payReasons">';
-            if (isGame) html += '<button class="pay-reason-tag active" data-reason="Spielschulden">🃏 Spielschulden</button>';
-            html += '<button class="pay-reason-tag' + (!isGame ? ' active' : '') + '" data-reason="Getraenkekasse">🍺 Getraenkekasse</button>';
-            html += '<button class="pay-reason-tag" data-reason="Essensgeld">🍕 Essensgeld</button>';
-            html += '<button class="pay-reason-tag" data-reason="Spende">🎁 Spende</button>';
-            html += '<button class="pay-reason-tag" data-reason="Sonstiges">✨ Sonstiges</button></div>';
-            html += '<div class="pay-field"><label>Betrag</label></div><div class="pay-presets" id="payPresets">';
-            html += '<button class="pay-preset" data-amount="2">2&euro;</button><button class="pay-preset" data-amount="5">5&euro;</button><button class="pay-preset active" data-amount="10">10&euro;</button><button class="pay-preset" data-amount="20">20&euro;</button><button class="pay-preset" data-amount="50">50&euro;</button></div>';
-            html += '<div class="pay-amount-wrap"><input type="number" class="pay-amount-input" id="payAmount" value="10" min="0.50" step="0.50" placeholder="0,00"><span class="pay-currency">EUR</span></div>';
-            html += '<div class="pay-field"><label>Dein Name</label><input type="text" id="payName" placeholder="z.B. Max"></div>';
-            html += '<div class="pay-field"><label>Notiz (optional)</label><input type="text" id="payNote" placeholder="z.B. Poker Schulden 16.04."></div>';
-            html += '<button class="pay-btn" id="payPaypalBtn">💳 Per PayPal senden</button><div class="pay-or">oder</div><button class="pay-btn-secondary" id="payBarBtn">🏠 Bar vor Ort bezahlen</button>';
-            html += '<div class="pay-info"><span>🔒</span><span>Du wirst zu PayPal weitergeleitet. Die Zahlung wird gespeichert.</span></div></div>';
-            html += '<div class="pay-success" id="paySuccess"><div class="pay-success-icon" id="paySuccessIcon">💳</div><div class="pay-success-title" id="paySuccessTitle">Zahlung vermerkt!</div><div class="pay-success-text" id="paySuccessText"></div></div></div>';
-
-            /* Event Details sidebar */
-            html += '<div class="sidebar-card"><h4>ℹ️ Event-Details</h4><div style="font-size:.85rem;color:var(--color-text-light);line-height:2">';
-            html += '<div><strong>Datum:</strong> ' + formatDate(e.date) + '</div>';
-            html += '<div><strong>Uhrzeit:</strong> ' + (e.time || "20:00") + ' Uhr</div>';
-            /* FIX: Use normalized cat */
-            html += '<div><strong>Kategorie:</strong> ' + (catNames[cat] || 'Event') + '</div>';
-            if (isGame && e.game) html += '<div><strong>Spiel:</strong> ' + esc(e.game) + '</div>';
-            html += '<div><strong>Location:</strong> ' + esc(loc) + '</div>';
-            html += '<div><strong>Max. Gaeste:</strong> ' + e.capacity + '</div></div></div>';
-
-            /* Admin Finish Game */
-            if (isGame) {
-                html += '<div class="sidebar-card"><h4>🔐 Spiel beenden (Admin)</h4>';
-                html += '<div id="adminFinishLogin"><div class="admin-pw-inline"><input type="password" id="fgPassword" placeholder="Admin-Passwort"><button id="fgLoginBtn">OK</button></div></div>';
-                html += '<div id="adminFinishPanel" style="display:none">' + renderFinishGameForm(e) + '</div></div>';
-            }
-
-            html += '</div></div></div>'; // end sidebar, grid, page
-
-            document.getElementById("pageContent").innerHTML = html;
-
-            /* Post-render */
-            setTimeout(function () { var fill = document.getElementById("capFill"); if (fill) fill.style.width = pct + "%"; }, 500);
-            var joinBtn = document.getElementById("joinBtn");
-            if (joinBtn) joinBtn.addEventListener("click", function () { openJoinPopup(); });
-            var calBtn = document.getElementById("calBtn");
-            if (calBtn) calBtn.addEventListener("click", function (ev) { ev.preventDefault(); downloadICS(e.title, e.date, e.time || "20:00", loc); });
-            var fgLoginBtn = document.getElementById("fgLoginBtn");
-            if (fgLoginBtn) {
-                fgLoginBtn.addEventListener("click", function () {
-                    if (document.getElementById("fgPassword").value === ADMIN_PW) { isAdminOnPage = true; document.getElementById("adminFinishLogin").style.display = "none"; document.getElementById("adminFinishPanel").style.display = "block"; bindFinishGameForm(); }
-                    else alert("Falsches Passwort!");
-                });
-                document.getElementById("fgPassword").addEventListener("keydown", function (ev) { if (ev.key === "Enter") fgLoginBtn.click(); });
-            }
-            bindPaySystem(e);
-            initReveal();
-        }
-
-        /* ===== PAY SYSTEM ===== */
-        function bindPaySystem(ev) {
-            var PAYPAL_LINK = "https://www.paypal.me/matsmoe32/";
-            var isGame = ev.category === "games";
-            var currentReason = isGame ? "Spielschulden" : "Getraenkekasse";
-            var currentAmount = 10;
-            var reasonBtns = document.querySelectorAll("#payReasons .pay-reason-tag");
-            for (var i = 0; i < reasonBtns.length; i++) { reasonBtns[i].addEventListener("click", function () { for (var j = 0; j < reasonBtns.length; j++) reasonBtns[j].classList.remove("active"); this.classList.add("active"); currentReason = this.getAttribute("data-reason"); }); }
-            var presetBtns = document.querySelectorAll("#payPresets .pay-preset");
-            var amountInput = document.getElementById("payAmount");
-            for (var i = 0; i < presetBtns.length; i++) { presetBtns[i].addEventListener("click", function () { for (var j = 0; j < presetBtns.length; j++) presetBtns[j].classList.remove("active"); this.classList.add("active"); currentAmount = parseFloat(this.getAttribute("data-amount")); amountInput.value = currentAmount; }); }
-            if (amountInput) { amountInput.addEventListener("input", function () { currentAmount = parseFloat(this.value) || 0; for (var j = 0; j < presetBtns.length; j++) { presetBtns[j].classList.toggle("active", parseFloat(presetBtns[j].getAttribute("data-amount")) === currentAmount); } }); }
-            var paypalBtn = document.getElementById("payPaypalBtn");
-            if (paypalBtn) { paypalBtn.addEventListener("click", function () {
-                var name = (document.getElementById("payName").value || "").trim();
-                var note = (document.getElementById("payNote").value || "").trim();
-                var amount = parseFloat(amountInput.value) || 0;
-                if (amount < 0.5) { alert("Mindestbetrag: 0,50 EUR"); return; }
-                if (!name) { alert("Bitte Namen eingeben!"); return; }
-                paypalBtn.disabled = true; paypalBtn.textContent = "Wird gespeichert...";
-                db.collection("payments").add({ eventId: ev.id, eventTitle: ev.title || "Event", name: name, amount: amount, reason: currentReason, note: note, method: "paypal", status: "wartet auf Zahlung", createdAt: firebase.firestore.FieldValue.serverTimestamp() }).then(function () {
-                    var paypalURL = PAYPAL_LINK + amount.toFixed(2) + "EUR";
-                    document.getElementById("payFormWrap").style.display = "none";
-                    var s = document.getElementById("paySuccess"); s.classList.add("show");
-                    document.getElementById("paySuccessIcon").textContent = "💳";
-                    document.getElementById("paySuccessTitle").textContent = "Weiterleitung zu PayPal...";
-                    document.getElementById("paySuccessText").innerHTML = "Du wirst zu <strong>PayPal</strong> weitergeleitet um <strong>" + amount.toFixed(2).replace(".", ",") + " EUR</strong> zu senden.<br><br>Falls sich nichts oeffnet: <a href='" + paypalURL + "' target='_blank' class='pay-success-link'>Hier klicken</a>";
-                    setTimeout(function () { window.open(paypalURL, "_blank"); }, 1200); launchConfetti();
-                }).catch(function (err) { console.error("Pay error:", err); alert("Fehler beim Speichern!"); paypalBtn.disabled = false; paypalBtn.textContent = "💳 Per PayPal senden"; });
-            }); }
-            var barBtn = document.getElementById("payBarBtn");
-            if (barBtn) { barBtn.addEventListener("click", function () {
-                var name = (document.getElementById("payName").value || "").trim();
-                var note = (document.getElementById("payNote").value || "").trim();
-                var amount = parseFloat(amountInput.value) || 0;
-                if (amount < 0.5) { alert("Mindestbetrag: 0,50 EUR"); return; }
-                if (!name) { alert("Bitte Namen eingeben!"); return; }
-                barBtn.disabled = true; barBtn.textContent = "Wird gespeichert...";
-                db.collection("payments").add({ eventId: ev.id, eventTitle: ev.title || "Event", name: name, amount: amount, reason: currentReason, note: note, method: "bar", status: "bar vor Ort", createdAt: firebase.firestore.FieldValue.serverTimestamp() }).then(function () {
-                    document.getElementById("payFormWrap").style.display = "none";
-                    var s = document.getElementById("paySuccess"); s.classList.add("show");
-                    document.getElementById("paySuccessIcon").textContent = "🏠";
-                    document.getElementById("paySuccessTitle").textContent = "Notiert!";
-                    document.getElementById("paySuccessText").innerHTML = "<strong>" + esc(name) + "</strong> zahlt <strong>" + amount.toFixed(2).replace(".", ",") + " EUR</strong> bar vor Ort.<br>Grund: " + esc(currentReason);
-                    launchConfetti();
-                }).catch(function (err) { console.error("Pay error:", err); alert("Fehler beim Speichern!"); barBtn.disabled = false; barBtn.textContent = "🏠 Bar vor Ort bezahlen"; });
-            }); }
-        }
-
-        /* ===== FINISH GAME FORM ===== */
-        function renderFinishGameForm(e) {
-            var gameName = e.game || "";
-            var special = SPECIAL_GAMES[gameName];
-            var attendees = e.attendees || [];
-            if (attendees.length === 0) return '<p style="font-size:.85rem;color:var(--color-gray)">Keine Teilnehmer angemeldet.</p>';
-            var html = "";
-            if (special) {
-                html += '<p style="font-size:.8rem;color:var(--color-text-light);margin-bottom:1rem">Trage die Ergebnisse fuer jeden Spieler ein:</p>';
-                for (var i = 0; i < attendees.length; i++) {
-                    html += '<div class="fg-player-row" data-player="' + esc(attendees[i].name) + '"><div class="fg-player-name">' + esc(attendees[i].name) + '</div>';
-                    for (var f = 0; f < special.fields.length; f++) { html += '<div class="fg-field"><label>' + special.labels[f] + '</label><input type="number" class="fg-input" data-field="' + special.fields[f] + '" data-player="' + esc(attendees[i].name) + '" step="0.01" placeholder="0"></div>'; }
-                    html += '</div>';
-                }
-            } else {
-                html += '<div class="fg-field"><label>Gewinner</label><select id="fgWinnerSelect"><option value="">Waehle den Gewinner...</option>';
-                for (var i = 0; i < attendees.length; i++) html += '<option value="' + esc(attendees[i].name) + '">' + esc(attendees[i].name) + '</option>';
-                html += '</select></div>';
-            }
-            html += '<button class="fg-submit" id="fgSubmitBtn">🏆 Spiel beenden &amp; Stats speichern</button><div class="fg-feedback" id="fgFeedback">Ergebnis gespeichert!</div>';
-            return html;
-        }
-
-        function bindFinishGameForm() {
-            var submitBtn = document.getElementById("fgSubmitBtn");
-            if (!submitBtn) return;
-            submitBtn.addEventListener("click", function () {
-                var e = currentEvent; var gameName = e.game || e.title; var special = SPECIAL_GAMES[gameName]; var emoji = GAME_EMOJIS[gameName] || "🎲";
-                var statData = { game: gameName, emoji: emoji, date: e.date, eventId: e.id, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
-                if (special) {
-                    var inputs = document.querySelectorAll(".fg-input"); var playerData = {};
-                    for (var i = 0; i < inputs.length; i++) { var pName = inputs[i].getAttribute("data-player"); var field = inputs[i].getAttribute("data-field"); var val = parseFloat(inputs[i].value) || 0; if (!playerData[pName]) playerData[pName] = { name: pName }; playerData[pName][field] = val; }
-                    var playerArr = []; for (var k in playerData) { if (playerData.hasOwnProperty(k)) playerArr.push(playerData[k]); }
-                    var winner = "";
-                    if (special.winLogic === "maxProfit") { var maxP = -Infinity; for (var i = 0; i < playerArr.length; i++) { var profit = (playerArr[i].cashOut || 0) - (playerArr[i].buyIn || 0); playerArr[i].profit = profit; if (profit > maxP) { maxP = profit; winner = playerArr[i].name; } } }
-                    else if (special.winLogic === "maxPoints") { var maxP = -Infinity; for (var i = 0; i < playerArr.length; i++) { var pts = playerArr[i].points || playerArr[i].money || 0; if (pts > maxP) { maxP = pts; winner = playerArr[i].name; } } }
-                    else if (special.winLogic === "minPoints") { var minP = Infinity; for (var i = 0; i < playerArr.length; i++) { var pts = playerArr[i].points || 0; if (pts < minP) { minP = pts; winner = playerArr[i].name; } } }
-                    statData.winner = winner; statData.players = playerArr; statData.gameType = special.winLogic;
-                } else {
-                    var sel = document.getElementById("fgWinnerSelect"); if (!sel || !sel.value) { alert("Bitte Gewinner waehlen!"); return; } statData.winner = sel.value;
-                }
-                submitBtn.disabled = true; submitBtn.textContent = "Wird gespeichert...";
-                db.collection("stats").add(statData).then(function () { document.getElementById("fgFeedback").classList.add("show"); submitBtn.textContent = "Gespeichert! ✓"; submitBtn.style.background = "#2D6A4F"; launchConfetti(); }).catch(function (err) { console.error("Error saving stats:", err); alert("Fehler!"); submitBtn.disabled = false; submitBtn.textContent = "🏆 Spiel beenden & Stats speichern"; });
-            });
-        }
-
-        /* ===== JOIN ===== */
-        function openJoinPopup() {
-            var e = currentEvent;
-            document.getElementById("joinEventName").textContent = (e.emoji || "📅") + " " + e.title;
-            document.getElementById("joinName").value = ""; document.getElementById("joinPersons").value = "1"; document.getElementById("joinError").style.display = "none";
-            document.getElementById("joinOverlay").classList.add("active"); document.body.style.overflow = "hidden";
-            setTimeout(function () { document.getElementById("joinName").focus(); }, 200);
-        }
-        document.getElementById("joinCancel").addEventListener("click", function () { document.getElementById("joinOverlay").classList.remove("active"); document.body.style.overflow = ""; });
-        document.getElementById("joinOverlay").addEventListener("click", function (e) { if (e.target === this) { this.classList.remove("active"); document.body.style.overflow = ""; } });
-        document.getElementById("joinConfirm").addEventListener("click", function () {
-            var name = document.getElementById("joinName").value.trim(); var persons = parseInt(document.getElementById("joinPersons").value) || 1; var errEl = document.getElementById("joinError"); var e = currentEvent;
-            if (!name) { errEl.textContent = "Bitte gib deinen Namen ein!"; errEl.style.display = "block"; return; }
-            if (persons < 1 || persons > 10) { errEl.textContent = "Anzahl zwischen 1 und 10!"; errEl.style.display = "block"; return; }
-            var attendees = e.attendees || [];
-            for (var i = 0; i < attendees.length; i++) { if (attendees[i].name.toLowerCase() === name.toLowerCase()) { errEl.textContent = "Du bist bereits angemeldet!"; errEl.style.display = "block"; return; } }
-            var currentCount = countAttending(e);
-            if (currentCount + persons > e.capacity) { errEl.textContent = "Nicht genug Plaetze! Noch " + (e.capacity - currentCount) + " frei."; errEl.style.display = "block"; return; }
-            var confirmBtn = document.getElementById("joinConfirm"); confirmBtn.disabled = true; confirmBtn.textContent = "Wird angemeldet...";
-            attendees.push({ name: name, persons: persons }); var newAttending = 0; for (var i = 0; i < attendees.length; i++) newAttending += (attendees[i].persons || 1);
-            db.collection("events").doc(eventId).update({ attendees: attendees, attending: newAttending }).then(function () {
-                return db.collection("event_signups").add({ eventId: eventId, name: name, persons: persons, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-            }).then(function () { markJoined(eventId, name); document.getElementById("joinOverlay").classList.remove("active"); document.body.style.overflow = ""; launchConfetti(); loadEvent(); }).catch(function (err) { console.error("Join error:", err); errEl.textContent = "Fehler beim Anmelden!"; errEl.style.display = "block"; confirmBtn.disabled = false; confirmBtn.textContent = "Anmelden! 🎉"; });
-        });
-
-        /* ===== HELPERS ===== */
-        function countAttending(ev) { var total = 0; var a = ev.attendees || []; for (var i = 0; i < a.length; i++) total += (a[i].persons || 1); return total; }
-        function hasJoined(eid) { var j = JSON.parse(localStorage.getItem("pocci4_joined") || "{}"); return !!j[eid]; }
-        function markJoined(eid, name) { var j = JSON.parse(localStorage.getItem("pocci4_joined") || "{}"); j[eid] = name; localStorage.setItem("pocci4_joined", JSON.stringify(j)); }
-        function formatDate(ds) { if (!ds) return ""; var p = ds.split("-"); if (p.length === 3) return parseInt(p[2]) + ". " + monthNames[parseInt(p[1]) - 1] + " " + p[0]; return ds; }
-        function esc(s) { if (!s) return ""; return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
-        function downloadICS(title, date, time, location) {
-            var h = time.split(":")[0]; var m = time.split(":")[1] || "00"; var dtStart = date.replace(/-/g, "") + "T" + h + m + "00"; var endHour = String(Math.min(parseInt(h) + 4, 23)).padStart(2, "0"); var dtEnd = date.replace(/-/g, "") + "T" + endHour + m + "00";
-            var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//pocci4//Event//DE", "BEGIN:VEVENT", "DTSTART:" + dtStart, "DTEND:" + dtEnd, "SUMMARY:" + title, "LOCATION:" + (location || DEFAULT_LOCATION), "DESCRIPTION:pocci4 Event - " + title, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
-            var blob = new Blob([ics], { type: "text/calendar;charset=utf-8" }); var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = title.replace(/[^a-zA-Z0-9]/g, "_") + ".ics"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        }
-        function launchConfetti() { var container = document.getElementById("confettiContainer"); var colors = ["#C03A2B", "#E8501E", "#C4A882", "#457B9D", "#FF6B6B", "#FFD93D", "#6BCB77"]; for (var i = 0; i < 50; i++) { var particle = document.createElement("div"); var size = Math.random() * 8 + 5; var isCircle = Math.random() > 0.5; particle.style.cssText = "position:absolute;left:" + (Math.random() * 100) + "%;top:-20px;width:" + size + "px;height:" + (isCircle ? size : size * 2.5) + "px;background:" + colors[Math.floor(Math.random() * colors.length)] + ";border-radius:" + (isCircle ? "50%" : "3px") + ";opacity:1;animation:cFall " + (Math.random() * 2 + 2) + "s ease-out forwards;animation-delay:" + (Math.random() * 0.3) + "s;pointer-events:none;"; container.appendChild(particle); (function (el) { setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 4000); })(particle); } }
-        var confettiStyle = document.createElement("style"); confettiStyle.textContent = "@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}"; document.head.appendChild(confettiStyle);
-        function initReveal() { var observer = new IntersectionObserver(function (entries) { for (var i = 0; i < entries.length; i++) { if (entries[i].isIntersecting) { (function (el, idx) { setTimeout(function () { el.classList.add("visible"); }, idx * 80); })(entries[i].target, i); observer.unobserve(entries[i].target); } } }, { threshold: 0.1 }); var revealEls = document.querySelectorAll(".reveal"); for (var i = 0; i < revealEls.length; i++) observer.observe(revealEls[i]); }
-        window.addEventListener("scroll", function () { var shapes = document.querySelectorAll(".bg-shape"); for (var i = 0; i < shapes.length; i++) { shapes[i].style.transform = "translateY(" + (window.scrollY * (i + 1) * 0.015) + "px) rotate(" + (window.scrollY * 0.01 * (i % 2 === 0 ? 1 : -1)) + "deg)"; } });
+    /* ===== ADMIN LOGIN ===== */
+    (function () {
+        var ADMIN_LOGIN_PW = "pocci4admin";
+        var trigger = document.getElementById("adminTrigger");
+        var overlay = document.getElementById("adminOverlay");
+        var input = document.getElementById("adminPwInput");
+        var cancel = document.getElementById("adminCancel");
+        var submit = document.getElementById("adminSubmit");
+        var error = document.getElementById("adminError");
+        function openM() { if (sessionStorage.getItem("pocci4admin") === "true") { window.location.href = "admin.html"; return; } overlay.classList.add("active"); setTimeout(function () { input.focus(); }, 100); }
+        function closeM() { overlay.classList.remove("active"); input.value = ""; error.style.display = "none"; }
+        function tryL() { if (input.value === ADMIN_LOGIN_PW) { sessionStorage.setItem("pocci4admin", "true"); window.location.href = "admin.html"; } else { error.style.display = "block"; input.value = ""; input.focus(); } }
+        if (trigger) trigger.addEventListener("click", openM);
+        if (cancel) cancel.addEventListener("click", closeM);
+        if (overlay) overlay.addEventListener("click", function (e) { if (e.target === overlay) closeM(); });
+        if (submit) submit.addEventListener("click", tryL);
+        if (input) input.addEventListener("keydown", function (e) { if (e.key === "Enter") tryL(); });
     })();
+
+    function normalizeCategory(cat) {
+        if (!cat) return "other";
+        if (cat === "gamenight") return "games";
+        if (cat === "dinner") return "drinks";
+        if (cat === "sport") return "other";
+        return cat;
+    }
+
+    /* ===== LOAD EVENT ===== */
+    loadEvent();
+
+    function loadEvent() {
+        db.collection("events").doc(eventId).get().then(function (doc) {
+            if (!doc.exists) { showError(); return; }
+            var data = doc.data();
+            data.id = doc.id;
+            data.attendees = data.attendees || [];
+            data.title = data.title || data.name || "Event";
+            data.desc = data.desc || data.description || "";
+            data.capacity = data.capacity || data.maxGuests || 20;
+            data.attending = data.attending || 0;
+            data.category = normalizeCategory(data.category);
+            currentEvent = data;
+            document.title = "pocci4 - " + (data.emoji || "") + " " + data.title;
+            if (data.category === "games") {
+                var gameName = data.game || data.title;
+                loadGameStats(gameName, function (stats) { currentStats = stats; renderPage(); });
+            } else { currentStats = []; renderPage(); }
+        }).catch(function (err) { console.error("Error loading event:", err); showError(); });
+    }
+
+    function loadGameStats(gameName, cb) {
+        db.collection("stats").where("game", "==", gameName).orderBy("createdAt", "desc").get().then(function (snap) {
+            var stats = []; snap.forEach(function (doc) { var d = doc.data(); d.id = doc.id; stats.push(d); }); cb(stats);
+        }).catch(function (err) {
+            console.warn("Stats query failed, trying fallback:", err);
+            db.collection("stats").get().then(function (snap) {
+                var stats = []; snap.forEach(function (doc) { var d = doc.data(); d.id = doc.id; if (d.game === gameName) stats.push(d); });
+                stats.sort(function (a, b) { var ta = a.createdAt ? a.createdAt.toMillis() : 0; var tb = b.createdAt ? b.createdAt.toMillis() : 0; return tb - ta; }); cb(stats);
+            }).catch(function () { cb([]); });
+        });
+    }
+
+    function showError() {
+        document.getElementById("pageContent").innerHTML = '<div class="error-page"><h2>Event nicht gefunden 😕</h2><p>Dieses Event existiert nicht oder wurde geloescht.</p><a href="events.html" class="btn btn-primary">Zurueck zu Events</a></div>';
+    }
+
+    /* ===== RENDER PAGE ===== */
+    function renderPage() {
+        var e = currentEvent;
+        var attending = countAttending(e);
+        var pct = e.capacity > 0 ? Math.round((attending / e.capacity) * 100) : 0;
+        if (pct > 100) pct = 100;
+        var loc = e.location || DEFAULT_LOCATION;
+        var joined = hasJoined(e.id);
+        var isFull = attending >= e.capacity;
+        var cat = e.category;
+        var isGame = cat === "games";
+        var gameName = e.game || e.title;
+
+        var html = '';
+        html += '<div class="detail-page">';
+        html += '<a href="events.html" class="back-link">&#8592; Zurueck zu Events</a>';
+        html += '<div class="detail-hero reveal">';
+        html += '<div class="detail-emoji">' + (e.emoji || "📅") + '</div>';
+        html += '<span class="detail-category" style="background:' + (catColors[cat] || catColors.other) + '">' + (catNames[cat] || 'Event') + '</span>';
+        html += '<h1 class="detail-title">' + esc(e.title) + '</h1>';
+        html += '<div class="detail-meta">';
+        html += '<div class="detail-meta-item">📅 ' + formatDate(e.date) + '</div>';
+        html += '<div class="detail-meta-item">🕐 ' + (e.time || "20:00") + ' Uhr</div>';
+        html += '<div class="detail-meta-item">📍 ' + esc(loc) + '</div>';
+        html += '<div class="detail-meta-item">👥 ' + attending + '/' + e.capacity + ' Plaetze</div>';
+        html += '</div></div>';
+        html += '<div class="detail-grid"><div class="detail-main">';
+
+        if (e.desc) {
+            html += '<div class="detail-card reveal"><h3>📝 Beschreibung</h3><p class="detail-desc">' + esc(e.desc) + '</p></div>';
+        }
+
+        html += '<div class="detail-card reveal"><h3>👥 Teilnehmer</h3>';
+        html += '<div class="capacity-big"><div class="capacity-big-header"><span class="capacity-big-count">' + attending + ' / ' + e.capacity + ' Plaetze belegt</span><span class="capacity-big-pct">' + pct + '%</span></div>';
+        html += '<div class="capacity-big-bar"><div class="capacity-big-fill" id="capFill" style="width:0%"></div></div></div>';
+        if (e.attendees.length > 0) {
+            html += '<div class="attendees-list">';
+            for (var i = 0; i < e.attendees.length; i++) {
+                var a = e.attendees[i];
+                html += '<div class="attendee-row"><span class="attendee-name">' + esc(a.name) + '</span><span class="attendee-persons">' + a.persons + (a.persons > 1 ? ' Personen' : ' Person') + '</span></div>';
+            }
+            html += '</div>';
+        } else { html += '<div class="no-attendees">Noch keine Anmeldungen. Sei der Erste! 🚀</div>'; }
+        html += '</div>';
+
+        html += '<div class="detail-card reveal"><h3>📍 Location</h3><p style="font-size:.9rem;color:var(--color-text-light);margin-bottom:1rem">' + esc(loc) + '</p>';
+        html += '<div class="detail-map"><iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=' + encodeURIComponent(loc) + '" allowfullscreen loading="lazy"></iframe></div>';
+        html += '<a href="https://www.google.com/maps/dir//' + encodeURIComponent(loc) + '" target="_blank" class="btn btn-outline btn-sm" style="margin-top:1rem;width:100%">🧭 Route planen</a></div>';
+
+        if (isGame && currentStats.length > 0) {
+            html += '<div class="detail-card reveal"><h3>🏆 Bisherige ' + esc(gameName) + ' Ergebnisse</h3>';
+            var wins = {};
+            for (var i = 0; i < currentStats.length; i++) { var w = currentStats[i].winner; if (w) wins[w] = (wins[w] || 0) + 1; }
+            var sorted = Object.keys(wins).sort(function (a, b) { return wins[b] - wins[a]; });
+            if (sorted.length > 0) {
+                html += '<div class="leaderboard-mini">';
+                for (var i = 0; i < Math.min(sorted.length, 5); i++) {
+                    var rankCls = i === 0 ? "lb-rank-1" : i === 1 ? "lb-rank-2" : i === 2 ? "lb-rank-3" : "lb-rank-other";
+                    html += '<div class="lb-row"><div class="lb-rank ' + rankCls + '">' + (i + 1) + '</div><span class="lb-name">' + esc(sorted[i]) + '</span><span class="lb-wins">' + wins[sorted[i]] + 'W</span></div>';
+                }
+                html += '</div>';
+            }
+            html += '<h4 style="font-size:.85rem;font-weight:700;margin-top:1.5rem;margin-bottom:.75rem">Letzte Ergebnisse</h4>';
+            var showCount = Math.min(currentStats.length, 8);
+            for (var i = 0; i < showCount; i++) {
+                var s = currentStats[i];
+                html += '<div class="stat-row"><span class="stat-winner">🏆 ' + esc(s.winner || '?') + '</span><span class="stat-date">' + formatDate(s.date || '') + '</span></div>';
+            }
+            html += '</div>';
+        }
+
+        html += '</div>';
+
+        /* SIDEBAR */
+        html += '<div class="detail-sidebar">';
+        html += '<div class="sidebar-join-top"><div class="sidebar-card"><div class="join-actions">';
+        if (joined) html += '<button class="btn-join-big joined">Du bist dabei! ✓</button>';
+        else if (isFull) html += '<button class="btn-join-big full" disabled>Ausgebucht</button>';
+        else html += '<button class="btn-join-big" id="joinBtn">Ich bin dabei! 🎉</button>';
+        html += '<a href="#" class="btn btn-outline btn-sm" id="calBtn">📅 Zum Kalender hinzufuegen</a></div></div></div>';
+
+        html += '<div class="pay-card" id="payCard"><h4>💸 Geld senden</h4><p class="pay-card-sub">Spielschulden, Getraenkekasse oder einfach so.</p>';
+        html += '<div id="payFormWrap">';
+        html += '<div class="pay-field"><label>Grund</label></div><div class="pay-reason-tags" id="payReasons">';
+        if (isGame) html += '<button class="pay-reason-tag active" data-reason="Spielschulden">🃏 Spielschulden</button>';
+        html += '<button class="pay-reason-tag' + (!isGame ? ' active' : '') + '" data-reason="Getraenkekasse">🍺 Getraenkekasse</button>';
+        html += '<button class="pay-reason-tag" data-reason="Essensgeld">🍕 Essensgeld</button>';
+        html += '<button class="pay-reason-tag" data-reason="Spende">🎁 Spende</button>';
+        html += '<button class="pay-reason-tag" data-reason="Sonstiges">✨ Sonstiges</button></div>';
+        html += '<div class="pay-field"><label>Betrag</label></div><div class="pay-presets" id="payPresets">';
+        html += '<button class="pay-preset" data-amount="2">2&euro;</button><button class="pay-preset" data-amount="5">5&euro;</button><button class="pay-preset active" data-amount="10">10&euro;</button><button class="pay-preset" data-amount="20">20&euro;</button><button class="pay-preset" data-amount="50">50&euro;</button></div>';
+        html += '<div class="pay-amount-wrap"><input type="number" class="pay-amount-input" id="payAmount" value="10" min="0.50" step="0.50" placeholder="0,00"><span class="pay-currency">EUR</span></div>';
+        html += '<div class="pay-field"><label>Dein Name</label><input type="text" id="payName" placeholder="z.B. Max"></div>';
+        html += '<div class="pay-field"><label>Notiz (optional)</label><input type="text" id="payNote" placeholder="z.B. Poker Schulden 16.04."></div>';
+        html += '<button class="pay-btn" id="payPaypalBtn">💳 Per PayPal senden</button><div class="pay-or">oder</div><button class="pay-btn-secondary" id="payBarBtn">🏠 Bar vor Ort bezahlen</button>';
+        html += '<div class="pay-info"><span>🔒</span><span>Du wirst zu PayPal weitergeleitet. Die Zahlung wird gespeichert.</span></div></div>';
+        html += '<div class="pay-success" id="paySuccess"><div class="pay-success-icon" id="paySuccessIcon">💳</div><div class="pay-success-title" id="paySuccessTitle">Zahlung vermerkt!</div><div class="pay-success-text" id="paySuccessText"></div></div></div>';
+
+        html += '<div class="sidebar-card"><h4>ℹ️ Event-Details</h4><div style="font-size:.85rem;color:var(--color-text-light);line-height:2">';
+        html += '<div><strong>Datum:</strong> ' + formatDate(e.date) + '</div>';
+        html += '<div><strong>Uhrzeit:</strong> ' + (e.time || "20:00") + ' Uhr</div>';
+        html += '<div><strong>Kategorie:</strong> ' + (catNames[cat] || 'Event') + '</div>';
+        if (isGame && e.game) html += '<div><strong>Spiel:</strong> ' + esc(e.game) + '</div>';
+        html += '<div><strong>Location:</strong> ' + esc(loc) + '</div>';
+        html += '<div><strong>Max. Gaeste:</strong> ' + e.capacity + '</div></div></div>';
+
+        if (isGame) {
+            html += '<div class="sidebar-card"><h4>🔐 Spiel beenden (Admin)</h4>';
+            html += '<div id="adminFinishLogin"><div class="admin-pw-inline"><input type="password" id="fgPassword" placeholder="Admin-Passwort"><button id="fgLoginBtn">OK</button></div></div>';
+            html += '<div id="adminFinishPanel" style="display:none">' + renderFinishGameForm(e) + '</div></div>';
+        }
+
+        html += '</div></div></div>';
+
+        document.getElementById("pageContent").innerHTML = html;
+
+        setTimeout(function () { var fill = document.getElementById("capFill"); if (fill) fill.style.width = pct + "%"; }, 500);
+        var joinBtn = document.getElementById("joinBtn");
+        if (joinBtn) joinBtn.addEventListener("click", function () { openJoinPopup(); });
+        var calBtn = document.getElementById("calBtn");
+        if (calBtn) calBtn.addEventListener("click", function (ev) { ev.preventDefault(); downloadICS(e.title, e.date, e.time || "20:00", loc); });
+        var fgLoginBtn = document.getElementById("fgLoginBtn");
+        if (fgLoginBtn) {
+            fgLoginBtn.addEventListener("click", function () {
+                if (document.getElementById("fgPassword").value === ADMIN_PW) { isAdminOnPage = true; document.getElementById("adminFinishLogin").style.display = "none"; document.getElementById("adminFinishPanel").style.display = "block"; bindFinishGameForm(); }
+                else alert("Falsches Passwort!");
+            });
+            document.getElementById("fgPassword").addEventListener("keydown", function (ev) { if (ev.key === "Enter") fgLoginBtn.click(); });
+        }
+        bindPaySystem(e);
+        initReveal();
+    }
+
+    /* ===== PAY SYSTEM ===== */
+    function bindPaySystem(ev) {
+        var PAYPAL_LINK = "https://www.paypal.me/matsmoe32/";
+        var isGame = ev.category === "games";
+        var currentReason = isGame ? "Spielschulden" : "Getraenkekasse";
+        var currentAmount = 10;
+        var reasonBtns = document.querySelectorAll("#payReasons .pay-reason-tag");
+        for (var i = 0; i < reasonBtns.length; i++) { reasonBtns[i].addEventListener("click", function () { for (var j = 0; j < reasonBtns.length; j++) reasonBtns[j].classList.remove("active"); this.classList.add("active"); currentReason = this.getAttribute("data-reason"); }); }
+        var presetBtns = document.querySelectorAll("#payPresets .pay-preset");
+        var amountInput = document.getElementById("payAmount");
+        for (var i = 0; i < presetBtns.length; i++) { presetBtns[i].addEventListener("click", function () { for (var j = 0; j < presetBtns.length; j++) presetBtns[j].classList.remove("active"); this.classList.add("active"); currentAmount = parseFloat(this.getAttribute("data-amount")); amountInput.value = currentAmount; }); }
+        if (amountInput) { amountInput.addEventListener("input", function () { currentAmount = parseFloat(this.value) || 0; for (var j = 0; j < presetBtns.length; j++) { presetBtns[j].classList.toggle("active", parseFloat(presetBtns[j].getAttribute("data-amount")) === currentAmount); } }); }
+
+        // ===== PAYPAL BUTTON =====
+        var paypalBtn = document.getElementById("payPaypalBtn");
+        if (paypalBtn) { paypalBtn.addEventListener("click", function () {
+            var name = (document.getElementById("payName").value || "").trim();
+            var note = (document.getElementById("payNote").value || "").trim();
+            var amount = parseFloat(amountInput.value) || 0;
+            if (amount < 0.5) { alert("Mindestbetrag: 0,50 EUR"); return; }
+            if (!name) { alert("Bitte Namen eingeben!"); return; }
+            paypalBtn.disabled = true; paypalBtn.textContent = "Wird gespeichert...";
+            db.collection("payments").add({ eventId: ev.id, eventTitle: ev.title || "Event", name: name, amount: amount, reason: currentReason, note: note, method: "paypal", status: "wartet auf Zahlung", createdAt: firebase.firestore.FieldValue.serverTimestamp() }).then(function () {
+                // ✅ TELEGRAM - PayPal Zahlung
+                var msg = "💳 *NEUE ZAHLUNG (PayPal)!*\n\n";
+                msg += "📅 *Event:* " + (ev.title || "Event") + "\n";
+                msg += "👤 *Von:* " + name + "\n";
+                msg += "💰 *Betrag:* " + amount.toFixed(2).replace(".",",") + " EUR\n";
+                msg += "📝 *Grund:* " + currentReason + "\n";
+                if (note) msg += "💬 *Notiz:* " + note + "\n";
+                msg += "\n⏰ " + new Date().toLocaleString("de-DE", {day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
+                sendTelegram(msg);
+
+                var paypalURL = PAYPAL_LINK + amount.toFixed(2) + "EUR";
+                document.getElementById("payFormWrap").style.display = "none";
+                var s = document.getElementById("paySuccess"); s.classList.add("show");
+                document.getElementById("paySuccessIcon").textContent = "💳";
+                document.getElementById("paySuccessTitle").textContent = "Weiterleitung zu PayPal...";
+                document.getElementById("paySuccessText").innerHTML = "Du wirst zu <strong>PayPal</strong> weitergeleitet um <strong>" + amount.toFixed(2).replace(".", ",") + " EUR</strong> zu senden.<br><br>Falls sich nichts oeffnet: <a href='" + paypalURL + "' target='_blank' class='pay-success-link'>Hier klicken</a>";
+                setTimeout(function () { window.open(paypalURL, "_blank"); }, 1200); launchConfetti();
+            }).catch(function (err) { console.error("Pay error:", err); alert("Fehler beim Speichern!"); paypalBtn.disabled = false; paypalBtn.textContent = "💳 Per PayPal senden"; });
+        }); }
+
+        // ===== BAR BUTTON =====
+        var barBtn = document.getElementById("payBarBtn");
+        if (barBtn) { barBtn.addEventListener("click", function () {
+            var name = (document.getElementById("payName").value || "").trim();
+            var note = (document.getElementById("payNote").value || "").trim();
+            var amount = parseFloat(amountInput.value) || 0;
+            if (amount < 0.5) { alert("Mindestbetrag: 0,50 EUR"); return; }
+            if (!name) { alert("Bitte Namen eingeben!"); return; }
+            barBtn.disabled = true; barBtn.textContent = "Wird gespeichert...";
+            db.collection("payments").add({ eventId: ev.id, eventTitle: ev.title || "Event", name: name, amount: amount, reason: currentReason, note: note, method: "bar", status: "bar vor Ort", createdAt: firebase.firestore.FieldValue.serverTimestamp() }).then(function () {
+                // ✅ TELEGRAM - Bar Zahlung
+                var msg = "🏠 *NEUE ZAHLUNG (Bar)!*\n\n";
+                msg += "📅 *Event:* " + (ev.title || "Event") + "\n";
+                msg += "👤 *Von:* " + name + "\n";
+                msg += "💰 *Betrag:* " + amount.toFixed(2).replace(".",",") + " EUR\n";
+                msg += "📝 *Grund:* " + currentReason + "\n";
+                if (note) msg += "💬 *Notiz:* " + note + "\n";
+                msg += "\n⏰ " + new Date().toLocaleString("de-DE", {day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
+                sendTelegram(msg);
+
+                document.getElementById("payFormWrap").style.display = "none";
+                var s = document.getElementById("paySuccess"); s.classList.add("show");
+                document.getElementById("paySuccessIcon").textContent = "🏠";
+                document.getElementById("paySuccessTitle").textContent = "Notiert!";
+                document.getElementById("paySuccessText").innerHTML = "<strong>" + esc(name) + "</strong> zahlt <strong>" + amount.toFixed(2).replace(".", ",") + " EUR</strong> bar vor Ort.<br>Grund: " + esc(currentReason);
+                launchConfetti();
+            }).catch(function (err) { console.error("Pay error:", err); alert("Fehler beim Speichern!"); barBtn.disabled = false; barBtn.textContent = "🏠 Bar vor Ort bezahlen"; });
+        }); }
+    }
+
+    /* ===== FINISH GAME FORM ===== */
+    function renderFinishGameForm(e) {
+        var gameName = e.game || "";
+        var special = SPECIAL_GAMES[gameName];
+        var attendees = e.attendees || [];
+        if (attendees.length === 0) return '<p style="font-size:.85rem;color:var(--color-gray)">Keine Teilnehmer angemeldet.</p>';
+        var html = "";
+        if (special) {
+            html += '<p style="font-size:.8rem;color:var(--color-text-light);margin-bottom:1rem">Trage die Ergebnisse fuer jeden Spieler ein:</p>';
+            for (var i = 0; i < attendees.length; i++) {
+                html += '<div class="fg-player-row" data-player="' + esc(attendees[i].name) + '"><div class="fg-player-name">' + esc(attendees[i].name) + '</div>';
+                for (var f = 0; f < special.fields.length; f++) { html += '<div class="fg-field"><label>' + special.labels[f] + '</label><input type="number" class="fg-input" data-field="' + special.fields[f] + '" data-player="' + esc(attendees[i].name) + '" step="0.01" placeholder="0"></div>'; }
+                html += '</div>';
+            }
+        } else {
+            html += '<div class="fg-field"><label>Gewinner</label><select id="fgWinnerSelect"><option value="">Waehle den Gewinner...</option>';
+            for (var i = 0; i < attendees.length; i++) html += '<option value="' + esc(attendees[i].name) + '">' + esc(attendees[i].name) + '</option>';
+            html += '</select></div>';
+        }
+        html += '<button class="fg-submit" id="fgSubmitBtn">🏆 Spiel beenden &amp; Stats speichern</button><div class="fg-feedback" id="fgFeedback">Ergebnis gespeichert!</div>';
+        return html;
+    }
+
+    function bindFinishGameForm() {
+        var submitBtn = document.getElementById("fgSubmitBtn");
+        if (!submitBtn) return;
+        submitBtn.addEventListener("click", function () {
+            var e = currentEvent; var gameName = e.game || e.title; var special = SPECIAL_GAMES[gameName]; var emoji = GAME_EMOJIS[gameName] || "🎲";
+            var statData = { game: gameName, emoji: emoji, date: e.date, eventId: e.id, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
+            if (special) {
+                var inputs = document.querySelectorAll(".fg-input"); var playerData = {};
+                for (var i = 0; i < inputs.length; i++) { var pName = inputs[i].getAttribute("data-player"); var field = inputs[i].getAttribute("data-field"); var val = parseFloat(inputs[i].value) || 0; if (!playerData[pName]) playerData[pName] = { name: pName }; playerData[pName][field] = val; }
+                var playerArr = []; for (var k in playerData) { if (playerData.hasOwnProperty(k)) playerArr.push(playerData[k]); }
+                var winner = "";
+                if (special.winLogic === "maxProfit") { var maxP = -Infinity; for (var i = 0; i < playerArr.length; i++) { var profit = (playerArr[i].cashOut || 0) - (playerArr[i].buyIn || 0); playerArr[i].profit = profit; if (profit > maxP) { maxP = profit; winner = playerArr[i].name; } } }
+                else if (special.winLogic === "maxPoints") { var maxP = -Infinity; for (var i = 0; i < playerArr.length; i++) { var pts = playerArr[i].points || playerArr[i].money || 0; if (pts > maxP) { maxP = pts; winner = playerArr[i].name; } } }
+                else if (special.winLogic === "minPoints") { var minP = Infinity; for (var i = 0; i < playerArr.length; i++) { var pts = playerArr[i].points || 0; if (pts < minP) { minP = pts; winner = playerArr[i].name; } } }
+                statData.winner = winner; statData.players = playerArr; statData.gameType = special.winLogic;
+            } else {
+                var sel = document.getElementById("fgWinnerSelect"); if (!sel || !sel.value) { alert("Bitte Gewinner waehlen!"); return; } statData.winner = sel.value;
+            }
+            submitBtn.disabled = true; submitBtn.textContent = "Wird gespeichert...";
+            db.collection("stats").add(statData).then(function () { document.getElementById("fgFeedback").classList.add("show"); submitBtn.textContent = "Gespeichert! ✓"; submitBtn.style.background = "#2D6A4F"; launchConfetti(); }).catch(function (err) { console.error("Error saving stats:", err); alert("Fehler!"); submitBtn.disabled = false; submitBtn.textContent = "🏆 Spiel beenden & Stats speichern"; });
+        });
+    }
+
+    /* ===== JOIN ===== */
+    function openJoinPopup() {
+        var e = currentEvent;
+        document.getElementById("joinEventName").textContent = (e.emoji || "📅") + " " + e.title;
+        document.getElementById("joinName").value = ""; document.getElementById("joinPersons").value = "1"; document.getElementById("joinError").style.display = "none";
+        document.getElementById("joinOverlay").classList.add("active"); document.body.style.overflow = "hidden";
+        setTimeout(function () { document.getElementById("joinName").focus(); }, 200);
+    }
+    document.getElementById("joinCancel").addEventListener("click", function () { document.getElementById("joinOverlay").classList.remove("active"); document.body.style.overflow = ""; });
+    document.getElementById("joinOverlay").addEventListener("click", function (e) { if (e.target === this) { this.classList.remove("active"); document.body.style.overflow = ""; } });
+
+    document.getElementById("joinConfirm").addEventListener("click", function () {
+        var name = document.getElementById("joinName").value.trim();
+        var persons = parseInt(document.getElementById("joinPersons").value) || 1;
+        var errEl = document.getElementById("joinError");
+        var e = currentEvent;
+        if (!name) { errEl.textContent = "Bitte gib deinen Namen ein!"; errEl.style.display = "block"; return; }
+        if (persons < 1 || persons > 10) { errEl.textContent = "Anzahl zwischen 1 und 10!"; errEl.style.display = "block"; return; }
+        var attendees = e.attendees || [];
+        for (var i = 0; i < attendees.length; i++) { if (attendees[i].name.toLowerCase() === name.toLowerCase()) { errEl.textContent = "Du bist bereits angemeldet!"; errEl.style.display = "block"; return; } }
+        var currentCount = countAttending(e);
+        if (currentCount + persons > e.capacity) { errEl.textContent = "Nicht genug Plaetze! Noch " + (e.capacity - currentCount) + " frei."; errEl.style.display = "block"; return; }
+        var confirmBtn = document.getElementById("joinConfirm"); confirmBtn.disabled = true; confirmBtn.textContent = "Wird angemeldet...";
+        attendees.push({ name: name, persons: persons });
+        var newAttending = 0; for (var i = 0; i < attendees.length; i++) newAttending += (attendees[i].persons || 1);
+
+        db.collection("events").doc(eventId).update({ attendees: attendees, attending: newAttending }).then(function () {
+            return db.collection("event_signups").add({ eventId: eventId, name: name, persons: persons, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+        }).then(function () {
+            // ✅ TELEGRAM - Event Anmeldung
+            var msg = "🎟️ *NEUE EVENT-ANMELDUNG!*\n\n";
+            msg += "📅 *Event:* " + (e.emoji || "") + " " + (e.title || "Event") + "\n";
+            msg += "👤 *Name:* " + name + "\n";
+            msg += "👥 *Personen:* " + persons + "\n";
+            msg += "📊 *Auslastung:* " + newAttending + "/" + e.capacity + "\n";
+            msg += "\n⏰ " + new Date().toLocaleString("de-DE", {day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
+            sendTelegram(msg);
+
+            markJoined(eventId, name);
+            document.getElementById("joinOverlay").classList.remove("active");
+            document.body.style.overflow = "";
+            launchConfetti();
+            loadEvent();
+        }).catch(function (err) { console.error("Join error:", err); errEl.textContent = "Fehler beim Anmelden!"; errEl.style.display = "block"; confirmBtn.disabled = false; confirmBtn.textContent = "Anmelden! 🎉"; });
+    });
+
+    /* ===== HELPERS ===== */
+    function countAttending(ev) { var total = 0; var a = ev.attendees || []; for (var i = 0; i < a.length; i++) total += (a[i].persons || 1); return total; }
+    function hasJoined(eid) { var j = JSON.parse(localStorage.getItem("pocci4_joined") || "{}"); return !!j[eid]; }
+    function markJoined(eid, name) { var j = JSON.parse(localStorage.getItem("pocci4_joined") || "{}"); j[eid] = name; localStorage.setItem("pocci4_joined", JSON.stringify(j)); }
+    function formatDate(ds) { if (!ds) return ""; var p = ds.split("-"); if (p.length === 3) return parseInt(p[2]) + ". " + monthNames[parseInt(p[1]) - 1] + " " + p[0]; return ds; }
+    function esc(s) { if (!s) return ""; return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+    function downloadICS(title, date, time, location) {
+        var h = time.split(":")[0]; var m = time.split(":")[1] || "00"; var dtStart = date.replace(/-/g, "") + "T" + h + m + "00"; var endHour = String(Math.min(parseInt(h) + 4, 23)).padStart(2, "0"); var dtEnd = date.replace(/-/g, "") + "T" + endHour + m + "00";
+        var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//pocci4//Event//DE", "BEGIN:VEVENT", "DTSTART:" + dtStart, "DTEND:" + dtEnd, "SUMMARY:" + title, "LOCATION:" + (location || DEFAULT_LOCATION), "DESCRIPTION:pocci4 Event - " + title, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+        var blob = new Blob([ics], { type: "text/calendar;charset=utf-8" }); var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = title.replace(/[^a-zA-Z0-9]/g, "_") + ".ics"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    }
+    function launchConfetti() { var container = document.getElementById("confettiContainer"); var colors = ["#C03A2B", "#E8501E", "#C4A882", "#457B9D", "#FF6B6B", "#FFD93D", "#6BCB77"]; for (var i = 0; i < 50; i++) { var particle = document.createElement("div"); var size = Math.random() * 8 + 5; var isCircle = Math.random() > 0.5; particle.style.cssText = "position:absolute;left:" + (Math.random() * 100) + "%;top:-20px;width:" + size + "px;height:" + (isCircle ? size : size * 2.5) + "px;background:" + colors[Math.floor(Math.random() * colors.length)] + ";border-radius:" + (isCircle ? "50%" : "3px") + ";opacity:1;animation:cFall " + (Math.random() * 2 + 2) + "s ease-out forwards;animation-delay:" + (Math.random() * 0.3) + "s;pointer-events:none;"; container.appendChild(particle); (function (el) { setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 4000); })(particle); } }
+    var confettiStyle = document.createElement("style"); confettiStyle.textContent = "@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}"; document.head.appendChild(confettiStyle);
+    function initReveal() { var observer = new IntersectionObserver(function (entries) { for (var i = 0; i < entries.length; i++) { if (entries[i].isIntersecting) { (function (el, idx) { setTimeout(function () { el.classList.add("visible"); }, idx * 80); })(entries[i].target, i); observer.unobserve(entries[i].target); } } }, { threshold: 0.1 }); var revealEls = document.querySelectorAll(".reveal"); for (var i = 0; i < revealEls.length; i++) observer.observe(revealEls[i]); }
+    window.addEventListener("scroll", function () { var shapes = document.querySelectorAll(".bg-shape"); for (var i = 0; i < shapes.length; i++) { shapes[i].style.transform = "translateY(" + (window.scrollY * (i + 1) * 0.015) + "px) rotate(" + (window.scrollY * 0.01 * (i % 2 === 0 ? 1 : -1)) + "deg)"; } });
+})();
     </script>
 </body>
 </html>
