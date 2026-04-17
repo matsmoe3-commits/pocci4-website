@@ -917,6 +917,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
         }
     });
 
+// EVENT DETAIL MODAL (Attendees + Signups + ADD PERSON)
     function viewEventDetail(id){
         var e=null;for(var i=0;i<allEvents.length;i++)if(allEvents[i]._id===id){e=allEvents[i];break;}
         if(!e)return;
@@ -925,24 +926,76 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
         var h='<div style="margin-bottom:1.25rem"><div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.3rem">INFO</div>';
         h+='<div style="font-size:.85rem;color:var(--color-text-light)">'+fDate(e.date)+' · '+(e.time||"20:00")+' · '+(e.location||"Poccistrasse 4")+'</div>';
         h+='<div style="font-size:.85rem;color:var(--color-text-light);margin-top:.2rem">'+(e.attending||0)+'/'+(evCap(e)||"∞")+' Gäste · Hype: '+(e.hype||0)+'</div></div>';
+
+        // ADD PERSON FORM
+        h+='<div style="background:var(--color-bg);border-radius:14px;padding:1rem;margin-bottom:1.25rem">';
+        h+='<div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.6rem">+ PERSON HINZUFÜGEN</div>';
+        h+='<div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:flex-end">';
+        h+='<div style="flex:1;min-width:120px"><label style="font-size:.6rem;font-weight:700;color:var(--color-gray);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:.25rem">Name *</label><input type="text" id="addAttName" class="form-input" placeholder="Max Mustermann" style="padding:8px 12px;font-size:.8rem"></div>';
+        h+='<div style="width:70px"><label style="font-size:.6rem;font-weight:700;color:var(--color-gray);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:.25rem">Personen</label><input type="number" id="addAttPersons" class="form-input" placeholder="1" min="1" value="1" style="padding:8px 12px;font-size:.8rem"></div>';
+        h+='<div style="flex:1;min-width:100px"><label style="font-size:.6rem;font-weight:700;color:var(--color-gray);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:.25rem">Instagram</label><input type="text" id="addAttInsta" class="form-input" placeholder="@username" style="padding:8px 12px;font-size:.8rem"></div>';
+        h+='<button class="btn btn-sm btn-primary" id="addAttBtn" data-evt-id="'+esc(e._id)+'">+ Hinzufügen</button>';
+        h+='</div></div>';
+
+        // Attendees from event doc
         var att=e.attendees||[];
         h+='<div style="margin-bottom:1.25rem"><div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.5rem">TEILNEHMER ('+att.length+')</div>';
-        if(att.length){for(var i=0;i<att.length;i++){var a=att[i];h+='<div class="att-row"><div class="att-name">'+(typeof a==="string"?esc(a):esc(a.name||"?"))+'</div>';if(typeof a==="object"&&a.persons)h+='<div class="att-persons">'+a.persons+' Pers.</div>';if(typeof a==="object"&&a.instagram)h+='<div class="att-insta">'+esc(a.instagram)+'</div>';h+='<button class="del-btn" data-rm-att="'+i+'" data-rm-evt="'+esc(e._id)+'">✕</button></div>';}}
+        if(att.length){
+            var totalPersons=0;
+            for(var i=0;i<att.length;i++){var a=att[i];
+                var pCount=(typeof a==="object"&&a.persons)?parseInt(a.persons)||1:1;
+                totalPersons+=pCount;
+                h+='<div class="att-row"><div class="att-name">'+(typeof a==="string"?esc(a):esc(a.name||"?"))+'</div>';
+                if(typeof a==="object"&&a.persons)h+='<div class="att-persons">'+a.persons+' Pers.</div>';
+                if(typeof a==="object"&&a.instagram)h+='<div class="att-insta">'+esc(a.instagram)+'</div>';
+                h+='<button class="del-btn" data-rm-att="'+i+'" data-rm-evt="'+esc(e._id)+'">✕</button></div>';
+            }
+            h+='<div style="font-size:.68rem;color:var(--color-gray);margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--color-border)">👥 Gesamt: <strong>'+totalPersons+'</strong> Personen aus <strong>'+att.length+'</strong> Anmeldungen</div>';
+        }
         else h+='<div style="font-size:.82rem;color:var(--color-gray)">Noch keine Teilnehmer.</div>';
         h+='</div>';
+
+        // Signups from event_signups collection
         var evSignups=allSignups.filter(function(s){return s.eventId===id;});
         if(evSignups.length){
             h+='<div><div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.5rem">ANMELDUNGEN (event_signups: '+evSignups.length+')</div>';
             for(var i=0;i<evSignups.length;i++){var s=evSignups[i];h+='<div class="att-row"><div class="att-name">'+esc(s.name||"?")+'</div>';if(s.instagram)h+='<div class="att-insta">'+esc(s.instagram)+'</div>';h+='<div class="msg-time">'+fShort(s.createdAt)+'</div></div>';}
             h+='</div>';
         }
+
         body.innerHTML=h;
+
+        // ADD PERSON BUTTON
+        var addBtn=document.getElementById("addAttBtn");
+        if(addBtn){addBtn.addEventListener("click",function(){
+            var name=document.getElementById("addAttName").value.trim();
+            var persons=parseInt(document.getElementById("addAttPersons").value)||1;
+            var insta=document.getElementById("addAttInsta").value.trim();
+            if(!name){toast("Name ist Pflicht!","error");return;}
+            var eid=this.getAttribute("data-evt-id");
+            var ev=null;for(var i=0;i<allEvents.length;i++)if(allEvents[i]._id===eid){ev=allEvents[i];break;}
+            if(!ev)return;
+            var atts=(ev.attendees||[]).slice();
+            var newAtt={name:name,persons:persons};
+            if(insta)newAtt.instagram=insta;
+            atts.push(newAtt);
+            var newCount=(ev.attending||0)+persons;
+            db.collection("events").doc(eid).update({attendees:atts,attending:newCount}).then(function(){
+                toast("✓ "+name+" hinzugefügt!");
+                viewEventDetail(eid); // Refresh
+            }).catch(function(){toast("Fehler","error");});
+        });}
+
+        // Remove attendee buttons
         body.querySelectorAll("[data-rm-att]").forEach(function(b){b.addEventListener("click",function(){
             var idx=parseInt(this.getAttribute("data-rm-att"));var eid=this.getAttribute("data-rm-evt");
             var ev=null;for(var i=0;i<allEvents.length;i++)if(allEvents[i]._id===eid){ev=allEvents[i];break;}
-            if(!ev)return;var atts=(ev.attendees||[]).slice();atts.splice(idx,1);
-            db.collection("events").doc(eid).update({attendees:atts,attending:Math.max(0,(ev.attending||0)-1)}).then(function(){toast("Entfernt");viewEventDetail(eid);});
+            if(!ev)return;var atts=(ev.attendees||[]).slice();
+            var removedPersons=(typeof atts[idx]==="object"&&atts[idx].persons)?parseInt(atts[idx].persons)||1:1;
+            atts.splice(idx,1);
+            db.collection("events").doc(eid).update({attendees:atts,attending:Math.max(0,(ev.attending||0)-removedPersons)}).then(function(){toast("Entfernt");viewEventDetail(eid);});
         });});
+
         openModal("eventDetailModal");
     }
 
