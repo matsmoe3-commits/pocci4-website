@@ -15,12 +15,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        :root{--color-primary:#C03A2B;--color-primary-light:#E8501E;--color-primary-hover:#A83225;--color-bg:#F5F0EB;--color-bg-warm:#EDE5DB;--color-white:#FFFFFF;--color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;--color-sand:#C4A882;--color-border:#E0D6CC;--color-green:#2D6A4F;--color-green-light:#D4EDDA;--color-yellow:#B8860B;--color-yellow-light:#FFF3CD;--color-blue:#2563EB;--color-blue-light:#E0F0FF;--font-main:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--nav-height:80px;--transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);--transition-smooth:0.4s cubic-bezier(0.4,0,0.2,1)}
+        :root{--color-primary:#C03A2B;--color-primary-light:#E8501E;--color-primary-hover:#A83225;--color-bg:#F5F0EB;--color-bg-warm:#EDE5DB;--color-white:#FFFFFF;--color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;--color-sand:#C4A882;--color-border:#E0D6CC;--color-green:#2D6A4F;--color-green-light:#D4EDDA;--color-yellow:#B8860B;--color-yellow-light:#FFF3CD;--color-blue:#2563EB;--color-blue-light:#E0F0FF;--color-orange:#E67E22;--color-orange-light:#FFF0E0;--font-main:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--nav-height:80px;--transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);--transition-smooth:0.4s cubic-bezier(0.4,0,0.2,1)}
         html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased}
         body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;min-height:100vh}
         a{text-decoration:none;color:inherit}
 
-        /* NAVBAR */
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(26,26,26,.95);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid rgba(255,255,255,.08)}
         .nav-container{max-width:1400px;margin:0 auto;padding:0 1.25rem;height:100%;display:flex;align-items:center;justify-content:space-between}
         .nav-logo img{height:48px;filter:brightness(0) invert(1)}
@@ -38,14 +37,12 @@
         .logout-btn{padding:7px 14px;border-radius:50px;font-size:.72rem;font-weight:600;border:1px solid rgba(255,255,255,.12);background:none;cursor:pointer;font-family:var(--font-main);color:rgba(255,255,255,.5);transition:var(--transition-fast)}
         .logout-btn:hover{border-color:#C03A2B;color:#C03A2B}
 
-        /* WRAPPER */
         .admin-wrapper{max-width:1400px;margin:0 auto;padding:calc(var(--nav-height) + 1.5rem) 1.25rem 4rem}
         .admin-header{margin-bottom:1.5rem;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem}
         .admin-header h1{font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;letter-spacing:-.03em}
         .admin-header p{color:var(--color-text-light);font-size:.85rem}
         .header-actions{display:flex;gap:.5rem;flex-wrap:wrap}
 
-        /* BUTTONS */
         .btn{padding:10px 20px;border-radius:50px;font-size:.78rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth);font-family:var(--font-main);border:none;display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap}
         .btn-primary{background:var(--color-primary);color:#fff}
         .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,58,43,.25)}
@@ -57,7 +54,6 @@
         .btn-green{background:var(--color-green);color:#fff;border:none}
         .btn-green:hover{background:#245a42}
 
-        /* STATS GRID */
         .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.75rem;margin-bottom:1.5rem}
         .stat-card{background:var(--color-white);border-radius:18px;padding:1.25rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
         .stat-card:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.05)}
@@ -65,7 +61,6 @@
         .stat-value{font-size:1.6rem;font-weight:900;letter-spacing:-.03em;line-height:1}
         .stat-label{font-size:.65rem;font-weight:600;color:var(--color-gray);text-transform:uppercase;letter-spacing:.08em;margin-top:.3rem}
 
-        /* PANEL */
         .panel{background:var(--color-white);border-radius:22px;border:1px solid var(--color-border);overflow:hidden;margin-bottom:1.25rem}
         .panel-header{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-border);flex-wrap:wrap;gap:.5rem}
         .panel-header h3{font-size:.92rem;font-weight:800;display:flex;align-items:center;gap:.4rem}
@@ -76,11 +71,9 @@
         .panel-search:focus{border-color:var(--color-primary)}
         .panel-list{max-height:600px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 
-        /* SECTIONS */
         .admin-section{display:none}
         .admin-section.active{display:block}
 
-        /* ORDER ROW */
         .order-row{display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
         .order-row:hover{background:var(--color-bg)}
         .order-row:last-child{border-bottom:none}
@@ -91,6 +84,7 @@
         .order-method{padding:3px 10px;border-radius:50px;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
         .method-paypal{background:#FFF0D4;color:#B8860B}
         .method-vor-ort{background:var(--color-blue-light);color:var(--color-blue)}
+        .method-shisha{background:var(--color-orange-light);color:var(--color-orange)}
         .order-total{font-size:.92rem;font-weight:900;white-space:nowrap}
         .order-info{flex:1;min-width:150px}
         .order-actions{display:flex;align-items:center;gap:.3rem;flex-shrink:0}
@@ -100,7 +94,6 @@
         .del-btn{padding:5px 8px;border-radius:50px;font-size:.68rem;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;transition:var(--transition-fast);color:var(--color-gray);flex-shrink:0}
         .del-btn:hover{border-color:var(--color-primary);color:var(--color-primary)}
 
-        /* EVENT ROW */
         .event-row{display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
         .event-row:hover{background:var(--color-bg)}
         .event-row:last-child{border-bottom:none}
@@ -116,7 +109,6 @@
         .event-status-draft{background:var(--color-yellow-light);color:var(--color-yellow)}
         .event-status-past{background:var(--color-bg);color:var(--color-gray)}
 
-        /* MESSAGE ROW */
         .msg-row{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);cursor:pointer}
         .msg-row:hover{background:var(--color-bg)}
         .msg-row:last-child{border-bottom:none}
@@ -129,7 +121,6 @@
         .msg-time{font-size:.62rem;color:var(--color-gray);white-space:nowrap;flex-shrink:0}
         .msg-unread-dot{width:7px;height:7px;border-radius:50%;background:var(--color-primary);flex-shrink:0}
 
-        /* MSG DETAIL */
         .msg-detail-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--color-border)}
         .msg-detail-avatar{width:46px;height:46px;border-radius:50%;background:var(--color-bg-warm);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:var(--color-primary);flex-shrink:0}
         .msg-detail-name{font-size:1rem;font-weight:800}
@@ -137,7 +128,6 @@
         .msg-detail-subject{font-size:.9rem;font-weight:700;margin-bottom:.75rem;padding:8px 12px;background:var(--color-bg);border-radius:10px}
         .msg-detail-body{font-size:.88rem;color:var(--color-text-light);line-height:1.7;white-space:pre-wrap;word-break:break-word}
 
-        /* GAME ROW */
         .game-row{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
         .game-row:hover{background:var(--color-bg)}
         .game-row:last-child{border-bottom:none}
@@ -147,7 +137,6 @@
         .game-stat{text-align:center;font-weight:800;font-size:.88rem;min-width:50px;flex-shrink:0}
         .game-stat-label{font-size:.55rem;color:var(--color-gray);font-weight:600;text-transform:uppercase}
 
-        /* CONTENT GRID */
         .content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
         .content-card{background:var(--color-white);border-radius:18px;padding:1.25rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
         .content-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.05)}
@@ -158,7 +147,6 @@
         .content-card-body{font-size:.78rem;color:var(--color-text-light);line-height:1.5}
         .content-card-footer{display:flex;gap:.5rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--color-border)}
 
-        /* SUGGESTION ROW */
         .sug-row{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
         .sug-row:hover{background:var(--color-bg)}
         .sug-row:last-child{border-bottom:none}
@@ -169,7 +157,6 @@
         .sug-title{font-size:.85rem;font-weight:800}
         .sug-meta{font-size:.68rem;color:var(--color-text-light);margin-top:.1rem}
 
-        /* PAYMENT ROW */
         .pay-row{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
         .pay-row:hover{background:var(--color-bg)}
         .pay-row:last-child{border-bottom:none}
@@ -179,14 +166,12 @@
         .pay-amount{font-size:.92rem;font-weight:900;white-space:nowrap;flex-shrink:0}
         .pay-method-badge{padding:3px 10px;border-radius:50px;font-size:.6rem;font-weight:700;white-space:nowrap;flex-shrink:0}
 
-        /* ATTENDEE ROW */
         .att-row{display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid rgba(224,214,204,.3)}
         .att-row:last-child{border-bottom:none}
         .att-name{flex:1;font-size:.82rem;font-weight:600}
         .att-persons{font-size:.72rem;color:var(--color-gray)}
         .att-insta{font-size:.68rem;color:var(--color-primary)}
 
-        /* BESTSELLER ROW */
         .best-row{display:flex;align-items:center;gap:.75rem;padding:.75rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3)}
         .best-row:last-child{border-bottom:none}
         .best-rank{font-size:1.1rem;font-weight:900;min-width:28px;text-align:center;flex-shrink:0}
@@ -197,7 +182,20 @@
         .best-rev{font-weight:900;font-size:.88rem;text-align:right;flex-shrink:0;white-space:nowrap}
         .best-sub{font-size:.55rem;color:var(--color-gray);font-weight:600}
 
-        /* MODAL */
+        /* SHISHA ROW */
+        .shisha-row{display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
+        .shisha-row:hover{background:var(--color-bg)}
+        .shisha-row:last-child{border-bottom:none}
+        .shisha-icon{font-size:1.6rem;flex-shrink:0}
+        .shisha-info{flex:1;min-width:150px}
+        .shisha-name{font-size:.85rem;font-weight:800}
+        .shisha-flavors{font-size:.72rem;color:var(--color-text-light);margin-top:.15rem}
+        .shisha-meta{font-size:.65rem;color:var(--color-gray);margin-top:.1rem}
+        .shisha-type-badge{padding:3px 10px;border-radius:50px;font-size:.6rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+        .type-eshisha{background:var(--color-blue-light);color:var(--color-blue)}
+        .type-shisha{background:var(--color-orange-light);color:var(--color-orange)}
+        .shisha-mix-badge{padding:3px 8px;border-radius:50px;font-size:.58rem;font-weight:700;background:var(--color-bg);color:var(--color-text-light);white-space:nowrap;flex-shrink:0}
+
         .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:flex-end;justify-content:center;padding:0}
         .modal-overlay.active{display:flex}
         .modal{background:var(--color-white);border-radius:24px 24px 0 0;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:0 -10px 40px rgba(0,0,0,.15);animation:modalSlideUp .3s ease}
@@ -209,7 +207,6 @@
         .modal-body{padding:1.5rem}
         .modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:.5rem;position:sticky;bottom:0;background:var(--color-white)}
 
-        /* FORM */
         .form-group{margin-bottom:1rem}
         .form-label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.4rem}
         .form-input,.form-textarea,.form-select{width:100%;padding:11px 14px;border:1.5px solid var(--color-border);border-radius:14px;font-family:var(--font-main);font-size:.85rem;outline:none;transition:var(--transition-fast);background:var(--color-white);color:var(--color-text);-webkit-appearance:none}
@@ -224,28 +221,23 @@
         .form-toggle input:checked+.toggle-track::after{left:22.5px}
         .toggle-label{font-size:.82rem;font-weight:600}
 
-        /* MEMBER/SOCIAL/GALLERY BLOCKS */
         .member-block,.social-block,.gallery-block{padding:.75rem;background:var(--color-bg);border-radius:12px;margin-bottom:.5rem}
 
-        /* EMPTY STATE */
         .empty-state{text-align:center;padding:2.5rem 1.5rem;color:var(--color-gray)}
         .empty-state-icon{font-size:2.5rem;margin-bottom:.5rem}
         .empty-state h3{font-size:1rem;font-weight:700;color:var(--color-text);margin-bottom:.3rem}
         .empty-state p{font-size:.8rem}
 
-        /* LOADING */
         .loading{text-align:center;padding:2.5rem;color:var(--color-gray)}
         .loading-spinner{width:24px;height:24px;border:3px solid var(--color-border);border-top-color:var(--color-primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto .5rem}
         @keyframes spin{to{transform:rotate(360deg)}}
 
-        /* TOAST */
         .toast-container{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:3000;display:flex;flex-direction:column;gap:.4rem;align-items:center;width:90%;max-width:380px}
         .toast{padding:12px 18px;border-radius:14px;background:var(--color-text);color:#fff;font-size:.82rem;font-weight:600;box-shadow:0 8px 25px rgba(0,0,0,.2);transform:translateY(50px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1);text-align:center;width:100%}
         .toast.show{transform:translateY(0);opacity:1}
         .toast.success{background:var(--color-green)}
         .toast.error{background:var(--color-primary)}
 
-        /* MOBILE TABS */
         .mobile-admin-tabs{display:none;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 1rem;margin-bottom:1rem;gap:.35rem;scrollbar-width:none;-ms-overflow-style:none}
         .mobile-admin-tabs::-webkit-scrollbar{display:none}
         .mobile-admin-tabs .admin-mtab{padding:7px 14px;border-radius:50px;font-size:.7rem;font-weight:700;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:1.5px solid var(--color-border);background:var(--color-white);font-family:var(--font-main);white-space:nowrap;flex-shrink:0;position:relative}
@@ -253,15 +245,12 @@
         .mobile-admin-tabs .admin-mtab .mtab-badge{position:absolute;top:-4px;right:-4px;min-width:14px;height:14px;border-radius:7px;background:var(--color-primary);color:#fff;font-size:.5rem;font-weight:800;display:none;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--color-bg)}
         .mobile-admin-tabs .admin-mtab .mtab-badge.show{display:flex}
 
-        /* DESKTOP MODAL CENTER */
         @media(min-width:640px){
             .modal-overlay{align-items:center;padding:1rem}
             .modal{border-radius:24px;max-height:90vh}
             .modal-header{border-radius:24px 24px 0 0}
             @keyframes modalSlideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
         }
-
-        /* RESPONSIVE */
         @media(max-width:1024px){
             .nav-center{display:none}
             .mobile-admin-tabs{display:flex}
@@ -293,6 +282,7 @@
         <div class="nav-center">
             <button class="nav-center-link active" data-section="dashboard">📊 Dashboard</button>
             <button class="nav-center-link" data-section="orders">📦 Bestellungen</button>
+            <button class="nav-center-link" data-section="shisha">🔥 Shisha <span class="nav-badge" id="navShishaBadge">0</span></button>
             <button class="nav-center-link" data-section="messages">📬 Nachrichten <span class="nav-badge" id="navMsgBadge">0</span></button>
             <button class="nav-center-link" data-section="events">📅 Events</button>
             <button class="nav-center-link" data-section="suggestions">🗳️ Vorschläge</button>
@@ -311,6 +301,7 @@
 <div class="mobile-admin-tabs" id="mobileTabs" style="margin-top:calc(var(--nav-height) + .75rem)">
     <button class="admin-mtab active" data-section="dashboard">📊 Dashboard</button>
     <button class="admin-mtab" data-section="orders">📦 Bestellungen</button>
+    <button class="admin-mtab" data-section="shisha">🔥 Shisha <span class="mtab-badge" id="mobileShishaBadge">0</span></button>
     <button class="admin-mtab" data-section="messages">📬 Nachrichten <span class="mtab-badge" id="mobileMsgBadge">0</span></button>
     <button class="admin-mtab" data-section="events">📅 Events</button>
     <button class="admin-mtab" data-section="suggestions">🗳️ Vorschläge</button>
@@ -328,12 +319,14 @@
         <div class="admin-header"><div><h1>Dashboard 📊</h1><p>Alles auf einen Blick.</p></div></div>
         <div class="stats-grid">
             <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-value" id="statOrders">-</div><div class="stat-label">Bestellungen</div></div>
+            <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-value" id="statShisha">-</div><div class="stat-label">Shisha Orders</div></div>
             <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-value" id="statRevenue">-</div><div class="stat-label">Umsatz (EUR)</div></div>
             <div class="stat-card"><div class="stat-icon">📬</div><div class="stat-value" id="statMessages">-</div><div class="stat-label">Nachrichten</div></div>
             <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-value" id="statEvents">-</div><div class="stat-label">Events</div></div>
             <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-value" id="statGames">-</div><div class="stat-label">Games</div></div>
             <div class="stat-card"><div class="stat-icon">💳</div><div class="stat-value" id="statPayments">-</div><div class="stat-label">Zahlungen</div></div>
         </div>
+        <div class="panel"><div class="panel-header"><h3>🔥 Neue Shisha Bestellungen</h3><button class="btn btn-sm btn-outline" data-go="shisha">Alle →</button></div><div class="panel-list" id="dashShishaList" style="max-height:280px"></div></div>
         <div class="panel"><div class="panel-header"><h3>📬 Neue Nachrichten</h3><button class="btn btn-sm btn-outline" data-go="messages">Alle →</button></div><div class="panel-list" id="dashMsgList" style="max-height:280px"></div></div>
         <div class="panel"><div class="panel-header"><h3>Letzte Bestellungen</h3><button class="btn btn-sm btn-outline" data-go="orders">Alle →</button></div><div class="panel-list" id="dashOrderList" style="max-height:280px"></div></div>
         <div class="panel"><div class="panel-header"><h3>Nächste Events</h3><button class="btn btn-sm btn-outline" data-go="events">Alle →</button></div><div class="panel-list" id="dashEventList" style="max-height:280px"></div></div>
@@ -346,6 +339,15 @@
         <div class="panel">
             <div class="panel-header"><div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap"><h3>Alle Bestellungen</h3><span class="panel-badge" id="ordersCount">0</span></div><input type="text" class="panel-search" id="ordersSearch" placeholder="🔍 Suchen..."></div>
             <div class="panel-list" id="ordersList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
+        </div>
+    </div>
+
+    <!-- ====== SHISHA ====== -->
+    <div class="admin-section" id="sec-shisha">
+        <div class="admin-header"><div><h1>Shisha Bestellungen 🔥</h1><p>Alle Shisha- und E-Shisha-Bestellungen.</p></div></div>
+        <div class="panel">
+            <div class="panel-header"><div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap"><h3>Alle Shisha Orders</h3><span class="panel-badge" id="shishaCount">0</span><span class="panel-badge unread" id="shishaNewCount" style="display:none">0 neu</span></div><input type="text" class="panel-search" id="shishaSearch" placeholder="🔍 Suchen..."></div>
+            <div class="panel-list" id="shishaList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
         </div>
     </div>
 
@@ -439,7 +441,7 @@
     </div>
 </div>
 
-<!-- ====== EVENT DETAIL MODAL (Attendees) ====== -->
+<!-- ====== EVENT DETAIL MODAL ====== -->
 <div class="modal-overlay" id="eventDetailModal">
     <div class="modal">
         <div class="modal-header"><h3 id="evtDetailTitle">Event Details</h3><button class="modal-close" onclick="closeModal('eventDetailModal')">✕</button></div>
@@ -494,6 +496,18 @@
         <div class="modal-footer">
             <button class="btn btn-danger btn-sm" id="msgDeleteBtn">🗑️ Löschen</button>
             <button class="btn btn-outline" onclick="closeModal('messageModal')">Schließen</button>
+        </div>
+    </div>
+</div>
+
+<!-- ====== SHISHA DETAIL MODAL ====== -->
+<div class="modal-overlay" id="shishaModal">
+    <div class="modal">
+        <div class="modal-header"><h3>🔥 Shisha Bestellung</h3><button class="modal-close" onclick="closeModal('shishaModal')">✕</button></div>
+        <div class="modal-body" id="shishaModalBody"></div>
+        <div class="modal-footer">
+            <button class="btn btn-danger btn-sm" id="shishaDeleteBtn">🗑️ Löschen</button>
+            <button class="btn btn-outline" onclick="closeModal('shishaModal')">Schließen</button>
         </div>
     </div>
 </div>
@@ -554,11 +568,19 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     if(!firebase.apps.length)firebase.initializeApp(fc);
     var db=firebase.firestore();
 
-    // GAME EMOJIS (same as stats.html)
+    // TELEGRAM CONFIG
+    var TG_BOT="7888587789:AAGbVDfSLBfMwOvMcYmadIMsHR_RZ7EJxfM";
+    var TG_CHAT="7870018700";
+    function sendTelegram(msg){
+        fetch("https://api.telegram.org/bot"+TG_BOT+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TG_CHAT,text:msg,parse_mode:"HTML"})}).catch(function(){});
+    }
+
     var GAME_EMOJIS={"Mario Kart":"🏎️","FIFA":"⚽","Poker":"🃏","Beer Pong":"🍺","Siedler von Catan":"🏗️","UNO":"🎴","Tischtennis":"🏓","Darts":"🎯","Billard":"🎱","Schach":"♟️","Jenga":"🧱","Flunkyball":"🍻","Monopoly":"💰","Dutch":"🃏","Sonstiges":"🎲"};
 
-    var allOrders=[],allEvents=[],allMessages=[],allStats=[],allSuggestions=[],allPayments=[],allSignups=[];
-    var editingEventId=null,viewingMsgId=null;
+    var allOrders=[],allEvents=[],allMessages=[],allStats=[],allSuggestions=[],allPayments=[],allSignups=[],allShisha=[];
+    var editingEventId=null,viewingMsgId=null,viewingShishaId=null;
+    // Track known IDs to detect NEW docs for Telegram
+    var knownOrderIds=new Set(),knownShishaIds=new Set(),knownMsgIds=new Set(),firstLoad={orders:true,shisha:true,messages:true};
 
     // ===== HELPERS =====
     function toast(msg,type){var t=document.createElement("div");t.className="toast "+(type||"success");t.textContent=msg;document.getElementById("toastContainer").appendChild(t);setTimeout(function(){t.classList.add("show");},50);setTimeout(function(){t.classList.remove("show");setTimeout(function(){t.remove();},400);},3000);}
@@ -588,7 +610,21 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     // ============================================================
     function loadOrders(){
         db.collection("orders").onSnapshot(function(snap){
-            allOrders=[];snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allOrders.push(d);});
+            allOrders=[];var newIds=[];
+            snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allOrders.push(d);newIds.push(doc.id);});
+            // Telegram notify for NEW orders
+            if(!firstLoad.orders){
+                newIds.forEach(function(id){
+                    if(!knownOrderIds.has(id)){
+                        var o=allOrders.find(function(x){return x._id===id;});
+                        if(o){
+                            var items=[];if(o.items)for(var j=0;j<o.items.length;j++)items.push(o.items[j].qty+"x "+o.items[j].title);
+                            sendTelegram("📦 <b>Neue Bestellung!</b>\n\n"+items.join(", ")+"\n💰 "+(o.total||0).toFixed(2)+" €\n💳 "+(o.paymentMethod==="paypal"?"PayPal":"Vor Ort")+"\n🕐 "+fDateTime(o.createdAt));
+                        }
+                    }
+                });
+            }
+            firstLoad.orders=false;knownOrderIds=new Set(newIds);
             allOrders.sort(function(a,b){return(b.createdAt?b.createdAt.seconds:0)-(a.createdAt?a.createdAt.seconds:0);});
             renderOrders(allOrders);renderDashOrders();updateDashboard();renderBestsellers();
         });
@@ -622,11 +658,120 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     document.getElementById("ordersSearch").addEventListener("input",function(){var q=this.value.toLowerCase();renderOrders(q?allOrders.filter(function(o){var t=JSON.stringify(o).toLowerCase();return t.indexOf(q)!==-1;}):allOrders);});
 
     // ============================================================
+    //  SHISHA ORDERS 🔥
+    // ============================================================
+    function loadShisha(){
+        db.collection("shisha_orders").onSnapshot(function(snap){
+            allShisha=[];var newIds=[];
+            snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allShisha.push(d);newIds.push(doc.id);});
+            // Telegram notify for NEW shisha orders
+            if(!firstLoad.shisha){
+                newIds.forEach(function(id){
+                    if(!knownShishaIds.has(id)){
+                        var s=allShisha.find(function(x){return x._id===id;});
+                        if(s){
+                            sendTelegram("🔥 <b>Neue Shisha Bestellung!</b>\n\n👤 "+(s.name||"?")+"\n🌿 "+(s.flavors||[]).join(", ")+"\n💨 "+(s.type==="eshisha"?"E-Shisha":"Shisha")+" · Mix: "+(s.mix||"normal")+(s.note?"\n📝 "+s.note:"")+"\n🕐 "+fDateTime(s.createdAt));
+                        }
+                    }
+                });
+            }
+            firstLoad.shisha=false;knownShishaIds=new Set(newIds);
+            allShisha.sort(function(a,b){return(b.createdAt?b.createdAt.seconds:0)-(a.createdAt?a.createdAt.seconds:0);});
+            renderShisha(allShisha);renderDashShisha();updateDashboard();updateShishaBadges();
+        });
+    }
+
+    function countNewShisha(){var c=0;for(var i=0;i<allShisha.length;i++)if(allShisha[i].status==="neu")c++;return c;}
+
+    function updateShishaBadges(){
+        var n=countNewShisha();
+        var nb=document.getElementById("navShishaBadge");nb.textContent=n;nb.classList.toggle("show",n>0);
+        var mb=document.getElementById("mobileShishaBadge");mb.textContent=n;mb.classList.toggle("show",n>0);
+        var ub=document.getElementById("shishaNewCount");if(n>0){ub.textContent=n+" neu";ub.style.display="inline-block";}else{ub.style.display="none";}
+    }
+
+    function renderShisha(list){
+        var c=document.getElementById("shishaList");document.getElementById("shishaCount").textContent=list.length;
+        if(!list.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🔥</div><h3>Keine Shisha Bestellungen</h3></div>';return;}
+        var h="";
+        for(var i=0;i<list.length;i++){var s=list[i];
+            var isNew=s.status==="neu";var isDone=s.status==="done"||s.status==="erledigt";
+            var typeLabel=s.type==="eshisha"?"E-Shisha":"Shisha";
+            var flavors=(s.flavors||[]).join(", ")||"-";
+            h+='<div class="shisha-row'+(isNew?" unread":"")+'" data-shisha-id="'+esc(s._id)+'" style="cursor:pointer'+(isNew?";background:rgba(230,126,34,.04);border-left:3px solid var(--color-orange)":"")+'">';
+            h+='<div class="shisha-icon">'+(s.type==="eshisha"?"💨":"🔥")+'</div>';
+            h+='<div class="shisha-info"><div class="shisha-name">'+esc(s.name||"Unbekannt")+(isNew?' <span style="color:var(--color-orange);font-size:.6rem">● NEU</span>':'')+'</div>';
+            h+='<div class="shisha-flavors">🌿 '+esc(flavors)+'</div>';
+            h+='<div class="shisha-meta">'+fDateTime(s.createdAt)+(s.note?' · 📝 '+esc(s.note):'')+'</div></div>';
+            h+='<span class="shisha-type-badge '+(s.type==="eshisha"?"type-eshisha":"type-shisha")+'">'+typeLabel+'</span>';
+            h+='<span class="shisha-mix-badge">Mix: '+esc(s.mix||"normal")+'</span>';
+            h+='<div class="order-actions"><button class="status-btn'+(isDone?" done":"")+'" data-shisha-status="'+esc(s._id)+'">'+(isDone?"✓ Erledigt":"Offen")+'</button><button class="del-btn" data-del-shisha="'+esc(s._id)+'">🗑️</button></div></div>';
+        }
+        c.innerHTML=h;
+        // Click row to open detail
+        c.querySelectorAll("[data-shisha-id]").forEach(function(r){r.addEventListener("click",function(e){if(e.target.closest(".status-btn")||e.target.closest(".del-btn"))return;openShishaDetail(this.getAttribute("data-shisha-id"));});});
+        c.querySelectorAll(".status-btn:not(.done)").forEach(function(b){b.addEventListener("click",function(){db.collection("shisha_orders").doc(this.getAttribute("data-shisha-status")).update({status:"done"});toast("✓ Erledigt");});});
+        c.querySelectorAll("[data-del-shisha]").forEach(function(b){b.addEventListener("click",function(){if(confirm("Löschen?")){db.collection("shisha_orders").doc(this.getAttribute("data-del-shisha")).delete();toast("Gelöscht","error");}});});
+    }
+
+    function openShishaDetail(id){
+        var s=null;for(var i=0;i<allShisha.length;i++)if(allShisha[i]._id===id){s=allShisha[i];break;}
+        if(!s)return;viewingShishaId=id;
+        // Mark as read (status → in_progress if "neu")
+        if(s.status==="neu")db.collection("shisha_orders").doc(id).update({status:"gesehen"}).catch(function(){});
+        var b=document.getElementById("shishaModalBody");
+        var typeLabel=s.type==="eshisha"?"💨 E-Shisha":"🔥 Shisha";
+        var flavors=(s.flavors||[]).join(", ")||"-";
+        var flavorIds=(s.flavorIds||[]).join(", ")||"-";
+        b.innerHTML='<div style="text-align:center;margin-bottom:1.25rem"><div style="font-size:3rem">'+(s.type==="eshisha"?"💨":"🔥")+'</div><div style="font-size:1.1rem;font-weight:900;margin-top:.3rem">'+esc(s.name||"Unbekannt")+'</div><div style="font-size:.78rem;color:var(--color-gray);margin-top:.2rem">'+fDateTime(s.createdAt)+'</div></div>'+
+        '<div style="background:var(--color-bg);border-radius:14px;padding:1rem;margin-bottom:.75rem"><div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.6rem">BESTELLDETAILS</div>'+
+        '<div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><span style="font-size:.82rem;color:var(--color-text-light)">Typ</span><span style="font-size:.82rem;font-weight:700">'+typeLabel+'</span></div>'+
+        '<div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><span style="font-size:.82rem;color:var(--color-text-light)">Geschmack</span><span style="font-size:.82rem;font-weight:700">'+esc(flavors)+'</span></div>'+
+        '<div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><span style="font-size:.82rem;color:var(--color-text-light)">Flavor IDs</span><span style="font-size:.82rem;font-weight:600;color:var(--color-gray)">'+esc(flavorIds)+'</span></div>'+
+        '<div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><span style="font-size:.82rem;color:var(--color-text-light)">Mix</span><span style="font-size:.82rem;font-weight:700">'+esc(s.mix||"normal")+'</span></div>'+
+        '<div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><span style="font-size:.82rem;color:var(--color-text-light)">Status</span><span style="font-size:.82rem;font-weight:700">'+esc(s.status||"neu")+'</span></div>'+
+        (s.note?'<div style="display:flex;justify-content:space-between"><span style="font-size:.82rem;color:var(--color-text-light)">Notiz</span><span style="font-size:.82rem;font-weight:700">'+esc(s.note)+'</span></div>':'')+
+        (s.signature?'<div style="margin-top:.5rem"><span style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray)">UNTERSCHRIFT</span><div style="margin-top:.3rem"><img src="'+esc(s.signature)+'" style="max-width:100%;border-radius:8px;border:1px solid var(--color-border)" alt="Unterschrift"></div></div>':'')+
+        '</div>';
+        openModal("shishaModal");
+    }
+
+    document.getElementById("shishaDeleteBtn").addEventListener("click",function(){if(!viewingShishaId)return;if(confirm("Löschen?")){db.collection("shisha_orders").doc(viewingShishaId).delete();closeModal("shishaModal");toast("Gelöscht","error");viewingShishaId=null;}});
+
+    function renderDashShisha(){
+        var c=document.getElementById("dashShishaList");
+        var recent=allShisha.filter(function(s){return s.status==="neu"||s.status==="gesehen";}).slice(0,5);
+        if(!recent.length){c.innerHTML='<div class="empty-state"><p>Keine offenen Shisha Bestellungen.</p></div>';return;}
+        var h="";for(var i=0;i<recent.length;i++){var s=recent[i];var isNew=s.status==="neu";
+            h+='<div class="shisha-row" data-dash-shisha="'+esc(s._id)+'" style="cursor:pointer">';
+            h+='<div class="shisha-icon">'+(s.type==="eshisha"?"💨":"🔥")+'</div>';
+            h+='<div class="shisha-info"><div class="shisha-name">'+esc(s.name||"?")+(isNew?' <span style="color:var(--color-orange);font-size:.6rem">● NEU</span>':'')+'</div>';
+            h+='<div class="shisha-flavors">🌿 '+esc((s.flavors||[]).join(", "))+'</div></div>';
+            h+='<div class="msg-time">'+fShort(s.createdAt)+'</div></div>';
+        }
+        c.innerHTML=h;
+        c.querySelectorAll("[data-dash-shisha]").forEach(function(r){r.addEventListener("click",function(){switchSection("shisha");var id=this.getAttribute("data-dash-shisha");setTimeout(function(){openShishaDetail(id);},200);});});
+    }
+
+    document.getElementById("shishaSearch").addEventListener("input",function(){var q=this.value.toLowerCase();renderShisha(q?allShisha.filter(function(s){return(s.name||"").toLowerCase().indexOf(q)!==-1||(s.flavors||[]).join(" ").toLowerCase().indexOf(q)!==-1||(s.type||"").toLowerCase().indexOf(q)!==-1||(s.mix||"").toLowerCase().indexOf(q)!==-1;}):allShisha);});
+
+    // ============================================================
     //  MESSAGES
     // ============================================================
     function loadMessages(){
         db.collection("messages").onSnapshot(function(snap){
-            allMessages=[];snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allMessages.push(d);});
+            allMessages=[];var newIds=[];
+            snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allMessages.push(d);newIds.push(doc.id);});
+            // Telegram notify for NEW messages
+            if(!firstLoad.messages){
+                newIds.forEach(function(id){
+                    if(!knownMsgIds.has(id)){
+                        var m=allMessages.find(function(x){return x._id===id;});
+                        if(m){sendTelegram("📬 <b>Neue Nachricht!</b>\n\n👤 "+(m.name||"?")+"\n📎 "+(m.subject||"Kein Betreff")+"\n💬 "+(m.message||"").substring(0,200));}
+                    }
+                });
+            }
+            firstLoad.messages=false;knownMsgIds=new Set(newIds);
             allMessages.sort(function(a,b){return(b.createdAt?b.createdAt.seconds:0)-(a.createdAt?a.createdAt.seconds:0);});
             renderMessages(allMessages);renderDashMsgs();updateDashboard();updateMsgBadges();
         });
@@ -685,7 +830,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     document.getElementById("messagesSearch").addEventListener("input",function(){var q=this.value.toLowerCase();renderMessages(q?allMessages.filter(function(m){return(m.name||"").toLowerCase().indexOf(q)!==-1||(m.subject||"").toLowerCase().indexOf(q)!==-1||(m.message||"").toLowerCase().indexOf(q)!==-1;}):allMessages);});
 
     // ============================================================
-    //  EVENTS (FIXED field names: title, desc, capacity)
+    //  EVENTS
     // ============================================================
     function loadEvents(){
         db.collection("events").onSnapshot(function(snap){
@@ -730,7 +875,6 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
 
     document.getElementById("eventsSearch").addEventListener("input",function(){var q=this.value.toLowerCase();renderEvents(q?allEvents.filter(function(e){return(evTitle(e)).toLowerCase().indexOf(q)!==-1||(e.location||"").toLowerCase().indexOf(q)!==-1;}):allEvents);});
 
-    // EVENT MODAL - CREATE/EDIT
     document.getElementById("addEventBtn").addEventListener("click",function(){
         editingEventId=null;document.getElementById("eventModalTitle").textContent="Neues Event";
         document.getElementById("evtTitle").value="";document.getElementById("evtEmoji").value="🎉";
@@ -751,7 +895,6 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
         document.getElementById("evtTime").value=e.time||"20:00";
         document.getElementById("evtLocation").value=e.location||"";
         document.getElementById("evtDesc").value=evDesc(e);
-        // Map old categories
         var cat=e.category||"party";
         if(cat==="gamenight")cat="games";if(cat==="dinner")cat="drinks";if(cat==="sport")cat="other";
         document.getElementById("evtCategory").value=cat;
@@ -765,30 +908,15 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     document.getElementById("eventModalSave").addEventListener("click",function(){
         var title=document.getElementById("evtTitle").value.trim();
         if(!title){toast("Name ist Pflicht!","error");return;}
-        var data={
-            title:title,
-            emoji:document.getElementById("evtEmoji").value.trim()||"📅",
-            date:document.getElementById("evtDate").value||"",
-            time:document.getElementById("evtTime").value||"",
-            location:document.getElementById("evtLocation").value.trim()||"",
-            desc:document.getElementById("evtDesc").value.trim()||"",
-            category:document.getElementById("evtCategory").value||"party",
-            capacity:parseInt(document.getElementById("evtCapacity").value)||0,
-            price:parseFloat(document.getElementById("evtPrice").value)||0,
-            game:document.getElementById("evtGame").value.trim()||"",
-            published:document.getElementById("evtPublished").checked,
-            updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-        };
+        var data={title:title,emoji:document.getElementById("evtEmoji").value.trim()||"📅",date:document.getElementById("evtDate").value||"",time:document.getElementById("evtTime").value||"",location:document.getElementById("evtLocation").value.trim()||"",desc:document.getElementById("evtDesc").value.trim()||"",category:document.getElementById("evtCategory").value||"party",capacity:parseInt(document.getElementById("evtCapacity").value)||0,price:parseFloat(document.getElementById("evtPrice").value)||0,game:document.getElementById("evtGame").value.trim()||"",published:document.getElementById("evtPublished").checked,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
         if(editingEventId){
-            db.collection("events").doc(editingEventId).update(data).then(function(){toast("Event aktualisiert ✓");closeModal("eventModal");}).catch(function(err){toast("Fehler","error");});
+            db.collection("events").doc(editingEventId).update(data).then(function(){toast("Event aktualisiert ✓");closeModal("eventModal");}).catch(function(){toast("Fehler","error");});
         }else{
-            data.attending=0;data.attendees=[];data.hype=0;
-            data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
-            db.collection("events").add(data).then(function(){toast("Event erstellt! 🎉");closeModal("eventModal");}).catch(function(err){toast("Fehler","error");});
+            data.attending=0;data.attendees=[];data.hype=0;data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+            db.collection("events").add(data).then(function(){toast("Event erstellt! 🎉");closeModal("eventModal");}).catch(function(){toast("Fehler","error");});
         }
     });
 
-    // EVENT DETAIL MODAL (Attendees + Signups)
     function viewEventDetail(id){
         var e=null;for(var i=0;i<allEvents.length;i++)if(allEvents[i]._id===id){e=allEvents[i];break;}
         if(!e)return;
@@ -797,24 +925,18 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
         var h='<div style="margin-bottom:1.25rem"><div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.3rem">INFO</div>';
         h+='<div style="font-size:.85rem;color:var(--color-text-light)">'+fDate(e.date)+' · '+(e.time||"20:00")+' · '+(e.location||"Poccistrasse 4")+'</div>';
         h+='<div style="font-size:.85rem;color:var(--color-text-light);margin-top:.2rem">'+(e.attending||0)+'/'+(evCap(e)||"∞")+' Gäste · Hype: '+(e.hype||0)+'</div></div>';
-
-        // Attendees from event doc
         var att=e.attendees||[];
         h+='<div style="margin-bottom:1.25rem"><div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.5rem">TEILNEHMER ('+att.length+')</div>';
         if(att.length){for(var i=0;i<att.length;i++){var a=att[i];h+='<div class="att-row"><div class="att-name">'+(typeof a==="string"?esc(a):esc(a.name||"?"))+'</div>';if(typeof a==="object"&&a.persons)h+='<div class="att-persons">'+a.persons+' Pers.</div>';if(typeof a==="object"&&a.instagram)h+='<div class="att-insta">'+esc(a.instagram)+'</div>';h+='<button class="del-btn" data-rm-att="'+i+'" data-rm-evt="'+esc(e._id)+'">✕</button></div>';}}
         else h+='<div style="font-size:.82rem;color:var(--color-gray)">Noch keine Teilnehmer.</div>';
         h+='</div>';
-
-        // Signups from event_signups collection
         var evSignups=allSignups.filter(function(s){return s.eventId===id;});
         if(evSignups.length){
             h+='<div><div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.5rem">ANMELDUNGEN (event_signups: '+evSignups.length+')</div>';
             for(var i=0;i<evSignups.length;i++){var s=evSignups[i];h+='<div class="att-row"><div class="att-name">'+esc(s.name||"?")+'</div>';if(s.instagram)h+='<div class="att-insta">'+esc(s.instagram)+'</div>';h+='<div class="msg-time">'+fShort(s.createdAt)+'</div></div>';}
             h+='</div>';
         }
-
         body.innerHTML=h;
-        // Remove attendee buttons
         body.querySelectorAll("[data-rm-att]").forEach(function(b){b.addEventListener("click",function(){
             var idx=parseInt(this.getAttribute("data-rm-att"));var eid=this.getAttribute("data-rm-evt");
             var ev=null;for(var i=0;i<allEvents.length;i++)if(allEvents[i]._id===eid){ev=allEvents[i];break;}
@@ -888,7 +1010,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     }
 
     // ============================================================
-    //  SIGNUPS (load for event detail view)
+    //  SIGNUPS
     // ============================================================
     function loadSignups(){
         db.collection("event_signups").onSnapshot(function(snap){
@@ -897,7 +1019,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     }
 
     // ============================================================
-    //  GAME STATS (uses 'stats' collection like stats.html)
+    //  GAME STATS
     // ============================================================
     function loadStats(){
         db.collection("stats").onSnapshot(function(snap){
@@ -949,23 +1071,19 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     function loadSocials(){db.collection("content").doc("socials").onSnapshot(function(doc){var l=(doc.exists?doc.data():{}).links||[];document.getElementById("socialsPreview").textContent=l.length?l.map(function(x){return x.label;}).join(", "):"Keine.";});}
     function loadGallery(){db.collection("content").doc("gallery").onSnapshot(function(doc){var i=(doc.exists?doc.data():{}).images||[];document.getElementById("galleryPreview").textContent=i.length?i.length+" Bilder":"Keine.";});}
 
-    // MEMBERS MODAL
     document.getElementById("editMembersBtn").addEventListener("click",function(){db.collection("content").doc("members").get().then(function(doc){var l=(doc.exists?doc.data():{}).list||[];var c=document.getElementById("membersModalBody");c.innerHTML="";for(var i=0;i<l.length;i++)addMemberRow(c,l[i]);openModal("membersModal");});});
     function addMemberRow(c,d){d=d||{};var div=document.createElement("div");div.className="member-block";div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:.4rem"><label class="form-label">Name</label><input type="text" class="form-input m-name" value="'+esc(d.name)+'"></div><div class="form-group" style="margin-bottom:.4rem"><label class="form-label">Emoji</label><input type="text" class="form-input m-emoji" value="'+esc(d.emoji)+'" maxlength="4"></div></div><div class="form-group" style="margin-bottom:.4rem"><label class="form-label">Bio</label><input type="text" class="form-input m-bio" value="'+esc(d.bio)+'"></div><div class="form-group" style="margin-bottom:.4rem"><label class="form-label">Instagram</label><input type="text" class="form-input m-insta" value="'+esc(d.instagram)+'"></div><button class="btn btn-sm btn-danger">Entfernen</button>';div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});c.appendChild(div);}
     document.getElementById("addMemberBtn").addEventListener("click",function(){addMemberRow(document.getElementById("membersModalBody"));});
     document.getElementById("membersModalSave").addEventListener("click",function(){var items=document.getElementById("membersModalBody").querySelectorAll(".member-block");var l=[];items.forEach(function(el){var n=el.querySelector(".m-name").value.trim();if(n)l.push({name:n,emoji:el.querySelector(".m-emoji").value.trim(),bio:el.querySelector(".m-bio").value.trim(),instagram:el.querySelector(".m-insta").value.trim()});});db.collection("content").doc("members").set({list:l}).then(function(){toast("Gespeichert ✓");closeModal("membersModal");});});
 
-    // TEXTS MODAL
     document.getElementById("editTextsBtn").addEventListener("click",function(){db.collection("content").doc("texts").get().then(function(doc){var d=doc.exists?doc.data():{};document.getElementById("txtHero").value=d.heroTitle||"";document.getElementById("txtHeroSub").value=d.heroSubtitle||"";document.getElementById("txtAbout").value=d.aboutText||"";document.getElementById("txtDisclaimer").value=d.disclaimer||"";openModal("textsModal");});});
     document.getElementById("textsModalSave").addEventListener("click",function(){db.collection("content").doc("texts").set({heroTitle:document.getElementById("txtHero").value.trim(),heroSubtitle:document.getElementById("txtHeroSub").value.trim(),aboutText:document.getElementById("txtAbout").value.trim(),disclaimer:document.getElementById("txtDisclaimer").value.trim()}).then(function(){toast("Gespeichert ✓");closeModal("textsModal");});});
 
-    // SOCIALS MODAL
     document.getElementById("editSocialsBtn").addEventListener("click",function(){db.collection("content").doc("socials").get().then(function(doc){var l=(doc.exists?doc.data():{}).links||[];var c=document.getElementById("socialsModalBody");c.innerHTML="";for(var i=0;i<l.length;i++)addSocialRow(c,l[i]);openModal("socialsModal");});});
     function addSocialRow(c,d){d=d||{};var div=document.createElement("div");div.className="social-block";div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:0"><label class="form-label">Label</label><input type="text" class="form-input s-label" value="'+esc(d.label)+'"></div><div class="form-group" style="margin-bottom:0"><label class="form-label">URL</label><input type="text" class="form-input s-url" value="'+esc(d.url)+'"></div></div><button class="btn btn-sm btn-danger" style="margin-top:.4rem">Entfernen</button>';div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});c.appendChild(div);}
     document.getElementById("addSocialBtn").addEventListener("click",function(){addSocialRow(document.getElementById("socialsModalBody"));});
     document.getElementById("socialsModalSave").addEventListener("click",function(){var items=document.getElementById("socialsModalBody").querySelectorAll(".social-block");var l=[];items.forEach(function(el){var la=el.querySelector(".s-label").value.trim(),u=el.querySelector(".s-url").value.trim();if(la&&u)l.push({label:la,url:u});});db.collection("content").doc("socials").set({links:l}).then(function(){toast("Gespeichert ✓");closeModal("socialsModal");});});
 
-    // GALLERY MODAL
     document.getElementById("editGalleryBtn").addEventListener("click",function(){db.collection("content").doc("gallery").get().then(function(doc){var imgs=(doc.exists?doc.data():{}).images||[];var c=document.getElementById("galleryModalBody");c.innerHTML="";for(var i=0;i<imgs.length;i++)addGalleryRow(c,imgs[i]);openModal("galleryModal");});});
     function addGalleryRow(c,d){d=d||{};var div=document.createElement("div");div.className="gallery-block";div.style.cssText="display:flex;gap:.4rem;align-items:center;margin-bottom:.4rem;flex-wrap:wrap";div.innerHTML='<input type="text" class="form-input g-url" value="'+esc(d.url)+'" placeholder="https://..." style="flex:1;min-width:150px"><input type="text" class="form-input g-cap" value="'+esc(d.caption)+'" placeholder="Caption" style="width:120px"><button class="btn btn-sm btn-danger">✕</button>';div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});c.appendChild(div);}
     document.getElementById("addGalleryBtn").addEventListener("click",function(){addGalleryRow(document.getElementById("galleryModalBody"));});
@@ -975,8 +1093,9 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     //  DASHBOARD
     // ============================================================
     function updateDashboard(){
-        var rev=0,items=0;for(var i=0;i<allOrders.length;i++){rev+=allOrders[i].total||0;if(allOrders[i].items)for(var j=0;j<allOrders[i].items.length;j++)items+=allOrders[i].items[j].qty||0;}
+        var rev=0;for(var i=0;i<allOrders.length;i++)rev+=allOrders[i].total||0;
         document.getElementById("statOrders").textContent=allOrders.length;
+        document.getElementById("statShisha").textContent=allShisha.length;
         document.getElementById("statRevenue").textContent=rev.toFixed(0);
         document.getElementById("statMessages").textContent=allMessages.length;
         document.getElementById("statEvents").textContent=allEvents.length;
@@ -997,7 +1116,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     // ============================================================
     //  INIT
     // ============================================================
-    loadOrders();loadEvents();loadMessages();loadStats();loadSuggestions();loadPayments();loadSignups();loadMembers();loadTexts();loadSocials();loadGallery();
+    loadOrders();loadShisha();loadEvents();loadMessages();loadStats();loadSuggestions();loadPayments();loadSignups();loadMembers();loadTexts();loadSocials();loadGallery();
 })();
 </script>
 </body>
