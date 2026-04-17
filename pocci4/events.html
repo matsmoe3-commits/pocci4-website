@@ -477,8 +477,9 @@
             for(var i=0;i<events.length;i++){
                 var e=events[i];var parts=e.date.split("-");var day=parseInt(parts[2]);var monthIdx=parseInt(parts[1])-1;var month=monthNames[monthIdx];var monthF=monthFull[monthIdx];var year=parts[0];
                 var dateObj=new Date(parseInt(parts[0]),monthIdx,day);var dayName=dayNames[dateObj.getDay()];
-                var cat=e.category||"other";var loc=e.location||"Poccistrasse 4";if(loc.length>25)loc=loc.substring(0,25)+"…";
-                var attending=e.attending||0;var capacity=e.capacity||20;var pct=Math.round((attending/capacity)*100);var isFull=attending>=capacity;
+                var cat=e.category||"other";
+if(cat==="gamenight")cat="games";if(cat==="dinner")cat="drinks";if(cat==="sport")cat="other";var loc=e.location||"Poccistrasse 4";if(loc.length>25)loc=loc.substring(0,25)+"…";
+                var attending=e.attending||0;var capacity=e.capacity||e.maxGuests||20;var pct=Math.round((attending/capacity)*100);var isFull=attending>=capacity;
                 var emoji=e.emoji||"🎉";var title=e.title||e.name||"Event";var desc=e.desc||e.description||"";if(desc.length>80)desc=desc.substring(0,80)+"…";
                 var price=e.price||0;var time=e.time||"20:00";var rotation=(Math.random()-0.5)*2.5;
                 var hypeCount=e.hype||0;var isHyped=getHyped(e._id);
