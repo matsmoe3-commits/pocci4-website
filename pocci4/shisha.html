@@ -578,25 +578,98 @@
     // MIX
     document.addEventListener("click",function(e){if(e.target.classList.contains("mix-opt")){document.querySelectorAll(".mix-opt").forEach(function(b){b.classList.remove("active");});e.target.classList.add("active");selMix=e.target.getAttribute("data-mix");updateOrder();}});
 
-    // SUBMIT
-    document.getElementById("orderSubmit").addEventListener("click",function(){
-        var name=document.getElementById("orderName").value.trim();var err=document.getElementById("orderError");err.classList.remove("show");
-        if(!selType){err.textContent="Bitte Typ waehlen!";err.classList.add("show");return;}
-        if(selFlavors.length===0){err.textContent="Bitte Geschmaecker waehlen!";err.classList.add("show");return;}
-        if(!name){err.textContent="Bitte Namen eingeben!";err.classList.add("show");document.getElementById("orderName").focus();return;}
-        var flNames=[];for(var i=0;i<selFlavors.length;i++){var f=findFL(selFlavors[i]);if(f)flNames.push(f.n);}
-        db.collection("shisha_orders").add({
-            name:name,type:selType,flavors:flNames,flavorIds:selFlavors.slice(),
-            mix:selMix,signature:selSig?selSig.name:"",
-            note:document.getElementById("orderNote").value.trim(),
-            status:"neu",createdAt:firebase.firestore.FieldValue.serverTimestamp()
-        }).then(function(){
-            document.getElementById("orderFormWrap").style.display="none";
-            var s=document.getElementById("orderSuccess");s.classList.add("show");s.style.display="";
-            document.getElementById("orderSuccessText").innerHTML="<strong>"+esc(name)+"</strong>, deine "+(selType==="kohle"?"🔥 Kohle":"⚡ E")+"-Shisha wird gebaut!<br>"+flNames.join(" + ")+"<br>Andrei kuemmert sich drum. 🫅💨";
-            bigSmoke();confetti();
-        }).catch(function(e){console.error(e);err.textContent="Fehler!";err.classList.add("show");});
+// ===== TELEGRAM NOTIFICATION =====
+function sendTelegramNotification(orderData) {
+    var TELEGRAM_BOT_TOKEN = "7866727707:AAEkLGOuSUGIGNjSmJmGLSCG7VU0mSi04IU";
+    var TELEGRAM_CHAT_ID = "-4930026015";
+    
+    var flavorList = orderData.flavors.join(", ");
+    var typeEmoji = orderData.type === "kohle" ? "🔥" : "⚡";
+    var mixEmoji = orderData.mix === "stark" ? "💪" : orderData.mix === "leicht" ? "🌿" : "👌";
+    
+    var message = "💨 *NEUE SHISHA-BESTELLUNG!*\n\n";
+    message += "👤 *Name:* " + orderData.name + "\n";
+    message += typeEmoji + " *Typ:* " + (orderData.type === "kohle" ? "Klassische Kohle" : "E-Shisha") + "\n";
+    message += "🎨 *Geschmäcker:* " + flavorList + "\n";
+    message += mixEmoji + " *Mix:* " + orderData.mix.charAt(0).toUpperCase() + orderData.mix.slice(1) + "\n";
+    
+    if (orderData.signature) {
+        message += "🫅 *Signature:* " + orderData.signature + "\n";
+    }
+    if (orderData.note) {
+        message += "📝 *Notiz:* " + orderData.note + "\n";
+    }
+    
+    message += "\n⏰ " + new Date().toLocaleString("de-DE", {
+        day: "2-digit", month: "2-digit", year: "numeric",
+        hour: "2-digit", minute: "2-digit"
     });
+    message += "\n\n🫅 Andrei, bau den Kopf! 💨";
+    
+    var url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
+    
+    fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: "Markdown"
+        })
+    }).then(function(res) {
+        console.log("Telegram notification sent:", res.ok);
+    }).catch(function(err) {
+        console.warn("Telegram notification failed:", err);
+    });
+}
+
+// ===== ORDER SUBMIT (mit Telegram) =====
+document.getElementById("orderSubmit").addEventListener("click",function(){
+    var name=document.getElementById("orderName").value.trim();
+    var err=document.getElementById("orderError");
+    err.classList.remove("show");
+    
+    if(!selType){err.textContent="Bitte Typ waehlen!";err.classList.add("show");return;}
+    if(selFlavors.length===0){err.textContent="Bitte Geschmaecker waehlen!";err.classList.add("show");return;}
+    if(!name){err.textContent="Bitte Namen eingeben!";err.classList.add("show");document.getElementById("orderName").focus();return;}
+    
+    var flNames=[];
+    for(var i=0;i<selFlavors.length;i++){
+        var f=findFL(selFlavors[i]);
+        if(f)flNames.push(f.n);
+    }
+    
+    var orderData = {
+        name: name,
+        type: selType,
+        flavors: flNames,
+        flavorIds: selFlavors.slice(),
+        mix: selMix,
+        signature: selSig ? selSig.name : "",
+        note: document.getElementById("orderNote").value.trim(),
+        status: "neu",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    
+    db.collection("shisha_orders").add(orderData).then(function(){
+        // ✅ TELEGRAM BENACHRICHTIGUNG SOFORT SENDEN
+        sendTelegramNotification(orderData);
+        
+        document.getElementById("orderFormWrap").style.display="none";
+        var s=document.getElementById("orderSuccess");
+        s.classList.add("show");
+        s.style.display="";
+        document.getElementById("orderSuccessText").innerHTML=
+            "<strong>"+esc(name)+"</strong>, deine "+(selType==="kohle"?"🔥 Kohle":"⚡ E")+"-Shisha wird gebaut!<br>"+
+            flNames.join(" + ")+"<br>Andrei kuemmert sich drum. 🫅💨";
+        bigSmoke();
+        confetti();
+    }).catch(function(e){
+        console.error(e);
+        err.textContent="Fehler!";
+        err.classList.add("show");
+    });
+});
 
     document.getElementById("orderNewBtn").addEventListener("click",function(){
         selFlavors=[];selType=null;selPath=null;selMix="normal";selSig=null;activeCat="all";
