@@ -569,7 +569,7 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     var db=firebase.firestore();
 
     // TELEGRAM CONFIG
-    var TG_BOT="7888587789:AAGbVDfSLBfMwOvMcYmadIMsHR_RZ7EJxfM";
+var TG_BOT="8631655315:AAHvIaqmbS1WlDOERrDXsd07q1hTVYLnTuA";
     var TG_CHAT="7870018700";
     function sendTelegram(msg){
         fetch("https://api.telegram.org/bot"+TG_BOT+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TG_CHAT,text:msg,parse_mode:"HTML"})}).catch(function(){});
