@@ -352,6 +352,16 @@
         };
         if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
+        // ===== TELEGRAM =====
+var TELEGRAM_BOT_TOKEN = "7866727707:AAEkLGOuSUGIGNjSmJmGLSCG7VU0mSi04IU";
+var TELEGRAM_CHAT_ID = "-4930026015";
+function sendTelegram(message) {
+    fetch("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: "Markdown" })
+    }).then(function(r){console.log("TG:",r.ok);}).catch(function(e){console.warn("TG fail:",e);});
+}
 
         // NAV
         var navbar=document.getElementById("navbar");
@@ -390,9 +400,18 @@
                 type: "contact",
                 read: false,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(function(){
-                document.getElementById("contactForm").style.display = "none";
-                document.getElementById("formSuccess").classList.add("show");
+}).then(function(){
+    // ✅ TELEGRAM
+    var msg = "📬 *NEUE KONTAKTNACHRICHT!*\n\n";
+    msg += "👤 *Von:* " + name + "\n";
+    msg += "📋 *Betreff:* " + (subject || "Kein Betreff") + "\n";
+    msg += "💬 *Nachricht:*\n" + message + "\n";
+    msg += "\n⏰ " + new Date().toLocaleString("de-DE", {day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
+    sendTelegram(msg);
+
+    document.getElementById("contactForm").style.display = "none";
+    document.getElementById("formSuccess").classList.add("show");
+    launchConfetti();
                 launchConfetti();
             }).catch(function(err){
                 console.error("Error sending message:", err);
