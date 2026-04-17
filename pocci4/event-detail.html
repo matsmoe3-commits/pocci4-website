@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>pocci4 - Event Details</title>
-<link rel="icon" type="image/svg+xml" href="assets/p.svg">
-<link rel="apple-touch-icon" href="assets/p-180.png">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#F5F0EB">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="pocci4">
+    <link rel="icon" type="image/svg+xml" href="assets/p.svg">
+    <link rel="apple-touch-icon" href="assets/p-180.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#F5F0EB">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="pocci4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -30,6 +30,8 @@
         body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden}
         a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
         img{max-width:100%;height:auto;display:block}
+
+        /* ===== ANIMATED BACKGROUND ===== */
         .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
         .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
         .bg-shape-1{width:700px;height:500px;background:#E0CEBB;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
@@ -38,18 +40,8 @@
         @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
         @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
         @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
-        .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
-        .admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
-        .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
-        .admin-modal-overlay.active{display:flex}
-        .admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
-        .admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
-        .admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
-        .admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
-        .admin-modal input:focus{border-color:var(--color-primary)}
-        .admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
-        .admin-modal-btns .btn{flex:1;padding:10px 16px;font-size:.85rem}
-        .admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
+
+        /* ===== NAVBAR ===== */
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
         .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
         .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
@@ -66,6 +58,12 @@
         .nav-dropdown-item{display:flex;align-items:center;gap:.6rem;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);white-space:nowrap}
         .nav-dropdown-item:hover{background:var(--color-bg);color:var(--color-primary)}
         .nav-dropdown-item span{font-size:1rem}
+
+        /* ===== ADMIN TRIGGER ===== */
+        .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
+        .admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
+
+        /* ===== HAMBURGER + MOBILE MENU ===== */
         .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
         .hamburger-line{width:24px;height:2px;background:var(--color-text);border-radius:2px;transition:var(--transition-smooth);transform-origin:center}
         .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
@@ -83,8 +81,20 @@
         .mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}
         .mobile-link:hover,.mobile-link.active{color:var(--color-primary)}
         .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
-        .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
-        .section-title{font-size:clamp(1.8rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
+
+        /* ===== ADMIN MODAL ===== */
+        .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+        .admin-modal-overlay.active{display:flex}
+        .admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+        .admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+        .admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
+        .admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
+        .admin-modal input:focus{border-color:var(--color-primary)}
+        .admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
+        .admin-modal-btns .btn{flex:1;padding:10px 16px;font-size:.85rem}
+        .admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
+
+        /* ===== BUTTONS ===== */
         .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;border-radius:50px;font-family:var(--font-main);font-size:.9rem;font-weight:600;cursor:pointer;transition:var(--transition-smooth);border:2px solid transparent;gap:.5rem}
         .btn-primary{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
         .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
@@ -94,7 +104,11 @@
         .btn-join-big{padding:16px 40px;border-radius:50px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:1rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth)}
         .btn-join-big:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
         .btn-join-big.joined{background:transparent;border:2px solid var(--color-primary);color:var(--color-primary);cursor:default}
+        .btn-join-big.joined:hover{transform:none;box-shadow:none}
         .btn-join-big.full{background:var(--color-gray);cursor:not-allowed;opacity:.6}
+        .btn-join-big.full:hover{transform:none;box-shadow:none}
+
+        /* ===== DETAIL PAGE LAYOUT ===== */
         .back-link{display:inline-flex;align-items:center;gap:.5rem;padding:calc(var(--nav-height) + 2rem) 0 0;font-size:.85rem;font-weight:600;color:var(--color-text-light);transition:var(--transition-fast)}
         .back-link:hover{color:var(--color-primary)}
         .detail-page{max-width:var(--container-width);margin:0 auto;padding:0 1.25rem}
@@ -106,27 +120,40 @@
         .detail-meta{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;margin-bottom:2rem;font-size:.95rem;color:var(--color-text-light)}
         .detail-meta-item{display:flex;align-items:center;gap:.4rem}
         .detail-grid{display:grid;grid-template-columns:1fr 380px;gap:2rem;padding-bottom:var(--section-padding);align-items:start}
+
+        /* ===== CARDS ===== */
         .detail-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2.5rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);margin-bottom:2rem}
         .detail-card h3{font-size:1.2rem;font-weight:800;margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem}
         .detail-desc{font-size:1rem;color:var(--color-text-light);line-height:1.8}
+
+        /* ===== CAPACITY BAR ===== */
         .capacity-big{margin-bottom:2rem}
         .capacity-big-header{display:flex;justify-content:space-between;margin-bottom:.75rem}
         .capacity-big-count{font-size:1.1rem;font-weight:800}
         .capacity-big-pct{font-size:.9rem;color:var(--color-gray)}
         .capacity-big-bar{width:100%;height:12px;background:var(--color-bg-warm);border-radius:10px;overflow:hidden}
         .capacity-big-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--color-primary),var(--color-primary-light));transition:width 1.5s cubic-bezier(.4,0,.2,1)}
+
+        /* ===== ATTENDEES ===== */
         .attendees-list{display:flex;flex-direction:column;gap:.5rem}
         .attendee-row{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border-radius:12px;background:var(--color-bg);font-size:.9rem}
         .attendee-name{font-weight:700}
         .attendee-persons{font-size:.8rem;color:var(--color-gray)}
         .no-attendees{text-align:center;padding:2rem;color:var(--color-gray);font-size:.9rem}
+
+        /* ===== MAP ===== */
         .detail-map{border-radius:16px;overflow:hidden;margin-top:1rem;box-shadow:0 2px 10px rgba(0,0,0,.06)}
         .detail-map iframe{width:100%;height:250px;border:none;display:block}
+
+        /* ===== SIDEBAR ===== */
         .sidebar-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);margin-bottom:1.5rem}
         .sidebar-card h4{font-size:1rem;font-weight:800;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
         .join-actions{text-align:center}
         .join-actions .btn-join-big{width:100%;margin-bottom:1rem}
         .join-actions .btn{width:100%}
+        .sidebar-join-top{position:sticky;top:calc(var(--nav-height) + 1rem);z-index:10}
+
+        /* ===== STATS / LEADERBOARD ===== */
         .stat-row{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--color-border);font-size:.85rem}
         .stat-row:last-child{border-bottom:none}
         .stat-winner{font-weight:700;color:var(--color-primary)}
@@ -139,6 +166,8 @@
         .lb-rank-other{background:var(--color-bg);color:var(--color-gray)}
         .lb-name{flex:1;font-weight:600;font-size:.9rem}
         .lb-wins{font-weight:700;color:var(--color-primary);font-size:.85rem}
+
+        /* ===== FINISH GAME (ADMIN) ===== */
         .finish-game-section{margin-top:2rem;padding-top:2rem;border-top:2px dashed var(--color-border)}
         .finish-game-section h4{font-size:1rem;font-weight:800;margin-bottom:1rem;color:var(--color-primary)}
         .fg-field{margin-bottom:.75rem}
@@ -157,6 +186,8 @@
         .admin-pw-inline input{flex:1;padding:10px 14px;border-radius:10px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.85rem}
         .admin-pw-inline input:focus{outline:none;border-color:var(--color-primary)}
         .admin-pw-inline button{padding:10px 16px;border-radius:10px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-weight:700;cursor:pointer;font-size:.8rem}
+
+        /* ===== JOIN MODAL ===== */
         .join-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:1500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth);padding:1.25rem}
         .join-overlay.active{opacity:1;pointer-events:all}
         .join-modal{background:var(--color-white);border-radius:24px;padding:2.5rem;max-width:420px;width:100%;transform:translateY(20px) scale(.95);transition:var(--transition-smooth);text-align:center}
@@ -175,13 +206,55 @@
         .join-confirm{background:var(--color-primary);color:#fff;border:none}
         .join-confirm:hover{background:var(--color-primary-hover)}
         .join-error{color:var(--color-primary);font-size:.8rem;margin-top:.5rem;display:none}
+
+        /* ===== PAY / SEND MONEY ===== */
+        .pay-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:1.5rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);margin-bottom:1.5rem;overflow:hidden}
+        .pay-card h4{font-size:1rem;font-weight:800;margin-bottom:.25rem;display:flex;align-items:center;gap:.5rem}
+        .pay-card-sub{font-size:.78rem;color:var(--color-gray);margin-bottom:1.25rem}
+        .pay-presets{display:flex;gap:.35rem;margin-bottom:.75rem;flex-wrap:wrap}
+        .pay-preset{padding:6px 12px;border-radius:50px;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);font-size:.75rem;font-weight:600;transition:var(--transition-fast);color:var(--color-text)}
+        .pay-preset:hover{border-color:var(--color-primary);color:var(--color-primary);background:rgba(192,58,43,.05)}
+        .pay-preset.active{border-color:var(--color-primary);background:var(--color-primary);color:#fff}
+        .pay-amount-wrap{display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem}
+        .pay-amount-input{width:100%;min-width:0;padding:10px 12px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:1.1rem;font-weight:800;outline:none;text-align:center;transition:var(--transition-fast);box-sizing:border-box}
+        .pay-amount-input:focus{border-color:var(--color-primary)}
+        .pay-currency{font-size:.9rem;font-weight:800;color:var(--color-gray);flex-shrink:0}
+        .pay-field{margin-bottom:.65rem}
+        .pay-field label{display:block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.25rem}
+        .pay-field input,.pay-field select{width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.82rem;outline:none;transition:var(--transition-fast);box-sizing:border-box}
+        .pay-field input:focus,.pay-field select:focus{border-color:var(--color-primary)}
+        .pay-field input::placeholder{color:var(--color-gray)}
+        .pay-reason-tags{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.75rem}
+        .pay-reason-tag{padding:5px 10px;border-radius:50px;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);font-size:.68rem;font-weight:600;transition:var(--transition-fast);color:var(--color-text-light)}
+        .pay-reason-tag:hover{border-color:var(--color-text);color:var(--color-text)}
+        .pay-reason-tag.active{border-color:var(--color-text);background:var(--color-text);color:#fff}
+        .pay-btn{width:100%;padding:12px;border-radius:50px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:.85rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth);display:flex;align-items:center;justify-content:center;gap:.4rem;box-sizing:border-box}
+        .pay-btn:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
+        .pay-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+        .pay-info{display:flex;align-items:flex-start;gap:.4rem;padding:.5rem .65rem;background:var(--color-bg);border-radius:10px;font-size:.65rem;color:var(--color-text-light);margin-top:.65rem;line-height:1.4;word-break:break-word}
+        .pay-info span:first-child{font-size:.8rem;flex-shrink:0;margin-top:1px}
+        .pay-success{display:none;text-align:center;padding:1.25rem}
+        .pay-success.show{display:block}
+        .pay-success-icon{font-size:2.5rem;margin-bottom:.5rem}
+        .pay-success-title{font-size:1rem;font-weight:800;margin-bottom:.2rem}
+        .pay-success-text{font-size:.78rem;color:var(--color-gray);line-height:1.4;word-break:break-word}
+        .pay-success-link{color:var(--color-primary);font-weight:700;text-decoration:underline;font-size:.78rem}
+        .pay-or{text-align:center;font-size:.68rem;color:var(--color-gray);font-weight:600;margin:.35rem 0}
+        .pay-btn-secondary{width:100%;padding:10px;border-radius:50px;border:2px solid var(--color-text);background:transparent;color:var(--color-text);font-family:var(--font-main);font-size:.82rem;font-weight:700;cursor:pointer;transition:var(--transition-fast);display:flex;align-items:center;justify-content:center;gap:.4rem;box-sizing:border-box}
+        .pay-btn-secondary:hover{background:var(--color-text);color:#fff}
+
+        /* ===== LOADING / ERROR ===== */
         .loading-page{text-align:center;padding:calc(var(--nav-height) + 6rem) 2rem;color:var(--color-gray);font-size:1.1rem}
         .loading-page .spinner{width:40px;height:40px;border:3px solid var(--color-border);border-top-color:var(--color-primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
         @keyframes spin{to{transform:rotate(360deg)}}
         .error-page{text-align:center;padding:calc(var(--nav-height) + 6rem) 2rem}
         .error-page h2{font-size:2rem;font-weight:900;margin-bottom:1rem}
         .error-page p{color:var(--color-gray);margin-bottom:2rem}
+
+        /* ===== CONFETTI ===== */
         .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
+
+        /* ===== FOOTER ===== */
         .footer{background:var(--color-text);color:#fff;padding:4rem 1.25rem 2rem}
         .footer-container{max-width:var(--container-width);margin:0 auto}
         .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
@@ -193,86 +266,87 @@
         .footer-col a:hover{color:#fff}
         .footer-bottom{padding-top:2rem;text-align:center}
         .footer-bottom p{font-size:.8rem;color:var(--color-gray)}
+
+        /* ===== REVEAL ANIMATION ===== */
         .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
         .reveal.visible{opacity:1;transform:translateY(0)}
-        @media(max-width:1024px){.detail-grid{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr;gap:3rem}}
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:1024px){
+            .detail-grid{grid-template-columns:1fr}
+            .sidebar-join-top{position:static}
+            .footer-top{grid-template-columns:1fr;gap:3rem}
+        }
         @media(max-width:768px){
             :root{--nav-height:68px}
-            .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
-            .detail-card{padding:2rem 1.5rem}.sidebar-card{padding:1.5rem}.detail-emoji{font-size:4rem}
-            .footer-links-grid{grid-template-columns:1fr 1fr}.join-modal{padding:2rem 1.5rem}
-            .fg-player-row{grid-template-columns:1fr}.nav-dropdown{display:none!important}
+            .nav-links{display:none}
+            .hamburger{display:flex}
+            .nav-logo img{height:44px}
+            .detail-card{padding:2rem 1.5rem}
+            .sidebar-card{padding:1.5rem}
+            .detail-emoji{font-size:4rem}
+            .footer-links-grid{grid-template-columns:1fr 1fr}
+            .join-modal{padding:2rem 1.5rem}
+            .fg-player-row{grid-template-columns:1fr}
+            .nav-dropdown{display:none!important}
         }
         @media(max-width:480px){
-            .nav-logo img{height:38px}.detail-title{font-size:1.8rem}
+            .nav-logo img{height:38px}
+            .detail-title{font-size:1.8rem}
             .detail-meta{flex-direction:column;align-items:center;gap:.75rem}
-            .footer-links-grid{grid-template-columns:1fr}.btn{width:100%}
+            .footer-links-grid{grid-template-columns:1fr}
+            .btn{width:100%}
         }
-/* === PAY / SEND MONEY === */
-.pay-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:1.5rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);margin-bottom:1.5rem;overflow:hidden}
-.pay-card h4{font-size:1rem;font-weight:800;margin-bottom:.25rem;display:flex;align-items:center;gap:.5rem}
-.pay-card-sub{font-size:.78rem;color:var(--color-gray);margin-bottom:1.25rem}
-.pay-presets{display:flex;gap:.35rem;margin-bottom:.75rem;flex-wrap:wrap}
-.pay-preset{padding:6px 12px;border-radius:50px;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);font-size:.75rem;font-weight:600;transition:var(--transition-fast);color:var(--color-text)}
-.pay-preset:hover{border-color:var(--color-primary);color:var(--color-primary);background:rgba(192,58,43,.05)}
-.pay-preset.active{border-color:var(--color-primary);background:var(--color-primary);color:#fff}
-.pay-amount-wrap{display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem}
-.pay-amount-input{width:100%;min-width:0;padding:10px 12px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:1.1rem;font-weight:800;outline:none;text-align:center;transition:var(--transition-fast);box-sizing:border-box}
-.pay-amount-input:focus{border-color:var(--color-primary)}
-.pay-currency{font-size:.9rem;font-weight:800;color:var(--color-gray);flex-shrink:0}
-.pay-field{margin-bottom:.65rem}
-.pay-field label{display:block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.25rem}
-.pay-field input,.pay-field select{width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--color-border);font-family:var(--font-main);font-size:.82rem;outline:none;transition:var(--transition-fast);box-sizing:border-box}
-.pay-field input:focus,.pay-field select:focus{border-color:var(--color-primary)}
-.pay-field input::placeholder{color:var(--color-gray)}
-.pay-reason-tags{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.75rem}
-.pay-reason-tag{padding:5px 10px;border-radius:50px;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);font-size:.68rem;font-weight:600;transition:var(--transition-fast);color:var(--color-text-light)}
-.pay-reason-tag:hover{border-color:var(--color-text);color:var(--color-text)}
-.pay-reason-tag.active{border-color:var(--color-text);background:var(--color-text);color:#fff}
-.pay-btn{width:100%;padding:12px;border-radius:50px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:.85rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth);display:flex;align-items:center;justify-content:center;gap:.4rem;box-sizing:border-box}
-.pay-btn:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
-.pay-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.pay-info{display:flex;align-items:flex-start;gap:.4rem;padding:.5rem .65rem;background:var(--color-bg);border-radius:10px;font-size:.65rem;color:var(--color-text-light);margin-top:.65rem;line-height:1.4;word-break:break-word}
-.pay-info span:first-child{font-size:.8rem;flex-shrink:0;margin-top:1px}
-.pay-success{display:none;text-align:center;padding:1.25rem}
-.pay-success.show{display:block}
-.pay-success-icon{font-size:2.5rem;margin-bottom:.5rem}
-.pay-success-title{font-size:1rem;font-weight:800;margin-bottom:.2rem}
-.pay-success-text{font-size:.78rem;color:var(--color-gray);line-height:1.4;word-break:break-word}
-.pay-success-link{color:var(--color-primary);font-weight:700;text-decoration:underline;font-size:.78rem}
-.pay-or{text-align:center;font-size:.68rem;color:var(--color-gray);font-weight:600;margin:.35rem 0}
-.pay-btn-secondary{width:100%;padding:10px;border-radius:50px;border:2px solid var(--color-text);background:transparent;color:var(--color-text);font-family:var(--font-main);font-size:.82rem;font-weight:700;cursor:pointer;transition:var(--transition-fast);display:flex;align-items:center;justify-content:center;gap:.4rem;box-sizing:border-box}
-.pay-btn-secondary:hover{background:var(--color-text);color:#fff}
-/* Sticky join top */
-.sidebar-join-top{position:sticky;top:calc(var(--nav-height) + 1rem);z-index:10}
-@media(max-width:1024px){.sidebar-join-top{position:static}}
     </style>
 </head>
 <body>
-    <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div></div>
+    <!-- ANIMATED BACKGROUND -->
+    <div class="animated-bg">
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+        <div class="bg-shape bg-shape-3"></div>
+    </div>
+
+    <!-- CONFETTI CONTAINER -->
     <div class="confetti-container" id="confettiContainer"></div>
 
-    <nav class="navbar" id="navbar"><div class="nav-container">
-        <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
-        <div class="nav-right">
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link active">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a></div></div>
-                <a href="shop.html" class="nav-link">Shop</a>
-                <a href="kontakt.html" class="nav-link">Kontakt</a>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <div class="nav-link-dropdown" id="eventsDropdown">
+                        <a href="events.html" class="nav-link active">Events</a>
+                        <div class="nav-dropdown">
+                            <a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a>
+                            <a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a>
+                        </div>
+                    </div>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="kontakt.html" class="nav-link">Kontakt</a>
+                </div>
+                <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
+                <button class="hamburger" id="hamburger">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
-            <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
-            <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
         </div>
-    </div></nav>
+    </nav>
 
-    <div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-content">
-        <a href="index.html" class="mobile-link">Home</a>
-        <a href="events.html" class="mobile-link active">Events</a>
-        <a href="stats.html" class="mobile-link mobile-link-sub">🏆 Game Statistik</a>
-        <a href="shop.html" class="mobile-link">Shop</a>
-        <a href="kontakt.html" class="mobile-link">Kontakt</a>
-    </div></div>
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="events.html" class="mobile-link active">Events</a>
+            <a href="stats.html" class="mobile-link mobile-link-sub">🏆 Game Statistik</a>
+            <a href="shop.html" class="mobile-link">Shop</a>
+            <a href="kontakt.html" class="mobile-link">Kontakt</a>
+        </div>
+    </div>
 
     <!-- JOIN MODAL -->
     <div class="join-overlay" id="joinOverlay">
@@ -280,14 +354,23 @@
             <div class="join-modal-emoji">🎉</div>
             <div class="join-modal-title">Ich bin dabei!</div>
             <div class="join-modal-event" id="joinEventName"></div>
-            <div class="join-field"><label>Dein Name</label><input type="text" id="joinName" placeholder="z.B. Max"></div>
-            <div class="join-field"><label>Anzahl Personen (inkl. dir)</label><input type="number" id="joinPersons" value="1" min="1" max="10"></div>
+            <div class="join-field">
+                <label>Dein Name</label>
+                <input type="text" id="joinName" placeholder="z.B. Max">
+            </div>
+            <div class="join-field">
+                <label>Anzahl Personen (inkl. dir)</label>
+                <input type="number" id="joinPersons" value="1" min="1" max="10">
+            </div>
             <div class="join-error" id="joinError"></div>
-            <div class="join-btns"><button class="join-cancel" id="joinCancel">Abbrechen</button><button class="join-confirm" id="joinConfirm">Anmelden! 🎉</button></div>
+            <div class="join-btns">
+                <button class="join-cancel" id="joinCancel">Abbrechen</button>
+                <button class="join-confirm" id="joinConfirm">Anmelden! 🎉</button>
+            </div>
         </div>
     </div>
 
-    <!-- ADMIN MODAL -->
+    <!-- ADMIN LOGIN MODAL -->
     <div class="admin-modal-overlay" id="adminOverlay">
         <div class="admin-modal">
             <h3>🔐 Admin Zugang</h3>
@@ -301,688 +384,1001 @@
         </div>
     </div>
 
-    <!-- CONTENT -->
+    <!-- MAIN CONTENT -->
     <div id="pageContent">
-        <div class="loading-page" id="loadingState"><div class="spinner"></div><p>Event wird geladen...</p></div>
+        <div class="loading-page" id="loadingState">
+            <div class="spinner"></div>
+            <p>Event wird geladen...</p>
+        </div>
     </div>
 
-    <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shop.html">Shop</a><a href="kontakt.html">Kontakt</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a><a href="events.html#vorschlag">Event vorschlagen</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p></div></div></footer>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="assets/logo.svg" alt="pocci4" class="footer-logo">
+                    <p class="footer-tagline">Poccistrasse, Muenchen</p>
+                </div>
+                <div class="footer-links-grid">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <a href="index.html">Home</a>
+                        <a href="events.html">Events</a>
+                        <a href="shop.html">Shop</a>
+                        <a href="kontakt.html">Kontakt</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Events</h4>
+                        <a href="events.html">Kommende Events</a>
+                        <a href="stats.html">Game Statistik</a>
+                        <a href="events.html#vorschlag">Event vorschlagen</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a>
+                        <a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a>
+                        <a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p>
+            </div>
+        </div>
+    </footer>
 
+    <!-- FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
     <script>
-(function(){
-    var firebaseConfig = {
-        apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
-        authDomain: "pocci4-a24e5.firebaseapp.com",
-        projectId: "pocci4-a24e5",
-        storageBucket: "pocci4-a24e5.firebasestorage.app",
-        messagingSenderId: "518621760671",
-        appId: "1:518621760671:web:90ad7c1bae464f313066aa"
-    };
-    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore();
-
-    var ADMIN_PW = "pocci2025";
-    var DEFAULT_LOCATION = "Poccistrasse 4, 80336 Muenchen";
-    var catColors = {party:"#C03A2B",games:"#1A1A1A",drinks:"#C4A882",film:"#457B9D",other:"#6B6B6B"};
-    var catNames = {party:"Party",games:"Spieleabend",drinks:"Trinkabend",film:"Filmabend",other:"Sonstiges"};
-    var monthNames = ["Januar","Februar","Maerz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-    var GAME_EMOJIS = {"Mario Kart":"🏎️","FIFA":"⚽","Poker":"🃏","Beer Pong":"🍺","Siedler von Catan":"🏗️","UNO":"🎴","Tischtennis":"🏓","Darts":"🎯","Billard":"🎱","Schach":"♟️","Jenga":"🧱","Flunkyball":"🍻","Monopoly":"💰","Dutch":"🃏","Sonstiges":"🎲"};
-    var SPECIAL_GAMES = {
-        "Poker": {fields:["buyIn","cashOut"], labels:["Buy-In (EUR)","Cash-Out (EUR)"], winLogic:"maxProfit"},
-        "Siedler von Catan": {fields:["points"], labels:["Siegpunkte"], winLogic:"maxPoints"},
-        "Monopoly": {fields:["money"], labels:["Endvermoegen (EUR)"], winLogic:"maxPoints"},
-        "Dutch": {fields:["points"], labels:["Punkte"], winLogic:"minPoints"}
-    };
-
-    var currentEvent = null;
-    var currentStats = [];
-    var isAdminOnPage = false;
-
-    var params = new URLSearchParams(window.location.search);
-    var eventId = params.get("id");
-
-    if(!eventId){ showError(); return; }
-
-    // ========== NAV ==========
-    var navbar = document.getElementById("navbar");
-    window.addEventListener("scroll", function(){ navbar.classList.toggle("scrolled", window.scrollY > 50); });
-    var hamburger = document.getElementById("hamburger"), mobileMenu = document.getElementById("mobileMenu");
-    hamburger.addEventListener("click", function(){
-        hamburger.classList.toggle("active");
-        mobileMenu.classList.toggle("active");
-        document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
-    });
-    var ml = document.querySelectorAll(".mobile-link");
-    for(var i = 0; i < ml.length; i++) ml[i].addEventListener("click", function(){
-        hamburger.classList.remove("active"); mobileMenu.classList.remove("active"); document.body.style.overflow = "";
-    });
-    var dd = document.getElementById("eventsDropdown"), ddT = null;
-    if(dd){
-        dd.addEventListener("mouseenter", function(){ ddT = setTimeout(function(){ dd.classList.add("dropdown-visible"); }, 200); });
-        dd.addEventListener("mouseleave", function(){ clearTimeout(ddT); setTimeout(function(){ dd.classList.remove("dropdown-visible"); }, 300); });
-    }
-
-    // ========== ADMIN MODAL ==========
     (function(){
-        var ADMIN_LOGIN_PW = "pocci4admin";
-        var trigger = document.getElementById("adminTrigger");
-        var overlay = document.getElementById("adminOverlay");
-        var input = document.getElementById("adminPwInput");
-        var cancel = document.getElementById("adminCancel");
-        var submit = document.getElementById("adminSubmit");
-        var error = document.getElementById("adminError");
-        if(trigger){
-            trigger.addEventListener("click", function(){
-                if(sessionStorage.getItem("pocci4admin") === "true"){
+        /* ===== FIREBASE INIT ===== */
+        var firebaseConfig = {
+            apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
+            authDomain: "pocci4-a24e5.firebaseapp.com",
+            projectId: "pocci4-a24e5",
+            storageBucket: "pocci4-a24e5.firebasestorage.app",
+            messagingSenderId: "518621760671",
+            appId: "1:518621760671:web:90ad7c1bae464f313066aa"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+
+        /* ===== CONSTANTS ===== */
+        var ADMIN_PW = "pocci2025";
+        var DEFAULT_LOCATION = "Poccistrasse 4, 80336 Muenchen";
+        var catColors = { party: "#C03A2B", games: "#1A1A1A", drinks: "#C4A882", film: "#457B9D", other: "#6B6B6B" };
+        var catNames = { party: "Party", games: "Spieleabend", drinks: "Trinkabend", film: "Filmabend", other: "Sonstiges" };
+        var monthNames = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+        var GAME_EMOJIS = {
+            "Mario Kart": "🏎️", "FIFA": "⚽", "Poker": "🃏", "Beer Pong": "🍺",
+            "Siedler von Catan": "🏗️", "UNO": "🎴", "Tischtennis": "🏓", "Darts": "🎯",
+            "Billard": "🎱", "Schach": "♟️", "Jenga": "🧱", "Flunkyball": "🍻",
+            "Monopoly": "💰", "Dutch": "🃏", "Sonstiges": "🎲"
+        };
+        var SPECIAL_GAMES = {
+            "Poker": { fields: ["buyIn", "cashOut"], labels: ["Buy-In (EUR)", "Cash-Out (EUR)"], winLogic: "maxProfit" },
+            "Siedler von Catan": { fields: ["points"], labels: ["Siegpunkte"], winLogic: "maxPoints" },
+            "Monopoly": { fields: ["money"], labels: ["Endvermoegen (EUR)"], winLogic: "maxPoints" },
+            "Dutch": { fields: ["points"], labels: ["Punkte"], winLogic: "minPoints" }
+        };
+
+        var currentEvent = null;
+        var currentStats = [];
+        var isAdminOnPage = false;
+
+        /* ===== GET EVENT ID FROM URL ===== */
+        var params = new URLSearchParams(window.location.search);
+        var eventId = params.get("id");
+        if (!eventId) { showError(); return; }
+
+        /* ===== NAVBAR SCROLL ===== */
+        var navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", function () {
+            navbar.classList.toggle("scrolled", window.scrollY > 50);
+        });
+
+        /* ===== HAMBURGER MENU ===== */
+        var hamburger = document.getElementById("hamburger");
+        var mobileMenu = document.getElementById("mobileMenu");
+        hamburger.addEventListener("click", function () {
+            hamburger.classList.toggle("active");
+            mobileMenu.classList.toggle("active");
+            document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
+        });
+        var mobileLinks = document.querySelectorAll(".mobile-link");
+        for (var i = 0; i < mobileLinks.length; i++) {
+            mobileLinks[i].addEventListener("click", function () {
+                hamburger.classList.remove("active");
+                mobileMenu.classList.remove("active");
+                document.body.style.overflow = "";
+            });
+        }
+
+        /* ===== EVENTS DROPDOWN (desktop) ===== */
+        var dd = document.getElementById("eventsDropdown");
+        var ddTimer = null;
+        if (dd) {
+            dd.addEventListener("mouseenter", function () {
+                ddTimer = setTimeout(function () { dd.classList.add("dropdown-visible"); }, 200);
+            });
+            dd.addEventListener("mouseleave", function () {
+                clearTimeout(ddTimer);
+                setTimeout(function () { dd.classList.remove("dropdown-visible"); }, 300);
+            });
+        }
+
+        /* ===== ADMIN LOGIN MODAL ===== */
+        (function () {
+            var ADMIN_LOGIN_PW = "pocci4admin";
+            var trigger = document.getElementById("adminTrigger");
+            var overlay = document.getElementById("adminOverlay");
+            var input = document.getElementById("adminPwInput");
+            var cancel = document.getElementById("adminCancel");
+            var submit = document.getElementById("adminSubmit");
+            var error = document.getElementById("adminError");
+
+            function openModal() {
+                if (sessionStorage.getItem("pocci4admin") === "true") {
                     window.location.href = "admin.html"; return;
                 }
                 overlay.classList.add("active");
-                setTimeout(function(){ input.focus(); }, 100);
-            });
-        }
-        if(cancel) cancel.addEventListener("click", function(){
-            overlay.classList.remove("active"); input.value = ""; error.style.display = "none";
-        });
-        if(overlay) overlay.addEventListener("click", function(e){
-            if(e.target === overlay){ overlay.classList.remove("active"); input.value = ""; error.style.display = "none"; }
-        });
-        function tryLogin(){
-            if(input.value === ADMIN_LOGIN_PW){
-                sessionStorage.setItem("pocci4admin", "true");
-                window.location.href = "admin.html";
-            } else { error.style.display = "block"; input.value = ""; input.focus(); }
-        }
-        if(submit) submit.addEventListener("click", tryLogin);
-        if(input) input.addEventListener("keydown", function(e){ if(e.key === "Enter") tryLogin(); });
-    })();
-
-    // ========== LOAD EVENT ==========
-    loadEvent();
-
-    function loadEvent(){
-db.collection("events").doc(eventId).update({
-            attendees: attendees, attending: newAttending
-        }).then(function(){
-            // Auch in event_signups speichern fuer Konsistenz
-            return db.collection("event_signups").add({
-                eventId: eventId,
-                name: name,
-                persons: persons,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-        }).then(function(){
-            markJoined(eventId, name);
-            document.getElementById("joinOverlay").classList.remove("active");
-            document.body.style.overflow = "";
-            launchConfetti();
-            loadEvent();
-        }).catch(function(err){
-            errEl.textContent = "Fehler!"; errEl.style.display = "block";
-        });
-    }
-
-    function loadGameStats(gameName, cb){
-        db.collection("stats").where("game","==",gameName).orderBy("createdAt","desc").get().then(function(snap){
-            var stats = [];
-            snap.forEach(function(doc){ var d = doc.data(); d.id = doc.id; stats.push(d); });
-            cb(stats);
-        }).catch(function(){ cb([]); });
-    }
-
-    function loadGameStatsByTitle(title, cb){
-        db.collection("stats").orderBy("createdAt","desc").get().then(function(snap){
-            var stats = [];
-            snap.forEach(function(doc){
-                var d = doc.data(); d.id = doc.id;
-                if(d.game && d.game.toLowerCase().indexOf(title.toLowerCase()) !== -1) stats.push(d);
-            });
-            cb(stats);
-        }).catch(function(){ cb([]); });
-    }
-
-    function showError(){
-        document.getElementById("pageContent").innerHTML = "<div class=\"error-page\"><h2>Event nicht gefunden 😕</h2><p>Dieses Event existiert nicht oder wurde geloescht.</p><a href=\"events.html\" class=\"btn btn-primary\">Zurueck zu Events</a></div>";
-    }
-
-    // ========== RENDER PAGE ==========
-    function renderPage(){
-        var e = currentEvent;
-        var attending = countAttending(e);
-        var pct = e.capacity > 0 ? Math.round((attending/e.capacity)*100) : 0;
-        var loc = e.location || DEFAULT_LOCATION;
-        var joined = hasJoined(e.id);
-        var isFull = attending >= e.capacity;
-        var isGame = e.category === "games";
-        var gameName = e.game || e.title;
-
-        var html = "";
-        html += "<div class=\"detail-page\">";
-        html += "<a href=\"events.html\" class=\"back-link\">&#8592; Zurueck zu Events</a>";
-
-        // HERO
-        html += "<div class=\"detail-hero reveal\">";
-        html += "<div class=\"detail-emoji\">" + e.emoji + "</div>";
-        html += "<span class=\"detail-category\" style=\"background:" + (catColors[e.category]||catColors.other) + "\">" + (catNames[e.category]||"Event") + "</span>";
-        html += "<h1 class=\"detail-title\">" + esc(e.title) + "</h1>";
-        html += "<div class=\"detail-meta\">";
-        html += "<div class=\"detail-meta-item\">📅 " + formatDate(e.date) + "</div>";
-        html += "<div class=\"detail-meta-item\">🕐 " + e.time + " Uhr</div>";
-        html += "<div class=\"detail-meta-item\">📍 " + esc(loc) + "</div>";
-        html += "<div class=\"detail-meta-item\">👥 " + attending + "/" + e.capacity + " Plaetze</div>";
-        html += "</div></div>";
-
-        // GRID
-        html += "<div class=\"detail-grid\">";
-        html += "<div class=\"detail-main\">";
-
-        // Description
-        if(e.desc){
-            html += "<div class=\"detail-card reveal\"><h3>📝 Beschreibung</h3><p class=\"detail-desc\">" + esc(e.desc) + "</p></div>";
-        }
-
-        // Capacity + Attendees
-        html += "<div class=\"detail-card reveal\"><h3>👥 Teilnehmer</h3>";
-        html += "<div class=\"capacity-big\"><div class=\"capacity-big-header\"><span class=\"capacity-big-count\">" + attending + " / " + e.capacity + " Plaetze belegt</span><span class=\"capacity-big-pct\">" + pct + "%</span></div>";
-        html += "<div class=\"capacity-big-bar\"><div class=\"capacity-big-fill\" id=\"capFill\" style=\"width:0%\"></div></div></div>";
-        if(e.attendees.length > 0){
-            html += "<div class=\"attendees-list\">";
-            for(var i = 0; i < e.attendees.length; i++){
-                var a = e.attendees[i];
-                html += "<div class=\"attendee-row\"><span class=\"attendee-name\">" + esc(a.name) + "</span><span class=\"attendee-persons\">" + a.persons + (a.persons > 1 ? " Personen" : " Person") + "</span></div>";
+                setTimeout(function () { input.focus(); }, 100);
             }
-            html += "</div>";
-        } else {
-            html += "<div class=\"no-attendees\">Noch keine Anmeldungen. Sei der Erste! 🚀</div>";
-        }
-        html += "</div>";
-
-        // MAP
-        html += "<div class=\"detail-card reveal\"><h3>📍 Location</h3>";
-        html += "<p style=\"font-size:.9rem;color:var(--color-text-light);margin-bottom:1rem\">" + esc(loc) + "</p>";
-        html += "<div class=\"detail-map\"><iframe src=\"https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=" + encodeURIComponent(loc) + "\" allowfullscreen loading=\"lazy\"></iframe></div>";
-        html += "<a href=\"https://www.google.com/maps/dir//" + encodeURIComponent(loc) + "\" target=\"_blank\" class=\"btn btn-outline btn-sm\" style=\"margin-top:1rem;width:100%\">🧭 Route planen</a>";
-        html += "</div>";
-
-        // GAME STATS
-        if(isGame && currentStats.length > 0){
-            html += "<div class=\"detail-card reveal\"><h3>🏆 Bisherige " + esc(gameName) + " Ergebnisse</h3>";
-            var wins = {};
-            for(var i = 0; i < currentStats.length; i++){
-                var w = currentStats[i].winner;
-                if(w) wins[w] = (wins[w]||0) + 1;
+            function closeModal() {
+                overlay.classList.remove("active");
+                input.value = "";
+                error.style.display = "none";
             }
-            var sorted = Object.keys(wins).sort(function(a,b){ return wins[b]-wins[a]; });
-            if(sorted.length > 0){
-                html += "<div class=\"leaderboard-mini\">";
-                for(var i = 0; i < Math.min(sorted.length,5); i++){
-                    var rankCls = i===0?"lb-rank-1":i===1?"lb-rank-2":i===2?"lb-rank-3":"lb-rank-other";
-                    html += "<div class=\"lb-row\"><div class=\"lb-rank " + rankCls + "\">" + (i+1) + "</div><span class=\"lb-name\">" + esc(sorted[i]) + "</span><span class=\"lb-wins\">" + wins[sorted[i]] + "W</span></div>";
+            function tryLogin() {
+                if (input.value === ADMIN_LOGIN_PW) {
+                    sessionStorage.setItem("pocci4admin", "true");
+                    window.location.href = "admin.html";
+                } else {
+                    error.style.display = "block";
+                    input.value = "";
+                    input.focus();
                 }
-                html += "</div>";
             }
-            html += "<h4 style=\"font-size:.85rem;font-weight:700;margin-top:1.5rem;margin-bottom:.75rem\">Letzte Ergebnisse</h4>";
-            var showCount = Math.min(currentStats.length, 8);
-            for(var i = 0; i < showCount; i++){
-                var s = currentStats[i];
-                html += "<div class=\"stat-row\"><span class=\"stat-winner\">🏆 " + esc(s.winner || "?") + "</span><span class=\"stat-date\">" + formatDate(s.date || "") + "</span></div>";
-            }
-            html += "</div>";
-        }
 
-        html += "</div>"; // end detail-main
+            if (trigger) trigger.addEventListener("click", openModal);
+            if (cancel) cancel.addEventListener("click", closeModal);
+            if (overlay) overlay.addEventListener("click", function (e) { if (e.target === overlay) closeModal(); });
+            if (submit) submit.addEventListener("click", tryLogin);
+            if (input) input.addEventListener("keydown", function (e) { if (e.key === "Enter") tryLogin(); });
+        })();
 
-        // SIDEBAR
-        html += "<div class=\"detail-sidebar\">";
+        /* ===== LOAD EVENT FROM FIRESTORE ===== */
+        loadEvent();
 
-        // ===== JOIN CARD (OBEN, STICKY) =====
-        html += "<div class=\"sidebar-join-top\">";
-        html += "<div class=\"sidebar-card\"><div class=\"join-actions\">";
-        if(joined){
-            html += "<button class=\"btn-join-big joined\">Du bist dabei! ✓</button>";
-        } else if(isFull){
-            html += "<button class=\"btn-join-big full\">Ausgebucht</button>";
-        } else {
-            html += "<button class=\"btn-join-big\" id=\"joinBtn\">Ich bin dabei! 🎉</button>";
-        }
-        html += "<a href=\"#\" class=\"btn btn-outline btn-sm\" onclick=\"downloadICS('" + e.title.replace(/'/g,"") + "','" + e.date + "','" + e.time + "');return false;\">📅 Zum Kalender hinzufuegen</a>";
-        html += "</div></div>";
-        html += "</div>"; // end sticky
+        function loadEvent() {
+            db.collection("events").doc(eventId).get().then(function (doc) {
+                if (!doc.exists) { showError(); return; }
+                var data = doc.data();
+                data.id = doc.id;
+                data.attendees = data.attendees || [];
+                data.capacity = data.capacity || 20;
+                data.attending = data.attending || 0;
+                currentEvent = data;
 
-        // ===== GELD SENDEN / SCHULDEN =====
-        html += "<div class=\"pay-card\" id=\"payCard\">";
-        html += "<h4>💸 Geld senden</h4>";
-        html += "<p class=\"pay-card-sub\">Spielschulden, Getraenkekasse oder einfach so.</p>";
+                // Update page title
+                document.title = "pocci4 - " + (data.emoji || "") + " " + (data.title || "Event");
 
-        // Pay form
-        html += "<div id=\"payFormWrap\">";
-
-        // Reason tags
-        html += "<div class=\"pay-field\"><label>Grund</label></div>";
-        html += "<div class=\"pay-reason-tags\" id=\"payReasons\">";
-        if(isGame) html += "<button class=\"pay-reason-tag active\" data-reason=\"Spielschulden\">🃏 Spielschulden</button>";
-        html += "<button class=\"pay-reason-tag" + (!isGame?" active":"") + "\" data-reason=\"Getraenkekasse\">🍺 Getraenkekasse</button>";
-        html += "<button class=\"pay-reason-tag\" data-reason=\"Essensgeld\">🍕 Essensgeld</button>";
-        html += "<button class=\"pay-reason-tag\" data-reason=\"Spende\">🎁 Spende</button>";
-        html += "<button class=\"pay-reason-tag\" data-reason=\"Sonstiges\">✨ Sonstiges</button>";
-        html += "</div>";
-
-        // Amount presets
-        html += "<div class=\"pay-field\"><label>Betrag</label></div>";
-        html += "<div class=\"pay-presets\" id=\"payPresets\">";
-        html += "<button class=\"pay-preset\" data-amount=\"2\">2€</button>";
-        html += "<button class=\"pay-preset\" data-amount=\"5\">5€</button>";
-        html += "<button class=\"pay-preset active\" data-amount=\"10\">10€</button>";
-        html += "<button class=\"pay-preset\" data-amount=\"20\">20€</button>";
-        html += "<button class=\"pay-preset\" data-amount=\"50\">50€</button>";
-        html += "</div>";
-
-        // Custom amount
-        html += "<div class=\"pay-amount-wrap\">";
-        html += "<input type=\"number\" class=\"pay-amount-input\" id=\"payAmount\" value=\"10\" min=\"0.50\" step=\"0.50\" placeholder=\"0,00\">";
-        html += "<span class=\"pay-currency\">EUR</span>";
-        html += "</div>";
-
-        // Name
-        html += "<div class=\"pay-field\"><label>Dein Name</label>";
-        html += "<input type=\"text\" id=\"payName\" placeholder=\"z.B. Max\"></div>";
-
-        // Notiz
-        html += "<div class=\"pay-field\"><label>Notiz (optional)</label>";
-        html += "<input type=\"text\" id=\"payNote\" placeholder=\"z.B. Poker Schulden 16.04.\"></div>";
-
-        // PayPal Button
-        html += "<button class=\"pay-btn\" id=\"payPaypalBtn\">💳 Per PayPal senden</button>";
-        html += "<div class=\"pay-or\">oder</div>";
-        html += "<button class=\"pay-btn-secondary\" id=\"payBarBtn\">🏠 Bar vor Ort bezahlen</button>";
-
-        html += "<div class=\"pay-info\"><span>🔒</span><span>Du wirst zu PayPal weitergeleitet. Die Zahlung wird gespeichert.</span></div>";
-        html += "</div>"; // end payFormWrap
-
-        // Pay success
-        html += "<div class=\"pay-success\" id=\"paySuccess\">";
-        html += "<div class=\"pay-success-icon\" id=\"paySuccessIcon\">💳</div>";
-        html += "<div class=\"pay-success-title\" id=\"paySuccessTitle\">Zahlung vermerkt!</div>";
-        html += "<div class=\"pay-success-text\" id=\"paySuccessText\"></div>";
-        html += "</div>";
-
-        html += "</div>"; // end pay-card
-
-        // ===== EVENT INFO CARD =====
-        html += "<div class=\"sidebar-card\"><h4>ℹ️ Event-Details</h4>";
-        html += "<div style=\"font-size:.85rem;color:var(--color-text-light);line-height:2\">";
-        html += "<div><strong>Datum:</strong> " + formatDate(e.date) + "</div>";
-        html += "<div><strong>Uhrzeit:</strong> " + e.time + " Uhr</div>";
-        html += "<div><strong>Kategorie:</strong> " + (catNames[e.category]||"Event") + "</div>";
-        if(isGame && e.game) html += "<div><strong>Spiel:</strong> " + esc(e.game) + "</div>";
-        html += "<div><strong>Location:</strong> " + esc(loc) + "</div>";
-        html += "<div><strong>Max. Gaeste:</strong> " + e.capacity + "</div>";
-        html += "</div></div>";
-
-        // ===== ADMIN FINISH GAME =====
-        if(isGame){
-            html += "<div class=\"sidebar-card\">";
-            html += "<h4>🔐 Spiel beenden (Admin)</h4>";
-            html += "<div id=\"adminFinishLogin\">";
-            html += "<div class=\"admin-pw-inline\"><input type=\"password\" id=\"fgPassword\" placeholder=\"Admin-Passwort\"><button id=\"fgLoginBtn\">OK</button></div>";
-            html += "</div>";
-            html += "<div id=\"adminFinishPanel\" style=\"display:none\">";
-            html += renderFinishGameForm(e);
-            html += "</div></div>";
-        }
-
-        html += "</div>"; // end sidebar
-        html += "</div>"; // end grid
-        html += "</div>"; // end detail-page
-
-        document.getElementById("pageContent").innerHTML = html;
-
-        // Animate capacity bar
-        setTimeout(function(){
-            var fill = document.getElementById("capFill");
-            if(fill) fill.style.width = pct + "%";
-        }, 500);
-
-        // Bind join button
-        var joinBtn = document.getElementById("joinBtn");
-        if(joinBtn) joinBtn.addEventListener("click", function(){ openJoinPopup(); });
-
-        // Bind admin finish
-        var fgLoginBtn = document.getElementById("fgLoginBtn");
-        if(fgLoginBtn){
-            fgLoginBtn.addEventListener("click", function(){
-                var pw = document.getElementById("fgPassword").value;
-                if(pw === ADMIN_PW){
-                    isAdminOnPage = true;
-                    document.getElementById("adminFinishLogin").style.display = "none";
-                    document.getElementById("adminFinishPanel").style.display = "block";
-                    bindFinishGameForm();
-                } else { alert("Falsches Passwort!"); }
-            });
-            document.getElementById("fgPassword").addEventListener("keydown", function(e){
-                if(e.key === "Enter") fgLoginBtn.click();
-            });
-        }
-// Bind pay system
-        bindPaySystem(e);
-        initReveal();
-    }
-// ========== PAY SYSTEM ==========
-    function bindPaySystem(ev){
-        var PAYPAL_LINK = "https://www.paypal.me/matsmoe32/";
-        var isGame = ev.category === "games";
-        var currentReason = isGame ? "Spielschulden" : "Getraenkekasse";
-        var currentAmount = 10;
-
-        var reasonBtns = document.querySelectorAll("#payReasons .pay-reason-tag");
-        for(var i = 0; i < reasonBtns.length; i++){
-            reasonBtns[i].addEventListener("click", function(){
-                for(var j = 0; j < reasonBtns.length; j++) reasonBtns[j].classList.remove("active");
-                this.classList.add("active");
-                currentReason = this.getAttribute("data-reason");
-            });
-        }
-
-        var presetBtns = document.querySelectorAll("#payPresets .pay-preset");
-        var amountInput = document.getElementById("payAmount");
-        for(var i = 0; i < presetBtns.length; i++){
-            presetBtns[i].addEventListener("click", function(){
-                for(var j = 0; j < presetBtns.length; j++) presetBtns[j].classList.remove("active");
-                this.classList.add("active");
-                currentAmount = parseFloat(this.getAttribute("data-amount"));
-                amountInput.value = currentAmount;
-            });
-        }
-        if(amountInput){
-            amountInput.addEventListener("input", function(){
-                currentAmount = parseFloat(this.value) || 0;
-                for(var j = 0; j < presetBtns.length; j++){
-                    presetBtns[j].classList.toggle("active", parseFloat(presetBtns[j].getAttribute("data-amount")) === currentAmount);
+                // If games category, load stats first then render
+                if (data.category === "games") {
+                    var gameName = data.game || data.title;
+                    loadGameStats(gameName, function (stats) {
+                        currentStats = stats;
+                        renderPage();
+                    });
+                } else {
+                    currentStats = [];
+                    renderPage();
                 }
+            }).catch(function (err) {
+                console.error("Error loading event:", err);
+                showError();
             });
         }
 
-        var paypalBtn = document.getElementById("payPaypalBtn");
-        if(paypalBtn){
-            paypalBtn.addEventListener("click", function(){
-                var name = (document.getElementById("payName").value || "").trim();
-                var note = (document.getElementById("payNote").value || "").trim();
-                var amount = parseFloat(amountInput.value) || 0;
-                if(amount < 0.5){ alert("Mindestbetrag: 0,50 EUR"); return; }
-                if(!name){ alert("Bitte Namen eingeben!"); return; }
-                db.collection("payments").add({
-                    eventId: ev.id, eventTitle: ev.title || "Event",
-                    name: name, amount: amount, reason: currentReason, note: note,
-                    method: "paypal", status: "wartet auf Zahlung",
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                }).then(function(){
-                    var paypalURL = PAYPAL_LINK + amount.toFixed(2) + "EUR";
-                    document.getElementById("payFormWrap").style.display = "none";
-                    var s = document.getElementById("paySuccess");
-                    s.classList.add("show");
-                    document.getElementById("paySuccessIcon").textContent = "💳";
-                    document.getElementById("paySuccessTitle").textContent = "Weiterleitung zu PayPal...";
-                    document.getElementById("paySuccessText").innerHTML = "Du wirst zu <strong>PayPal</strong> weitergeleitet um <strong>" + amount.toFixed(2).replace(".",",") + " EUR</strong> zu senden.<br><br>Falls sich nichts oeffnet: <a href='" + paypalURL + "' target='_blank' class='pay-success-link'>Hier klicken</a>";
-                    setTimeout(function(){ window.open(paypalURL, "_blank"); }, 1200);
-                    launchConfetti();
-                }).catch(function(err){ console.error("Pay error:", err); alert("Fehler!"); });
+        function loadGameStats(gameName, cb) {
+            db.collection("stats").where("game", "==", gameName).orderBy("createdAt", "desc").get().then(function (snap) {
+                var stats = [];
+                snap.forEach(function (doc) {
+                    var d = doc.data();
+                    d.id = doc.id;
+                    stats.push(d);
+                });
+                cb(stats);
+            }).catch(function (err) {
+                console.warn("Stats query failed, trying fallback:", err);
+                // Fallback: load all stats and filter client-side
+                db.collection("stats").get().then(function (snap) {
+                    var stats = [];
+                    snap.forEach(function (doc) {
+                        var d = doc.data();
+                        d.id = doc.id;
+                        if (d.game === gameName) stats.push(d);
+                    });
+                    // Sort by createdAt descending
+                    stats.sort(function (a, b) {
+                        var ta = a.createdAt ? a.createdAt.toMillis() : 0;
+                        var tb = b.createdAt ? b.createdAt.toMillis() : 0;
+                        return tb - ta;
+                    });
+                    cb(stats);
+                }).catch(function () { cb([]); });
             });
         }
 
-        var barBtn = document.getElementById("payBarBtn");
-        if(barBtn){
-            barBtn.addEventListener("click", function(){
-                var name = (document.getElementById("payName").value || "").trim();
-                var note = (document.getElementById("payNote").value || "").trim();
-                var amount = parseFloat(amountInput.value) || 0;
-                if(amount < 0.5){ alert("Mindestbetrag: 0,50 EUR"); return; }
-                if(!name){ alert("Bitte Namen eingeben!"); return; }
-                db.collection("payments").add({
-                    eventId: ev.id, eventTitle: ev.title || "Event",
-                    name: name, amount: amount, reason: currentReason, note: note,
-                    method: "bar", status: "bar vor Ort",
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                }).then(function(){
-                    document.getElementById("payFormWrap").style.display = "none";
-                    var s = document.getElementById("paySuccess");
-                    s.classList.add("show");
-                    document.getElementById("paySuccessIcon").textContent = "🏠";
-                    document.getElementById("paySuccessTitle").textContent = "Notiert!";
-                    document.getElementById("paySuccessText").innerHTML = "<strong>" + esc(name) + "</strong> zahlt <strong>" + amount.toFixed(2).replace(".",",") + " EUR</strong> bar vor Ort.<br>Grund: " + esc(currentReason);
-                    launchConfetti();
-                }).catch(function(err){ console.error("Pay error:", err); alert("Fehler!"); });
-            });
+        function showError() {
+            document.getElementById("pageContent").innerHTML =
+                '<div class="error-page">' +
+                '<h2>Event nicht gefunden 😕</h2>' +
+                '<p>Dieses Event existiert nicht oder wurde geloescht.</p>' +
+                '<a href="events.html" class="btn btn-primary">Zurueck zu Events</a>' +
+                '</div>';
         }
-    }
-    // ========== FINISH GAME FORM ==========
-    function renderFinishGameForm(e){
-        var gameName = e.game || "";
-        var special = SPECIAL_GAMES[gameName];
-        var attendees = e.attendees || [];
-        var html = "";
-        if(attendees.length === 0){
-            return "<p style=\"font-size:.85rem;color:var(--color-gray)\">Keine Teilnehmer angemeldet.</p>";
-        }
-        if(special){
-            html += "<p style=\"font-size:.8rem;color:var(--color-text-light);margin-bottom:1rem\">Trage die Ergebnisse fuer jeden Spieler ein:</p>";
-            for(var i = 0; i < attendees.length; i++){
-                html += "<div class=\"fg-player-row\" data-player=\"" + esc(attendees[i].name) + "\">";
-                html += "<div class=\"fg-player-name\">" + esc(attendees[i].name) + "</div>";
-                for(var f = 0; f < special.fields.length; f++){
-                    html += "<div class=\"fg-field\"><label>" + special.labels[f] + "</label><input type=\"number\" class=\"fg-input\" data-field=\"" + special.fields[f] + "\" data-player=\"" + esc(attendees[i].name) + "\" step=\"0.01\" placeholder=\"0\"></div>";
-                }
-                html += "</div>";
-            }
-        } else {
-            html += "<div class=\"fg-field\"><label>Gewinner</label><select id=\"fgWinnerSelect\">";
-            html += "<option value=\"\">Waehle den Gewinner...</option>";
-            for(var i = 0; i < attendees.length; i++){
-                html += "<option value=\"" + esc(attendees[i].name) + "\">" + esc(attendees[i].name) + "</option>";
-            }
-            html += "</select></div>";
-        }
-        html += "<button class=\"fg-submit\" id=\"fgSubmitBtn\">🏆 Spiel beenden & Stats speichern</button>";
-        html += "<div class=\"fg-feedback\" id=\"fgFeedback\">Ergebnis gespeichert!</div>";
-        return html;
-    }
 
-    function bindFinishGameForm(){
-        var submitBtn = document.getElementById("fgSubmitBtn");
-        if(!submitBtn) return;
-        submitBtn.addEventListener("click", function(){
+        /* ===== RENDER THE FULL PAGE ===== */
+        function renderPage() {
             var e = currentEvent;
+            var attending = countAttending(e);
+            var pct = e.capacity > 0 ? Math.round((attending / e.capacity) * 100) : 0;
+            if (pct > 100) pct = 100;
+            var loc = e.location || DEFAULT_LOCATION;
+            var joined = hasJoined(e.id);
+            var isFull = attending >= e.capacity;
+            var isGame = e.category === "games";
             var gameName = e.game || e.title;
-            var special = SPECIAL_GAMES[gameName];
-            var emoji = GAME_EMOJIS[gameName] || "🎲";
-            var statData = {
-                game: gameName, emoji: emoji, date: e.date, eventId: e.id,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
-            if(special){
-                var inputs = document.querySelectorAll(".fg-input");
-                var playerData = {};
-                for(var i = 0; i < inputs.length; i++){
-                    var pName = inputs[i].getAttribute("data-player");
-                    var field = inputs[i].getAttribute("data-field");
-                    var val = parseFloat(inputs[i].value) || 0;
-                    if(!playerData[pName]) playerData[pName] = {name: pName};
-                    playerData[pName][field] = val;
+
+            var html = '';
+            html += '<div class="detail-page">';
+            html += '<a href="events.html" class="back-link">&#8592; Zurueck zu Events</a>';
+
+            /* --- HERO --- */
+            html += '<div class="detail-hero reveal">';
+            html += '<div class="detail-emoji">' + e.emoji + '</div>';
+            html += '<span class="detail-category" style="background:' + (catColors[e.category] || catColors.other) + '">' + (catNames[e.category] || 'Event') + '</span>';
+            html += '<h1 class="detail-title">' + esc(e.title) + '</h1>';
+            html += '<div class="detail-meta">';
+            html += '<div class="detail-meta-item">📅 ' + formatDate(e.date) + '</div>';
+            html += '<div class="detail-meta-item">🕐 ' + e.time + ' Uhr</div>';
+            html += '<div class="detail-meta-item">📍 ' + esc(loc) + '</div>';
+            html += '<div class="detail-meta-item">👥 ' + attending + '/' + e.capacity + ' Plaetze</div>';
+            html += '</div>';
+            html += '</div>';
+
+            /* --- GRID --- */
+            html += '<div class="detail-grid">';
+
+            /* ====== MAIN COLUMN ====== */
+            html += '<div class="detail-main">';
+
+            /* Description */
+            if (e.desc) {
+                html += '<div class="detail-card reveal">';
+                html += '<h3>📝 Beschreibung</h3>';
+                html += '<p class="detail-desc">' + esc(e.desc) + '</p>';
+                html += '</div>';
+            }
+
+            /* Attendees / Capacity */
+            html += '<div class="detail-card reveal">';
+            html += '<h3>👥 Teilnehmer</h3>';
+            html += '<div class="capacity-big">';
+            html += '<div class="capacity-big-header">';
+            html += '<span class="capacity-big-count">' + attending + ' / ' + e.capacity + ' Plaetze belegt</span>';
+            html += '<span class="capacity-big-pct">' + pct + '%</span>';
+            html += '</div>';
+            html += '<div class="capacity-big-bar"><div class="capacity-big-fill" id="capFill" style="width:0%"></div></div>';
+            html += '</div>';
+
+            if (e.attendees.length > 0) {
+                html += '<div class="attendees-list">';
+                for (var i = 0; i < e.attendees.length; i++) {
+                    var a = e.attendees[i];
+                    html += '<div class="attendee-row">';
+                    html += '<span class="attendee-name">' + esc(a.name) + '</span>';
+                    html += '<span class="attendee-persons">' + a.persons + (a.persons > 1 ? ' Personen' : ' Person') + '</span>';
+                    html += '</div>';
                 }
-                var playerArr = [];
-                for(var k in playerData) playerArr.push(playerData[k]);
-                var winner = "";
-                if(special.winLogic === "maxProfit"){
-                    var maxP = -Infinity;
-                    for(var i = 0; i < playerArr.length; i++){
-                        var profit = (playerArr[i].cashOut||0) - (playerArr[i].buyIn||0);
-                        playerArr[i].profit = profit;
-                        if(profit > maxP){ maxP = profit; winner = playerArr[i].name; }
-                    }
-                } else if(special.winLogic === "maxPoints"){
-                    var maxP = -Infinity;
-                    for(var i = 0; i < playerArr.length; i++){
-                        var pts = playerArr[i].points || playerArr[i].money || 0;
-                        if(pts > maxP){ maxP = pts; winner = playerArr[i].name; }
-                    }
-                } else if(special.winLogic === "minPoints"){
-                    var minP = Infinity;
-                    for(var i = 0; i < playerArr.length; i++){
-                        var pts = playerArr[i].points || 0;
-                        if(pts < minP){ minP = pts; winner = playerArr[i].name; }
-                    }
-                }
-                statData.winner = winner;
-                statData.players = playerArr;
-                statData.gameType = special.winLogic;
+                html += '</div>';
             } else {
-                var sel = document.getElementById("fgWinnerSelect");
-                if(!sel || !sel.value){ alert("Bitte Gewinner waehlen!"); return; }
-                statData.winner = sel.value;
+                html += '<div class="no-attendees">Noch keine Anmeldungen. Sei der Erste! 🚀</div>';
             }
-            db.collection("stats").add(statData).then(function(){
-                var fb = document.getElementById("fgFeedback");
-                fb.classList.add("show");
+            html += '</div>';
+
+            /* Location / Map */
+            html += '<div class="detail-card reveal">';
+            html += '<h3>📍 Location</h3>';
+            html += '<p style="font-size:.9rem;color:var(--color-text-light);margin-bottom:1rem">' + esc(loc) + '</p>';
+            html += '<div class="detail-map">';
+            html += '<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=' + encodeURIComponent(loc) + '" allowfullscreen loading="lazy"></iframe>';
+            html += '</div>';
+            html += '<a href="https://www.google.com/maps/dir//' + encodeURIComponent(loc) + '" target="_blank" class="btn btn-outline btn-sm" style="margin-top:1rem;width:100%">🧭 Route planen</a>';
+            html += '</div>';
+
+            /* Game Stats (only for games category) */
+            if (isGame && currentStats.length > 0) {
+                html += '<div class="detail-card reveal">';
+                html += '<h3>🏆 Bisherige ' + esc(gameName) + ' Ergebnisse</h3>';
+
+                // Build leaderboard
+                var wins = {};
+                for (var i = 0; i < currentStats.length; i++) {
+                    var w = currentStats[i].winner;
+                    if (w) wins[w] = (wins[w] || 0) + 1;
+                }
+                var sorted = Object.keys(wins).sort(function (a, b) { return wins[b] - wins[a]; });
+
+                if (sorted.length > 0) {
+                    html += '<div class="leaderboard-mini">';
+                    for (var i = 0; i < Math.min(sorted.length, 5); i++) {
+                        var rankCls = i === 0 ? "lb-rank-1" : i === 1 ? "lb-rank-2" : i === 2 ? "lb-rank-3" : "lb-rank-other";
+                        html += '<div class="lb-row">';
+                        html += '<div class="lb-rank ' + rankCls + '">' + (i + 1) + '</div>';
+                        html += '<span class="lb-name">' + esc(sorted[i]) + '</span>';
+                        html += '<span class="lb-wins">' + wins[sorted[i]] + 'W</span>';
+                        html += '</div>';
+                    }
+                    html += '</div>';
+                }
+
+                html += '<h4 style="font-size:.85rem;font-weight:700;margin-top:1.5rem;margin-bottom:.75rem">Letzte Ergebnisse</h4>';
+                var showCount = Math.min(currentStats.length, 8);
+                for (var i = 0; i < showCount; i++) {
+                    var s = currentStats[i];
+                    html += '<div class="stat-row">';
+                    html += '<span class="stat-winner">🏆 ' + esc(s.winner || '?') + '</span>';
+                    html += '<span class="stat-date">' + formatDate(s.date || '') + '</span>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+
+            html += '</div>'; // end detail-main
+
+            /* ====== SIDEBAR COLUMN ====== */
+            html += '<div class="detail-sidebar">';
+
+            /* Join Card (sticky) */
+            html += '<div class="sidebar-join-top">';
+            html += '<div class="sidebar-card">';
+            html += '<div class="join-actions">';
+            if (joined) {
+                html += '<button class="btn-join-big joined">Du bist dabei! ✓</button>';
+            } else if (isFull) {
+                html += '<button class="btn-join-big full" disabled>Ausgebucht</button>';
+            } else {
+                html += '<button class="btn-join-big" id="joinBtn">Ich bin dabei! 🎉</button>';
+            }
+            html += '<a href="#" class="btn btn-outline btn-sm" id="calBtn">📅 Zum Kalender hinzufuegen</a>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            /* Pay Card */
+            html += '<div class="pay-card" id="payCard">';
+            html += '<h4>💸 Geld senden</h4>';
+            html += '<p class="pay-card-sub">Spielschulden, Getraenkekasse oder einfach so.</p>';
+
+            // Pay form wrapper
+            html += '<div id="payFormWrap">';
+
+            // Reason tags
+            html += '<div class="pay-field"><label>Grund</label></div>';
+            html += '<div class="pay-reason-tags" id="payReasons">';
+            if (isGame) {
+                html += '<button class="pay-reason-tag active" data-reason="Spielschulden">🃏 Spielschulden</button>';
+            }
+            html += '<button class="pay-reason-tag' + (!isGame ? ' active' : '') + '" data-reason="Getraenkekasse">🍺 Getraenkekasse</button>';
+            html += '<button class="pay-reason-tag" data-reason="Essensgeld">🍕 Essensgeld</button>';
+            html += '<button class="pay-reason-tag" data-reason="Spende">🎁 Spende</button>';
+            html += '<button class="pay-reason-tag" data-reason="Sonstiges">✨ Sonstiges</button>';
+            html += '</div>';
+
+            // Amount presets
+            html += '<div class="pay-field"><label>Betrag</label></div>';
+            html += '<div class="pay-presets" id="payPresets">';
+            html += '<button class="pay-preset" data-amount="2">2&euro;</button>';
+            html += '<button class="pay-preset" data-amount="5">5&euro;</button>';
+            html += '<button class="pay-preset active" data-amount="10">10&euro;</button>';
+            html += '<button class="pay-preset" data-amount="20">20&euro;</button>';
+            html += '<button class="pay-preset" data-amount="50">50&euro;</button>';
+            html += '</div>';
+
+            // Custom amount input
+            html += '<div class="pay-amount-wrap">';
+            html += '<input type="number" class="pay-amount-input" id="payAmount" value="10" min="0.50" step="0.50" placeholder="0,00">';
+            html += '<span class="pay-currency">EUR</span>';
+            html += '</div>';
+
+            // Name
+            html += '<div class="pay-field"><label>Dein Name</label>';
+            html += '<input type="text" id="payName" placeholder="z.B. Max"></div>';
+
+            // Note
+            html += '<div class="pay-field"><label>Notiz (optional)</label>';
+            html += '<input type="text" id="payNote" placeholder="z.B. Poker Schulden 16.04."></div>';
+
+            // PayPal button
+            html += '<button class="pay-btn" id="payPaypalBtn">💳 Per PayPal senden</button>';
+            html += '<div class="pay-or">oder</div>';
+            html += '<button class="pay-btn-secondary" id="payBarBtn">🏠 Bar vor Ort bezahlen</button>';
+
+            html += '<div class="pay-info"><span>🔒</span><span>Du wirst zu PayPal weitergeleitet. Die Zahlung wird gespeichert.</span></div>';
+            html += '</div>'; // end payFormWrap
+
+            // Pay success view
+            html += '<div class="pay-success" id="paySuccess">';
+            html += '<div class="pay-success-icon" id="paySuccessIcon">💳</div>';
+            html += '<div class="pay-success-title" id="paySuccessTitle">Zahlung vermerkt!</div>';
+            html += '<div class="pay-success-text" id="paySuccessText"></div>';
+            html += '</div>';
+
+            html += '</div>'; // end pay-card
+
+            /* Event Details Card */
+            html += '<div class="sidebar-card">';
+            html += '<h4>ℹ️ Event-Details</h4>';
+            html += '<div style="font-size:.85rem;color:var(--color-text-light);line-height:2">';
+            html += '<div><strong>Datum:</strong> ' + formatDate(e.date) + '</div>';
+            html += '<div><strong>Uhrzeit:</strong> ' + e.time + ' Uhr</div>';
+            html += '<div><strong>Kategorie:</strong> ' + (catNames[e.category] || 'Event') + '</div>';
+            if (isGame && e.game) html += '<div><strong>Spiel:</strong> ' + esc(e.game) + '</div>';
+            html += '<div><strong>Location:</strong> ' + esc(loc) + '</div>';
+            html += '<div><strong>Max. Gaeste:</strong> ' + e.capacity + '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            /* Admin Finish Game Card (only for games) */
+            if (isGame) {
+                html += '<div class="sidebar-card">';
+                html += '<h4>🔐 Spiel beenden (Admin)</h4>';
+                html += '<div id="adminFinishLogin">';
+                html += '<div class="admin-pw-inline">';
+                html += '<input type="password" id="fgPassword" placeholder="Admin-Passwort">';
+                html += '<button id="fgLoginBtn">OK</button>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div id="adminFinishPanel" style="display:none">';
+                html += renderFinishGameForm(e);
+                html += '</div>';
+                html += '</div>';
+            }
+
+            html += '</div>'; // end detail-sidebar
+            html += '</div>'; // end detail-grid
+            html += '</div>'; // end detail-page
+
+            document.getElementById("pageContent").innerHTML = html;
+
+            /* --- POST-RENDER: Animate capacity bar --- */
+            setTimeout(function () {
+                var fill = document.getElementById("capFill");
+                if (fill) fill.style.width = pct + "%";
+            }, 500);
+
+            /* --- BIND: Join button --- */
+            var joinBtn = document.getElementById("joinBtn");
+            if (joinBtn) {
+                joinBtn.addEventListener("click", function () { openJoinPopup(); });
+            }
+
+            /* --- BIND: Calendar button --- */
+            var calBtn = document.getElementById("calBtn");
+            if (calBtn) {
+                calBtn.addEventListener("click", function (ev) {
+                    ev.preventDefault();
+                    downloadICS(e.title, e.date, e.time, loc);
+                });
+            }
+
+            /* --- BIND: Admin finish game --- */
+            var fgLoginBtn = document.getElementById("fgLoginBtn");
+            if (fgLoginBtn) {
+                fgLoginBtn.addEventListener("click", function () {
+                    var pw = document.getElementById("fgPassword").value;
+                    if (pw === ADMIN_PW) {
+                        isAdminOnPage = true;
+                        document.getElementById("adminFinishLogin").style.display = "none";
+                        document.getElementById("adminFinishPanel").style.display = "block";
+                        bindFinishGameForm();
+                    } else {
+                        alert("Falsches Passwort!");
+                    }
+                });
+                document.getElementById("fgPassword").addEventListener("keydown", function (ev) {
+                    if (ev.key === "Enter") fgLoginBtn.click();
+                });
+            }
+
+            /* --- BIND: Pay system --- */
+            bindPaySystem(e);
+
+            /* --- Init reveal animations --- */
+            initReveal();
+        }
+
+        /* ===== PAY SYSTEM ===== */
+        function bindPaySystem(ev) {
+            var PAYPAL_LINK = "https://www.paypal.me/matsmoe32/";
+            var isGame = ev.category === "games";
+            var currentReason = isGame ? "Spielschulden" : "Getraenkekasse";
+            var currentAmount = 10;
+
+            // Reason tags
+            var reasonBtns = document.querySelectorAll("#payReasons .pay-reason-tag");
+            for (var i = 0; i < reasonBtns.length; i++) {
+                reasonBtns[i].addEventListener("click", function () {
+                    for (var j = 0; j < reasonBtns.length; j++) reasonBtns[j].classList.remove("active");
+                    this.classList.add("active");
+                    currentReason = this.getAttribute("data-reason");
+                });
+            }
+
+            // Amount presets
+            var presetBtns = document.querySelectorAll("#payPresets .pay-preset");
+            var amountInput = document.getElementById("payAmount");
+            for (var i = 0; i < presetBtns.length; i++) {
+                presetBtns[i].addEventListener("click", function () {
+                    for (var j = 0; j < presetBtns.length; j++) presetBtns[j].classList.remove("active");
+                    this.classList.add("active");
+                    currentAmount = parseFloat(this.getAttribute("data-amount"));
+                    amountInput.value = currentAmount;
+                });
+            }
+            if (amountInput) {
+                amountInput.addEventListener("input", function () {
+                    currentAmount = parseFloat(this.value) || 0;
+                    for (var j = 0; j < presetBtns.length; j++) {
+                        presetBtns[j].classList.toggle("active", parseFloat(presetBtns[j].getAttribute("data-amount")) === currentAmount);
+                    }
+                });
+            }
+
+            // PayPal button
+            var paypalBtn = document.getElementById("payPaypalBtn");
+            if (paypalBtn) {
+                paypalBtn.addEventListener("click", function () {
+                    var name = (document.getElementById("payName").value || "").trim();
+                    var note = (document.getElementById("payNote").value || "").trim();
+                    var amount = parseFloat(amountInput.value) || 0;
+                    if (amount < 0.5) { alert("Mindestbetrag: 0,50 EUR"); return; }
+                    if (!name) { alert("Bitte Namen eingeben!"); return; }
+
+                    paypalBtn.disabled = true;
+                    paypalBtn.textContent = "Wird gespeichert...";
+
+                    db.collection("payments").add({
+                        eventId: ev.id,
+                        eventTitle: ev.title || "Event",
+                        name: name,
+                        amount: amount,
+                        reason: currentReason,
+                        note: note,
+                        method: "paypal",
+                        status: "wartet auf Zahlung",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(function () {
+                        var paypalURL = PAYPAL_LINK + amount.toFixed(2) + "EUR";
+                        document.getElementById("payFormWrap").style.display = "none";
+                        var s = document.getElementById("paySuccess");
+                        s.classList.add("show");
+                        document.getElementById("paySuccessIcon").textContent = "💳";
+                        document.getElementById("paySuccessTitle").textContent = "Weiterleitung zu PayPal...";
+                        document.getElementById("paySuccessText").innerHTML =
+                            "Du wirst zu <strong>PayPal</strong> weitergeleitet um <strong>" +
+                            amount.toFixed(2).replace(".", ",") + " EUR</strong> zu senden.<br><br>" +
+                            "Falls sich nichts oeffnet: <a href='" + paypalURL + "' target='_blank' class='pay-success-link'>Hier klicken</a>";
+                        setTimeout(function () { window.open(paypalURL, "_blank"); }, 1200);
+                        launchConfetti();
+                    }).catch(function (err) {
+                        console.error("Pay error:", err);
+                        alert("Fehler beim Speichern!");
+                        paypalBtn.disabled = false;
+                        paypalBtn.textContent = "💳 Per PayPal senden";
+                    });
+                });
+            }
+
+            // Bar button
+            var barBtn = document.getElementById("payBarBtn");
+            if (barBtn) {
+                barBtn.addEventListener("click", function () {
+                    var name = (document.getElementById("payName").value || "").trim();
+                    var note = (document.getElementById("payNote").value || "").trim();
+                    var amount = parseFloat(amountInput.value) || 0;
+                    if (amount < 0.5) { alert("Mindestbetrag: 0,50 EUR"); return; }
+                    if (!name) { alert("Bitte Namen eingeben!"); return; }
+
+                    barBtn.disabled = true;
+                    barBtn.textContent = "Wird gespeichert...";
+
+                    db.collection("payments").add({
+                        eventId: ev.id,
+                        eventTitle: ev.title || "Event",
+                        name: name,
+                        amount: amount,
+                        reason: currentReason,
+                        note: note,
+                        method: "bar",
+                        status: "bar vor Ort",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(function () {
+                        document.getElementById("payFormWrap").style.display = "none";
+                        var s = document.getElementById("paySuccess");
+                        s.classList.add("show");
+                        document.getElementById("paySuccessIcon").textContent = "🏠";
+                        document.getElementById("paySuccessTitle").textContent = "Notiert!";
+                        document.getElementById("paySuccessText").innerHTML =
+                            "<strong>" + esc(name) + "</strong> zahlt <strong>" +
+                            amount.toFixed(2).replace(".", ",") + " EUR</strong> bar vor Ort.<br>Grund: " + esc(currentReason);
+                        launchConfetti();
+                    }).catch(function (err) {
+                        console.error("Pay error:", err);
+                        alert("Fehler beim Speichern!");
+                        barBtn.disabled = false;
+                        barBtn.textContent = "🏠 Bar vor Ort bezahlen";
+                    });
+                });
+            }
+        }
+
+        /* ===== FINISH GAME FORM (render) ===== */
+        function renderFinishGameForm(e) {
+            var gameName = e.game || "";
+            var special = SPECIAL_GAMES[gameName];
+            var attendees = e.attendees || [];
+            var html = "";
+
+            if (attendees.length === 0) {
+                return '<p style="font-size:.85rem;color:var(--color-gray)">Keine Teilnehmer angemeldet.</p>';
+            }
+
+            if (special) {
+                html += '<p style="font-size:.8rem;color:var(--color-text-light);margin-bottom:1rem">Trage die Ergebnisse fuer jeden Spieler ein:</p>';
+                for (var i = 0; i < attendees.length; i++) {
+                    html += '<div class="fg-player-row" data-player="' + esc(attendees[i].name) + '">';
+                    html += '<div class="fg-player-name">' + esc(attendees[i].name) + '</div>';
+                    for (var f = 0; f < special.fields.length; f++) {
+                        html += '<div class="fg-field">';
+                        html += '<label>' + special.labels[f] + '</label>';
+                        html += '<input type="number" class="fg-input" data-field="' + special.fields[f] + '" data-player="' + esc(attendees[i].name) + '" step="0.01" placeholder="0">';
+                        html += '</div>';
+                    }
+                    html += '</div>';
+                }
+            } else {
+                html += '<div class="fg-field"><label>Gewinner</label>';
+                html += '<select id="fgWinnerSelect">';
+                html += '<option value="">Waehle den Gewinner...</option>';
+                for (var i = 0; i < attendees.length; i++) {
+                    html += '<option value="' + esc(attendees[i].name) + '">' + esc(attendees[i].name) + '</option>';
+                }
+                html += '</select></div>';
+            }
+
+            html += '<button class="fg-submit" id="fgSubmitBtn">🏆 Spiel beenden &amp; Stats speichern</button>';
+            html += '<div class="fg-feedback" id="fgFeedback">Ergebnis gespeichert!</div>';
+            return html;
+        }
+
+        /* ===== FINISH GAME FORM (bind) ===== */
+        function bindFinishGameForm() {
+            var submitBtn = document.getElementById("fgSubmitBtn");
+            if (!submitBtn) return;
+
+            submitBtn.addEventListener("click", function () {
+                var e = currentEvent;
+                var gameName = e.game || e.title;
+                var special = SPECIAL_GAMES[gameName];
+                var emoji = GAME_EMOJIS[gameName] || "🎲";
+
+                var statData = {
+                    game: gameName,
+                    emoji: emoji,
+                    date: e.date,
+                    eventId: e.id,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                if (special) {
+                    var inputs = document.querySelectorAll(".fg-input");
+                    var playerData = {};
+                    for (var i = 0; i < inputs.length; i++) {
+                        var pName = inputs[i].getAttribute("data-player");
+                        var field = inputs[i].getAttribute("data-field");
+                        var val = parseFloat(inputs[i].value) || 0;
+                        if (!playerData[pName]) playerData[pName] = { name: pName };
+                        playerData[pName][field] = val;
+                    }
+                    var playerArr = [];
+                    for (var k in playerData) {
+                        if (playerData.hasOwnProperty(k)) playerArr.push(playerData[k]);
+                    }
+
+                    var winner = "";
+                    if (special.winLogic === "maxProfit") {
+                        var maxP = -Infinity;
+                        for (var i = 0; i < playerArr.length; i++) {
+                            var profit = (playerArr[i].cashOut || 0) - (playerArr[i].buyIn || 0);
+                            playerArr[i].profit = profit;
+                            if (profit > maxP) { maxP = profit; winner = playerArr[i].name; }
+                        }
+                    } else if (special.winLogic === "maxPoints") {
+                        var maxP = -Infinity;
+                        for (var i = 0; i < playerArr.length; i++) {
+                            var pts = playerArr[i].points || playerArr[i].money || 0;
+                            if (pts > maxP) { maxP = pts; winner = playerArr[i].name; }
+                        }
+                    } else if (special.winLogic === "minPoints") {
+                        var minP = Infinity;
+                        for (var i = 0; i < playerArr.length; i++) {
+                            var pts = playerArr[i].points || 0;
+                            if (pts < minP) { minP = pts; winner = playerArr[i].name; }
+                        }
+                    }
+
+                    statData.winner = winner;
+                    statData.players = playerArr;
+                    statData.gameType = special.winLogic;
+                } else {
+                    var sel = document.getElementById("fgWinnerSelect");
+                    if (!sel || !sel.value) { alert("Bitte Gewinner waehlen!"); return; }
+                    statData.winner = sel.value;
+                }
+
                 submitBtn.disabled = true;
-                submitBtn.textContent = "Gespeichert! ✓";
-                submitBtn.style.background = "#2D6A4F";
-                launchConfetti();
-            }).catch(function(err){ console.error("Error:", err); alert("Fehler beim Speichern!"); });
-        });
-    }
+                submitBtn.textContent = "Wird gespeichert...";
 
-    // ========== JOIN POPUP ==========
-    function openJoinPopup(){
-        var e = currentEvent;
-        document.getElementById("joinEventName").textContent = e.emoji + " " + e.title;
-        document.getElementById("joinName").value = "";
-        document.getElementById("joinPersons").value = "1";
-        document.getElementById("joinError").style.display = "none";
-        document.getElementById("joinOverlay").classList.add("active");
-        document.body.style.overflow = "hidden";
-        setTimeout(function(){ document.getElementById("joinName").focus(); }, 200);
-    }
+                db.collection("stats").add(statData).then(function () {
+                    var fb = document.getElementById("fgFeedback");
+                    fb.classList.add("show");
+                    submitBtn.textContent = "Gespeichert! ✓";
+                    submitBtn.style.background = "#2D6A4F";
+                    launchConfetti();
+                }).catch(function (err) {
+                    console.error("Error saving stats:", err);
+                    alert("Fehler beim Speichern!");
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "🏆 Spiel beenden & Stats speichern";
+                });
+            });
+        }
 
-    document.getElementById("joinCancel").addEventListener("click", function(){
-        document.getElementById("joinOverlay").classList.remove("active");
-        document.body.style.overflow = "";
-    });
-    document.getElementById("joinOverlay").addEventListener("click", function(e){
-        if(e.target === this){ this.classList.remove("active"); document.body.style.overflow = ""; }
-    });
-    document.getElementById("joinConfirm").addEventListener("click", function(){
-        var name = document.getElementById("joinName").value.trim();
-        var persons = parseInt(document.getElementById("joinPersons").value) || 1;
-        var errEl = document.getElementById("joinError");
-        var e = currentEvent;
-        if(!name){ errEl.textContent="Bitte gib deinen Namen ein!"; errEl.style.display="block"; return; }
-        if(persons<1||persons>10){ errEl.textContent="Anzahl zwischen 1 und 10!"; errEl.style.display="block"; return; }
-        var attendees = e.attendees || [];
-        for(var i = 0; i < attendees.length; i++){
-            if(attendees[i].name.toLowerCase() === name.toLowerCase()){
-                errEl.textContent = "Du bist bereits angemeldet!"; errEl.style.display = "block"; return;
-            }
+        /* ===== JOIN POPUP ===== */
+        function openJoinPopup() {
+            var e = currentEvent;
+            document.getElementById("joinEventName").textContent = e.emoji + " " + e.title;
+            document.getElementById("joinName").value = "";
+            document.getElementById("joinPersons").value = "1";
+            document.getElementById("joinError").style.display = "none";
+            document.getElementById("joinOverlay").classList.add("active");
+            document.body.style.overflow = "hidden";
+            setTimeout(function () { document.getElementById("joinName").focus(); }, 200);
         }
-        var currentCount = countAttending(e);
-        if(currentCount + persons > e.capacity){
-            errEl.textContent = "Nicht genug Plaetze! Noch " + (e.capacity - currentCount) + " frei.";
-            errEl.style.display = "block"; return;
-        }
-        attendees.push({name: name, persons: persons});
-        var newAttending = 0;
-        for(var i=0;i<attendees.length;i++) newAttending += (attendees[i].persons||1);
-        db.collection("events").doc(eventId).update({
-            attendees: attendees, attending: newAttending
-        }).then(function(){
-            markJoined(eventId, name);
+
+        document.getElementById("joinCancel").addEventListener("click", function () {
             document.getElementById("joinOverlay").classList.remove("active");
             document.body.style.overflow = "";
-            launchConfetti();
-            loadEvent();
-        }).catch(function(err){
-            errEl.textContent = "Fehler!"; errEl.style.display = "block";
         });
-    });
 
-    // ========== HELPERS ==========
-    function countAttending(ev){
-        var t=0; var a=ev.attendees||[];
-        for(var i=0;i<a.length;i++) t+=(a[i].persons||1);
-        return t;
-    }
-    function hasJoined(eid){
-        var j=JSON.parse(localStorage.getItem("pocci4_joined")||"{}");
-        return !!j[eid];
-    }
-    function markJoined(eid,name){
-        var j=JSON.parse(localStorage.getItem("pocci4_joined")||"{}");
-        j[eid]=name;
-        localStorage.setItem("pocci4_joined",JSON.stringify(j));
-    }
-    function formatDate(ds){
-        if(!ds) return "";
-        var p=ds.split("-");
-        if(p.length===3) return parseInt(p[2])+". "+monthNames[parseInt(p[1])-1]+" "+p[0];
-        return ds;
-    }
-    function esc(s){
-        if(!s) return "";
-        return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-    }
+        document.getElementById("joinOverlay").addEventListener("click", function (e) {
+            if (e.target === this) {
+                this.classList.remove("active");
+                document.body.style.overflow = "";
+            }
+        });
 
-    // ICS
-    window.downloadICS = function(title,date,time){
-        var h=time.split(":")[0], m=time.split(":")[1]||"00";
-        var s=date.replace(/-/g,"")+"T"+h+m+"00";
-        var eH=String(Math.min(parseInt(h)+4,23)).padStart(2,"0");
-        var en=date.replace(/-/g,"")+"T"+eH+m+"00";
-        var ics="BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:"+s+"\nDTEND:"+en+"\nSUMMARY:"+title+"\nLOCATION:Poccistrasse Muenchen\nEND:VEVENT\nEND:VCALENDAR";
-        var a=document.createElement("a");
-        a.href=URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));
-        a.download=title.replace(/[^a-zA-Z0-9]/g,"_")+".ics";
-        a.click();
-    };
+        document.getElementById("joinConfirm").addEventListener("click", function () {
+            var name = document.getElementById("joinName").value.trim();
+            var persons = parseInt(document.getElementById("joinPersons").value) || 1;
+            var errEl = document.getElementById("joinError");
+            var e = currentEvent;
 
-    // CONFETTI
-    function launchConfetti(){
-        var c=document.getElementById("confettiContainer");
-        var colors=["#C03A2B","#E8501E","#C4A882","#457B9D","#FF6B6B","#FFD93D","#6BCB77"];
-        for(var i=0;i<50;i++){
-            var p=document.createElement("div");
-            var sz=Math.random()*8+5;
-            var isCir=Math.random()>.5;
-            p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"3px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.3)+"s;pointer-events:none;";
-            c.appendChild(p);
-            (function(el){setTimeout(function(){el.remove();},4000);})(p);
-        }
-    }
-    var cs=document.createElement("style");
-    cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";
-    document.head.appendChild(cs);
+            // Validation
+            if (!name) {
+                errEl.textContent = "Bitte gib deinen Namen ein!";
+                errEl.style.display = "block";
+                return;
+            }
+            if (persons < 1 || persons > 10) {
+                errEl.textContent = "Anzahl zwischen 1 und 10!";
+                errEl.style.display = "block";
+                return;
+            }
 
-    // REVEAL
-    function initReveal(){
-        var ro = new IntersectionObserver(function(entries){
-            for(var i=0;i<entries.length;i++){
-                if(entries[i].isIntersecting){
-                    (function(el,idx){setTimeout(function(){el.classList.add("visible");},idx*80);})(entries[i].target,i);
-                    ro.unobserve(entries[i].target);
+            // Duplicate check
+            var attendees = e.attendees || [];
+            for (var i = 0; i < attendees.length; i++) {
+                if (attendees[i].name.toLowerCase() === name.toLowerCase()) {
+                    errEl.textContent = "Du bist bereits angemeldet!";
+                    errEl.style.display = "block";
+                    return;
                 }
             }
-        },{threshold:.1});
-        var revEls = document.querySelectorAll(".reveal");
-        for(var i=0;i<revEls.length;i++) ro.observe(revEls[i]);
-    }
 
-    // PARALLAX
-    window.addEventListener("scroll", function(){
-        var shapes = document.querySelectorAll(".bg-shape");
-        for(var i=0;i<shapes.length;i++){
-            shapes[i].style.transform = "translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";
+            // Capacity check
+            var currentCount = countAttending(e);
+            if (currentCount + persons > e.capacity) {
+                errEl.textContent = "Nicht genug Plaetze! Noch " + (e.capacity - currentCount) + " frei.";
+                errEl.style.display = "block";
+                return;
+            }
+
+            // Disable button
+            var confirmBtn = document.getElementById("joinConfirm");
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = "Wird angemeldet...";
+
+            // Add to attendees
+            attendees.push({ name: name, persons: persons });
+            var newAttending = 0;
+            for (var i = 0; i < attendees.length; i++) newAttending += (attendees[i].persons || 1);
+
+            // Update Firestore
+            db.collection("events").doc(eventId).update({
+                attendees: attendees,
+                attending: newAttending
+            }).then(function () {
+                // Also save to event_signups collection
+                return db.collection("event_signups").add({
+                    eventId: eventId,
+                    name: name,
+                    persons: persons,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }).then(function () {
+                markJoined(eventId, name);
+                document.getElementById("joinOverlay").classList.remove("active");
+                document.body.style.overflow = "";
+                launchConfetti();
+                loadEvent(); // Reload the page content
+            }).catch(function (err) {
+                console.error("Join error:", err);
+                errEl.textContent = "Fehler beim Anmelden! Bitte nochmal versuchen.";
+                errEl.style.display = "block";
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = "Anmelden! 🎉";
+            });
+        });
+
+        /* ===== HELPER FUNCTIONS ===== */
+        function countAttending(ev) {
+            var total = 0;
+            var a = ev.attendees || [];
+            for (var i = 0; i < a.length; i++) total += (a[i].persons || 1);
+            return total;
         }
-    });
 
-})();
-</script>
+        function hasJoined(eid) {
+            var j = JSON.parse(localStorage.getItem("pocci4_joined") || "{}");
+            return !!j[eid];
+        }
+
+        function markJoined(eid, name) {
+            var j = JSON.parse(localStorage.getItem("pocci4_joined") || "{}");
+            j[eid] = name;
+            localStorage.setItem("pocci4_joined", JSON.stringify(j));
+        }
+
+        function formatDate(ds) {
+            if (!ds) return "";
+            var p = ds.split("-");
+            if (p.length === 3) return parseInt(p[2]) + ". " + monthNames[parseInt(p[1]) - 1] + " " + p[0];
+            return ds;
+        }
+
+        function esc(s) {
+            if (!s) return "";
+            return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+
+        /* ===== ICS CALENDAR DOWNLOAD ===== */
+        function downloadICS(title, date, time, location) {
+            var h = time.split(":")[0];
+            var m = time.split(":")[1] || "00";
+            var dtStart = date.replace(/-/g, "") + "T" + h + m + "00";
+            var endHour = String(Math.min(parseInt(h) + 4, 23)).padStart(2, "0");
+            var dtEnd = date.replace(/-/g, "") + "T" + endHour + m + "00";
+
+            var ics = [
+                "BEGIN:VCALENDAR",
+                "VERSION:2.0",
+                "PRODID:-//pocci4//Event//DE",
+                "BEGIN:VEVENT",
+                "DTSTART:" + dtStart,
+                "DTEND:" + dtEnd,
+                "SUMMARY:" + title,
+                "LOCATION:" + (location || DEFAULT_LOCATION),
+                "DESCRIPTION:pocci4 Event - " + title,
+                "END:VEVENT",
+                "END:VCALENDAR"
+            ].join("\r\n");
+
+            var blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+            var a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = title.replace(/[^a-zA-Z0-9]/g, "_") + ".ics";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        /* ===== CONFETTI ANIMATION ===== */
+        function launchConfetti() {
+            var container = document.getElementById("confettiContainer");
+            var colors = ["#C03A2B", "#E8501E", "#C4A882", "#457B9D", "#FF6B6B", "#FFD93D", "#6BCB77"];
+
+            for (var i = 0; i < 50; i++) {
+                var particle = document.createElement("div");
+                var size = Math.random() * 8 + 5;
+                var isCircle = Math.random() > 0.5;
+                var color = colors[Math.floor(Math.random() * colors.length)];
+                var duration = (Math.random() * 2 + 2);
+                var delay = (Math.random() * 0.3);
+
+                particle.style.cssText =
+                    "position:absolute;" +
+                    "left:" + (Math.random() * 100) + "%;" +
+                    "top:-20px;" +
+                    "width:" + size + "px;" +
+                    "height:" + (isCircle ? size : size * 2.5) + "px;" +
+                    "background:" + color + ";" +
+                    "border-radius:" + (isCircle ? "50%" : "3px") + ";" +
+                    "opacity:1;" +
+                    "animation:cFall " + duration + "s ease-out forwards;" +
+                    "animation-delay:" + delay + "s;" +
+                    "pointer-events:none;";
+
+                container.appendChild(particle);
+
+                (function (el) {
+                    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 4000);
+                })(particle);
+            }
+        }
+
+        // Add confetti keyframes
+        var confettiStyle = document.createElement("style");
+        confettiStyle.textContent = "@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";
+        document.head.appendChild(confettiStyle);
+
+        /* ===== REVEAL ANIMATION (IntersectionObserver) ===== */
+        function initReveal() {
+            var observer = new IntersectionObserver(function (entries) {
+                for (var i = 0; i < entries.length; i++) {
+                    if (entries[i].isIntersecting) {
+                        (function (el, idx) {
+                            setTimeout(function () { el.classList.add("visible"); }, idx * 80);
+                        })(entries[i].target, i);
+                        observer.unobserve(entries[i].target);
+                    }
+                }
+            }, { threshold: 0.1 });
+
+            var revealEls = document.querySelectorAll(".reveal");
+            for (var i = 0; i < revealEls.length; i++) {
+                observer.observe(revealEls[i]);
+            }
+        }
+
+        /* ===== PARALLAX ON BACKGROUND SHAPES ===== */
+        window.addEventListener("scroll", function () {
+            var shapes = document.querySelectorAll(".bg-shape");
+            var scrollY = window.scrollY;
+            for (var i = 0; i < shapes.length; i++) {
+                var yOffset = scrollY * (i + 1) * 0.015;
+                var rotation = scrollY * 0.01 * (i % 2 === 0 ? 1 : -1);
+                shapes[i].style.transform = "translateY(" + yOffset + "px) rotate(" + rotation + "deg)";
+            }
+        });
+
+    })();
+    </script>
 </body>
 </html>
