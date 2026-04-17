@@ -637,12 +637,12 @@
                 var month = monthNames[parseInt(parts[1])-1];
                 var monthF = monthFull[parseInt(parts[1])-1];
                 var year = parts[0];
-                var cat = e.category || "other";
+                var cat = e.category || "other";if(cat==="gamenight")cat="games";if(cat==="dinner")cat="drinks";if(cat==="sport")cat="other";
                 var catName = catNames[cat] || "Event";
                 var loc = e.location || "Poccistrasse 4";
                 if(loc.length > 22) loc = loc.substring(0, 22) + "…";
-                var attending = e.attending || 0;
-                var capacity = e.capacity || 20;
+var attending = e.attending || 0;
+var capacity = e.capacity || e.maxGuests || 20;
                 var pct = Math.round((attending/capacity)*100);
                 var isFull = attending >= capacity;
                 var emoji = e.emoji || "🎉";
