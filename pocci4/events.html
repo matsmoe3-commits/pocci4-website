@@ -26,7 +26,6 @@
         body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden}
         a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
         img{max-width:100%;height:auto;display:block}
-
         .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
         .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
         .bg-shape-1{width:700px;height:500px;background:#E0CEBB;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
@@ -35,13 +34,10 @@
         @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
         @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
         @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
-
-        /* NAV */
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
         .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
         .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
-        .nav-logo{display:flex;align-items:center;z-index:1001}
-        .nav-logo img{height:56px}
+        .nav-logo{display:flex;align-items:center;z-index:1001}.nav-logo img{height:56px}
         .nav-right{display:flex;align-items:center;gap:.5rem}
         .nav-links{display:flex;align-items:center;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
         .nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}
@@ -71,7 +67,6 @@
         .mobile-menu.active .mobile-link:nth-child(7){transition-delay:.4s}
         .mobile-link:hover,.mobile-link.active{color:var(--color-primary)}
         .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
-
         .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4}
         .admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
         .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
@@ -86,6 +81,8 @@
         .admin-modal-btns .btn-modal-cancel{background:var(--color-bg);color:var(--color-text)}
         .admin-modal-btns .btn-modal-submit{background:var(--color-primary);color:#fff}
         .admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
+        .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
+        .section-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
 
         /* HERO */
         .events-hero{padding:calc(var(--nav-height) + 4rem) 2rem 2rem;max-width:var(--container-width);margin:0 auto;text-align:center}
@@ -95,24 +92,21 @@
         .events-hero-sub{font-size:clamp(1rem,2vw,1.15rem);color:var(--color-text-light);max-width:500px;margin:0 auto 2rem;opacity:0;animation:fadeUp .8s ease forwards .6s}
         @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-        /* FILTER TABS */
+        /* FILTERS */
         .filter-bar{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-bottom:3rem;opacity:0;animation:fadeUp .8s ease forwards .8s}
         .filter-tab{padding:8px 20px;border-radius:50px;font-size:.8rem;font-weight:600;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:none;background:var(--color-white);font-family:var(--font-main);box-shadow:0 1px 5px rgba(0,0,0,.04)}
         .filter-tab:hover{color:var(--color-text);background:var(--color-bg-warm)}
         .filter-tab.active{background:var(--color-text);color:var(--color-white);box-shadow:0 4px 15px rgba(0,0,0,.1)}
         .events-count{text-align:center;font-size:.8rem;color:var(--color-gray);margin-bottom:2rem;font-weight:500}
 
-        /* === TICKET GRID === */
-        .ticket-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2rem;max-width:var(--container-width);margin:0 auto;padding:0 2rem var(--section-padding)}
+        /* TICKET GRID */
+        .ticket-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2rem;max-width:var(--container-width);margin:0 auto;padding:0 2rem 4rem}
 
         /* TICKET CARD */
         .tkt{position:relative;cursor:pointer;transition:transform .5s cubic-bezier(.4,0,.2,1),box-shadow .3s ease}
         .tkt:hover{transform:translateY(-10px) rotate(0deg)!important;z-index:10}
-
         .tkt-body{background:var(--color-white);border-radius:22px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.06);border:1px solid var(--color-border);position:relative}
         .tkt:hover .tkt-body{box-shadow:0 25px 60px rgba(0,0,0,.12)}
-
-        /* Top Section */
         .tkt-top{padding:2rem 1.75rem 1.5rem;position:relative;overflow:hidden;min-height:220px}
         .tkt-top::before{content:'';position:absolute;top:-50%;right:-40%;width:300px;height:300px;border-radius:50%;opacity:.06;pointer-events:none}
         .tkt-top.cat-party::before{background:var(--color-primary)}
@@ -120,18 +114,10 @@
         .tkt-top.cat-drinks::before{background:var(--color-sand)}
         .tkt-top.cat-film::before{background:#457B9D}
         .tkt-top.cat-other::before{background:var(--color-gray)}
-        .tkt-top::after{content:'';position:absolute;bottom:-30%;left:-20%;width:200px;height:200px;border-radius:50%;opacity:.04;pointer-events:none}
-        .tkt-top.cat-party::after{background:var(--color-primary-light)}
-        .tkt-top.cat-games::after{background:#333}
-        .tkt-top.cat-drinks::after{background:var(--color-sand)}
-
-        /* Date ribbon */
         .tkt-date{position:absolute;top:1.25rem;right:1.25rem;background:var(--color-text);color:#fff;padding:10px 14px;border-radius:14px;text-align:center;line-height:1;z-index:2;box-shadow:0 4px 15px rgba(0,0,0,.15)}
         .tkt-date-day{font-size:1.6rem;font-weight:900;display:block}
         .tkt-date-month{font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--color-primary-light);margin-top:3px;display:block}
         .tkt-date-year{font-size:.5rem;color:var(--color-gray);display:block;margin-top:1px}
-
-        /* Category + Live */
         .tkt-badges{display:flex;gap:.5rem;align-items:center;margin-bottom:.75rem;flex-wrap:wrap}
         .tkt-cat{display:inline-flex;align-items:center;gap:.3rem;padding:4px 12px;border-radius:50px;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
         .tkt-cat-party{background:rgba(192,58,43,.1);color:var(--color-primary)}
@@ -142,28 +128,38 @@
         .tkt-live{display:inline-flex;align-items:center;gap:.3rem;padding:4px 10px;border-radius:50px;font-size:.58rem;font-weight:700;background:rgba(46,213,115,.1);color:#2D6A4F}
         .tkt-live-dot{width:5px;height:5px;border-radius:50%;background:#2D6A4F;animation:livePulse 1.5s ease-in-out infinite}
         @keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
-
         .tkt-emoji{font-size:3.2rem;margin-bottom:.75rem;display:block;transition:transform .4s ease}
         .tkt:hover .tkt-emoji{transform:scale(1.15) rotate(-5deg)}
-        .tkt-title{font-size:1.35rem;font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:.5rem;color:var(--color-text)}
+        .tkt-title{font-size:1.35rem;font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:.5rem}
         .tkt-desc{font-size:.82rem;color:var(--color-text-light);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:.75rem}
         .tkt-price{display:inline-flex;align-items:center;gap:.3rem;padding:5px 14px;border-radius:50px;font-size:.72rem;font-weight:700}
         .tkt-price-free{background:rgba(46,213,115,.08);color:#2D6A4F}
         .tkt-price-paid{background:rgba(192,58,43,.08);color:var(--color-primary)}
+
+        /* HYPE METER */
+        .tkt-hype{display:flex;align-items:center;gap:.4rem;margin-top:.75rem}
+        .tkt-hype-btn{background:none;border:1.5px solid var(--color-border);border-radius:50px;padding:5px 12px;font-family:var(--font-main);font-size:.72rem;font-weight:700;cursor:pointer;transition:var(--transition-fast);display:flex;align-items:center;gap:.3rem;color:var(--color-text-light)}
+        .tkt-hype-btn:hover{border-color:var(--color-primary);color:var(--color-primary);background:rgba(192,58,43,.04)}
+        .tkt-hype-btn.hyped{border-color:var(--color-primary);background:var(--color-primary);color:#fff;animation:hypePop .4s ease}
+        @keyframes hypePop{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+        .tkt-hype-count{font-size:.7rem;color:var(--color-gray);font-weight:600}
+        .tkt-hype-flames{display:flex;gap:1px}
+        .tkt-hype-flame{font-size:.65rem;animation:flameWiggle 1s ease-in-out infinite}
+        .tkt-hype-flame:nth-child(2){animation-delay:.15s}
+        .tkt-hype-flame:nth-child(3){animation-delay:.3s}
+        .tkt-hype-flame:nth-child(4){animation-delay:.45s}
+        .tkt-hype-flame:nth-child(5){animation-delay:.6s}
+        @keyframes flameWiggle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.1)}}
 
         /* Perforation */
         .tkt-perf{position:relative;height:30px;background:var(--color-white);display:flex;align-items:center;overflow:hidden}
         .tkt-perf::before{content:'';position:absolute;left:-1px;top:50%;width:15px;height:30px;background:var(--color-bg);border-radius:0 15px 15px 0;transform:translateY(-50%)}
         .tkt-perf::after{content:'';position:absolute;right:-1px;top:50%;width:15px;height:30px;background:var(--color-bg);border-radius:15px 0 0 15px;transform:translateY(-50%)}
         .tkt-perf-line{width:100%;border-top:2.5px dashed var(--color-border);margin:0 22px}
-
-        /* Bottom Info */
         .tkt-bottom{padding:1.25rem 1.75rem 1rem;background:var(--color-white);display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
         .tkt-info{display:flex;flex-direction:column}
         .tkt-info-label{font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--color-gray);margin-bottom:.1rem}
         .tkt-info-value{font-size:.82rem;font-weight:700;color:var(--color-text)}
-
-        /* Capacity bar */
         .tkt-cap{grid-column:span 2;margin-top:.4rem}
         .tkt-cap-bar{width:100%;height:6px;background:var(--color-bg-warm);border-radius:10px;overflow:hidden}
         .tkt-cap-fill{height:100%;border-radius:10px;transition:width 1.5s cubic-bezier(.4,0,.2,1)}
@@ -173,17 +169,10 @@
         .tkt-cap-fill.full{background:#C03A2B}
         .tkt-cap-meta{display:flex;justify-content:space-between;margin-top:.35rem;font-size:.65rem}
         .tkt-cap-status{font-weight:600}
-        .tkt-cap-status.open{color:#2D6A4F}
-        .tkt-cap-status.filling{color:#E8501E}
-        .tkt-cap-status.almost{color:#C03A2B}
-        .tkt-cap-status.soldout{color:#C03A2B}
+        .tkt-cap-status.open{color:#2D6A4F}.tkt-cap-status.filling{color:#E8501E}.tkt-cap-status.almost{color:#C03A2B}.tkt-cap-status.soldout{color:#C03A2B}
         .tkt-cap-pct{color:var(--color-gray);font-weight:500}
-
-        /* Barcode */
         .tkt-barcode{display:flex;gap:1.5px;align-items:end;height:28px;opacity:.12;margin-top:.5rem;grid-column:span 2}
         .tkt-barcode span{display:block;width:2px;background:var(--color-text);border-radius:1px}
-
-        /* CTA Footer */
         .tkt-footer{display:grid;grid-template-columns:1fr auto auto;gap:.5rem;padding:1rem 1.75rem;background:var(--color-text);border-radius:0 0 22px 22px;align-items:center}
         .tkt-btn-join{padding:10px 20px;border-radius:50px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:.8rem;font-weight:700;cursor:pointer;transition:var(--transition-fast);display:flex;align-items:center;gap:.3rem}
         .tkt-btn-join:hover{background:var(--color-primary-hover);transform:translateY(-1px);box-shadow:0 4px 15px rgba(192,58,43,.3)}
@@ -192,29 +181,23 @@
         .tkt-btn-cal:hover{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.08)}
         .tkt-btn-detail{padding:10px 16px;border-radius:50px;border:1.5px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.7);font-family:var(--font-main);font-size:.78rem;font-weight:600;cursor:pointer;transition:var(--transition-fast);display:flex;align-items:center;gap:.3rem}
         .tkt-btn-detail:hover{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.06)}
-
-        /* Sold out overlay */
         .tkt-soldout .tkt-top{opacity:.5;filter:grayscale(.3)}
         .tkt-soldout .tkt-footer{background:#444}
-
-        /* Empty state */
-        .events-empty{text-align:center;padding:5rem 2rem;max-width:500px;margin:0 auto}
+        .events-empty{text-align:center;padding:5rem 2rem;max-width:500px;margin:0 auto;grid-column:1/-1}
         .events-empty-emoji{font-size:4rem;margin-bottom:1rem}
         .events-empty-title{font-size:1.5rem;font-weight:800;margin-bottom:.5rem}
-        .events-empty-text{font-size:.9rem;color:var(--color-gray);line-height:1.5}
-
-        /* Loading */
-        .events-loading{text-align:center;padding:4rem 2rem}
+        .events-empty-text{font-size:.9rem;color:var(--color-gray)}
+        .events-loading{text-align:center;padding:4rem 2rem;grid-column:1/-1}
         .loader{width:40px;height:40px;border:3px solid var(--color-border);border-top-color:var(--color-primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
         @keyframes spin{to{transform:rotate(360deg)}}
 
         /* SIGNUP MODAL */
         .signup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
         .signup-overlay.active{display:flex}
-        .signup-modal{background:var(--color-white);border-radius:24px;padding:2.5rem;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.15);position:relative;animation:modalIn .4s ease}
+        .signup-modal{background:var(--color-white);border-radius:24px;padding:2.5rem;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.15);animation:modalIn .4s ease}
         @keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
-        .signup-modal h3{font-size:1.3rem;font-weight:800;margin-bottom:.25rem}
-        .signup-event-name{font-size:.85rem;color:var(--color-primary);font-weight:600;margin-bottom:1.5rem}
+        .signup-modal h3{font-size:1.3rem;font-weight:800;margin-bottom:.25rem;text-align:center}
+        .signup-event-name{font-size:.85rem;color:var(--color-primary);font-weight:600;margin-bottom:1.5rem;text-align:center}
         .signup-field{margin-bottom:1rem}
         .signup-field label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.4rem;display:block}
         .signup-field input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast)}
@@ -230,7 +213,64 @@
         .signup-success-text{font-size:1rem;font-weight:700;margin-bottom:.25rem}
         .signup-success-sub{font-size:.8rem;color:var(--color-gray)}
 
-        /* Confetti */
+        /* === EVENT VORSCHLAGEN === */
+        .suggest-section{max-width:700px;margin:0 auto;padding:0 2rem var(--section-padding)}
+        .suggest-card{background:var(--color-white);border-radius:24px;padding:2.5rem;box-shadow:0 4px 20px rgba(0,0,0,.04);border:1px solid var(--color-border)}
+        .suggest-header{text-align:center;margin-bottom:2rem}
+        .suggest-field{margin-bottom:1.25rem}
+        .suggest-field label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.4rem}
+        .suggest-field input,.suggest-field textarea,.suggest-field select{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast)}
+        .suggest-field input:focus,.suggest-field textarea:focus,.suggest-field select:focus{border-color:var(--color-primary)}
+        .suggest-field textarea{resize:vertical;min-height:80px}
+        .suggest-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .suggest-submit{width:100%;padding:16px;border-radius:50px;border:none;background:var(--color-primary);color:#fff;font-family:var(--font-main);font-size:1rem;font-weight:800;cursor:pointer;transition:var(--transition-smooth)}
+        .suggest-submit:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
+        .suggest-success{display:none;text-align:center;padding:2rem}
+        .suggest-success.show{display:block}
+        .suggest-success-icon{font-size:3rem;margin-bottom:.75rem}
+        .suggest-success-title{font-size:1.2rem;font-weight:800;margin-bottom:.25rem}
+        .suggest-success-text{font-size:.85rem;color:var(--color-gray)}
+
+        /* === DRINKING ROULETTE === */
+        .roulette-section{max-width:800px;margin:0 auto;padding:0 2rem var(--section-padding)}
+        .roulette-header{text-align:center;margin-bottom:2.5rem}
+        .roulette-card{background:var(--color-text);border-radius:28px;padding:3rem 2.5rem;color:#fff;text-align:center;position:relative;overflow:hidden}
+        .roulette-card::before{content:'';position:absolute;top:-40%;right:-25%;width:400px;height:400px;background:radial-gradient(circle,rgba(192,58,43,.2) 0%,transparent 70%);pointer-events:none}
+        .roulette-card::after{content:'';position:absolute;bottom:-30%;left:-20%;width:350px;height:350px;background:radial-gradient(circle,rgba(196,168,130,.1) 0%,transparent 70%);pointer-events:none}
+
+        .wheel-container{position:relative;width:280px;height:280px;margin:0 auto 2rem;z-index:1}
+        .wheel{width:100%;height:100%;border-radius:50%;border:6px solid rgba(255,255,255,.15);position:relative;transition:transform 4s cubic-bezier(.17,.67,.12,.99);background:conic-gradient(#C03A2B 0deg 30deg,#E8501E 30deg 60deg,#F39C12 60deg 90deg,#2D6A4F 90deg 120deg,#457B9D 120deg 150deg,#6c5ce7 150deg 180deg,#C03A2B 180deg 210deg,#E8501E 210deg 240deg,#F39C12 240deg 270deg,#2D6A4F 270deg 300deg,#457B9D 300deg 330deg,#6c5ce7 330deg 360deg)}
+        .wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:var(--color-text);border:4px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:2rem;z-index:2;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+        .wheel-pointer{position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:20px solid var(--color-primary);z-index:3;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+        .wheel-glow{position:absolute;inset:-10px;border-radius:50%;border:2px solid rgba(255,255,255,.05);animation:wheelGlow 2s ease-in-out infinite alternate}
+        @keyframes wheelGlow{0%{box-shadow:0 0 20px rgba(192,58,43,.1)}100%{box-shadow:0 0 40px rgba(192,58,43,.3)}}
+
+        .spin-btn{padding:18px 48px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--color-primary),var(--color-primary-light));color:#fff;font-family:var(--font-main);font-size:1.1rem;font-weight:800;cursor:pointer;transition:var(--transition-smooth);position:relative;z-index:1;margin-bottom:1.5rem}
+        .spin-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(192,58,43,.4)}
+        .spin-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+        .spin-btn.spinning{animation:btnPulse 1s ease-in-out infinite}
+        @keyframes btnPulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+        .challenge-display{position:relative;z-index:1;min-height:120px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+        .challenge-text{font-size:1.4rem;font-weight:800;line-height:1.3;max-width:450px;margin:0 auto;opacity:0;transform:translateY(20px);transition:all .5s ease}
+        .challenge-text.show{opacity:1;transform:translateY(0)}
+        .challenge-emoji{font-size:3rem;margin-bottom:.75rem;opacity:0;transform:scale(0);transition:all .5s cubic-bezier(.68,-.55,.27,1.55)}
+        .challenge-emoji.show{opacity:1;transform:scale(1)}
+        .challenge-category{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:4px 14px;border-radius:50px;margin-top:.75rem;opacity:0;transition:opacity .5s ease .3s}
+        .challenge-category.show{opacity:1}
+        .challenge-category.drink{background:rgba(192,58,43,.2);color:#FF6B6B}
+        .challenge-category.social{background:rgba(139,92,246,.2);color:#A78BFA}
+        .challenge-category.action{background:rgba(46,213,115,.2);color:#2D6A4F}
+        .challenge-category.wild{background:rgba(255,217,61,.2);color:#C9960C}
+
+        .roulette-hint{font-size:.75rem;color:rgba(255,255,255,.3);margin-top:1.5rem;position:relative;z-index:1}
+        .roulette-history{margin-top:2rem;position:relative;z-index:1}
+        .roulette-history-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:.75rem}
+        .roulette-history-list{display:flex;flex-direction:column;gap:.4rem;max-height:200px;overflow-y:auto}
+        .roulette-history-item{padding:.5rem .75rem;border-radius:10px;background:rgba(255,255,255,.06);font-size:.75rem;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:.4rem}
+        .roulette-history-item span:first-child{font-size:1rem}
+
+        /* CONFETTI */
         .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
 
         /* FOOTER */
@@ -245,7 +285,6 @@
         .footer-col a:hover{color:#fff}
         .footer-bottom{padding-top:2rem;text-align:center}
         .footer-bottom p{font-size:.8rem;color:var(--color-gray)}
-
         .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
         .reveal.visible{opacity:1;transform:translateY(0)}
 
@@ -253,19 +292,21 @@
         @media(max-width:768px){
             :root{--nav-height:68px;--section-padding:60px}
             .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
-            .ticket-grid{grid-template-columns:1fr;padding:0 1.25rem var(--section-padding)}
-            .tkt-footer{grid-template-columns:1fr auto}
-            .tkt-btn-detail{display:none}
+            .ticket-grid{grid-template-columns:1fr;padding:0 1.25rem 3rem}
+            .tkt-footer{grid-template-columns:1fr auto}.tkt-btn-detail{display:none}
             .footer-links-grid{grid-template-columns:1fr 1fr}
             .nav-dropdown{display:none!important}
+            .suggest-row{grid-template-columns:1fr}
+            .roulette-card{padding:2rem 1.5rem}
+            .wheel-container{width:240px;height:240px}
+            .challenge-text{font-size:1.1rem}
         }
         @media(max-width:480px){
             .nav-logo img{height:38px}
             .ticket-grid{grid-template-columns:1fr}
             .footer-links-grid{grid-template-columns:1fr}
-            .tkt-top{padding:1.5rem 1.25rem 1.25rem;min-height:180px}
-            .tkt-bottom{padding:1rem 1.25rem .75rem}
-            .tkt-footer{padding:.75rem 1.25rem}
+            .wheel-container{width:200px;height:200px}
+            .wheel-center{width:55px;height:55px;font-size:1.5rem}
         }
     </style>
 </head>
@@ -278,14 +319,7 @@
         <div class="nav-right">
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Home</a>
-                <div class="nav-link-dropdown" id="eventsDropdown">
-                    <a href="events.html" class="nav-link active">Events</a>
-                    <div class="nav-dropdown">
-                        <a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a>
-                        <a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a>
-                        <a href="shisha.html" class="nav-dropdown-item"><span>💨</span> Shisha Lounge</a>
-                    </div>
-                </div>
+                <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link active">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a><a href="shisha.html" class="nav-dropdown-item"><span>💨</span> Shisha Lounge</a></div></div>
                 <a href="shop.html" class="nav-link">Shop</a>
                 <a href="kontakt.html" class="nav-link">Kontakt</a>
             </div>
@@ -309,17 +343,12 @@
     <section class="events-hero">
         <p class="events-hero-overline">ALLE EVENTS</p>
         <h1 class="events-hero-title">Kommende <span>Abende.</span></h1>
-        <p class="events-hero-sub">Meld dich an, sichere dir deinen Platz und sei dabei.</p>
+        <p class="events-hero-sub">Meld dich an, hype dein Event und sei dabei.</p>
     </section>
 
-    <!-- FILTERS -->
     <div class="filter-bar" id="filterBar"></div>
     <div class="events-count" id="eventsCount"></div>
-
-    <!-- TICKET GRID -->
-    <div class="ticket-grid" id="ticketGrid">
-        <div class="events-loading"><div class="loader"></div><p style="color:var(--color-gray);font-size:.85rem">Events werden geladen...</p></div>
-    </div>
+    <div class="ticket-grid" id="ticketGrid"><div class="events-loading"><div class="loader"></div><p style="color:var(--color-gray);font-size:.85rem">Events werden geladen...</p></div></div>
 
     <!-- SIGNUP MODAL -->
     <div class="signup-overlay" id="signupOverlay">
@@ -339,6 +368,60 @@
             </div>
         </div>
     </div>
+
+    <!-- EVENT VORSCHLAGEN -->
+    <section class="suggest-section reveal" id="suggestSection">
+        <div class="suggest-card">
+            <div class="suggest-header">
+                <p class="section-overline">DEINE IDEE</p>
+                <h2 class="section-title">Event vorschlagen.</h2>
+                <p style="font-size:.9rem;color:var(--color-text-light);margin-top:.5rem">Du hast eine geile Idee? Schlag ein Event vor und wir schauen was geht!</p>
+            </div>
+            <div id="suggestFormWrap">
+                <div class="suggest-field"><label>Dein Name</label><input type="text" id="suggestName" placeholder="Wer bist du?"></div>
+                <div class="suggest-field"><label>Event-Titel</label><input type="text" id="suggestTitle" placeholder="z.B. Poker Nacht, Karaoke, Grillen..."></div>
+                <div class="suggest-row">
+                    <div class="suggest-field"><label>Kategorie</label><select id="suggestCat"><option value="party">🎉 Party</option><option value="games">🎮 Spieleabend</option><option value="drinks">🍹 Trinkabend</option><option value="film">🎬 Filmabend</option><option value="other">✨ Sonstiges</option></select></div>
+                    <div class="suggest-field"><label>Wunschdatum (optional)</label><input type="date" id="suggestDate"></div>
+                </div>
+                <div class="suggest-field"><label>Beschreibung</label><textarea id="suggestDesc" placeholder="Was stellst du dir vor? Was braucht man? Wie viele Leute?"></textarea></div>
+                <button class="suggest-submit" id="suggestSubmit">🗳️ Event vorschlagen</button>
+            </div>
+            <div class="suggest-success" id="suggestSuccess">
+                <div class="suggest-success-icon">🗳️</div>
+                <div class="suggest-success-title">Vorschlag eingereicht!</div>
+                <div class="suggest-success-text">Die Crew schaut sich deinen Vorschlag an. Stay tuned!</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DRINKING ROULETTE -->
+    <section class="roulette-section reveal" id="rouletteSection">
+        <div class="roulette-header">
+            <p class="section-overline">PARTY GAME</p>
+            <h2 class="section-title">🎲 Drinking Roulette.</h2>
+            <p style="font-size:.9rem;color:var(--color-text-light);margin-top:.5rem">Dreh das Rad. Tu was es sagt. Keine Ausreden.</p>
+        </div>
+        <div class="roulette-card">
+            <div class="wheel-container">
+                <div class="wheel-glow"></div>
+                <div class="wheel-pointer"></div>
+                <div class="wheel" id="wheel"></div>
+                <div class="wheel-center">🎲</div>
+            </div>
+            <button class="spin-btn" id="spinBtn">🎰 DREHEN!</button>
+            <div class="challenge-display" id="challengeDisplay">
+                <div class="challenge-emoji" id="challengeEmoji"></div>
+                <div class="challenge-text" id="challengeText">Dreh das Rad und finde dein Schicksal...</div>
+                <div class="challenge-category" id="challengeCat"></div>
+            </div>
+            <p class="roulette-hint">💀 Wer sich weigert trinkt doppelt.</p>
+            <div class="roulette-history" id="rouletteHistory" style="display:none">
+                <div class="roulette-history-title">Letzte Challenges</div>
+                <div class="roulette-history-list" id="historyList"></div>
+            </div>
+        </div>
+    </section>
 
     <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shisha.html">Shisha</a><a href="shop.html">Shop</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a><a href="shisha.html">Shisha Lounge</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 – Mit Liebe aus der Poccistrasse.</p></div></div></footer>
 
@@ -369,246 +452,248 @@
         var monthFull=["Januar","Februar","Maerz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
         var dayNames=["So","Mo","Di","Mi","Do","Fr","Sa"];
 
-        // LOAD EVENTS
         var today=new Date().toISOString().split("T")[0];
         db.collection("events").where("date",">=",today).orderBy("date","asc").get().then(function(snap){
             snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allEvents.push(d);});
-            renderFilters();
-            renderTickets(allEvents);
+            renderFilters();renderTickets(allEvents);
         }).catch(function(err){
             console.error(err);
-            document.getElementById("ticketGrid").innerHTML='<div class="events-empty"><div class="events-empty-emoji">😵</div><div class="events-empty-title">Fehler beim Laden</div><div class="events-empty-text">Bitte versuch es spaeter nochmal.</div></div>';
+            document.getElementById("ticketGrid").innerHTML='<div class="events-empty"><div class="events-empty-emoji">😵</div><div class="events-empty-title">Fehler</div><div class="events-empty-text">Events konnten nicht geladen werden.</div></div>';
         });
 
-        // FILTERS
         function renderFilters(){
-            var cats=["all"];
-            for(var i=0;i<allEvents.length;i++){var c=allEvents[i].category||"other";if(cats.indexOf(c)===-1)cats.push(c);}
+            var cats=["all"];for(var i=0;i<allEvents.length;i++){var c=allEvents[i].category||"other";if(cats.indexOf(c)===-1)cats.push(c);}
             var html='<button class="filter-tab active" data-cat="all">🎯 Alle</button>';
             var catEmojis={party:"🎉",games:"🎮",drinks:"🍹",film:"🎬",other:"📌"};
-            for(var i=1;i<cats.length;i++){
-                html+='<button class="filter-tab" data-cat="'+cats[i]+'">'+(catEmojis[cats[i]]||"📌")+' '+(catNames[cats[i]]||cats[i])+'</button>';
-            }
+            for(var i=1;i<cats.length;i++){html+='<button class="filter-tab" data-cat="'+cats[i]+'">'+(catEmojis[cats[i]]||"📌")+' '+(catNames[cats[i]]||cats[i])+'</button>';}
             document.getElementById("filterBar").innerHTML=html;
-            document.querySelectorAll(".filter-tab").forEach(function(tab){
-                tab.addEventListener("click",function(){
-                    activeFilter=this.getAttribute("data-cat");
-                    document.querySelectorAll(".filter-tab").forEach(function(t){t.classList.remove("active");});
-                    this.classList.add("active");
-                    var filtered=activeFilter==="all"?allEvents:allEvents.filter(function(e){return(e.category||"other")===activeFilter;});
-                    renderTickets(filtered);
-                });
-            });
+            document.querySelectorAll(".filter-tab").forEach(function(tab){tab.addEventListener("click",function(){activeFilter=this.getAttribute("data-cat");document.querySelectorAll(".filter-tab").forEach(function(t){t.classList.remove("active");});this.classList.add("active");var filtered=activeFilter==="all"?allEvents:allEvents.filter(function(e){return(e.category||"other")===activeFilter;});renderTickets(filtered);});});
         }
 
-        // RENDER TICKETS
         function renderTickets(events){
-            if(events.length===0){
-                document.getElementById("ticketGrid").innerHTML='<div class="events-empty" style="grid-column:1/-1"><div class="events-empty-emoji">🎫</div><div class="events-empty-title">Keine Events gefunden</div><div class="events-empty-text">Aktuell sind keine Events in dieser Kategorie geplant.</div></div>';
-                document.getElementById("eventsCount").textContent="";
-                return;
-            }
-            document.getElementById("eventsCount").textContent=events.length+" Event"+(events.length!==1?"s":"")+" gefunden";
-
+            if(events.length===0){document.getElementById("ticketGrid").innerHTML='<div class="events-empty"><div class="events-empty-emoji">🎫</div><div class="events-empty-title">Keine Events</div><div class="events-empty-text">Aktuell nichts geplant. Schlag eins vor!</div></div>';document.getElementById("eventsCount").textContent="";return;}
+            document.getElementById("eventsCount").textContent=events.length+" Event"+(events.length!==1?"s":"");
             var html="";
             for(var i=0;i<events.length;i++){
-                var e=events[i];
-                var parts=e.date.split("-");
-                var day=parseInt(parts[2]);
-                var monthIdx=parseInt(parts[1])-1;
-                var month=monthNames[monthIdx];
-                var monthF=monthFull[monthIdx];
-                var year=parts[0];
-                var dateObj=new Date(parseInt(parts[0]),monthIdx,day);
-                var dayName=dayNames[dateObj.getDay()];
-                var cat=e.category||"other";
-                var catName=catNames[cat]||"Event";
-                var loc=e.location||"Poccistrasse 4";
-                if(loc.length>25)loc=loc.substring(0,25)+"…";
-                var attending=e.attending||0;
-                var capacity=e.capacity||20;
-                var pct=Math.round((attending/capacity)*100);
-                var isFull=attending>=capacity;
-                var emoji=e.emoji||"🎉";
-                var title=e.title||e.name||"Event";
-                var desc=e.desc||e.description||"";
-                if(desc.length>80)desc=desc.substring(0,80)+"…";
-                var price=e.price||0;
-                var time=e.time||"20:00";
-                var rotation=(Math.random()-0.5)*2.5;
+                var e=events[i];var parts=e.date.split("-");var day=parseInt(parts[2]);var monthIdx=parseInt(parts[1])-1;var month=monthNames[monthIdx];var monthF=monthFull[monthIdx];var year=parts[0];
+                var dateObj=new Date(parseInt(parts[0]),monthIdx,day);var dayName=dayNames[dateObj.getDay()];
+                var cat=e.category||"other";var loc=e.location||"Poccistrasse 4";if(loc.length>25)loc=loc.substring(0,25)+"…";
+                var attending=e.attending||0;var capacity=e.capacity||20;var pct=Math.round((attending/capacity)*100);var isFull=attending>=capacity;
+                var emoji=e.emoji||"🎉";var title=e.title||e.name||"Event";var desc=e.desc||e.description||"";if(desc.length>80)desc=desc.substring(0,80)+"…";
+                var price=e.price||0;var time=e.time||"20:00";var rotation=(Math.random()-0.5)*2.5;
+                var hypeCount=e.hype||0;var isHyped=getHyped(e._id);
 
-                // Capacity status
                 var capClass,capText;
-                if(isFull){capClass="soldout";capText="🔴 Ausgebucht";}
-                else if(pct>=80){capClass="almost";capText="🟠 Fast voll";}
-                else if(pct>=40){capClass="filling";capText="🟡 Fuellt sich";}
-                else{capClass="open";capText="🟢 Verfuegbar";}
-
+                if(isFull){capClass="soldout";capText="🔴 Ausgebucht";}else if(pct>=80){capClass="almost";capText="🟠 Fast voll";}else if(pct>=40){capClass="filling";capText="🟡 Fuellt sich";}else{capClass="open";capText="🟢 Verfuegbar";}
                 var fillClass=pct>=90?"full":pct>=70?"high":pct>=40?"mid":"low";
+                var now=new Date();now.setHours(0,0,0,0);var diff=Math.ceil((dateObj-now)/(1000*60*60*24));
+                var liveText=diff===0?"Heute!":diff===1?"Morgen":"In "+diff+" Tagen";
 
-                // Days until
-                var now=new Date();now.setHours(0,0,0,0);
-                var diff=Math.ceil((dateObj-now)/(1000*60*60*24));
-                var liveText=diff===0?"Heute!":diff===1?"Morgen":diff<=7?"In "+diff+" Tagen":"In "+diff+" Tagen";
+                // Hype flames
+                var flameCount=Math.min(Math.floor(hypeCount/2),5);
+                var flamesHtml="";if(flameCount>0){flamesHtml='<span class="tkt-hype-flames">';for(var f=0;f<flameCount;f++)flamesHtml+='<span class="tkt-hype-flame">🔥</span>';flamesHtml+='</span>';}
 
                 html+='<div class="tkt'+(isFull?' tkt-soldout':'')+' reveal" style="transform:rotate('+rotation.toFixed(1)+'deg)">';
                 html+='<div class="tkt-body">';
-
-                // Date ribbon
                 html+='<div class="tkt-date"><span class="tkt-date-day">'+day+'</span><span class="tkt-date-month">'+month+'</span><span class="tkt-date-year">'+year+'</span></div>';
-
-                // Top
                 html+='<div class="tkt-top cat-'+cat+'">';
-                html+='<div class="tkt-badges">';
-                html+='<span class="tkt-cat tkt-cat-'+cat+'">'+catName+'</span>';
+                html+='<div class="tkt-badges"><span class="tkt-cat tkt-cat-'+cat+'">'+esc(catNames[cat]||"Event")+'</span>';
                 if(diff<=7)html+='<span class="tkt-live"><span class="tkt-live-dot"></span>'+liveText+'</span>';
                 html+='</div>';
                 html+='<span class="tkt-emoji">'+emoji+'</span>';
                 html+='<div class="tkt-title">'+esc(title)+'</div>';
                 if(desc)html+='<div class="tkt-desc">'+esc(desc)+'</div>';
                 html+='<span class="tkt-price '+(price>0?'tkt-price-paid':'tkt-price-free')+'">'+(price>0?'💰 '+formatPrice(price):'✅ Kostenlos')+'</span>';
-                html+='</div>';
-
-                // Perforation
+                // HYPE
+                html+='<div class="tkt-hype"><button class="tkt-hype-btn'+(isHyped?' hyped':'')+'" data-hype-id="'+e._id+'">🔥 '+(isHyped?'Hyped!':'Hype!')+'</button><span class="tkt-hype-count">'+hypeCount+' hyped</span>'+flamesHtml+'</div>';
+                html+='</div>'; // top
                 html+='<div class="tkt-perf"><div class="tkt-perf-line"></div></div>';
-
-                // Bottom
                 html+='<div class="tkt-bottom">';
                 html+='<div class="tkt-info"><span class="tkt-info-label">Datum</span><span class="tkt-info-value">'+dayName+', '+day+'. '+monthF+'</span></div>';
                 html+='<div class="tkt-info"><span class="tkt-info-label">Uhrzeit</span><span class="tkt-info-value">'+time+' Uhr</span></div>';
                 html+='<div class="tkt-info"><span class="tkt-info-label">Location</span><span class="tkt-info-value">📍 '+esc(loc)+'</span></div>';
-                html+='<div class="tkt-info"><span class="tkt-info-label">Gaeste</span><span class="tkt-info-value">'+attending+' / '+capacity+'</span></div>';
-
-                // Cap bar
-                html+='<div class="tkt-cap"><div class="tkt-cap-bar"><div class="tkt-cap-fill '+fillClass+'" style="width:0%" data-pct="'+pct+'"></div></div>';
-                html+='<div class="tkt-cap-meta"><span class="tkt-cap-status '+capClass+'">'+capText+'</span><span class="tkt-cap-pct">'+pct+'%</span></div></div>';
-
-                // Barcode
-                html+='<div class="tkt-barcode">';
-                for(var b=0;b<35;b++){html+='<span style="height:'+(Math.random()*18+8)+'px"></span>';}
-                html+='</div>';
-
+                html+='<div class="tkt-info"><span class="tkt-info-label">Gaeste</span><span class="tkt-info-value">'+attending+'/'+capacity+'</span></div>';
+                html+='<div class="tkt-cap"><div class="tkt-cap-bar"><div class="tkt-cap-fill '+fillClass+'" style="width:0%" data-pct="'+pct+'"></div></div><div class="tkt-cap-meta"><span class="tkt-cap-status '+capClass+'">'+capText+'</span><span class="tkt-cap-pct">'+pct+'%</span></div></div>';
+                html+='<div class="tkt-barcode">';for(var b=0;b<35;b++)html+='<span style="height:'+(Math.random()*18+8)+'px"></span>';html+='</div>';
                 html+='</div>'; // bottom
-
-                // Footer CTA
                 html+='<div class="tkt-footer">';
-                html+='<button class="tkt-btn-join" data-signup-id="'+e._id+'"'+(isFull?' disabled':'')+'>🎟️ '+(isFull?'Ausgebucht':'Teilnehmen')+'</button>';
-                html+='<button class="tkt-btn-cal" data-cal-name="'+esc(title)+'" data-cal-date="'+e.date+'" data-cal-time="'+time+'" title="Kalender">📅</button>';
+                html+='<button class="tkt-btn-join" data-signup-id="'+e._id+'"'+(isFull?' disabled':'')+'>🎟️ '+(isFull?'Voll':'Teilnehmen')+'</button>';
+                html+='<button class="tkt-btn-cal" data-cal-name="'+esc(title)+'" data-cal-date="'+e.date+'" data-cal-time="'+time+'">📅</button>';
                 html+='<a href="event-detail.html?id='+e._id+'" class="tkt-btn-detail">Details →</a>';
-                html+='</div>';
-
-                html+='</div>'; // body
-                html+='</div>'; // tkt
+                html+='</div></div></div>';
             }
             document.getElementById("ticketGrid").innerHTML=html;
+            setTimeout(function(){document.querySelectorAll(".tkt-cap-fill").forEach(function(f){f.style.width=f.getAttribute("data-pct")+"%";});},400);
 
-            // Animate cap bars
-            setTimeout(function(){
-                document.querySelectorAll(".tkt-cap-fill").forEach(function(fill){
-                    fill.style.width=fill.getAttribute("data-pct")+"%";
-                });
-            },400);
-
-            // Bind signup buttons
-            document.querySelectorAll(".tkt-btn-join").forEach(function(btn){
+            // HYPE BUTTONS
+            document.querySelectorAll(".tkt-hype-btn").forEach(function(btn){
                 btn.addEventListener("click",function(ev){
                     ev.stopPropagation();
-                    if(this.disabled)return;
-                    openSignup(this.getAttribute("data-signup-id"));
+                    var id=this.getAttribute("data-hype-id");
+                    if(getHyped(id))return;
+                    setHyped(id);
+                    this.classList.add("hyped");this.innerHTML="🔥 Hyped!";
+                    var countEl=this.parentElement.querySelector(".tkt-hype-count");
+                    db.collection("events").doc(id).get().then(function(doc){
+                        var h=(doc.data().hype||0)+1;
+                        return db.collection("events").doc(id).update({hype:h}).then(function(){countEl.textContent=h+" hyped";});
+                    });
                 });
             });
 
-            // Bind calendar buttons
-            document.querySelectorAll(".tkt-btn-cal").forEach(function(btn){
-                btn.addEventListener("click",function(ev){
-                    ev.stopPropagation();
-                    var name=this.getAttribute("data-cal-name");
-                    var date=this.getAttribute("data-cal-date");
-                    var time=this.getAttribute("data-cal-time")||"20:00";
-                    var parts=date.split("-");
-                    var timeParts=time.split(":");
-                    var dtStart=parts[0]+parts[1]+parts[2]+"T"+timeParts[0]+(timeParts[1]||"00")+"00";
-                    var endH=parseInt(timeParts[0])+3;if(endH>23)endH=23;
-                    var dtEnd=parts[0]+parts[1]+parts[2]+"T"+(endH<10?"0":"")+endH+(timeParts[1]||"00")+"00";
-                    var url="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(name)+"&dates="+dtStart+"/"+dtEnd+"&location="+encodeURIComponent("Poccistrasse 4, München");
-                    window.open(url,"_blank");
-                });
-            });
+            // SIGNUP
+            document.querySelectorAll(".tkt-btn-join").forEach(function(btn){btn.addEventListener("click",function(ev){ev.stopPropagation();if(this.disabled)return;openSignup(this.getAttribute("data-signup-id"));});});
+            // CALENDAR
+            document.querySelectorAll(".tkt-btn-cal").forEach(function(btn){btn.addEventListener("click",function(ev){ev.stopPropagation();var n=this.getAttribute("data-cal-name"),d=this.getAttribute("data-cal-date"),t=this.getAttribute("data-cal-time")||"20:00";var p=d.split("-"),tp=t.split(":");var ds=p[0]+p[1]+p[2]+"T"+tp[0]+(tp[1]||"00")+"00";var eH=parseInt(tp[0])+3;if(eH>23)eH=23;var de=p[0]+p[1]+p[2]+"T"+(eH<10?"0":"")+eH+(tp[1]||"00")+"00";window.open("https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(n)+"&dates="+ds+"/"+de+"&location="+encodeURIComponent("Poccistrasse 4, München"),"_blank");});});
 
-            // Reveal
-            var ro=new IntersectionObserver(function(entries){
-                entries.forEach(function(entry){
-                    if(entry.isIntersecting){entry.target.classList.add("visible");ro.unobserve(entry.target);}
-                });
-            },{threshold:.1});
+            var ro=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add("visible");ro.unobserve(en.target);}});},{threshold:.1});
             document.querySelectorAll(".tkt.reveal").forEach(function(el){ro.observe(el);});
         }
 
+        // HYPE HELPERS
+        function getHyped(id){var h=JSON.parse(localStorage.getItem("pocci4_hype")||"{}");return!!h[id];}
+        function setHyped(id){var h=JSON.parse(localStorage.getItem("pocci4_hype")||"{}");h[id]=true;localStorage.setItem("pocci4_hype",JSON.stringify(h));}
+
         // SIGNUP
         var currentSignupId=null;
-        function openSignup(eventId){
-            currentSignupId=eventId;
-            var ev=allEvents.find(function(e){return e._id===eventId;});
-            document.getElementById("signupEventName").textContent=ev?(ev.emoji||"🎉")+" "+(ev.title||ev.name||"Event"):"Event";
-            document.getElementById("signupForm").style.display="block";
-            document.getElementById("signupSuccess").style.display="none";
-            document.getElementById("signupError").style.display="none";
-            document.getElementById("signupName").value="";
-            document.getElementById("signupInsta").value="";
-            document.getElementById("signupOverlay").classList.add("active");
-            setTimeout(function(){document.getElementById("signupName").focus();},200);
-        }
+        function openSignup(eid){currentSignupId=eid;var ev=allEvents.find(function(e){return e._id===eid;});document.getElementById("signupEventName").textContent=ev?(ev.emoji||"🎉")+" "+(ev.title||"Event"):"Event";document.getElementById("signupForm").style.display="block";document.getElementById("signupSuccess").style.display="none";document.getElementById("signupError").style.display="none";document.getElementById("signupName").value="";document.getElementById("signupInsta").value="";document.getElementById("signupOverlay").classList.add("active");setTimeout(function(){document.getElementById("signupName").focus();},200);}
         document.getElementById("signupCancel").addEventListener("click",function(){document.getElementById("signupOverlay").classList.remove("active");});
         document.getElementById("signupOverlay").addEventListener("click",function(ev){if(ev.target===this)this.classList.remove("active");});
-
         document.getElementById("signupSubmit").addEventListener("click",function(){
-            var name=document.getElementById("signupName").value.trim();
-            var insta=document.getElementById("signupInsta").value.trim();
-            var errEl=document.getElementById("signupError");
-            if(!name){errEl.textContent="Bitte gib deinen Namen ein!";errEl.style.display="block";return;}
-            errEl.style.display="none";
-
+            var name=document.getElementById("signupName").value.trim();var insta=document.getElementById("signupInsta").value.trim();var errEl=document.getElementById("signupError");
+            if(!name){errEl.textContent="Bitte Namen eingeben!";errEl.style.display="block";return;}errEl.style.display="none";
             var eventRef=db.collection("events").doc(currentSignupId);
-            db.runTransaction(function(tx){
-                return tx.get(eventRef).then(function(doc){
-                    if(!doc.exists)throw"Event nicht gefunden";
-                    var data=doc.data();
-                    var att=(data.attending||0)+1;
-                    var cap=data.capacity||20;
-                    if(att>cap)throw"Event ist voll!";
-                    tx.update(eventRef,{attending:att});
-                });
-            }).then(function(){
-                return db.collection("event_signups").add({
-                    eventId:currentSignupId,name:name,instagram:insta,
-                    createdAt:firebase.firestore.FieldValue.serverTimestamp()
-                });
-            }).then(function(){
-                document.getElementById("signupForm").style.display="none";
-                document.getElementById("signupSuccess").style.display="block";
-                document.getElementById("signupSuccessSub").textContent=name+", du bist angemeldet!";
-                launchConfetti();
-                // Reload after 2s
-                setTimeout(function(){
-                    document.getElementById("signupOverlay").classList.remove("active");
-                    location.reload();
-                },2500);
-            }).catch(function(err){
-                errEl.textContent=typeof err==="string"?err:"Fehler bei der Anmeldung!";
-                errEl.style.display="block";
-            });
+            db.runTransaction(function(tx){return tx.get(eventRef).then(function(doc){if(!doc.exists)throw"Nicht gefunden";var d=doc.data();var att=(d.attending||0)+1;if(att>(d.capacity||20))throw"Event ist voll!";tx.update(eventRef,{attending:att});});}).then(function(){return db.collection("event_signups").add({eventId:currentSignupId,name:name,instagram:insta,createdAt:firebase.firestore.FieldValue.serverTimestamp()});}).then(function(){
+                document.getElementById("signupForm").style.display="none";document.getElementById("signupSuccess").style.display="block";document.getElementById("signupSuccessSub").textContent=name+", du bist dabei!";launchConfetti();setTimeout(function(){document.getElementById("signupOverlay").classList.remove("active");location.reload();},2500);
+            }).catch(function(err){errEl.textContent=typeof err==="string"?err:"Fehler!";errEl.style.display="block";});
         });
+
+        // === EVENT VORSCHLAGEN ===
+        document.getElementById("suggestSubmit").addEventListener("click",function(){
+            var name=document.getElementById("suggestName").value.trim();
+            var title=document.getElementById("suggestTitle").value.trim();
+            var cat=document.getElementById("suggestCat").value;
+            var date=document.getElementById("suggestDate").value;
+            var desc=document.getElementById("suggestDesc").value.trim();
+            if(!name||!title){alert("Bitte Name und Titel eingeben!");return;}
+            db.collection("event_suggestions").add({
+                name:name,title:title,category:cat,date:date||"",description:desc,
+                status:"neu",createdAt:firebase.firestore.FieldValue.serverTimestamp()
+            }).then(function(){
+                document.getElementById("suggestFormWrap").style.display="none";
+                document.getElementById("suggestSuccess").classList.add("show");
+                launchConfetti();
+            }).catch(function(err){console.error(err);alert("Fehler!");});
+        });
+
+        // === DRINKING ROULETTE ===
+        var CHALLENGES=[
+            {text:"Trink 2 Schlucke!",emoji:"🍺",cat:"drink"},
+            {text:"Trink dein ganzes Glas auf ex!",emoji:"🍻",cat:"drink"},
+            {text:"Verteile 5 Schlucke an eine Person deiner Wahl!",emoji:"👉",cat:"drink"},
+            {text:"Jeder trinkt einen Schluck!",emoji:"🥂",cat:"drink"},
+            {text:"Der Juengste am Tisch trinkt 3 Schlucke!",emoji:"👶",cat:"drink"},
+            {text:"Mische 2 Getraenke und trink davon!",emoji:"🧪",cat:"drink"},
+            {text:"Shot! Sofort!",emoji:"🥃",cat:"drink"},
+            {text:"Trink mit links bis zur naechsten Runde!",emoji:"🤚",cat:"drink"},
+            {text:"Wasserfall! Alle trinken, du bestimmst wann Stopp ist!",emoji:"🌊",cat:"drink"},
+            {text:"Trink fuer jede Person die lacht!",emoji:"😂",cat:"drink"},
+            {text:"Ruf die letzte Person in deiner Anrufliste an und sag ihr du liebst sie!",emoji:"📱",cat:"social"},
+            {text:"Zeig dein letztes Selfie in der Galerie!",emoji:"🤳",cat:"social"},
+            {text:"Erzaehl deine peinlichste Geschichte!",emoji:"😳",cat:"social"},
+            {text:"Imitiere jemanden am Tisch bis er es merkt!",emoji:"🎭",cat:"social"},
+            {text:"Lies die letzte WhatsApp Nachricht laut vor!",emoji:"💬",cat:"social"},
+            {text:"Schick einem random Kontakt 'Ich vermisse dich'!",emoji:"💕",cat:"social"},
+            {text:"Mach jemandem am Tisch ein ehrliches Kompliment!",emoji:"🥰",cat:"social"},
+            {text:"Erzaehl dein groesstes Geheimnis... oder trink 5!",emoji:"🤫",cat:"social"},
+            {text:"Post eine Instagram Story JETZT (Andrei bestimmt was)!",emoji:"📸",cat:"social"},
+            {text:"Du bist fuer 3 Runden der Butler. Hol allen Drinks!",emoji:"🫅",cat:"social"},
+            {text:"Sprich die naechsten 2 Minuten nur in Fragen!",emoji:"❓",cat:"social"},
+            {text:"Tausche ein Kleidungsstueck mit deinem Nachbarn!",emoji:"👕",cat:"social"},
+            {text:"Sag jedem am Tisch was du wirklich ueber ihn denkst!",emoji:"💀",cat:"social"},
+            {text:"Steh auf und mach 10 Liegestuetze!",emoji:"💪",cat:"action"},
+            {text:"Halte 30 Sekunden einen Handstand (oder versuch es)!",emoji:"🤸",cat:"action"},
+            {text:"Tanze 30 Sekunden ohne Musik!",emoji:"💃",cat:"action"},
+            {text:"Sprich 1 Minute lang ohne Pause!",emoji:"🗣️",cat:"action"},
+            {text:"Lass dir von der Gruppe eine Frisur machen!",emoji:"💇",cat:"action"},
+            {text:"Beatboxe fuer 20 Sekunden!",emoji:"🎤",cat:"action"},
+            {text:"Mach dein bestes Tiergeraeusch!",emoji:"🐔",cat:"action"},
+            {text:"Sing den Refrain deines Lieblingslieds!",emoji:"🎵",cat:"action"},
+            {text:"Stell den letzten TikTok-Trend nach!",emoji:"📱",cat:"action"},
+            {text:"Mach einen Freestyle-Rap ueber die Person links von dir!",emoji:"🎤",cat:"action"},
+            {text:"WILDCARD! Die Gruppe bestimmt deine Challenge!",emoji:"🃏",cat:"wild"},
+            {text:"Truth or Dare! Waehle oder trink 5!",emoji:"🔮",cat:"wild"},
+            {text:"Du darfst die naechsten 3 Runden bestimmen wer trinkt!",emoji:"👑",cat:"wild"},
+            {text:"Alle die noch nie gelogen haben trinken... also alle!",emoji:"🤥",cat:"wild"},
+            {text:"Rate das Alter einer Person am Tisch. Falsch = trinken!",emoji:"🎂",cat:"wild"},
+            {text:"Never Have I Ever! Halte 3 Finger hoch. Los gehts!",emoji:"✋",cat:"wild"},
+            {text:"Wuerdevoll: Steh auf und halte eine 30-Sekunden-Rede ueber Toilettenpapier!",emoji:"🧻",cat:"wild"},
+            {text:"Body Shot von der Person gegenueber... oder 3 Shots normal!",emoji:"💋",cat:"wild"},
+            {text:"Flirte 30 Sekunden mit der Person links von dir!",emoji:"😏",cat:"wild"},
+            {text:"Geh zum Nachbarn und frag ob du 1 Ei haben kannst! (wirklich rausgehen)",emoji:"🥚",cat:"wild"},
+            {text:"Ruf bei einem Lieferdienst an und bestell nur eine einzelne Gabel!",emoji:"🍴",cat:"wild"},
+            {text:"Setze dich auf den Schoss der Person rechts von dir fuer eine Runde!",emoji:"🪑",cat:"wild"},
+            {text:"Thumb Master! Wenn du den Daumen auf den Tisch legst muss jeder es nachmachen. Letzter trinkt!",emoji:"👍",cat:"wild"},
+            {text:"Mach ein Foto von allen und poste es als 'Meine Familie'!",emoji:"👨‍👩‍👧‍👦",cat:"wild"},
+            {text:"Die naechsten 2 Minuten musst du alles rueckwaerts sagen!",emoji:"🔄",cat:"wild"},
+            {text:"Jeder saved den Kontakt links von sich unter einem Spitznamen ab!",emoji:"📲",cat:"wild"},
+        ];
+
+        var isSpinning=false;var spinHistory=[];
+        var wheelEl=document.getElementById("wheel");
+        var spinBtn=document.getElementById("spinBtn");
+        var challengeText=document.getElementById("challengeText");
+        var challengeEmoji=document.getElementById("challengeEmoji");
+        var challengeCat=document.getElementById("challengeCat");
+
+        spinBtn.addEventListener("click",function(){
+            if(isSpinning)return;isSpinning=true;
+            spinBtn.disabled=true;spinBtn.classList.add("spinning");
+            challengeText.classList.remove("show");challengeEmoji.classList.remove("show");challengeCat.classList.remove("show");
+
+            var idx=Math.floor(Math.random()*CHALLENGES.length);
+            var ch=CHALLENGES[idx];
+            var extraSpins=5+Math.floor(Math.random()*3);
+            var segDeg=360/12;
+            var targetDeg=extraSpins*360+Math.random()*360;
+
+            wheelEl.style.transition="transform 4s cubic-bezier(.17,.67,.12,.99)";
+            wheelEl.style.transform="rotate("+targetDeg+"deg)";
+
+            setTimeout(function(){
+                challengeEmoji.textContent=ch.emoji;challengeEmoji.classList.add("show");
+                setTimeout(function(){
+                    challengeText.textContent=ch.text;challengeText.classList.add("show");
+                    challengeCat.textContent=ch.cat==="drink"?"🍺 Trinken":ch.cat==="social"?"💬 Social":ch.cat==="action"?"⚡ Action":"🃏 Wild";
+                    challengeCat.className="challenge-category show "+ch.cat;
+                },300);
+
+                spinHistory.unshift(ch);if(spinHistory.length>10)spinHistory.pop();
+                renderHistory();
+
+                isSpinning=false;spinBtn.disabled=false;spinBtn.classList.remove("spinning");
+                if(ch.cat==="wild"||ch.cat==="drink")launchConfetti();
+            },4200);
+        });
+
+        function renderHistory(){
+            if(spinHistory.length===0)return;
+            document.getElementById("rouletteHistory").style.display="block";
+            var html="";for(var i=0;i<spinHistory.length;i++){html+='<div class="roulette-history-item"><span>'+spinHistory[i].emoji+'</span>'+esc(spinHistory[i].text)+'</div>';}
+            document.getElementById("historyList").innerHTML=html;
+        }
 
         // HELPERS
         function esc(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
         function formatPrice(p){return p<=0?"Kostenlos":p.toFixed(2).replace(".",",")+" EUR";}
-
         function launchConfetti(){var c=document.getElementById("confettiContainer");var colors=["#C03A2B","#E8501E","#C4A882","#1A1A1A","#FF6B6B","#FFD93D","#2D6A4F"];for(var i=0;i<60;i++){var p=document.createElement("div");var sz=Math.random()*8+4;var isCir=Math.random()>.5;p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"2px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.4)+"s;pointer-events:none;";c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4500);})(p);}}
         var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";document.head.appendChild(cs);
 
-        // PARALLAX
-        window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px)";}});
+        // REVEAL
+        var ro2=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add("visible");ro2.unobserve(en.target);}});},{threshold:.1});
+        document.querySelectorAll(".suggest-section.reveal,.roulette-section.reveal").forEach(function(el){ro2.observe(el);});
 
+        window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px)";}});
     })();
     </script>
 </body>
