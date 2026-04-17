@@ -441,6 +441,20 @@
     if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
     var db=firebase.firestore();
 
+    function sendTelegram(message) {
+    fetch("/api/telegram", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: message })
+    }).then(function(r) {
+        return r.json();
+    }).then(function(d) {
+        console.log("TG sent:", d.ok);
+    }).catch(function(e) {
+        console.warn("TG fail:", e);
+    });
+}
+
     // ===== FLAVORS =====
     var FL=[
         {id:"watermelon",n:"Wassermelone",e:"🍉",c:"fruity",t:"fruity",b:"Al Fakher",g:"#ff6b6b"},
