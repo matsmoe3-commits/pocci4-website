@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>pocci4 - Admin Panel</title>
-<link rel="icon" type="image/svg+xml" href="assets/p.svg">
-<link rel="apple-touch-icon" href="assets/p-180.png">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#F5F0EB">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="pocci4">
+    <link rel="icon" type="image/svg+xml" href="assets/p.svg">
+    <link rel="apple-touch-icon" href="assets/p-180.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#F5F0EB">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="pocci4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -19,193 +19,270 @@
         html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased}
         body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;min-height:100vh}
         a{text-decoration:none;color:inherit}
+
+        /* NAVBAR */
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(26,26,26,.95);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid rgba(255,255,255,.08)}
-        .nav-container{max-width:1400px;margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
+        .nav-container{max-width:1400px;margin:0 auto;padding:0 1.25rem;height:100%;display:flex;align-items:center;justify-content:space-between}
         .nav-logo img{height:48px;filter:brightness(0) invert(1)}
-        .nav-center{display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);padding:5px;border-radius:50px}
-        .nav-center-link{padding:7px 16px;border-radius:50px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.5);transition:var(--transition-fast);cursor:pointer;border:none;background:none;font-family:var(--font-main);position:relative}
+        .nav-center{display:flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.08);padding:4px;border-radius:50px}
+        .nav-center-link{padding:7px 14px;border-radius:50px;font-size:.72rem;font-weight:600;color:rgba(255,255,255,.5);transition:var(--transition-fast);cursor:pointer;border:none;background:none;font-family:var(--font-main);position:relative;white-space:nowrap}
         .nav-center-link:hover{color:rgba(255,255,255,.8)}
         .nav-center-link.active{background:var(--color-primary);color:#fff}
         .nav-center-link .nav-badge{position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;border-radius:8px;background:var(--color-primary);color:#fff;font-size:.55rem;font-weight:800;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid rgba(26,26,26,.95)}
         .nav-center-link .nav-badge.show{display:flex}
         .nav-center-link.active .nav-badge{background:#fff;color:var(--color-primary)}
-        .nav-right{display:flex;align-items:center;gap:.75rem}
-        .nav-back{padding:7px 16px;border-radius:50px;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.5);transition:var(--transition-fast);border:1px solid rgba(255,255,255,.12);background:none;text-decoration:none}
+        .nav-right{display:flex;align-items:center;gap:.5rem}
+        .nav-back{padding:7px 14px;border-radius:50px;font-size:.75rem;font-weight:600;color:rgba(255,255,255,.5);transition:var(--transition-fast);border:1px solid rgba(255,255,255,.12);background:none;text-decoration:none}
         .nav-back:hover{color:#fff;border-color:rgba(255,255,255,.3)}
-        .nav-admin-badge{padding:5px 12px;border-radius:50px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;background:var(--color-primary);color:#fff}
-        .logout-btn{padding:7px 16px;border-radius:50px;font-size:.78rem;font-weight:600;border:1px solid rgba(255,255,255,.12);background:none;cursor:pointer;font-family:var(--font-main);color:rgba(255,255,255,.5);transition:var(--transition-fast)}
+        .nav-admin-badge{padding:5px 10px;border-radius:50px;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;background:var(--color-primary);color:#fff}
+        .logout-btn{padding:7px 14px;border-radius:50px;font-size:.72rem;font-weight:600;border:1px solid rgba(255,255,255,.12);background:none;cursor:pointer;font-family:var(--font-main);color:rgba(255,255,255,.5);transition:var(--transition-fast)}
         .logout-btn:hover{border-color:#C03A2B;color:#C03A2B}
-        .admin-wrapper{max-width:1400px;margin:0 auto;padding:calc(var(--nav-height) + 2rem) 1.25rem 4rem}
-        .admin-header{margin-bottom:2rem;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-        .admin-header h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;letter-spacing:-.03em}
-        .admin-header p{color:var(--color-text-light);font-size:.9rem}
-        .header-actions{display:flex;gap:.5rem}
-        .btn{padding:10px 22px;border-radius:50px;font-size:.82rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth);font-family:var(--font-main);border:none;display:inline-flex;align-items:center;gap:.5rem}
+
+        /* WRAPPER */
+        .admin-wrapper{max-width:1400px;margin:0 auto;padding:calc(var(--nav-height) + 1.5rem) 1.25rem 4rem}
+        .admin-header{margin-bottom:1.5rem;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+        .admin-header h1{font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;letter-spacing:-.03em}
+        .admin-header p{color:var(--color-text-light);font-size:.85rem}
+        .header-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+
+        /* BUTTONS */
+        .btn{padding:10px 20px;border-radius:50px;font-size:.78rem;font-weight:700;cursor:pointer;transition:var(--transition-smooth);font-family:var(--font-main);border:none;display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap}
         .btn-primary{background:var(--color-primary);color:#fff}
         .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,58,43,.25)}
         .btn-outline{background:transparent;border:1.5px solid var(--color-border);color:var(--color-text)}
         .btn-outline:hover{border-color:var(--color-text);background:var(--color-text);color:#fff}
         .btn-danger{background:transparent;border:1.5px solid var(--color-border);color:var(--color-gray)}
         .btn-danger:hover{border-color:var(--color-primary);color:var(--color-primary);background:rgba(192,58,43,.05)}
-        .btn-sm{padding:7px 16px;font-size:.75rem}
-        .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
-        .stat-card{background:var(--color-white);border-radius:20px;padding:1.5rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
-        .stat-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
-        .stat-icon{font-size:1.6rem;margin-bottom:.6rem}
-        .stat-value{font-size:1.8rem;font-weight:900;letter-spacing:-.03em;line-height:1}
-        .stat-label{font-size:.7rem;font-weight:600;color:var(--color-gray);text-transform:uppercase;letter-spacing:.08em;margin-top:.35rem}
-        .panel{background:var(--color-white);border-radius:24px;border:1px solid var(--color-border);overflow:hidden;margin-bottom:1.5rem}
-        .panel-header{padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-border);flex-wrap:wrap;gap:.75rem}
-        .panel-header h3{font-size:1rem;font-weight:800;display:flex;align-items:center;gap:.5rem}
-        .panel-badge{font-size:.7rem;font-weight:700;color:var(--color-gray);background:var(--color-bg);padding:3px 10px;border-radius:50px}
+        .btn-sm{padding:7px 14px;font-size:.72rem}
+        .btn-green{background:var(--color-green);color:#fff;border:none}
+        .btn-green:hover{background:#245a42}
+
+        /* STATS GRID */
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.75rem;margin-bottom:1.5rem}
+        .stat-card{background:var(--color-white);border-radius:18px;padding:1.25rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
+        .stat-card:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.05)}
+        .stat-icon{font-size:1.4rem;margin-bottom:.4rem}
+        .stat-value{font-size:1.6rem;font-weight:900;letter-spacing:-.03em;line-height:1}
+        .stat-label{font-size:.65rem;font-weight:600;color:var(--color-gray);text-transform:uppercase;letter-spacing:.08em;margin-top:.3rem}
+
+        /* PANEL */
+        .panel{background:var(--color-white);border-radius:22px;border:1px solid var(--color-border);overflow:hidden;margin-bottom:1.25rem}
+        .panel-header{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-border);flex-wrap:wrap;gap:.5rem}
+        .panel-header h3{font-size:.92rem;font-weight:800;display:flex;align-items:center;gap:.4rem}
+        .panel-badge{font-size:.65rem;font-weight:700;color:var(--color-gray);background:var(--color-bg);padding:3px 8px;border-radius:50px}
         .panel-badge.unread{background:var(--color-primary);color:#fff}
-        .panel-body{padding:1.5rem}
-        .panel-search{padding:8px 16px;border:1.5px solid var(--color-border);border-radius:50px;font-size:.8rem;font-family:var(--font-main);outline:none;transition:var(--transition-fast);width:220px}
+        .panel-body{padding:1.25rem}
+        .panel-search{padding:8px 14px;border:1.5px solid var(--color-border);border-radius:50px;font-size:.78rem;font-family:var(--font-main);outline:none;transition:var(--transition-fast);width:100%;max-width:220px}
         .panel-search:focus{border-color:var(--color-primary)}
-        .panel-list{max-height:550px;overflow-y:auto}
+        .panel-list{max-height:600px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+
+        /* SECTIONS */
         .admin-section{display:none}
         .admin-section.active{display:block}
-        .order-row{display:grid;grid-template-columns:140px 1fr auto auto auto;gap:1.25rem;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.4);transition:var(--transition-fast)}
+
+        /* ORDER ROW */
+        .order-row{display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
         .order-row:hover{background:var(--color-bg)}
         .order-row:last-child{border-bottom:none}
-        .order-id{font-size:.68rem;font-weight:700;color:var(--color-gray);text-transform:uppercase;letter-spacing:.04em}
-        .order-date{font-size:.72rem;color:var(--color-gray);margin-top:.2rem}
-        .order-items-main{font-size:.88rem;font-weight:700}
-        .order-items-detail{font-size:.73rem;color:var(--color-text-light);margin-top:.15rem}
-        .order-method{padding:4px 12px;border-radius:50px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+        .order-id{font-size:.65rem;font-weight:700;color:var(--color-gray);text-transform:uppercase;letter-spacing:.04em}
+        .order-date{font-size:.68rem;color:var(--color-gray);margin-top:.15rem}
+        .order-items-main{font-size:.82rem;font-weight:700}
+        .order-items-detail{font-size:.7rem;color:var(--color-text-light);margin-top:.1rem}
+        .order-method{padding:3px 10px;border-radius:50px;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
         .method-paypal{background:#FFF0D4;color:#B8860B}
         .method-vor-ort{background:var(--color-blue-light);color:var(--color-blue)}
-        .order-total{font-size:1rem;font-weight:900;white-space:nowrap}
-        .order-actions{display:flex;align-items:center;gap:.4rem}
-        .status-btn{padding:6px 14px;border-radius:50px;font-size:.68rem;font-weight:700;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);transition:var(--transition-fast);color:var(--color-text-light)}
+        .order-total{font-size:.92rem;font-weight:900;white-space:nowrap}
+        .order-info{flex:1;min-width:150px}
+        .order-actions{display:flex;align-items:center;gap:.3rem;flex-shrink:0}
+        .status-btn{padding:5px 12px;border-radius:50px;font-size:.65rem;font-weight:700;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;font-family:var(--font-main);transition:var(--transition-fast);color:var(--color-text-light);white-space:nowrap}
         .status-btn:hover{border-color:var(--color-green);color:var(--color-green)}
         .status-btn.done{background:var(--color-green-light);color:var(--color-green);border-color:transparent;pointer-events:none}
-        .del-btn{padding:6px 10px;border-radius:50px;font-size:.7rem;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;transition:var(--transition-fast);color:var(--color-gray)}
+        .del-btn{padding:5px 8px;border-radius:50px;font-size:.68rem;border:1.5px solid var(--color-border);background:transparent;cursor:pointer;transition:var(--transition-fast);color:var(--color-gray);flex-shrink:0}
         .del-btn:hover{border-color:var(--color-primary);color:var(--color-primary)}
-        .event-row{display:grid;grid-template-columns:auto 50px 1fr auto auto;gap:1.25rem;align-items:center;padding:1.15rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.4);transition:var(--transition-fast)}
+
+        /* EVENT ROW */
+        .event-row{display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
         .event-row:hover{background:var(--color-bg)}
         .event-row:last-child{border-bottom:none}
-        .event-emoji{font-size:2rem}
-        .event-title{font-size:.92rem;font-weight:800}
-        .event-meta{font-size:.73rem;color:var(--color-text-light);margin-top:.15rem}
-        .event-date-badge{padding:8px 14px;border-radius:14px;background:var(--color-bg);text-align:center;min-width:55px}
-        .event-date-day{font-size:1.2rem;font-weight:900;line-height:1}
-        .event-date-month{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--color-gray)}
-        .event-status-live{padding:4px 10px;border-radius:50px;font-size:.65rem;font-weight:700;background:var(--color-green-light);color:var(--color-green)}
-        .event-status-draft{padding:4px 10px;border-radius:50px;font-size:.65rem;font-weight:700;background:var(--color-yellow-light);color:var(--color-yellow)}
-        .event-status-past{padding:4px 10px;border-radius:50px;font-size:.65rem;font-weight:700;background:var(--color-bg);color:var(--color-gray)}
-        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center;padding:1rem}
-        .modal-overlay.active{display:flex}
-        .modal{background:var(--color-white);border-radius:24px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 25px 80px rgba(0,0,0,.2)}
-        .modal-header{padding:1.5rem 2rem;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--color-white);z-index:1;border-radius:24px 24px 0 0}
-        .modal-header h3{font-size:1.15rem;font-weight:800}
-        .modal-close{width:32px;height:32px;border-radius:50%;border:none;background:var(--color-bg);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:var(--transition-fast)}
-        .modal-close:hover{background:var(--color-text);color:#fff}
-        .modal-body{padding:2rem}
-        .modal-footer{padding:1.25rem 2rem;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:.5rem;position:sticky;bottom:0;background:var(--color-white);border-radius:0 0 24px 24px}
-        .form-group{margin-bottom:1.25rem}
-        .form-label{display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.5rem}
-        .form-input,.form-textarea,.form-select{width:100%;padding:12px 16px;border:1.5px solid var(--color-border);border-radius:14px;font-family:var(--font-main);font-size:.88rem;outline:none;transition:var(--transition-fast);background:var(--color-white);color:var(--color-text)}
-        .form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--color-primary)}
-        .form-textarea{min-height:100px;resize:vertical}
-        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-        .form-toggle{display:flex;align-items:center;gap:.75rem;cursor:pointer}
-        .form-toggle input{display:none}
-        .toggle-track{width:44px;height:24px;border-radius:12px;background:var(--color-border);position:relative;transition:var(--transition-fast);flex-shrink:0}
-        .toggle-track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:var(--transition-fast);box-shadow:0 1px 3px rgba(0,0,0,.15)}
-        .form-toggle input:checked+.toggle-track{background:var(--color-green)}
-        .form-toggle input:checked+.toggle-track::after{left:23px}
-        .toggle-label{font-size:.85rem;font-weight:600}
-        .game-row{display:grid;grid-template-columns:auto 1fr repeat(3,80px) auto;gap:1rem;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.4);transition:var(--transition-fast)}
-        .game-row:hover{background:var(--color-bg)}
-        .game-row:last-child{border-bottom:none}
-        .game-rank{font-size:1.2rem;font-weight:900;min-width:30px;text-align:center}
-        .game-player{display:flex;align-items:center;gap:.75rem}
-        .game-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#fff;flex-shrink:0}
-        .game-name{font-size:.9rem;font-weight:700}
-        .game-stat{text-align:center;font-weight:800;font-size:.95rem}
-        .game-stat-label{font-size:.6rem;color:var(--color-gray);font-weight:600;text-transform:uppercase}
-        .content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
-        .content-card{background:var(--color-white);border-radius:20px;padding:1.5rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
-        .content-card:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.06)}
-        .content-card-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
-        .content-card-emoji{font-size:2.2rem}
-        .content-card-title{font-size:.95rem;font-weight:800}
-        .content-card-sub{font-size:.73rem;color:var(--color-gray)}
-        .content-card-body{font-size:.82rem;color:var(--color-text-light);line-height:1.6}
-        .content-card-footer{display:flex;gap:.5rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--color-border)}
-        .best-row{display:grid;grid-template-columns:40px 40px 1fr auto auto;gap:1rem;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.4)}
-        .best-row:last-child{border-bottom:none}
-        .best-rank{font-size:1.2rem;font-weight:900;text-align:center}
-        .best-emoji{font-size:1.6rem;text-align:center}
-        .best-title{font-size:.9rem;font-weight:700}
-        .best-qty{font-weight:900;font-size:1rem;text-align:center}
-        .best-rev{font-weight:900;font-size:1rem;text-align:right}
-        .best-sub{font-size:.6rem;color:var(--color-gray);font-weight:600}
-        .empty-state{text-align:center;padding:3.5rem 2rem;color:var(--color-gray)}
-        .empty-state-icon{font-size:3rem;margin-bottom:.75rem}
-        .empty-state h3{font-size:1.1rem;font-weight:700;color:var(--color-text);margin-bottom:.4rem}
-        .empty-state p{font-size:.85rem}
-        .loading{text-align:center;padding:3rem;color:var(--color-gray)}
-        .loading-spinner{width:28px;height:28px;border:3px solid var(--color-border);border-top-color:var(--color-primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto .75rem}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        .toast-container{position:fixed;bottom:2rem;right:2rem;z-index:3000;display:flex;flex-direction:column;gap:.5rem}
-        .toast{padding:14px 20px;border-radius:14px;background:var(--color-text);color:#fff;font-size:.85rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);transform:translateX(120%);transition:transform .4s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:.5rem}
-        .toast.show{transform:translateX(0)}
-        .toast.success{background:var(--color-green)}
-        .toast.error{background:var(--color-primary)}
-        .member-block,.social-block,.gallery-block{padding:1rem;background:var(--color-bg);border-radius:14px;margin-bottom:.75rem}
-        /* MESSAGE STYLES */
-        .msg-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:1.25rem;align-items:center;padding:1.15rem 1.5rem;border-bottom:1px solid rgba(224,214,204,.4);transition:var(--transition-fast)}
+        .event-emoji-big{font-size:1.8rem;flex-shrink:0}
+        .event-date-badge{padding:6px 10px;border-radius:12px;background:var(--color-bg);text-align:center;min-width:48px;flex-shrink:0}
+        .event-date-day{font-size:1.1rem;font-weight:900;line-height:1}
+        .event-date-month{font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--color-gray)}
+        .event-info{flex:1;min-width:140px}
+        .event-title{font-size:.88rem;font-weight:800}
+        .event-meta{font-size:.68rem;color:var(--color-text-light);margin-top:.1rem}
+        .event-status{padding:3px 10px;border-radius:50px;font-size:.6rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+        .event-status-live{background:var(--color-green-light);color:var(--color-green)}
+        .event-status-draft{background:var(--color-yellow-light);color:var(--color-yellow)}
+        .event-status-past{background:var(--color-bg);color:var(--color-gray)}
+
+        /* MESSAGE ROW */
+        .msg-row{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);cursor:pointer}
         .msg-row:hover{background:var(--color-bg)}
         .msg-row:last-child{border-bottom:none}
         .msg-row.unread{background:rgba(192,58,43,.03);border-left:3px solid var(--color-primary)}
-        .msg-avatar{width:42px;height:42px;border-radius:50%;background:var(--color-bg-warm);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;font-weight:800;color:var(--color-primary)}
-        .msg-sender{font-size:.9rem;font-weight:800}
-        .msg-subject{font-size:.78rem;font-weight:600;color:var(--color-text-light);margin-top:.1rem}
-        .msg-preview{font-size:.78rem;color:var(--color-gray);margin-top:.25rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-        .msg-time{font-size:.68rem;color:var(--color-gray);white-space:nowrap}
-        .msg-unread-dot{width:8px;height:8px;border-radius:50%;background:var(--color-primary);flex-shrink:0}
-        .msg-detail{padding:2rem}
-        .msg-detail-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--color-border)}
-        .msg-detail-avatar{width:50px;height:50px;border-radius:50%;background:var(--color-bg-warm);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;color:var(--color-primary);flex-shrink:0}
-        .msg-detail-name{font-size:1.1rem;font-weight:800}
-        .msg-detail-sub{font-size:.8rem;color:var(--color-gray)}
-        .msg-detail-subject{font-size:1rem;font-weight:700;margin-bottom:1rem;padding:10px 14px;background:var(--color-bg);border-radius:10px}
-        .msg-detail-body{font-size:.92rem;color:var(--color-text-light);line-height:1.8;white-space:pre-wrap;word-break:break-word}
+        .msg-avatar{width:38px;height:38px;border-radius:50%;background:var(--color-bg-warm);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;font-weight:800;color:var(--color-primary)}
+        .msg-info{flex:1;min-width:0}
+        .msg-sender{font-size:.85rem;font-weight:800}
+        .msg-subject{font-size:.72rem;font-weight:600;color:var(--color-text-light);margin-top:.05rem}
+        .msg-preview{font-size:.72rem;color:var(--color-gray);margin-top:.15rem;line-height:1.3;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+        .msg-time{font-size:.62rem;color:var(--color-gray);white-space:nowrap;flex-shrink:0}
+        .msg-unread-dot{width:7px;height:7px;border-radius:50%;background:var(--color-primary);flex-shrink:0}
+
+        /* MSG DETAIL */
+        .msg-detail-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--color-border)}
+        .msg-detail-avatar{width:46px;height:46px;border-radius:50%;background:var(--color-bg-warm);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:var(--color-primary);flex-shrink:0}
+        .msg-detail-name{font-size:1rem;font-weight:800}
+        .msg-detail-sub{font-size:.75rem;color:var(--color-gray)}
+        .msg-detail-subject{font-size:.9rem;font-weight:700;margin-bottom:.75rem;padding:8px 12px;background:var(--color-bg);border-radius:10px}
+        .msg-detail-body{font-size:.88rem;color:var(--color-text-light);line-height:1.7;white-space:pre-wrap;word-break:break-word}
+
+        /* GAME ROW */
+        .game-row{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
+        .game-row:hover{background:var(--color-bg)}
+        .game-row:last-child{border-bottom:none}
+        .game-rank{font-size:1.1rem;font-weight:900;min-width:28px;text-align:center;flex-shrink:0}
+        .game-player{display:flex;align-items:center;gap:.5rem;flex:1;min-width:100px}
+        .game-name{font-size:.85rem;font-weight:700}
+        .game-stat{text-align:center;font-weight:800;font-size:.88rem;min-width:50px;flex-shrink:0}
+        .game-stat-label{font-size:.55rem;color:var(--color-gray);font-weight:600;text-transform:uppercase}
+
+        /* CONTENT GRID */
+        .content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+        .content-card{background:var(--color-white);border-radius:18px;padding:1.25rem;border:1px solid var(--color-border);transition:var(--transition-smooth)}
+        .content-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.05)}
+        .content-card-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
+        .content-card-emoji{font-size:2rem}
+        .content-card-title{font-size:.88rem;font-weight:800}
+        .content-card-sub{font-size:.68rem;color:var(--color-gray)}
+        .content-card-body{font-size:.78rem;color:var(--color-text-light);line-height:1.5}
+        .content-card-footer{display:flex;gap:.5rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--color-border)}
+
+        /* SUGGESTION ROW */
+        .sug-row{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
+        .sug-row:hover{background:var(--color-bg)}
+        .sug-row:last-child{border-bottom:none}
+        .sug-status{padding:3px 8px;border-radius:50px;font-size:.6rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+        .sug-status-neu{background:var(--color-primary);color:#fff}
+        .sug-status-done{background:var(--color-green-light);color:var(--color-green)}
+        .sug-info{flex:1;min-width:140px}
+        .sug-title{font-size:.85rem;font-weight:800}
+        .sug-meta{font-size:.68rem;color:var(--color-text-light);margin-top:.1rem}
+
+        /* PAYMENT ROW */
+        .pay-row{display:flex;align-items:center;gap:.75rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3);transition:var(--transition-fast);flex-wrap:wrap}
+        .pay-row:hover{background:var(--color-bg)}
+        .pay-row:last-child{border-bottom:none}
+        .pay-info{flex:1;min-width:140px}
+        .pay-name{font-size:.85rem;font-weight:700}
+        .pay-meta{font-size:.68rem;color:var(--color-text-light);margin-top:.1rem}
+        .pay-amount{font-size:.92rem;font-weight:900;white-space:nowrap;flex-shrink:0}
+        .pay-method-badge{padding:3px 10px;border-radius:50px;font-size:.6rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+
+        /* ATTENDEE ROW */
+        .att-row{display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid rgba(224,214,204,.3)}
+        .att-row:last-child{border-bottom:none}
+        .att-name{flex:1;font-size:.82rem;font-weight:600}
+        .att-persons{font-size:.72rem;color:var(--color-gray)}
+        .att-insta{font-size:.68rem;color:var(--color-primary)}
+
+        /* BESTSELLER ROW */
+        .best-row{display:flex;align-items:center;gap:.75rem;padding:.75rem 1.25rem;border-bottom:1px solid rgba(224,214,204,.3)}
+        .best-row:last-child{border-bottom:none}
+        .best-rank{font-size:1.1rem;font-weight:900;min-width:28px;text-align:center;flex-shrink:0}
+        .best-emoji{font-size:1.4rem;text-align:center;flex-shrink:0}
+        .best-info{flex:1;min-width:100px}
+        .best-title{font-size:.85rem;font-weight:700}
+        .best-qty{font-weight:900;font-size:.88rem;text-align:center;flex-shrink:0;min-width:40px}
+        .best-rev{font-weight:900;font-size:.88rem;text-align:right;flex-shrink:0;white-space:nowrap}
+        .best-sub{font-size:.55rem;color:var(--color-gray);font-weight:600}
+
+        /* MODAL */
+        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:flex-end;justify-content:center;padding:0}
+        .modal-overlay.active{display:flex}
+        .modal{background:var(--color-white);border-radius:24px 24px 0 0;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:0 -10px 40px rgba(0,0,0,.15);animation:modalSlideUp .3s ease}
+        @keyframes modalSlideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+        .modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--color-white);z-index:1;border-radius:24px 24px 0 0}
+        .modal-header h3{font-size:1.05rem;font-weight:800}
+        .modal-close{width:32px;height:32px;border-radius:50%;border:none;background:var(--color-bg);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:var(--transition-fast)}
+        .modal-close:hover{background:var(--color-text);color:#fff}
+        .modal-body{padding:1.5rem}
+        .modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--color-border);display:flex;justify-content:flex-end;gap:.5rem;position:sticky;bottom:0;background:var(--color-white)}
+
+        /* FORM */
+        .form-group{margin-bottom:1rem}
+        .form-label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.4rem}
+        .form-input,.form-textarea,.form-select{width:100%;padding:11px 14px;border:1.5px solid var(--color-border);border-radius:14px;font-family:var(--font-main);font-size:.85rem;outline:none;transition:var(--transition-fast);background:var(--color-white);color:var(--color-text);-webkit-appearance:none}
+        .form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--color-primary)}
+        .form-textarea{min-height:80px;resize:vertical}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+        .form-toggle{display:flex;align-items:center;gap:.6rem;cursor:pointer}
+        .form-toggle input{display:none}
+        .toggle-track{width:42px;height:22px;border-radius:11px;background:var(--color-border);position:relative;transition:var(--transition-fast);flex-shrink:0}
+        .toggle-track::after{content:"";position:absolute;top:2.5px;left:2.5px;width:17px;height:17px;border-radius:50%;background:#fff;transition:var(--transition-fast);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+        .form-toggle input:checked+.toggle-track{background:var(--color-green)}
+        .form-toggle input:checked+.toggle-track::after{left:22.5px}
+        .toggle-label{font-size:.82rem;font-weight:600}
+
+        /* MEMBER/SOCIAL/GALLERY BLOCKS */
+        .member-block,.social-block,.gallery-block{padding:.75rem;background:var(--color-bg);border-radius:12px;margin-bottom:.5rem}
+
+        /* EMPTY STATE */
+        .empty-state{text-align:center;padding:2.5rem 1.5rem;color:var(--color-gray)}
+        .empty-state-icon{font-size:2.5rem;margin-bottom:.5rem}
+        .empty-state h3{font-size:1rem;font-weight:700;color:var(--color-text);margin-bottom:.3rem}
+        .empty-state p{font-size:.8rem}
+
+        /* LOADING */
+        .loading{text-align:center;padding:2.5rem;color:var(--color-gray)}
+        .loading-spinner{width:24px;height:24px;border:3px solid var(--color-border);border-top-color:var(--color-primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto .5rem}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        /* TOAST */
+        .toast-container{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:3000;display:flex;flex-direction:column;gap:.4rem;align-items:center;width:90%;max-width:380px}
+        .toast{padding:12px 18px;border-radius:14px;background:var(--color-text);color:#fff;font-size:.82rem;font-weight:600;box-shadow:0 8px 25px rgba(0,0,0,.2);transform:translateY(50px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1);text-align:center;width:100%}
+        .toast.show{transform:translateY(0);opacity:1}
+        .toast.success{background:var(--color-green)}
+        .toast.error{background:var(--color-primary)}
+
+        /* MOBILE TABS */
+        .mobile-admin-tabs{display:none;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 1rem;margin-bottom:1rem;gap:.35rem;scrollbar-width:none;-ms-overflow-style:none}
+        .mobile-admin-tabs::-webkit-scrollbar{display:none}
+        .mobile-admin-tabs .admin-mtab{padding:7px 14px;border-radius:50px;font-size:.7rem;font-weight:700;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:1.5px solid var(--color-border);background:var(--color-white);font-family:var(--font-main);white-space:nowrap;flex-shrink:0;position:relative}
+        .mobile-admin-tabs .admin-mtab.active{background:var(--color-text);color:#fff;border-color:var(--color-text)}
+        .mobile-admin-tabs .admin-mtab .mtab-badge{position:absolute;top:-4px;right:-4px;min-width:14px;height:14px;border-radius:7px;background:var(--color-primary);color:#fff;font-size:.5rem;font-weight:800;display:none;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--color-bg)}
+        .mobile-admin-tabs .admin-mtab .mtab-badge.show{display:flex}
+
+        /* DESKTOP MODAL CENTER */
+        @media(min-width:640px){
+            .modal-overlay{align-items:center;padding:1rem}
+            .modal{border-radius:24px;max-height:90vh}
+            .modal-header{border-radius:24px 24px 0 0}
+            @keyframes modalSlideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+        }
+
+        /* RESPONSIVE */
         @media(max-width:1024px){
-            .stats-grid{grid-template-columns:repeat(2,1fr)}
             .nav-center{display:none}
-            .order-row{grid-template-columns:1fr;gap:.6rem}
-            .event-row{grid-template-columns:1fr;gap:.6rem}
-            .game-row{grid-template-columns:auto 1fr auto;gap:.5rem}
-            .game-row .game-stat:not(:last-of-type){display:none}
-            .msg-row{grid-template-columns:1fr auto;gap:.5rem}
-            .msg-row .msg-avatar{display:none}
+            .mobile-admin-tabs{display:flex}
         }
         @media(max-width:768px){
-            :root{--nav-height:68px}
-            .nav-logo img{height:40px}
-            .stats-grid{grid-template-columns:1fr 1fr}
+            :root{--nav-height:64px}
+            .nav-logo img{height:38px}
+            .nav-admin-badge{display:none}
             .panel-header{flex-direction:column;align-items:stretch}
-            .panel-search{width:100%}
+            .panel-search{max-width:100%}
             .form-row{grid-template-columns:1fr}
             .admin-header{flex-direction:column;align-items:stretch}
-            .best-row{grid-template-columns:30px 30px 1fr auto}
-            .best-rev{display:none}
+            .stats-grid{grid-template-columns:repeat(2,1fr)}
+            .game-stat.hide-mobile{display:none}
         }
         @media(max-width:480px){
-            .nav-logo img{height:34px}
-            .stats-grid{grid-template-columns:1fr}
+            .nav-logo img{height:32px}
+            .stats-grid{grid-template-columns:1fr 1fr}
             .content-grid{grid-template-columns:1fr}
-            .nav-admin-badge{display:none}
+            .best-rev{display:none}
         }
-        .mobile-admin-tabs{display:none;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 1rem;margin-bottom:1.5rem;gap:.4rem}
-        .mobile-admin-tabs .admin-mtab{padding:8px 16px;border-radius:50px;font-size:.75rem;font-weight:700;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:1.5px solid var(--color-border);background:var(--color-white);font-family:var(--font-main);white-space:nowrap;flex-shrink:0;position:relative}
-        .mobile-admin-tabs .admin-mtab.active{background:var(--color-text);color:#fff;border-color:var(--color-text)}
-        .mobile-admin-tabs .admin-mtab .mtab-badge{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:8px;background:var(--color-primary);color:#fff;font-size:.55rem;font-weight:800;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--color-bg)}
-        .mobile-admin-tabs .admin-mtab .mtab-badge.show{display:flex}
-        @media(max-width:1024px){.mobile-admin-tabs{display:flex}}
     </style>
 </head>
 <body>
@@ -218,23 +295,27 @@
             <button class="nav-center-link" data-section="orders">📦 Bestellungen</button>
             <button class="nav-center-link" data-section="messages">📬 Nachrichten <span class="nav-badge" id="navMsgBadge">0</span></button>
             <button class="nav-center-link" data-section="events">📅 Events</button>
-            <button class="nav-center-link" data-section="gamestats">🏆 Game Stats</button>
+            <button class="nav-center-link" data-section="suggestions">🗳️ Vorschläge</button>
+            <button class="nav-center-link" data-section="payments">💰 Zahlungen</button>
+            <button class="nav-center-link" data-section="gamestats">🏆 Stats</button>
             <button class="nav-center-link" data-section="content">✏️ Content</button>
         </div>
         <div class="nav-right">
-            <a href="shop.html" class="nav-back">← Shop</a>
+            <a href="index.html" class="nav-back">← Zurück</a>
             <span class="nav-admin-badge">Admin</span>
             <button class="logout-btn" id="logoutBtn">Logout</button>
         </div>
     </div>
 </nav>
 
-<div class="mobile-admin-tabs" id="mobileTabs" style="margin-top:calc(var(--nav-height) + 1rem)">
+<div class="mobile-admin-tabs" id="mobileTabs" style="margin-top:calc(var(--nav-height) + .75rem)">
     <button class="admin-mtab active" data-section="dashboard">📊 Dashboard</button>
     <button class="admin-mtab" data-section="orders">📦 Bestellungen</button>
     <button class="admin-mtab" data-section="messages">📬 Nachrichten <span class="mtab-badge" id="mobileMsgBadge">0</span></button>
     <button class="admin-mtab" data-section="events">📅 Events</button>
-    <button class="admin-mtab" data-section="gamestats">🏆 Game Stats</button>
+    <button class="admin-mtab" data-section="suggestions">🗳️ Vorschläge</button>
+    <button class="admin-mtab" data-section="payments">💰 Zahlungen</button>
+    <button class="admin-mtab" data-section="gamestats">🏆 Stats</button>
     <button class="admin-mtab" data-section="content">✏️ Content</button>
 </div>
 
@@ -242,74 +323,93 @@
 
 <div class="admin-wrapper">
 
-    <!-- DASHBOARD -->
+    <!-- ====== DASHBOARD ====== -->
     <div class="admin-section active" id="sec-dashboard">
         <div class="admin-header"><div><h1>Dashboard 📊</h1><p>Alles auf einen Blick.</p></div></div>
         <div class="stats-grid">
             <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-value" id="statOrders">-</div><div class="stat-label">Bestellungen</div></div>
             <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-value" id="statRevenue">-</div><div class="stat-label">Umsatz (EUR)</div></div>
-            <div class="stat-card"><div class="stat-icon">🛒</div><div class="stat-value" id="statItems">-</div><div class="stat-label">Artikel verkauft</div></div>
             <div class="stat-card"><div class="stat-icon">📬</div><div class="stat-value" id="statMessages">-</div><div class="stat-label">Nachrichten</div></div>
             <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-value" id="statEvents">-</div><div class="stat-label">Events</div></div>
+            <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-value" id="statGames">-</div><div class="stat-label">Games</div></div>
+            <div class="stat-card"><div class="stat-icon">💳</div><div class="stat-value" id="statPayments">-</div><div class="stat-label">Zahlungen</div></div>
         </div>
-        <div class="panel"><div class="panel-header"><h3>📬 Neue Nachrichten</h3><button class="btn btn-sm btn-outline" id="goToMessages">Alle anzeigen →</button></div><div class="panel-list" id="recentMessagesList" style="max-height:300px"></div></div>
-        <div class="panel"><div class="panel-header"><h3>Letzte Bestellungen</h3><button class="btn btn-sm btn-outline" id="goToOrders">Alle anzeigen →</button></div><div class="panel-list" id="recentOrdersList" style="max-height:300px"></div></div>
-        <div class="panel"><div class="panel-header"><h3>Nächste Events</h3><button class="btn btn-sm btn-outline" id="goToEvents">Alle anzeigen →</button></div><div class="panel-list" id="upcomingEventsList" style="max-height:300px"></div></div>
+        <div class="panel"><div class="panel-header"><h3>📬 Neue Nachrichten</h3><button class="btn btn-sm btn-outline" data-go="messages">Alle →</button></div><div class="panel-list" id="dashMsgList" style="max-height:280px"></div></div>
+        <div class="panel"><div class="panel-header"><h3>Letzte Bestellungen</h3><button class="btn btn-sm btn-outline" data-go="orders">Alle →</button></div><div class="panel-list" id="dashOrderList" style="max-height:280px"></div></div>
+        <div class="panel"><div class="panel-header"><h3>Nächste Events</h3><button class="btn btn-sm btn-outline" data-go="events">Alle →</button></div><div class="panel-list" id="dashEventList" style="max-height:280px"></div></div>
         <div class="panel"><div class="panel-header"><h3>🏆 Top Produkte</h3></div><div class="panel-list" id="bestsellerList"></div></div>
     </div>
 
-    <!-- ORDERS -->
+    <!-- ====== ORDERS ====== -->
     <div class="admin-section" id="sec-orders">
-        <div class="admin-header"><div><h1>Bestellungen 📦</h1><p>Alle Shop-Bestellungen verwalten.</p></div></div>
+        <div class="admin-header"><div><h1>Bestellungen 📦</h1><p>Alle Shop-Bestellungen.</p></div></div>
         <div class="panel">
-            <div class="panel-header"><div style="display:flex;align-items:center;gap:.75rem"><h3>Alle Bestellungen</h3><span class="panel-badge" id="ordersCount">0</span></div><input type="text" class="panel-search" id="ordersSearch" placeholder="🔍 Suchen..."></div>
+            <div class="panel-header"><div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap"><h3>Alle Bestellungen</h3><span class="panel-badge" id="ordersCount">0</span></div><input type="text" class="panel-search" id="ordersSearch" placeholder="🔍 Suchen..."></div>
             <div class="panel-list" id="ordersList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
         </div>
     </div>
 
-    <!-- MESSAGES -->
+    <!-- ====== MESSAGES ====== -->
     <div class="admin-section" id="sec-messages">
-        <div class="admin-header"><div><h1>Nachrichten 📬</h1><p>Alle Kontakt-Nachrichten von der Website.</p></div><div class="header-actions"><button class="btn btn-outline" id="markAllReadBtn">✓ Alle gelesen</button></div></div>
+        <div class="admin-header"><div><h1>Nachrichten 📬</h1><p>Kontakt-Nachrichten.</p></div><div class="header-actions"><button class="btn btn-outline" id="markAllReadBtn">✓ Alle gelesen</button></div></div>
         <div class="panel">
-            <div class="panel-header"><div style="display:flex;align-items:center;gap:.75rem"><h3>Alle Nachrichten</h3><span class="panel-badge" id="messagesCount">0</span><span class="panel-badge unread" id="messagesUnread" style="display:none">0 ungelesen</span></div><input type="text" class="panel-search" id="messagesSearch" placeholder="🔍 Nachricht suchen..."></div>
-            <div class="panel-list" id="messagesList" style="max-height:700px"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
+            <div class="panel-header"><div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap"><h3>Alle Nachrichten</h3><span class="panel-badge" id="messagesCount">0</span><span class="panel-badge unread" id="messagesUnread" style="display:none">0 ungelesen</span></div><input type="text" class="panel-search" id="messagesSearch" placeholder="🔍 Suchen..."></div>
+            <div class="panel-list" id="messagesList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
         </div>
     </div>
 
-    <!-- EVENTS -->
+    <!-- ====== EVENTS ====== -->
     <div class="admin-section" id="sec-events">
-        <div class="admin-header"><div><h1>Events 📅</h1><p>Events erstellen, bearbeiten und verwalten.</p></div><div class="header-actions"><button class="btn btn-primary" id="addEventBtn">+ Neues Event</button></div></div>
+        <div class="admin-header"><div><h1>Events 📅</h1><p>Events erstellen und verwalten.</p></div><div class="header-actions"><button class="btn btn-primary" id="addEventBtn">+ Neues Event</button></div></div>
         <div class="panel">
-            <div class="panel-header"><div style="display:flex;align-items:center;gap:.75rem"><h3>Alle Events</h3><span class="panel-badge" id="eventsCount">0</span></div><input type="text" class="panel-search" id="eventsSearch" placeholder="🔍 Event suchen..."></div>
+            <div class="panel-header"><div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap"><h3>Alle Events</h3><span class="panel-badge" id="eventsCount">0</span></div><input type="text" class="panel-search" id="eventsSearch" placeholder="🔍 Suchen..."></div>
             <div class="panel-list" id="eventsList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
         </div>
     </div>
 
-    <!-- GAME STATS -->
-    <div class="admin-section" id="sec-gamestats">
-        <div class="admin-header"><div><h1>Game Statistik 🏆</h1><p>Spieler und Scores verwalten.</p></div><div class="header-actions"><button class="btn btn-outline" id="addPlayerBtn">+ Spieler</button><button class="btn btn-primary" id="addGameBtn">+ Spiel eintragen</button></div></div>
-        <div class="panel"><div class="panel-header"><h3>Leaderboard</h3><span class="panel-badge" id="playersCount">0</span></div><div class="panel-list" id="gameStatsList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div></div>
-        <div class="panel" style="margin-top:1rem"><div class="panel-header"><h3>Letzte Spiele</h3></div><div class="panel-list" id="recentGamesList" style="max-height:400px"></div></div>
+    <!-- ====== SUGGESTIONS ====== -->
+    <div class="admin-section" id="sec-suggestions">
+        <div class="admin-header"><div><h1>Event-Vorschläge 🗳️</h1><p>Von Nutzern vorgeschlagene Events.</p></div></div>
+        <div class="panel">
+            <div class="panel-header"><div style="display:flex;align-items:center;gap:.5rem"><h3>Vorschläge</h3><span class="panel-badge" id="sugCount">0</span></div></div>
+            <div class="panel-list" id="sugList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
+        </div>
     </div>
 
-    <!-- CONTENT -->
+    <!-- ====== PAYMENTS ====== -->
+    <div class="admin-section" id="sec-payments">
+        <div class="admin-header"><div><h1>Zahlungen 💰</h1><p>Alle Event-Zahlungen.</p></div></div>
+        <div class="panel">
+            <div class="panel-header"><div style="display:flex;align-items:center;gap:.5rem"><h3>Alle Zahlungen</h3><span class="panel-badge" id="payCount">0</span></div></div>
+            <div class="panel-list" id="payList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div>
+        </div>
+    </div>
+
+    <!-- ====== GAME STATS ====== -->
+    <div class="admin-section" id="sec-gamestats">
+        <div class="admin-header"><div><h1>Game Statistik 🏆</h1><p>Basierend auf der stats Collection.</p></div><div class="header-actions"><button class="btn btn-primary" id="addStatBtn">+ Spiel eintragen</button></div></div>
+        <div class="panel"><div class="panel-header"><h3>Leaderboard</h3></div><div class="panel-list" id="leaderboardList"><div class="loading"><div class="loading-spinner"></div>Laden...</div></div></div>
+        <div class="panel" style="margin-top:.75rem"><div class="panel-header"><h3>Letzte Spiele</h3><span class="panel-badge" id="gamesCount">0</span></div><div class="panel-list" id="recentGamesList" style="max-height:500px"></div></div>
+    </div>
+
+    <!-- ====== CONTENT ====== -->
     <div class="admin-section" id="sec-content">
-        <div class="admin-header"><div><h1>Content ✏️</h1><p>WG-Infos, Texte und sonstigen Content verwalten.</p></div></div>
+        <div class="admin-header"><div><h1>Content ✏️</h1><p>Texte und Infos verwalten.</p></div></div>
         <div class="content-grid">
             <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">🏠</div><div><div class="content-card-title">WG Mitglieder</div><div class="content-card-sub">Namen, Bios, Socials</div></div></div><div class="content-card-body" id="membersPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editMembersBtn">Bearbeiten</button></div></div>
-            <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">📝</div><div><div class="content-card-title">Homepage Texte</div><div class="content-card-sub">Hero, Taglines, About</div></div></div><div class="content-card-body" id="textsPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editTextsBtn">Bearbeiten</button></div></div>
-            <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">🔗</div><div><div class="content-card-title">Social Links</div><div class="content-card-sub">Instagram, etc.</div></div></div><div class="content-card-body" id="socialsPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editSocialsBtn">Bearbeiten</button></div></div>
-            <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">🎨</div><div><div class="content-card-title">Galerie</div><div class="content-card-sub">Bilder-URLs verwalten</div></div></div><div class="content-card-body" id="galleryPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editGalleryBtn">Bearbeiten</button></div></div>
+            <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">📝</div><div><div class="content-card-title">Homepage Texte</div><div class="content-card-sub">Hero, About</div></div></div><div class="content-card-body" id="textsPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editTextsBtn">Bearbeiten</button></div></div>
+            <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">🔗</div><div><div class="content-card-title">Social Links</div><div class="content-card-sub">Instagram etc.</div></div></div><div class="content-card-body" id="socialsPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editSocialsBtn">Bearbeiten</button></div></div>
+            <div class="content-card"><div class="content-card-header"><div class="content-card-emoji">🎨</div><div><div class="content-card-title">Galerie</div><div class="content-card-sub">Bilder-URLs</div></div></div><div class="content-card-body" id="galleryPreview">Laden...</div><div class="content-card-footer"><button class="btn btn-sm btn-outline" id="editGalleryBtn">Bearbeiten</button></div></div>
         </div>
     </div>
 </div>
 
-<!-- EVENT MODAL -->
+<!-- ====== EVENT MODAL ====== -->
 <div class="modal-overlay" id="eventModal">
     <div class="modal">
         <div class="modal-header"><h3 id="eventModalTitle">Neues Event</h3><button class="modal-close" onclick="closeModal('eventModal')">✕</button></div>
         <div class="modal-body">
-            <div class="form-group"><label class="form-label">Event Name</label><input type="text" class="form-input" id="evtName" placeholder="z.B. WG Party Vol. 5"></div>
+            <div class="form-group"><label class="form-label">Event Name</label><input type="text" class="form-input" id="evtTitle" placeholder="z.B. WG Party Vol. 5"></div>
             <div class="form-group"><label class="form-label">Emoji</label><input type="text" class="form-input" id="evtEmoji" placeholder="🎉" maxlength="4"></div>
             <div class="form-row">
                 <div class="form-group"><label class="form-label">Datum</label><input type="date" class="form-input" id="evtDate"></div>
@@ -319,9 +419,19 @@
             <div class="form-group"><label class="form-label">Beschreibung</label><textarea class="form-textarea" id="evtDesc" placeholder="Was erwartet die Gäste?"></textarea></div>
             <div class="form-row">
                 <div class="form-group"><label class="form-label">Kategorie</label>
-                    <select class="form-select" id="evtCategory"><option value="party">🎉 Party</option><option value="gamenight">🎮 Game Night</option><option value="dinner">🍕 Dinner</option><option value="sport">⚽ Sport</option><option value="other">✨ Sonstiges</option></select>
+                    <select class="form-select" id="evtCategory">
+                        <option value="party">🎉 Party</option>
+                        <option value="games">🎮 Spieleabend</option>
+                        <option value="drinks">🍹 Trinkabend</option>
+                        <option value="film">🎬 Filmabend</option>
+                        <option value="other">✨ Sonstiges</option>
+                    </select>
                 </div>
-                <div class="form-group"><label class="form-label">Max. Gäste</label><input type="number" class="form-input" id="evtMaxGuests" placeholder="0 = Unlimitiert" min="0"></div>
+                <div class="form-group"><label class="form-label">Kapazität (0=∞)</label><input type="number" class="form-input" id="evtCapacity" placeholder="20" min="0"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label class="form-label">Preis (0=Gratis)</label><input type="number" class="form-input" id="evtPrice" placeholder="0" min="0" step="0.01"></div>
+                <div class="form-group"><label class="form-label">Spiel (optional)</label><input type="text" class="form-input" id="evtGame" placeholder="z.B. Bierpong, Flunkyball"></div>
             </div>
             <div class="form-group"><label class="form-toggle"><input type="checkbox" id="evtPublished" checked><span class="toggle-track"></span><span class="toggle-label">Veröffentlicht</span></label></div>
         </div>
@@ -329,38 +439,54 @@
     </div>
 </div>
 
-<!-- PLAYER MODAL -->
-<div class="modal-overlay" id="playerModal">
+<!-- ====== EVENT DETAIL MODAL (Attendees) ====== -->
+<div class="modal-overlay" id="eventDetailModal">
     <div class="modal">
-        <div class="modal-header"><h3 id="playerModalTitle">Neuer Spieler</h3><button class="modal-close" onclick="closeModal('playerModal')">✕</button></div>
-        <div class="modal-body">
-            <div class="form-group"><label class="form-label">Name</label><input type="text" class="form-input" id="plrName" placeholder="z.B. Mats"></div>
-            <div class="form-row">
-                <div class="form-group"><label class="form-label">Emoji / Avatar</label><input type="text" class="form-input" id="plrEmoji" placeholder="😎" maxlength="4"></div>
-                <div class="form-group"><label class="form-label">Farbe</label><input type="color" class="form-input" id="plrColor" value="#C03A2B" style="height:48px;padding:4px"></div>
-            </div>
-        </div>
-        <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('playerModal')">Abbrechen</button><button class="btn btn-primary" id="playerModalSave">Speichern</button></div>
+        <div class="modal-header"><h3 id="evtDetailTitle">Event Details</h3><button class="modal-close" onclick="closeModal('eventDetailModal')">✕</button></div>
+        <div class="modal-body" id="evtDetailBody"></div>
     </div>
 </div>
 
-<!-- GAME MODAL -->
+<!-- ====== GAME STAT MODAL ====== -->
 <div class="modal-overlay" id="gameModal">
     <div class="modal">
         <div class="modal-header"><h3>Spiel eintragen</h3><button class="modal-close" onclick="closeModal('gameModal')">✕</button></div>
         <div class="modal-body">
             <div class="form-group"><label class="form-label">Spiel</label>
-                <select class="form-select" id="gmType"><option value="flunkyball">🍺 Flunkyball</option><option value="bierpong">🏓 Bierpong</option><option value="catan">🏝️ Catan</option><option value="mario-kart">🏎️ Mario Kart</option><option value="other">🎮 Sonstiges</option></select>
+                <select class="form-select" id="gmType">
+                    <option value="">Spiel wählen...</option>
+                    <option value="Mario Kart">🏎️ Mario Kart</option>
+                    <option value="FIFA">⚽ FIFA</option>
+                    <option value="Poker">🃏 Poker</option>
+                    <option value="Beer Pong">🍺 Beer Pong</option>
+                    <option value="Siedler von Catan">🏗️ Siedler von Catan</option>
+                    <option value="UNO">🎴 UNO</option>
+                    <option value="Tischtennis">🏓 Tischtennis</option>
+                    <option value="Darts">🎯 Darts</option>
+                    <option value="Billard">🎱 Billard</option>
+                    <option value="Schach">♟️ Schach</option>
+                    <option value="Jenga">🧱 Jenga</option>
+                    <option value="Flunkyball">🍻 Flunkyball</option>
+                    <option value="Monopoly">💰 Monopoly</option>
+                    <option value="Dutch">🃏 Dutch</option>
+                    <option value="Sonstiges">🎲 Sonstiges</option>
+                </select>
             </div>
-            <div class="form-group"><label class="form-label">Gewinner</label><select class="form-select" id="gmWinner"><option value="">-- Spieler wählen --</option></select></div>
+            <div class="form-group"><label class="form-label">Gewinner</label>
+                <select class="form-select" id="gmWinner">
+                    <option value="">Gewinner wählen...</option>
+                    <option value="Andrei">Andrei</option>
+                    <option value="Georgie">Georgie</option>
+                    <option value="Mats">Mats</option>
+                </select>
+            </div>
             <div class="form-group"><label class="form-label">Datum</label><input type="date" class="form-input" id="gmDate"></div>
-            <div class="form-group"><label class="form-label">Notizen (optional)</label><input type="text" class="form-input" id="gmNotes" placeholder="z.B. Episches Comeback"></div>
         </div>
         <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('gameModal')">Abbrechen</button><button class="btn btn-primary" id="gameModalSave">Speichern</button></div>
     </div>
 </div>
 
-<!-- MESSAGE DETAIL MODAL -->
+<!-- ====== MESSAGE DETAIL MODAL ====== -->
 <div class="modal-overlay" id="messageModal">
     <div class="modal">
         <div class="modal-header"><h3>📬 Nachricht</h3><button class="modal-close" onclick="closeModal('messageModal')">✕</button></div>
@@ -372,7 +498,7 @@
     </div>
 </div>
 
-<!-- MEMBERS MODAL -->
+<!-- ====== MEMBERS MODAL ====== -->
 <div class="modal-overlay" id="membersModal">
     <div class="modal">
         <div class="modal-header"><h3>WG Mitglieder</h3><button class="modal-close" onclick="closeModal('membersModal')">✕</button></div>
@@ -381,21 +507,21 @@
     </div>
 </div>
 
-<!-- TEXTS MODAL -->
+<!-- ====== TEXTS MODAL ====== -->
 <div class="modal-overlay" id="textsModal">
     <div class="modal">
         <div class="modal-header"><h3>Homepage Texte</h3><button class="modal-close" onclick="closeModal('textsModal')">✕</button></div>
         <div class="modal-body">
-            <div class="form-group"><label class="form-label">Hero Titel</label><input type="text" class="form-input" id="txtHero" placeholder="Die WG."></div>
-            <div class="form-group"><label class="form-label">Hero Subtitle</label><input type="text" class="form-input" id="txtHeroSub" placeholder="Drei Leute, ein Zuhause."></div>
-            <div class="form-group"><label class="form-label">About Text</label><textarea class="form-textarea" id="txtAbout" placeholder="Über die WG..."></textarea></div>
+            <div class="form-group"><label class="form-label">Hero Titel</label><input type="text" class="form-input" id="txtHero"></div>
+            <div class="form-group"><label class="form-label">Hero Subtitle</label><input type="text" class="form-input" id="txtHeroSub"></div>
+            <div class="form-group"><label class="form-label">About Text</label><textarea class="form-textarea" id="txtAbout"></textarea></div>
             <div class="form-group"><label class="form-label">Shop Disclaimer</label><input type="text" class="form-input" id="txtDisclaimer"></div>
         </div>
         <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('textsModal')">Abbrechen</button><button class="btn btn-primary" id="textsModalSave">Speichern</button></div>
     </div>
 </div>
 
-<!-- SOCIALS MODAL -->
+<!-- ====== SOCIALS MODAL ====== -->
 <div class="modal-overlay" id="socialsModal">
     <div class="modal">
         <div class="modal-header"><h3>Social Links</h3><button class="modal-close" onclick="closeModal('socialsModal')">✕</button></div>
@@ -404,7 +530,7 @@
     </div>
 </div>
 
-<!-- GALLERY MODAL -->
+<!-- ====== GALLERY MODAL ====== -->
 <div class="modal-overlay" id="galleryModal">
     <div class="modal">
         <div class="modal-header"><h3>Galerie</h3><button class="modal-close" onclick="closeModal('galleryModal')">✕</button></div>
@@ -428,714 +554,450 @@ function openModal(id){document.getElementById(id).classList.add("active");docum
     if(!firebase.apps.length)firebase.initializeApp(fc);
     var db=firebase.firestore();
 
-    var products=[
-        {id:1,title:"Immobilienbewertung by Mats",emoji:"🏠",price:49.99},
-        {id:2,title:"Trainingsplan by Andrei",emoji:"💪",price:29.99},
-        {id:3,title:"Zweitmeinung by Georgie",emoji:"🩺",price:14.99},
-        {id:4,title:"Excel deines Lebens",emoji:"📊",price:19.99},
-        {id:5,title:"Flunkyball-Pokal",emoji:"🏆",price:0},
-        {id:6,title:"Goldener Bierpong-Ball",emoji:"🥇",price:9.99},
-        {id:7,title:"Catan-Dominanz-Plakette",emoji:"🏝️",price:0},
-        {id:8,title:"Abend mit dem Tank",emoji:"🍗",price:24.99},
-        {id:9,title:"Strategie-Coaching Georgie",emoji:"♟️",price:19.99},
-        {id:10,title:"Justus-for-a-Day",emoji:"🎩",price:34.99},
-        {id:11,title:"VIP Hausparty-Experience",emoji:"🎉",price:59.99},
-        {id:12,title:"pocci4 Bierglas",emoji:"🍺",price:12.99},
-        {id:13,title:"Naturally T-Shirt",emoji:"👕",price:24.99},
-        {id:14,title:"Andreis Protein-Shaker",emoji:"🥤",price:14.99},
-        {id:15,title:"Georgies Notfallkit",emoji:"🧳",price:9.99}
-    ];
+    // GAME EMOJIS (same as stats.html)
+    var GAME_EMOJIS={"Mario Kart":"🏎️","FIFA":"⚽","Poker":"🃏","Beer Pong":"🍺","Siedler von Catan":"🏗️","UNO":"🎴","Tischtennis":"🏓","Darts":"🎯","Billard":"🎱","Schach":"♟️","Jenga":"🧱","Flunkyball":"🍻","Monopoly":"💰","Dutch":"🃏","Sonstiges":"🎲"};
 
-    var allOrders=[],allEvents=[],allPlayers=[],allGames=[],allMessages=[];
-    var editingEventId=null,editingPlayerId=null,viewingMsgId=null;
+    var allOrders=[],allEvents=[],allMessages=[],allStats=[],allSuggestions=[],allPayments=[],allSignups=[];
+    var editingEventId=null,viewingMsgId=null;
 
     // ===== HELPERS =====
-    function toast(msg,type){
-        var t=document.createElement("div");t.className="toast "+(type||"success");t.textContent=msg;
-        document.getElementById("toastContainer").appendChild(t);
-        setTimeout(function(){t.classList.add("show");},50);
-        setTimeout(function(){t.classList.remove("show");setTimeout(function(){t.remove();},400);},3000);
-    }
-
-    function esc(str){return(str||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-
-    function getDateStr(val){
-        if(!val)return"";
-        if(val.seconds){var d=new Date(val.seconds*1000);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
-        if(typeof val==="string")return val;
-        return"";
-    }
-
-    function fDate(ts){
-        if(!ts)return"-";
-        var d;
-        if(ts.seconds)d=new Date(ts.seconds*1000);
-        else if(typeof ts==="string")d=new Date(ts+"T00:00:00");
-        else return"-";
-        if(isNaN(d.getTime()))return"-";
-        return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"})+" · "+d.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
-    }
-
-    function fDateShort(ts){
-        if(!ts)return"-";
-        var d;
-        if(ts.seconds)d=new Date(ts.seconds*1000);
-        else return"-";
-        var now=new Date();
-        var diff=now.getTime()-d.getTime();
-        var mins=Math.floor(diff/60000);
-        if(mins<1)return"Gerade eben";
-        if(mins<60)return mins+" Min.";
-        var hrs=Math.floor(mins/60);
-        if(hrs<24)return hrs+" Std.";
-        var days=Math.floor(hrs/24);
-        if(days<7)return days+" Tag"+(days>1?"e":"");
-        return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"});
-    }
-
+    function toast(msg,type){var t=document.createElement("div");t.className="toast "+(type||"success");t.textContent=msg;document.getElementById("toastContainer").appendChild(t);setTimeout(function(){t.classList.add("show");},50);setTimeout(function(){t.classList.remove("show");setTimeout(function(){t.remove();},400);},3000);}
+    function esc(s){return(s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+    function fDate(ts){if(!ts)return"-";var d;if(ts.seconds)d=new Date(ts.seconds*1000);else if(typeof ts==="string")d=new Date(ts+"T00:00:00");else return"-";if(isNaN(d.getTime()))return"-";return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"});}
+    function fDateTime(ts){if(!ts)return"-";var d;if(ts.seconds)d=new Date(ts.seconds*1000);else return"-";return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"})+" "+d.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});}
+    function fShort(ts){if(!ts)return"-";var d;if(ts.seconds)d=new Date(ts.seconds*1000);else return"-";var diff=Date.now()-d.getTime();var m=Math.floor(diff/60000);if(m<1)return"Gerade";if(m<60)return m+" Min.";var h=Math.floor(m/60);if(h<24)return h+" Std.";var dy=Math.floor(h/24);if(dy<7)return dy+"T";return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"});}
     function monthName(m){return["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"][m];}
     function todayStr(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
-
-    function getInitials(name){
-        if(!name)return"?";
-        var parts=name.trim().split(/\s+/);
-        if(parts.length>=2)return(parts[0][0]+parts[1][0]).toUpperCase();
-        return name.substring(0,2).toUpperCase();
-    }
+    function getInitials(n){if(!n)return"?";var p=n.trim().split(/\s+/);return p.length>=2?(p[0][0]+p[1][0]).toUpperCase():n.substring(0,2).toUpperCase();}
+    function getDateStr(val){if(!val)return"";if(val.seconds){var d=new Date(val.seconds*1000);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}if(typeof val==="string")return val;return"";}
 
     // ===== NAVIGATION =====
     function switchSection(name){
-        var secs=document.querySelectorAll(".admin-section");
-        for(var i=0;i<secs.length;i++)secs[i].classList.toggle("active",secs[i].id==="sec-"+name);
-        var nBtns=document.querySelectorAll(".nav-center-link");
-        for(var i=0;i<nBtns.length;i++)nBtns[i].classList.toggle("active",nBtns[i].getAttribute("data-section")===name);
-        var mBtns=document.querySelectorAll(".admin-mtab");
-        for(var i=0;i<mBtns.length;i++)mBtns[i].classList.toggle("active",mBtns[i].getAttribute("data-section")===name);
+        document.querySelectorAll(".admin-section").forEach(function(s){s.classList.toggle("active",s.id==="sec-"+name);});
+        document.querySelectorAll(".nav-center-link").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-section")===name);});
+        document.querySelectorAll(".admin-mtab").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-section")===name);});
         window.scrollTo({top:0,behavior:"smooth"});
     }
-
-    document.querySelectorAll(".nav-center-link").forEach(function(btn){btn.addEventListener("click",function(){switchSection(this.getAttribute("data-section"));});});
-    document.querySelectorAll(".admin-mtab").forEach(function(btn){btn.addEventListener("click",function(){switchSection(this.getAttribute("data-section"));});});
-    document.getElementById("goToOrders").addEventListener("click",function(e){e.preventDefault();switchSection("orders");});
-    document.getElementById("goToEvents").addEventListener("click",function(e){e.preventDefault();switchSection("events");});
-    document.getElementById("goToMessages").addEventListener("click",function(e){e.preventDefault();switchSection("messages");});
-    document.getElementById("logoutBtn").addEventListener("click",function(){sessionStorage.removeItem("pocci4admin");window.location.href="shop.html";});
-
-    document.querySelectorAll(".modal-overlay").forEach(function(ov){
-        ov.addEventListener("click",function(e){if(e.target===ov)closeModal(ov.id);});
-    });
+    document.querySelectorAll(".nav-center-link,.admin-mtab").forEach(function(b){b.addEventListener("click",function(){switchSection(this.getAttribute("data-section"));});});
+    document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(e){e.preventDefault();switchSection(this.getAttribute("data-go"));});});
+    document.getElementById("logoutBtn").addEventListener("click",function(){sessionStorage.removeItem("pocci4admin");window.location.href="index.html";});
+    document.querySelectorAll(".modal-overlay").forEach(function(ov){ov.addEventListener("click",function(e){if(e.target===ov)closeModal(ov.id);});});
 
     // ============================================================
     //  ORDERS
     // ============================================================
     function loadOrders(){
         db.collection("orders").onSnapshot(function(snap){
-            allOrders=[];
-            snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allOrders.push(d);});
-            allOrders.sort(function(a,b){
-                var ta=a.createdAt?a.createdAt.seconds:0;
-                var tb=b.createdAt?b.createdAt.seconds:0;
-                return tb-ta;
-            });
-            renderOrders(allOrders);renderRecentOrders();updateDashboard();renderBestsellers();
-        },function(err){
-            console.error("Orders:",err);
-            document.getElementById("ordersList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+esc(err.message)+'</p></div>';
+            allOrders=[];snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allOrders.push(d);});
+            allOrders.sort(function(a,b){return(b.createdAt?b.createdAt.seconds:0)-(a.createdAt?a.createdAt.seconds:0);});
+            renderOrders(allOrders);renderDashOrders();updateDashboard();renderBestsellers();
         });
     }
 
     function renderOrders(orders){
-        var c=document.getElementById("ordersList");
-        document.getElementById("ordersCount").textContent=orders.length;
-        if(!orders.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📭</div><h3>Keine Bestellungen</h3><p>Sobald jemand bestellt taucht es hier auf.</p></div>';return;}
+        var c=document.getElementById("ordersList");document.getElementById("ordersCount").textContent=orders.length;
+        if(!orders.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📭</div><h3>Keine Bestellungen</h3></div>';return;}
         var h="";
-        for(var i=0;i<orders.length;i++){
-            var o=orders[i],emojis="",names=[];
-            if(o.items&&o.items.length)for(var j=0;j<o.items.length;j++){emojis+=(o.items[j].emoji||"");names.push(o.items[j].qty+"x "+o.items[j].title);}
-            else if(o.itemsSummary)names.push(o.itemsSummary);
-            var done=o.status==="done";
-            h+='<div class="order-row"><div><div class="order-id">#'+esc(o._id.substring(0,8).toUpperCase())+'</div><div class="order-date">'+fDate(o.createdAt)+'</div></div>';
-            h+='<div><div class="order-items-main">'+emojis+'</div><div class="order-items-detail">'+esc(names.join(", "))+'</div></div>';
-            h+='<span class="order-method '+(o.paymentMethod==="paypal"?"method-paypal":"method-vor-ort")+'">'+(o.paymentMethod==="paypal"?"PayPal":"Vor Ort")+'</span>';
-            h+='<div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+" €</div>";
-            h+='<div class="order-actions"><button class="status-btn'+(done?" done":"")+'" data-oid="'+esc(o._id)+'">'+(done?"✓ Erledigt":"Offen")+'</button><button class="del-btn" data-oid="'+esc(o._id)+'">🗑️</button></div></div>';
-        }
-        c.innerHTML=h;
-        c.querySelectorAll(".status-btn:not(.done)").forEach(function(btn){btn.addEventListener("click",function(){db.collection("orders").doc(this.getAttribute("data-oid")).update({status:"done"});toast("✓ Erledigt");});});
-        c.querySelectorAll(".del-btn[data-oid]").forEach(function(btn){btn.addEventListener("click",function(){if(confirm("Bestellung löschen?")){db.collection("orders").doc(this.getAttribute("data-oid")).delete();toast("Gelöscht","error");}});});
-    }
-
-    function renderRecentOrders(){
-        var c=document.getElementById("recentOrdersList"),recent=allOrders.slice(0,5);
-        if(!recent.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📭</div><p>Noch keine Bestellungen.</p></div>';return;}
-        var h="";
-        for(var i=0;i<recent.length;i++){
-            var o=recent[i],names=[];
+        for(var i=0;i<orders.length;i++){var o=orders[i],names=[];
             if(o.items)for(var j=0;j<o.items.length;j++)names.push(o.items[j].qty+"x "+o.items[j].title);
             else if(o.itemsSummary)names.push(o.itemsSummary);
-            h+='<div class="order-row" style="grid-template-columns:1fr auto auto"><div><div class="order-items-main">'+esc(names.join(", ")||"Bestellung")+'</div><div class="order-date">'+fDate(o.createdAt)+'</div></div>';
+            var done=o.status==="done";
+            h+='<div class="order-row"><div class="order-info"><div class="order-id">#'+esc(o._id.substring(0,8).toUpperCase())+'</div><div class="order-items-detail">'+esc(names.join(", "))+'</div><div class="order-date">'+fDateTime(o.createdAt)+'</div></div>';
             h+='<span class="order-method '+(o.paymentMethod==="paypal"?"method-paypal":"method-vor-ort")+'">'+(o.paymentMethod==="paypal"?"PayPal":"Vor Ort")+'</span>';
-            h+='<div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+' €</div></div>';
+            h+='<div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+" €</div>";
+            h+='<div class="order-actions"><button class="status-btn'+(done?" done":"")+'" data-oid="'+esc(o._id)+'">'+(done?"✓ Erledigt":"Offen")+'</button><button class="del-btn" data-del-order="'+esc(o._id)+'">🗑️</button></div></div>';
         }
+        c.innerHTML=h;
+        c.querySelectorAll(".status-btn:not(.done)").forEach(function(b){b.addEventListener("click",function(){db.collection("orders").doc(this.getAttribute("data-oid")).update({status:"done"});toast("✓ Erledigt");});});
+        c.querySelectorAll("[data-del-order]").forEach(function(b){b.addEventListener("click",function(){if(confirm("Löschen?")){db.collection("orders").doc(this.getAttribute("data-del-order")).delete();toast("Gelöscht","error");}});});
+    }
+
+    function renderDashOrders(){
+        var c=document.getElementById("dashOrderList"),recent=allOrders.slice(0,5);
+        if(!recent.length){c.innerHTML='<div class="empty-state"><p>Keine Bestellungen.</p></div>';return;}
+        var h="";for(var i=0;i<recent.length;i++){var o=recent[i],names=[];if(o.items)for(var j=0;j<o.items.length;j++)names.push(o.items[j].qty+"x "+o.items[j].title);h+='<div class="order-row"><div class="order-info"><div class="order-items-main">'+esc(names.join(", ")||"Bestellung")+'</div><div class="order-date">'+fDateTime(o.createdAt)+'</div></div><div class="order-total">'+(o.total||0).toFixed(2).replace(".",",")+' €</div></div>';}
         c.innerHTML=h;
     }
 
-    document.getElementById("ordersSearch").addEventListener("input",function(){
-        var q=this.value.toLowerCase();
-        if(!q){renderOrders(allOrders);return;}
-        renderOrders(allOrders.filter(function(o){
-            var t=(o.itemsSummary||"")+" "+(o.paymentMethod||"")+" "+o._id;
-            if(o.items)for(var i=0;i<o.items.length;i++)t+=" "+o.items[i].title;
-            return t.toLowerCase().indexOf(q)!==-1;
-        }));
-    });
+    document.getElementById("ordersSearch").addEventListener("input",function(){var q=this.value.toLowerCase();renderOrders(q?allOrders.filter(function(o){var t=JSON.stringify(o).toLowerCase();return t.indexOf(q)!==-1;}):allOrders);});
 
     // ============================================================
     //  MESSAGES
     // ============================================================
     function loadMessages(){
         db.collection("messages").onSnapshot(function(snap){
-            allMessages=[];
-            snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allMessages.push(d);});
-            allMessages.sort(function(a,b){
-                var ta=a.createdAt?a.createdAt.seconds:0;
-                var tb=b.createdAt?b.createdAt.seconds:0;
-                return tb-ta;
-            });
-            renderMessages(allMessages);renderRecentMessages();updateDashboard();updateMsgBadges();
-        },function(err){
-            console.error("Messages:",err);
-            document.getElementById("messagesList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+esc(err.message)+'</p></div>';
+            allMessages=[];snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allMessages.push(d);});
+            allMessages.sort(function(a,b){return(b.createdAt?b.createdAt.seconds:0)-(a.createdAt?a.createdAt.seconds:0);});
+            renderMessages(allMessages);renderDashMsgs();updateDashboard();updateMsgBadges();
         });
     }
 
-    function countUnread(){
-        var count=0;
-        for(var i=0;i<allMessages.length;i++){if(!allMessages[i].read)count++;}
-        return count;
-    }
+    function countUnread(){var c=0;for(var i=0;i<allMessages.length;i++)if(!allMessages[i].read)c++;return c;}
 
     function updateMsgBadges(){
-        var unread=countUnread();
-        // Nav badge
-        var navBadge=document.getElementById("navMsgBadge");
-        navBadge.textContent=unread;
-        navBadge.classList.toggle("show",unread>0);
-        // Mobile badge
-        var mobBadge=document.getElementById("mobileMsgBadge");
-        mobBadge.textContent=unread;
-        mobBadge.classList.toggle("show",unread>0);
-        // Panel unread badge
-        var unreadBadge=document.getElementById("messagesUnread");
-        if(unread>0){unreadBadge.textContent=unread+" ungelesen";unreadBadge.style.display="inline-block";}
-        else{unreadBadge.style.display="none";}
+        var u=countUnread();
+        var nb=document.getElementById("navMsgBadge");nb.textContent=u;nb.classList.toggle("show",u>0);
+        var mb=document.getElementById("mobileMsgBadge");mb.textContent=u;mb.classList.toggle("show",u>0);
+        var ub=document.getElementById("messagesUnread");if(u>0){ub.textContent=u+" ungelesen";ub.style.display="inline-block";}else{ub.style.display="none";}
     }
 
-    function renderMessages(messages){
-        var c=document.getElementById("messagesList");
-        document.getElementById("messagesCount").textContent=messages.length;
-        if(!messages.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📬</div><h3>Keine Nachrichten</h3><p>Sobald jemand über die Kontaktseite schreibt, erscheint es hier.</p></div>';return;}
-        var h="";
-        for(var i=0;i<messages.length;i++){
-            var m=messages[i];
-            var isUnread=!m.read;
-            h+='<div class="msg-row'+(isUnread?" unread":"")+'" data-msg-id="'+esc(m._id)+'" style="cursor:pointer">';
+    function renderMessages(msgs){
+        var c=document.getElementById("messagesList");document.getElementById("messagesCount").textContent=msgs.length;
+        if(!msgs.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📬</div><h3>Keine Nachrichten</h3></div>';return;}
+        var h="";for(var i=0;i<msgs.length;i++){var m=msgs[i],ur=!m.read;
+            h+='<div class="msg-row'+(ur?" unread":"")+'" data-msg-id="'+esc(m._id)+'">';
             h+='<div class="msg-avatar">'+getInitials(m.name)+'</div>';
-            h+='<div><div class="msg-sender">'+esc(m.name||"Unbekannt")+'</div>';
-            h+='<div class="msg-subject">'+esc(m.subject||"Kein Betreff")+'</div>';
-            h+='<div class="msg-preview">'+esc(m.message||"")+'</div></div>';
-            h+='<div class="msg-time">'+fDateShort(m.createdAt)+'</div>';
-            h+='<div class="order-actions">'+(isUnread?'<div class="msg-unread-dot"></div>':'')+'<button class="del-btn" data-del-msg="'+esc(m._id)+'">🗑️</button></div>';
-            h+='</div>';
+            h+='<div class="msg-info"><div class="msg-sender">'+esc(m.name||"Unbekannt")+'</div><div class="msg-subject">'+esc(m.subject||"Kein Betreff")+'</div><div class="msg-preview">'+esc(m.message||"")+'</div></div>';
+            h+='<div class="msg-time">'+fShort(m.createdAt)+'</div>';
+            if(ur)h+='<div class="msg-unread-dot"></div>';
+            h+='<button class="del-btn" data-del-msg="'+esc(m._id)+'" style="margin-left:.25rem">🗑️</button></div>';
         }
         c.innerHTML=h;
-        // Click to open message
-        c.querySelectorAll(".msg-row").forEach(function(row){
-            row.addEventListener("click",function(e){
-                if(e.target.closest(".del-btn"))return;
-                var msgId=this.getAttribute("data-msg-id");
-                openMessage(msgId);
-            });
-        });
-        // Delete buttons
-        c.querySelectorAll("[data-del-msg]").forEach(function(btn){
-            btn.addEventListener("click",function(e){
-                e.stopPropagation();
-                if(confirm("Nachricht löschen?")){
-                    db.collection("messages").doc(this.getAttribute("data-del-msg")).delete();
-                    toast("Gelöscht","error");
-                }
-            });
-        });
+        c.querySelectorAll(".msg-row").forEach(function(r){r.addEventListener("click",function(e){if(e.target.closest(".del-btn"))return;openMessage(this.getAttribute("data-msg-id"));});});
+        c.querySelectorAll("[data-del-msg]").forEach(function(b){b.addEventListener("click",function(e){e.stopPropagation();if(confirm("Löschen?")){db.collection("messages").doc(this.getAttribute("data-del-msg")).delete();toast("Gelöscht","error");}});});
     }
 
     function openMessage(id){
-        var msg=null;
-        for(var i=0;i<allMessages.length;i++){if(allMessages[i]._id===id){msg=allMessages[i];break;}}
-        if(!msg)return;
-        viewingMsgId=id;
-        // Mark as read
-        if(!msg.read){
-            db.collection("messages").doc(id).update({read:true}).catch(function(err){console.error(err);});
-        }
-        var body=document.getElementById("messageModalBody");
-        var h='<div class="msg-detail-header"><div class="msg-detail-avatar">'+getInitials(msg.name)+'</div><div><div class="msg-detail-name">'+esc(msg.name||"Unbekannt")+'</div><div class="msg-detail-sub">'+fDate(msg.createdAt)+'</div></div></div>';
-        if(msg.subject)h+='<div class="msg-detail-subject">📎 '+esc(msg.subject)+'</div>';
-        h+='<div class="msg-detail-body">'+esc(msg.message||"(Keine Nachricht)")+'</div>';
-        body.innerHTML=h;
+        var msg=null;for(var i=0;i<allMessages.length;i++)if(allMessages[i]._id===id){msg=allMessages[i];break;}
+        if(!msg)return;viewingMsgId=id;
+        if(!msg.read)db.collection("messages").doc(id).update({read:true}).catch(function(){});
+        var b=document.getElementById("messageModalBody");
+        b.innerHTML='<div class="msg-detail-header"><div class="msg-detail-avatar">'+getInitials(msg.name)+'</div><div><div class="msg-detail-name">'+esc(msg.name||"Unbekannt")+'</div><div class="msg-detail-sub">'+fDateTime(msg.createdAt)+'</div></div></div>'+(msg.subject?'<div class="msg-detail-subject">📎 '+esc(msg.subject)+'</div>':'')+'<div class="msg-detail-body">'+esc(msg.message||"(leer)")+'</div>';
         openModal("messageModal");
     }
 
-    document.getElementById("msgDeleteBtn").addEventListener("click",function(){
-        if(!viewingMsgId)return;
-        if(confirm("Nachricht löschen?")){
-            db.collection("messages").doc(viewingMsgId).delete();
-            closeModal("messageModal");
-            toast("Gelöscht","error");
-            viewingMsgId=null;
-        }
-    });
+    document.getElementById("msgDeleteBtn").addEventListener("click",function(){if(!viewingMsgId)return;if(confirm("Löschen?")){db.collection("messages").doc(viewingMsgId).delete();closeModal("messageModal");toast("Gelöscht","error");viewingMsgId=null;}});
+    document.getElementById("markAllReadBtn").addEventListener("click",function(){var batch=db.batch(),c=0;for(var i=0;i<allMessages.length;i++)if(!allMessages[i].read){batch.update(db.collection("messages").doc(allMessages[i]._id),{read:true});c++;}if(!c){toast("Alle gelesen ✓");return;}batch.commit().then(function(){toast(c+" gelesen ✓");});});
 
-    document.getElementById("markAllReadBtn").addEventListener("click",function(){
-        var batch=db.batch();
-        var count=0;
-        for(var i=0;i<allMessages.length;i++){
-            if(!allMessages[i].read){
-                batch.update(db.collection("messages").doc(allMessages[i]._id),{read:true});
-                count++;
-            }
-        }
-        if(count===0){toast("Alle bereits gelesen ✓");return;}
-        batch.commit().then(function(){toast(count+" als gelesen markiert ✓");}).catch(function(err){toast("Fehler","error");console.error(err);});
-    });
-
-    function renderRecentMessages(){
-        var c=document.getElementById("recentMessagesList");
-        var recent=allMessages.slice(0,5);
-        if(!recent.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📬</div><p>Noch keine Nachrichten.</p></div>';return;}
-        var h="";
-        for(var i=0;i<recent.length;i++){
-            var m=recent[i];
-            var isUnread=!m.read;
-            h+='<div class="msg-row'+(isUnread?" unread":"")+'" data-dash-msg="'+esc(m._id)+'" style="cursor:pointer;grid-template-columns:auto 1fr auto">';
+    function renderDashMsgs(){
+        var c=document.getElementById("dashMsgList"),recent=allMessages.slice(0,5);
+        if(!recent.length){c.innerHTML='<div class="empty-state"><p>Keine Nachrichten.</p></div>';return;}
+        var h="";for(var i=0;i<recent.length;i++){var m=recent[i],ur=!m.read;
+            h+='<div class="msg-row'+(ur?" unread":"")+'" data-dash-msg="'+esc(m._id)+'" style="cursor:pointer">';
             h+='<div class="msg-avatar">'+getInitials(m.name)+'</div>';
-            h+='<div><div class="msg-sender">'+esc(m.name||"Unbekannt")+(isUnread?' <span style="color:var(--color-primary);font-size:.7rem">● NEU</span>':'')+'</div>';
-            h+='<div class="msg-preview">'+esc(m.message||"")+'</div></div>';
-            h+='<div class="msg-time">'+fDateShort(m.createdAt)+'</div>';
-            h+='</div>';
+            h+='<div class="msg-info"><div class="msg-sender">'+esc(m.name||"Unbekannt")+(ur?' <span style="color:var(--color-primary);font-size:.6rem">● NEU</span>':'')+'</div><div class="msg-preview">'+esc(m.message||"")+'</div></div>';
+            h+='<div class="msg-time">'+fShort(m.createdAt)+'</div></div>';
         }
         c.innerHTML=h;
-        c.querySelectorAll("[data-dash-msg]").forEach(function(row){
-            row.addEventListener("click",function(){
-                switchSection("messages");
-                var msgId=this.getAttribute("data-dash-msg");
-                setTimeout(function(){openMessage(msgId);},300);
-            });
-        });
+        c.querySelectorAll("[data-dash-msg]").forEach(function(r){r.addEventListener("click",function(){switchSection("messages");var id=this.getAttribute("data-dash-msg");setTimeout(function(){openMessage(id);},200);});});
     }
 
-    document.getElementById("messagesSearch").addEventListener("input",function(){
-        var q=this.value.toLowerCase();
-        if(!q){renderMessages(allMessages);return;}
-        renderMessages(allMessages.filter(function(m){
-            return(m.name||"").toLowerCase().indexOf(q)!==-1||(m.subject||"").toLowerCase().indexOf(q)!==-1||(m.message||"").toLowerCase().indexOf(q)!==-1;
-        }));
-    });
+    document.getElementById("messagesSearch").addEventListener("input",function(){var q=this.value.toLowerCase();renderMessages(q?allMessages.filter(function(m){return(m.name||"").toLowerCase().indexOf(q)!==-1||(m.subject||"").toLowerCase().indexOf(q)!==-1||(m.message||"").toLowerCase().indexOf(q)!==-1;}):allMessages);});
 
     // ============================================================
-    //  EVENTS
+    //  EVENTS (FIXED field names: title, desc, capacity)
     // ============================================================
     function loadEvents(){
         db.collection("events").onSnapshot(function(snap){
-            allEvents=[];
-            snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allEvents.push(d);});
+            allEvents=[];snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allEvents.push(d);});
             allEvents.sort(function(a,b){return(getDateStr(b.date)||"").localeCompare(getDateStr(a.date)||"");});
-            renderEvents(allEvents);renderUpcomingEvents();updateDashboard();
-        },function(err){
-            console.error("Events:",err);
-            document.getElementById("eventsList").innerHTML='<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Fehler</h3><p>'+esc(err.message)+'</p></div>';
+            renderEvents(allEvents);renderDashEvents();updateDashboard();
         });
     }
 
+    function evTitle(e){return e.title||e.name||"Unbenannt";}
+    function evDesc(e){return e.desc||e.description||"";}
+    function evCap(e){return e.capacity||e.maxGuests||0;}
+
     function renderEvents(events){
-        var c=document.getElementById("eventsList");
-        document.getElementById("eventsCount").textContent=events.length;
-        if(!events.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📅</div><h3>Keine Events</h3><p>Erstelle dein erstes Event!</p></div>';return;}
-        var now=new Date();now.setHours(0,0,0,0);
-        var h="";
-        for(var i=0;i<events.length;i++){
-            var e=events[i],ds=getDateStr(e.date),d=ds?new Date(ds+"T00:00:00"):null;
-            var isPast=d?d<now:false;
-            var isPublished=e.published!==false;
+        var c=document.getElementById("eventsList");document.getElementById("eventsCount").textContent=events.length;
+        if(!events.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📅</div><h3>Keine Events</h3></div>';return;}
+        var now=new Date();now.setHours(0,0,0,0);var h="";
+        for(var i=0;i<events.length;i++){var e=events[i],ds=getDateStr(e.date),d=ds?new Date(ds+"T00:00:00"):null;
+            var isPast=d?d<now:false;var isPub=e.published!==false;
             h+='<div class="event-row">';
             if(d&&!isNaN(d.getTime()))h+='<div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div>';
             else h+='<div class="event-date-badge"><div class="event-date-day">?</div><div class="event-date-month">TBD</div></div>';
-            h+='<div class="event-emoji">'+(e.emoji||"📅")+'</div>';
-            h+='<div><div class="event-title">'+esc(e.name||"Unbenannt")+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+esc(e.location):"")+(e.maxGuests?" · Max "+e.maxGuests+" Gäste":"")+'</div></div>';
-            h+='<span class="'+(!isPublished?"event-status-draft":isPast?"event-status-past":"event-status-live")+'">'+(!isPublished?"Entwurf":isPast?"Vergangen":"Live")+'</span>';
-            h+='<div class="order-actions"><button class="btn btn-sm btn-outline" data-edit-evt="'+esc(e._id)+'">✏️</button><button class="del-btn" data-del-evt="'+esc(e._id)+'">🗑️</button></div></div>';
+            h+='<div class="event-emoji-big">'+(e.emoji||"📅")+'</div>';
+            h+='<div class="event-info"><div class="event-title">'+esc(evTitle(e))+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+esc(e.location):"")+" · "+(e.attending||0)+"/"+(evCap(e)||"∞")+" Gäste"+'</div></div>';
+            h+='<span class="event-status '+(!isPub?"event-status-draft":isPast?"event-status-past":"event-status-live")+'">'+(!isPub?"Entwurf":isPast?"Vergangen":"Live")+'</span>';
+            h+='<div class="order-actions"><button class="btn btn-sm btn-outline" data-view-evt="'+esc(e._id)+'">👥</button><button class="btn btn-sm btn-outline" data-edit-evt="'+esc(e._id)+'">✏️</button><button class="del-btn" data-del-evt="'+esc(e._id)+'">🗑️</button></div></div>';
         }
         c.innerHTML=h;
-        c.querySelectorAll("[data-edit-evt]").forEach(function(btn){btn.addEventListener("click",function(){editEvent(this.getAttribute("data-edit-evt"));});});
-        c.querySelectorAll("[data-del-evt]").forEach(function(btn){btn.addEventListener("click",function(){if(confirm("Event löschen?")){db.collection("events").doc(this.getAttribute("data-del-evt")).delete();toast("Event gelöscht","error");}});});
+        c.querySelectorAll("[data-edit-evt]").forEach(function(b){b.addEventListener("click",function(){editEvent(this.getAttribute("data-edit-evt"));});});
+        c.querySelectorAll("[data-view-evt]").forEach(function(b){b.addEventListener("click",function(){viewEventDetail(this.getAttribute("data-view-evt"));});});
+        c.querySelectorAll("[data-del-evt]").forEach(function(b){b.addEventListener("click",function(){if(confirm("Event löschen?")){db.collection("events").doc(this.getAttribute("data-del-evt")).delete();toast("Gelöscht","error");}});});
     }
 
-    function renderUpcomingEvents(){
-        var c=document.getElementById("upcomingEventsList");
-        var now=new Date();now.setHours(0,0,0,0);
-        var upcoming=allEvents.filter(function(e){
-            if(e.published===false)return false;
-            var ds=getDateStr(e.date);if(!ds)return false;
-            return new Date(ds+"T00:00:00")>=now;
-        }).sort(function(a,b){return(getDateStr(a.date)||"").localeCompare(getDateStr(b.date)||"");}).slice(0,3);
-        if(!upcoming.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📅</div><p>Keine kommenden Events.</p></div>';return;}
-        var h="";
-        for(var i=0;i<upcoming.length;i++){
-            var e=upcoming[i],ds=getDateStr(e.date),d=ds?new Date(ds+"T00:00:00"):new Date();
-            h+='<div class="event-row" style="grid-template-columns:auto 40px 1fr"><div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div><div class="event-emoji">'+(e.emoji||"📅")+'</div><div><div class="event-title">'+esc(e.name||"")+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+esc(e.location):"")+'</div></div></div>';
-        }
-        c.innerHTML=h;
+    function renderDashEvents(){
+        var c=document.getElementById("dashEventList");var now=new Date();now.setHours(0,0,0,0);
+        var upcoming=allEvents.filter(function(e){if(e.published===false)return false;var ds=getDateStr(e.date);return ds?new Date(ds+"T00:00:00")>=now:false;}).sort(function(a,b){return(getDateStr(a.date)||"").localeCompare(getDateStr(b.date)||"");}).slice(0,3);
+        if(!upcoming.length){c.innerHTML='<div class="empty-state"><p>Keine Events.</p></div>';return;}
+        var h="";for(var i=0;i<upcoming.length;i++){var e=upcoming[i],ds=getDateStr(e.date),d=ds?new Date(ds+"T00:00:00"):new Date();
+            h+='<div class="event-row"><div class="event-date-badge"><div class="event-date-day">'+d.getDate()+'</div><div class="event-date-month">'+monthName(d.getMonth())+'</div></div><div class="event-emoji-big">'+(e.emoji||"📅")+'</div><div class="event-info"><div class="event-title">'+esc(evTitle(e))+'</div><div class="event-meta">'+(e.time||"")+(e.location?" · "+esc(e.location):"")+'</div></div></div>';
+        }c.innerHTML=h;
     }
 
-    document.getElementById("eventsSearch").addEventListener("input",function(){
-        var q=this.value.toLowerCase();
-        if(!q){renderEvents(allEvents);return;}
-        renderEvents(allEvents.filter(function(e){return(e.name||"").toLowerCase().indexOf(q)!==-1||(e.location||"").toLowerCase().indexOf(q)!==-1;}));
-    });
+    document.getElementById("eventsSearch").addEventListener("input",function(){var q=this.value.toLowerCase();renderEvents(q?allEvents.filter(function(e){return(evTitle(e)).toLowerCase().indexOf(q)!==-1||(e.location||"").toLowerCase().indexOf(q)!==-1;}):allEvents);});
 
-    // Event Modal
+    // EVENT MODAL - CREATE/EDIT
     document.getElementById("addEventBtn").addEventListener("click",function(){
-        editingEventId=null;
-        document.getElementById("eventModalTitle").textContent="Neues Event";
-        document.getElementById("evtName").value="";
-        document.getElementById("evtEmoji").value="🎉";
-        document.getElementById("evtDate").value="";
-        document.getElementById("evtTime").value="20:00";
-        document.getElementById("evtLocation").value="Poccistrasse 4";
-        document.getElementById("evtDesc").value="";
-        document.getElementById("evtCategory").value="party";
-        document.getElementById("evtMaxGuests").value="";
-        document.getElementById("evtPublished").checked=true;
-        openModal("eventModal");
+        editingEventId=null;document.getElementById("eventModalTitle").textContent="Neues Event";
+        document.getElementById("evtTitle").value="";document.getElementById("evtEmoji").value="🎉";
+        document.getElementById("evtDate").value="";document.getElementById("evtTime").value="20:00";
+        document.getElementById("evtLocation").value="Poccistrasse 4";document.getElementById("evtDesc").value="";
+        document.getElementById("evtCategory").value="party";document.getElementById("evtCapacity").value="20";
+        document.getElementById("evtPrice").value="0";document.getElementById("evtGame").value="";
+        document.getElementById("evtPublished").checked=true;openModal("eventModal");
     });
 
     function editEvent(id){
-        var e=null;for(var i=0;i<allEvents.length;i++){if(allEvents[i]._id===id){e=allEvents[i];break;}}
-        if(!e)return;
-        editingEventId=id;
+        var e=null;for(var i=0;i<allEvents.length;i++)if(allEvents[i]._id===id){e=allEvents[i];break;}
+        if(!e)return;editingEventId=id;
         document.getElementById("eventModalTitle").textContent="Event bearbeiten";
-        document.getElementById("evtName").value=e.name||"";
+        document.getElementById("evtTitle").value=evTitle(e);
         document.getElementById("evtEmoji").value=e.emoji||"🎉";
         document.getElementById("evtDate").value=getDateStr(e.date);
         document.getElementById("evtTime").value=e.time||"20:00";
         document.getElementById("evtLocation").value=e.location||"";
-        document.getElementById("evtDesc").value=e.description||"";
-        document.getElementById("evtCategory").value=e.category||"party";
-        document.getElementById("evtMaxGuests").value=e.maxGuests||"";
+        document.getElementById("evtDesc").value=evDesc(e);
+        // Map old categories
+        var cat=e.category||"party";
+        if(cat==="gamenight")cat="games";if(cat==="dinner")cat="drinks";if(cat==="sport")cat="other";
+        document.getElementById("evtCategory").value=cat;
+        document.getElementById("evtCapacity").value=evCap(e)||"20";
+        document.getElementById("evtPrice").value=e.price||"0";
+        document.getElementById("evtGame").value=e.game||"";
         document.getElementById("evtPublished").checked=e.published!==false;
         openModal("eventModal");
     }
 
     document.getElementById("eventModalSave").addEventListener("click",function(){
-        var nameVal=document.getElementById("evtName").value.trim();
-        if(!nameVal){toast("Name ist Pflicht!","error");document.getElementById("evtName").focus();return;}
+        var title=document.getElementById("evtTitle").value.trim();
+        if(!title){toast("Name ist Pflicht!","error");return;}
         var data={
-            name:nameVal,
+            title:title,
             emoji:document.getElementById("evtEmoji").value.trim()||"📅",
             date:document.getElementById("evtDate").value||"",
             time:document.getElementById("evtTime").value||"",
             location:document.getElementById("evtLocation").value.trim()||"",
-            description:document.getElementById("evtDesc").value.trim()||"",
+            desc:document.getElementById("evtDesc").value.trim()||"",
             category:document.getElementById("evtCategory").value||"party",
-            maxGuests:parseInt(document.getElementById("evtMaxGuests").value)||0,
+            capacity:parseInt(document.getElementById("evtCapacity").value)||0,
+            price:parseFloat(document.getElementById("evtPrice").value)||0,
+            game:document.getElementById("evtGame").value.trim()||"",
             published:document.getElementById("evtPublished").checked,
             updatedAt:firebase.firestore.FieldValue.serverTimestamp()
         };
         if(editingEventId){
-            db.collection("events").doc(editingEventId).update(data).then(function(){toast("Event aktualisiert! ✓");closeModal("eventModal");}).catch(function(err){console.error(err);toast("Fehler: "+err.message,"error");});
+            db.collection("events").doc(editingEventId).update(data).then(function(){toast("Event aktualisiert ✓");closeModal("eventModal");}).catch(function(err){toast("Fehler","error");});
         }else{
+            data.attending=0;data.attendees=[];data.hype=0;
             data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
-            db.collection("events").add(data).then(function(){toast("Event erstellt! 🎉");closeModal("eventModal");}).catch(function(err){console.error(err);toast("Fehler: "+err.message,"error");});
+            db.collection("events").add(data).then(function(){toast("Event erstellt! 🎉");closeModal("eventModal");}).catch(function(err){toast("Fehler","error");});
         }
     });
 
-    // ============================================================
-    //  GAME STATS
-    // ============================================================
-    function loadPlayers(){
-        db.collection("players").onSnapshot(function(snap){
-            allPlayers=[];
-            snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allPlayers.push(d);});
-            allPlayers.sort(function(a,b){return(a.name||"").localeCompare(b.name||"");});
-            updatePlayerDropdown();loadGames();
-        },function(err){console.error("Players:",err);});
+    // EVENT DETAIL MODAL (Attendees + Signups)
+    function viewEventDetail(id){
+        var e=null;for(var i=0;i<allEvents.length;i++)if(allEvents[i]._id===id){e=allEvents[i];break;}
+        if(!e)return;
+        document.getElementById("evtDetailTitle").textContent=(e.emoji||"📅")+" "+evTitle(e);
+        var body=document.getElementById("evtDetailBody");
+        var h='<div style="margin-bottom:1.25rem"><div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.3rem">INFO</div>';
+        h+='<div style="font-size:.85rem;color:var(--color-text-light)">'+fDate(e.date)+' · '+(e.time||"20:00")+' · '+(e.location||"Poccistrasse 4")+'</div>';
+        h+='<div style="font-size:.85rem;color:var(--color-text-light);margin-top:.2rem">'+(e.attending||0)+'/'+(evCap(e)||"∞")+' Gäste · Hype: '+(e.hype||0)+'</div></div>';
+
+        // Attendees from event doc
+        var att=e.attendees||[];
+        h+='<div style="margin-bottom:1.25rem"><div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.5rem">TEILNEHMER ('+att.length+')</div>';
+        if(att.length){for(var i=0;i<att.length;i++){var a=att[i];h+='<div class="att-row"><div class="att-name">'+(typeof a==="string"?esc(a):esc(a.name||"?"))+'</div>';if(typeof a==="object"&&a.persons)h+='<div class="att-persons">'+a.persons+' Pers.</div>';if(typeof a==="object"&&a.instagram)h+='<div class="att-insta">'+esc(a.instagram)+'</div>';h+='<button class="del-btn" data-rm-att="'+i+'" data-rm-evt="'+esc(e._id)+'">✕</button></div>';}}
+        else h+='<div style="font-size:.82rem;color:var(--color-gray)">Noch keine Teilnehmer.</div>';
+        h+='</div>';
+
+        // Signups from event_signups collection
+        var evSignups=allSignups.filter(function(s){return s.eventId===id;});
+        if(evSignups.length){
+            h+='<div><div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-gray);margin-bottom:.5rem">ANMELDUNGEN (event_signups: '+evSignups.length+')</div>';
+            for(var i=0;i<evSignups.length;i++){var s=evSignups[i];h+='<div class="att-row"><div class="att-name">'+esc(s.name||"?")+'</div>';if(s.instagram)h+='<div class="att-insta">'+esc(s.instagram)+'</div>';h+='<div class="msg-time">'+fShort(s.createdAt)+'</div></div>';}
+            h+='</div>';
+        }
+
+        body.innerHTML=h;
+        // Remove attendee buttons
+        body.querySelectorAll("[data-rm-att]").forEach(function(b){b.addEventListener("click",function(){
+            var idx=parseInt(this.getAttribute("data-rm-att"));var eid=this.getAttribute("data-rm-evt");
+            var ev=null;for(var i=0;i<allEvents.length;i++)if(allEvents[i]._id===eid){ev=allEvents[i];break;}
+            if(!ev)return;var atts=(ev.attendees||[]).slice();atts.splice(idx,1);
+            db.collection("events").doc(eid).update({attendees:atts,attending:Math.max(0,(ev.attending||0)-1)}).then(function(){toast("Entfernt");viewEventDetail(eid);});
+        });});
+        openModal("eventDetailModal");
     }
 
-    function loadGames(){
-        db.collection("games").onSnapshot(function(snap){
-            allGames=[];
-            snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allGames.push(d);});
-            allGames.sort(function(a,b){
-                var ta=a.createdAt?a.createdAt.seconds:0;
-                var tb=b.createdAt?b.createdAt.seconds:0;
-                return tb-ta;
-            });
-            renderLeaderboard();renderRecentGames();
-        },function(err){console.error("Games:",err);});
+    // ============================================================
+    //  SUGGESTIONS
+    // ============================================================
+    function loadSuggestions(){
+        db.collection("event_suggestions").onSnapshot(function(snap){
+            allSuggestions=[];snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allSuggestions.push(d);});
+            allSuggestions.sort(function(a,b){return(b.createdAt?b.createdAt.seconds:0)-(a.createdAt?a.createdAt.seconds:0);});
+            renderSuggestions();
+        });
+    }
+
+    function renderSuggestions(){
+        var c=document.getElementById("sugList");document.getElementById("sugCount").textContent=allSuggestions.length;
+        if(!allSuggestions.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🗳️</div><h3>Keine Vorschläge</h3></div>';return;}
+        var h="";for(var i=0;i<allSuggestions.length;i++){var s=allSuggestions[i];var isDone=s.status==="done";
+            h+='<div class="sug-row"><span class="sug-status '+(isDone?"sug-status-done":"sug-status-neu")+'">'+(isDone?"✓ Erledigt":"Neu")+'</span>';
+            h+='<div class="sug-info"><div class="sug-title">'+esc(s.title||"?")+'</div><div class="sug-meta">von '+esc(s.name||"?")+(s.category?" · "+esc(s.category):"")+(s.date?" · "+esc(s.date):"")+'</div>';
+            if(s.description)h+='<div style="font-size:.72rem;color:var(--color-text-light);margin-top:.2rem">'+esc(s.description)+'</div>';
+            h+='</div><div class="order-actions">';
+            if(!isDone)h+='<button class="btn btn-sm btn-green" data-sug-create="'+esc(s._id)+'">→ Event</button><button class="btn btn-sm btn-outline" data-sug-done="'+esc(s._id)+'">✓</button>';
+            h+='<button class="del-btn" data-del-sug="'+esc(s._id)+'">🗑️</button></div></div>';
+        }
+        c.innerHTML=h;
+        c.querySelectorAll("[data-sug-done]").forEach(function(b){b.addEventListener("click",function(){db.collection("event_suggestions").doc(this.getAttribute("data-sug-done")).update({status:"done"});toast("Erledigt ✓");});});
+        c.querySelectorAll("[data-del-sug]").forEach(function(b){b.addEventListener("click",function(){if(confirm("Löschen?")){db.collection("event_suggestions").doc(this.getAttribute("data-del-sug")).delete();toast("Gelöscht","error");}});});
+        c.querySelectorAll("[data-sug-create]").forEach(function(b){b.addEventListener("click",function(){
+            var sid=this.getAttribute("data-sug-create");var s=null;for(var i=0;i<allSuggestions.length;i++)if(allSuggestions[i]._id===sid){s=allSuggestions[i];break;}
+            if(!s)return;
+            editingEventId=null;document.getElementById("eventModalTitle").textContent="Event aus Vorschlag";
+            document.getElementById("evtTitle").value=s.title||"";document.getElementById("evtEmoji").value="🎉";
+            document.getElementById("evtDate").value=s.date||"";document.getElementById("evtTime").value="20:00";
+            document.getElementById("evtLocation").value="Poccistrasse 4";document.getElementById("evtDesc").value=s.description||"";
+            document.getElementById("evtCategory").value=s.category||"party";document.getElementById("evtCapacity").value="20";
+            document.getElementById("evtPrice").value="0";document.getElementById("evtGame").value="";
+            document.getElementById("evtPublished").checked=false;openModal("eventModal");
+            db.collection("event_suggestions").doc(sid).update({status:"done"});
+        });});
+    }
+
+    // ============================================================
+    //  PAYMENTS
+    // ============================================================
+    function loadPayments(){
+        db.collection("payments").onSnapshot(function(snap){
+            allPayments=[];snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allPayments.push(d);});
+            allPayments.sort(function(a,b){return(b.createdAt?b.createdAt.seconds:0)-(a.createdAt?a.createdAt.seconds:0);});
+            renderPayments();updateDashboard();
+        });
+    }
+
+    function renderPayments(){
+        var c=document.getElementById("payList");document.getElementById("payCount").textContent=allPayments.length;
+        if(!allPayments.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">💰</div><h3>Keine Zahlungen</h3></div>';return;}
+        var h="";for(var i=0;i<allPayments.length;i++){var p=allPayments[i];
+            h+='<div class="pay-row"><div class="pay-info"><div class="pay-name">'+esc(p.name||p.user||"?")+'</div><div class="pay-meta">'+fDateTime(p.createdAt)+(p.eventId?" · Event: "+esc(p.eventId.substring(0,8)):"")+'</div></div>';
+            h+='<span class="pay-method-badge '+(p.method==="paypal"?"method-paypal":"method-vor-ort")+'">'+(p.method==="paypal"?"PayPal":esc(p.method||"?"))+'</span>';
+            h+='<div class="pay-amount">'+(p.amount||0).toFixed(2).replace(".",",")+' €</div>';
+            h+='<button class="del-btn" data-del-pay="'+esc(p._id)+'">🗑️</button></div>';
+        }
+        c.innerHTML=h;
+        c.querySelectorAll("[data-del-pay]").forEach(function(b){b.addEventListener("click",function(){if(confirm("Löschen?")){db.collection("payments").doc(this.getAttribute("data-del-pay")).delete();toast("Gelöscht","error");}});});
+    }
+
+    // ============================================================
+    //  SIGNUPS (load for event detail view)
+    // ============================================================
+    function loadSignups(){
+        db.collection("event_signups").onSnapshot(function(snap){
+            allSignups=[];snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allSignups.push(d);});
+        });
+    }
+
+    // ============================================================
+    //  GAME STATS (uses 'stats' collection like stats.html)
+    // ============================================================
+    function loadStats(){
+        db.collection("stats").onSnapshot(function(snap){
+            allStats=[];snap.forEach(function(doc){var d=doc.data();d._id=doc.id;allStats.push(d);});
+            allStats.sort(function(a,b){return(b.createdAt?b.createdAt.seconds:0)-(a.createdAt?a.createdAt.seconds:0);});
+            renderLeaderboard();renderRecentGames();updateDashboard();
+        });
     }
 
     function renderLeaderboard(){
-        var c=document.getElementById("gameStatsList");
-        document.getElementById("playersCount").textContent=allPlayers.length+" Spieler";
-        if(!allPlayers.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🏆</div><h3>Keine Spieler</h3><p>Füge Spieler hinzu!</p></div>';return;}
-        var wins={};
-        for(var i=0;i<allGames.length;i++){var w=allGames[i].winnerId;if(w){if(!wins[w])wins[w]={total:0,types:{}};wins[w].total++;var gt=allGames[i].type||"other";if(!wins[w].types[gt])wins[w].types[gt]=0;wins[w].types[gt]++;}}
-        var sorted=allPlayers.slice().sort(function(a,b){return(wins[b._id]?wins[b._id].total:0)-(wins[a._id]?wins[a._id].total:0);});
-        var totalG=allGames.length;
-        var h="";
-        for(var i=0;i<sorted.length;i++){
-            var p=sorted[i],w=wins[p._id]||{total:0,types:{}};
-            var medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":String(i+1)+".";
-            var rate=totalG>0?Math.round(w.total/totalG*100):0;
-            h+='<div class="game-row"><div class="game-rank">'+medal+'</div><div class="game-player"><div class="game-avatar" style="background:'+(p.color||"#C03A2B")+'">'+(p.emoji||"😎")+'</div><div class="game-name">'+esc(p.name)+'</div></div>';
-            h+='<div class="game-stat">'+w.total+'<div class="game-stat-label">Siege</div></div><div class="game-stat">'+rate+'%<div class="game-stat-label">Winrate</div></div><div class="game-stat">'+Object.keys(w.types).length+'<div class="game-stat-label">Spiele</div></div>';
-            h+='<div class="order-actions"><button class="btn btn-sm btn-outline" data-edit-plr="'+esc(p._id)+'">✏️</button><button class="del-btn" data-del-plr="'+esc(p._id)+'">🗑️</button></div></div>';
+        var c=document.getElementById("leaderboardList");
+        if(!allStats.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🏆</div><h3>Keine Spiele</h3></div>';return;}
+        var wins={};for(var i=0;i<allStats.length;i++){var w=allStats[i].winner;if(w)wins[w]=(wins[w]||0)+1;}
+        var sorted=Object.keys(wins).sort(function(a,b){return wins[b]-wins[a];});
+        var total=allStats.length;var h="";
+        for(var i=0;i<sorted.length;i++){var name=sorted[i],w=wins[name];var medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1)+".";var rate=total>0?Math.round(w/total*100):0;
+            h+='<div class="game-row"><div class="game-rank">'+medal+'</div><div class="game-player"><div class="game-name">'+esc(name)+'</div></div><div class="game-stat">'+w+'<div class="game-stat-label">Siege</div></div><div class="game-stat hide-mobile">'+rate+'%<div class="game-stat-label">Rate</div></div></div>';
         }
         c.innerHTML=h;
-        c.querySelectorAll("[data-edit-plr]").forEach(function(btn){btn.addEventListener("click",function(){editPlayer(this.getAttribute("data-edit-plr"));});});
-        c.querySelectorAll("[data-del-plr]").forEach(function(btn){btn.addEventListener("click",function(){if(confirm("Spieler löschen?")){db.collection("players").doc(this.getAttribute("data-del-plr")).delete();toast("Gelöscht","error");}});});
     }
 
     function renderRecentGames(){
-        var c=document.getElementById("recentGamesList");
-        if(!allGames.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🎮</div><p>Noch keine Spiele.</p></div>';return;}
-        var ge={flunkyball:"🍺",bierpong:"🏓",catan:"🏝️","mario-kart":"🏎️",other:"🎮"};
-        var h="";
-        for(var i=0;i<Math.min(allGames.length,20);i++){
-            var g=allGames[i],winner=null;
-            for(var j=0;j<allPlayers.length;j++){if(allPlayers[j]._id===g.winnerId){winner=allPlayers[j];break;}}
-            var gt=(g.type||"other"),gl=gt.charAt(0).toUpperCase()+gt.slice(1).replace("-"," ");
-            h+='<div class="order-row" style="grid-template-columns:auto 1fr auto auto auto"><div style="font-size:1.5rem">'+(ge[gt]||"🎮")+'</div>';
-            h+='<div><div style="font-weight:800;font-size:.9rem">'+esc(gl)+'</div><div class="order-date">'+esc(g.notes||"")+'</div></div>';
-            h+='<div style="font-weight:700;font-size:.85rem">🏆 '+esc(winner?winner.name:"?")+'</div>';
-            h+='<div class="order-date">'+(getDateStr(g.date)||fDate(g.createdAt))+'</div>';
-            h+='<button class="del-btn" data-del-game="'+esc(g._id)+'">🗑️</button></div>';
+        var c=document.getElementById("recentGamesList");document.getElementById("gamesCount").textContent=allStats.length;
+        if(!allStats.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">🎮</div><h3>Keine Spiele</h3></div>';return;}
+        var h="";for(var i=0;i<Math.min(allStats.length,25);i++){var s=allStats[i];var emoji=s.emoji||GAME_EMOJIS[s.game]||"🎲";
+            h+='<div class="game-row"><div style="font-size:1.3rem">'+emoji+'</div><div class="game-player"><div class="game-name">'+esc(s.game||"?")+'</div></div><div style="font-weight:700;font-size:.82rem">🏆 '+esc(s.winner||"?")+'</div><div class="msg-time">'+esc(s.date||"")+'</div><button class="del-btn" data-del-stat="'+esc(s._id)+'">🗑️</button></div>';
         }
         c.innerHTML=h;
-        c.querySelectorAll("[data-del-game]").forEach(function(btn){btn.addEventListener("click",function(){if(confirm("Spiel löschen?")){db.collection("games").doc(this.getAttribute("data-del-game")).delete();toast("Gelöscht","error");}});});
+        c.querySelectorAll("[data-del-stat]").forEach(function(b){b.addEventListener("click",function(){if(confirm("Löschen?")){db.collection("stats").doc(this.getAttribute("data-del-stat")).delete();toast("Gelöscht","error");}});});
     }
 
-    function updatePlayerDropdown(){
-        var sel=document.getElementById("gmWinner");
-        sel.innerHTML='<option value="">-- Spieler wählen --</option>';
-        for(var i=0;i<allPlayers.length;i++){var o=document.createElement("option");o.value=allPlayers[i]._id;o.textContent=(allPlayers[i].emoji||"")+" "+allPlayers[i].name;sel.appendChild(o);}
-    }
-
-    document.getElementById("addPlayerBtn").addEventListener("click",function(){
-        editingPlayerId=null;document.getElementById("playerModalTitle").textContent="Neuer Spieler";
-        document.getElementById("plrName").value="";document.getElementById("plrEmoji").value="😎";document.getElementById("plrColor").value="#C03A2B";
-        openModal("playerModal");
-    });
-
-    function editPlayer(id){
-        var p=null;for(var i=0;i<allPlayers.length;i++){if(allPlayers[i]._id===id){p=allPlayers[i];break;}}
-        if(!p)return;editingPlayerId=id;
-        document.getElementById("playerModalTitle").textContent="Spieler bearbeiten";
-        document.getElementById("plrName").value=p.name||"";document.getElementById("plrEmoji").value=p.emoji||"";document.getElementById("plrColor").value=p.color||"#C03A2B";
-        openModal("playerModal");
-    }
-
-    document.getElementById("playerModalSave").addEventListener("click",function(){
-        var name=document.getElementById("plrName").value.trim();
-        if(!name){toast("Name ist Pflicht!","error");return;}
-        var data={name:name,emoji:document.getElementById("plrEmoji").value.trim()||"😎",color:document.getElementById("plrColor").value};
-        if(editingPlayerId){db.collection("players").doc(editingPlayerId).update(data).then(function(){toast("Aktualisiert ✓");closeModal("playerModal");}).catch(function(err){toast("Fehler","error");});}
-        else{db.collection("players").add(data).then(function(){toast("Spieler hinzugefügt! 🎮");closeModal("playerModal");}).catch(function(err){toast("Fehler","error");});}
-    });
-
-    document.getElementById("addGameBtn").addEventListener("click",function(){
-        if(!allPlayers.length){toast("Erst Spieler hinzufügen!","error");return;}
-        document.getElementById("gmDate").value=todayStr();document.getElementById("gmNotes").value="";document.getElementById("gmType").value="flunkyball";
+    document.getElementById("addStatBtn").addEventListener("click",function(){
+        document.getElementById("gmType").value="";document.getElementById("gmWinner").value="";document.getElementById("gmDate").value=todayStr();
         openModal("gameModal");
     });
 
     document.getElementById("gameModalSave").addEventListener("click",function(){
-        var winnerId=document.getElementById("gmWinner").value;
-        if(!winnerId){toast("Gewinner wählen!","error");return;}
-        db.collection("games").add({
-            type:document.getElementById("gmType").value,winnerId:winnerId,
-            date:document.getElementById("gmDate").value,notes:document.getElementById("gmNotes").value.trim(),
-            createdAt:firebase.firestore.FieldValue.serverTimestamp()
-        }).then(function(){toast("Spiel eingetragen! 🏆");closeModal("gameModal");}).catch(function(err){toast("Fehler","error");});
+        var game=document.getElementById("gmType").value;var winner=document.getElementById("gmWinner").value;var date=document.getElementById("gmDate").value;
+        if(!game||!winner){toast("Spiel & Gewinner wählen!","error");return;}
+        var emoji=GAME_EMOJIS[game]||"🎲";
+        db.collection("stats").add({game:game,emoji:emoji,winner:winner,date:date||todayStr(),createdAt:firebase.firestore.FieldValue.serverTimestamp()}).then(function(){toast("Spiel eingetragen! 🏆");closeModal("gameModal");}).catch(function(){toast("Fehler","error");});
     });
 
     // ============================================================
     //  CONTENT
     // ============================================================
+    function loadMembers(){db.collection("content").doc("members").onSnapshot(function(doc){var l=(doc.exists?doc.data():{}).list||[];document.getElementById("membersPreview").textContent=l.length?l.map(function(m){return(m.emoji||"")+" "+m.name;}).join(", "):"Keine.";});}
+    function loadTexts(){db.collection("content").doc("texts").onSnapshot(function(doc){var d=doc.exists?doc.data():{};document.getElementById("textsPreview").textContent=d.heroTitle||"Nicht konfiguriert.";});}
+    function loadSocials(){db.collection("content").doc("socials").onSnapshot(function(doc){var l=(doc.exists?doc.data():{}).links||[];document.getElementById("socialsPreview").textContent=l.length?l.map(function(x){return x.label;}).join(", "):"Keine.";});}
+    function loadGallery(){db.collection("content").doc("gallery").onSnapshot(function(doc){var i=(doc.exists?doc.data():{}).images||[];document.getElementById("galleryPreview").textContent=i.length?i.length+" Bilder":"Keine.";});}
 
-    // MEMBERS
-    function loadMembers(){
-        db.collection("content").doc("members").onSnapshot(function(doc){
-            var list=(doc.exists?doc.data():{}).list||[];
-            document.getElementById("membersPreview").textContent=list.length?list.map(function(m){return(m.emoji||"")+" "+m.name;}).join(", "):"Keine Mitglieder.";
-        },function(err){console.error(err);});
-    }
-
-    document.getElementById("editMembersBtn").addEventListener("click",function(){
-        db.collection("content").doc("members").get().then(function(doc){
-            var list=(doc.exists?doc.data():{}).list||[];
-            var c=document.getElementById("membersModalBody");c.innerHTML="";
-            for(var i=0;i<list.length;i++)addMemberRow(c,list[i]);
-            openModal("membersModal");
-        });
-    });
-
-    function addMemberRow(container,data){
-        data=data||{};
-        var div=document.createElement("div");div.className="member-block";
-        div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Name</label><input type="text" class="form-input m-name" value="'+esc(data.name)+'"></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Emoji</label><input type="text" class="form-input m-emoji" value="'+esc(data.emoji)+'" maxlength="4"></div></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Bio</label><input type="text" class="form-input m-bio" value="'+esc(data.bio)+'"></div><div class="form-group" style="margin-bottom:.5rem"><label class="form-label">Instagram</label><input type="text" class="form-input m-insta" value="'+esc(data.instagram)+'"></div><button class="btn btn-sm btn-danger">Entfernen</button>';
-        div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});
-        container.appendChild(div);
-    }
-
+    // MEMBERS MODAL
+    document.getElementById("editMembersBtn").addEventListener("click",function(){db.collection("content").doc("members").get().then(function(doc){var l=(doc.exists?doc.data():{}).list||[];var c=document.getElementById("membersModalBody");c.innerHTML="";for(var i=0;i<l.length;i++)addMemberRow(c,l[i]);openModal("membersModal");});});
+    function addMemberRow(c,d){d=d||{};var div=document.createElement("div");div.className="member-block";div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:.4rem"><label class="form-label">Name</label><input type="text" class="form-input m-name" value="'+esc(d.name)+'"></div><div class="form-group" style="margin-bottom:.4rem"><label class="form-label">Emoji</label><input type="text" class="form-input m-emoji" value="'+esc(d.emoji)+'" maxlength="4"></div></div><div class="form-group" style="margin-bottom:.4rem"><label class="form-label">Bio</label><input type="text" class="form-input m-bio" value="'+esc(d.bio)+'"></div><div class="form-group" style="margin-bottom:.4rem"><label class="form-label">Instagram</label><input type="text" class="form-input m-insta" value="'+esc(d.instagram)+'"></div><button class="btn btn-sm btn-danger">Entfernen</button>';div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});c.appendChild(div);}
     document.getElementById("addMemberBtn").addEventListener("click",function(){addMemberRow(document.getElementById("membersModalBody"));});
+    document.getElementById("membersModalSave").addEventListener("click",function(){var items=document.getElementById("membersModalBody").querySelectorAll(".member-block");var l=[];items.forEach(function(el){var n=el.querySelector(".m-name").value.trim();if(n)l.push({name:n,emoji:el.querySelector(".m-emoji").value.trim(),bio:el.querySelector(".m-bio").value.trim(),instagram:el.querySelector(".m-insta").value.trim()});});db.collection("content").doc("members").set({list:l}).then(function(){toast("Gespeichert ✓");closeModal("membersModal");});});
 
-    document.getElementById("membersModalSave").addEventListener("click",function(){
-        var items=document.getElementById("membersModalBody").querySelectorAll(".member-block");
-        var list=[];
-        items.forEach(function(el){var n=el.querySelector(".m-name").value.trim();if(n)list.push({name:n,emoji:el.querySelector(".m-emoji").value.trim(),bio:el.querySelector(".m-bio").value.trim(),instagram:el.querySelector(".m-insta").value.trim()});});
-        db.collection("content").doc("members").set({list:list}).then(function(){toast("Gespeichert ✓");closeModal("membersModal");}).catch(function(err){toast("Fehler","error");});
-    });
+    // TEXTS MODAL
+    document.getElementById("editTextsBtn").addEventListener("click",function(){db.collection("content").doc("texts").get().then(function(doc){var d=doc.exists?doc.data():{};document.getElementById("txtHero").value=d.heroTitle||"";document.getElementById("txtHeroSub").value=d.heroSubtitle||"";document.getElementById("txtAbout").value=d.aboutText||"";document.getElementById("txtDisclaimer").value=d.disclaimer||"";openModal("textsModal");});});
+    document.getElementById("textsModalSave").addEventListener("click",function(){db.collection("content").doc("texts").set({heroTitle:document.getElementById("txtHero").value.trim(),heroSubtitle:document.getElementById("txtHeroSub").value.trim(),aboutText:document.getElementById("txtAbout").value.trim(),disclaimer:document.getElementById("txtDisclaimer").value.trim()}).then(function(){toast("Gespeichert ✓");closeModal("textsModal");});});
 
-    // TEXTS
-    function loadTexts(){
-        db.collection("content").doc("texts").onSnapshot(function(doc){
-            var d=doc.exists?doc.data():{};
-            document.getElementById("textsPreview").textContent=d.heroTitle||"Nicht konfiguriert.";
-        },function(err){console.error(err);});
-    }
-
-    document.getElementById("editTextsBtn").addEventListener("click",function(){
-        db.collection("content").doc("texts").get().then(function(doc){
-            var d=doc.exists?doc.data():{};
-            document.getElementById("txtHero").value=d.heroTitle||"";
-            document.getElementById("txtHeroSub").value=d.heroSubtitle||"";
-            document.getElementById("txtAbout").value=d.aboutText||"";
-            document.getElementById("txtDisclaimer").value=d.disclaimer||"";
-            openModal("textsModal");
-        });
-    });
-
-    document.getElementById("textsModalSave").addEventListener("click",function(){
-        db.collection("content").doc("texts").set({
-            heroTitle:document.getElementById("txtHero").value.trim(),
-            heroSubtitle:document.getElementById("txtHeroSub").value.trim(),
-            aboutText:document.getElementById("txtAbout").value.trim(),
-            disclaimer:document.getElementById("txtDisclaimer").value.trim()
-        }).then(function(){toast("Texte gespeichert ✓");closeModal("textsModal");}).catch(function(err){toast("Fehler","error");});
-    });
-
-    // SOCIALS
-    function loadSocials(){
-        db.collection("content").doc("socials").onSnapshot(function(doc){
-            var links=(doc.exists?doc.data():{}).links||[];
-            document.getElementById("socialsPreview").textContent=links.length?links.map(function(l){return l.label;}).join(", "):"Keine Links.";
-        },function(err){console.error(err);});
-    }
-
-    document.getElementById("editSocialsBtn").addEventListener("click",function(){
-        db.collection("content").doc("socials").get().then(function(doc){
-            var links=(doc.exists?doc.data():{}).links||[];
-            var c=document.getElementById("socialsModalBody");c.innerHTML="";
-            for(var i=0;i<links.length;i++)addSocialRow(c,links[i]);
-            openModal("socialsModal");
-        });
-    });
-
-    function addSocialRow(container,data){
-        data=data||{};
-        var div=document.createElement("div");div.className="social-block";
-        div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:0"><label class="form-label">Label</label><input type="text" class="form-input s-label" value="'+esc(data.label)+'"></div><div class="form-group" style="margin-bottom:0"><label class="form-label">URL</label><input type="text" class="form-input s-url" value="'+esc(data.url)+'"></div></div><button class="btn btn-sm btn-danger" style="margin-top:.5rem">Entfernen</button>';
-        div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});
-        container.appendChild(div);
-    }
-
+    // SOCIALS MODAL
+    document.getElementById("editSocialsBtn").addEventListener("click",function(){db.collection("content").doc("socials").get().then(function(doc){var l=(doc.exists?doc.data():{}).links||[];var c=document.getElementById("socialsModalBody");c.innerHTML="";for(var i=0;i<l.length;i++)addSocialRow(c,l[i]);openModal("socialsModal");});});
+    function addSocialRow(c,d){d=d||{};var div=document.createElement("div");div.className="social-block";div.innerHTML='<div class="form-row"><div class="form-group" style="margin-bottom:0"><label class="form-label">Label</label><input type="text" class="form-input s-label" value="'+esc(d.label)+'"></div><div class="form-group" style="margin-bottom:0"><label class="form-label">URL</label><input type="text" class="form-input s-url" value="'+esc(d.url)+'"></div></div><button class="btn btn-sm btn-danger" style="margin-top:.4rem">Entfernen</button>';div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});c.appendChild(div);}
     document.getElementById("addSocialBtn").addEventListener("click",function(){addSocialRow(document.getElementById("socialsModalBody"));});
+    document.getElementById("socialsModalSave").addEventListener("click",function(){var items=document.getElementById("socialsModalBody").querySelectorAll(".social-block");var l=[];items.forEach(function(el){var la=el.querySelector(".s-label").value.trim(),u=el.querySelector(".s-url").value.trim();if(la&&u)l.push({label:la,url:u});});db.collection("content").doc("socials").set({links:l}).then(function(){toast("Gespeichert ✓");closeModal("socialsModal");});});
 
-    document.getElementById("socialsModalSave").addEventListener("click",function(){
-        var items=document.getElementById("socialsModalBody").querySelectorAll(".social-block");
-        var links=[];
-        items.forEach(function(el){var l=el.querySelector(".s-label").value.trim(),u=el.querySelector(".s-url").value.trim();if(l&&u)links.push({label:l,url:u});});
-        db.collection("content").doc("socials").set({links:links}).then(function(){toast("Gespeichert ✓");closeModal("socialsModal");}).catch(function(err){toast("Fehler","error");});
-    });
-
-    // GALLERY
-    function loadGallery(){
-        db.collection("content").doc("gallery").onSnapshot(function(doc){
-            var imgs=(doc.exists?doc.data():{}).images||[];
-            document.getElementById("galleryPreview").textContent=imgs.length?imgs.length+" Bilder":"Keine Bilder.";
-        },function(err){console.error(err);});
-    }
-
-    document.getElementById("editGalleryBtn").addEventListener("click",function(){
-        db.collection("content").doc("gallery").get().then(function(doc){
-            var imgs=(doc.exists?doc.data():{}).images||[];
-            var c=document.getElementById("galleryModalBody");c.innerHTML="";
-            for(var i=0;i<imgs.length;i++)addGalleryRow(c,imgs[i]);
-            openModal("galleryModal");
-        });
-    });
-
-    function addGalleryRow(container,data){
-        data=data||{};
-        var div=document.createElement("div");div.className="gallery-block";
-        div.style.cssText="display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem";
-        div.innerHTML='<input type="text" class="form-input g-url" value="'+esc(data.url)+'" placeholder="https://..." style="flex:1"><input type="text" class="form-input g-cap" value="'+esc(data.caption)+'" placeholder="Caption" style="width:140px"><button class="btn btn-sm btn-danger">✕</button>';
-        div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});
-        container.appendChild(div);
-    }
-
+    // GALLERY MODAL
+    document.getElementById("editGalleryBtn").addEventListener("click",function(){db.collection("content").doc("gallery").get().then(function(doc){var imgs=(doc.exists?doc.data():{}).images||[];var c=document.getElementById("galleryModalBody");c.innerHTML="";for(var i=0;i<imgs.length;i++)addGalleryRow(c,imgs[i]);openModal("galleryModal");});});
+    function addGalleryRow(c,d){d=d||{};var div=document.createElement("div");div.className="gallery-block";div.style.cssText="display:flex;gap:.4rem;align-items:center;margin-bottom:.4rem;flex-wrap:wrap";div.innerHTML='<input type="text" class="form-input g-url" value="'+esc(d.url)+'" placeholder="https://..." style="flex:1;min-width:150px"><input type="text" class="form-input g-cap" value="'+esc(d.caption)+'" placeholder="Caption" style="width:120px"><button class="btn btn-sm btn-danger">✕</button>';div.querySelector(".btn-danger").addEventListener("click",function(){div.remove();});c.appendChild(div);}
     document.getElementById("addGalleryBtn").addEventListener("click",function(){addGalleryRow(document.getElementById("galleryModalBody"));});
-
-    document.getElementById("galleryModalSave").addEventListener("click",function(){
-        var items=document.getElementById("galleryModalBody").querySelectorAll(".gallery-block");
-        var images=[];
-        items.forEach(function(el){var u=el.querySelector(".g-url").value.trim();if(u)images.push({url:u,caption:el.querySelector(".g-cap").value.trim()});});
-        db.collection("content").doc("gallery").set({images:images}).then(function(){toast("Gespeichert ✓");closeModal("galleryModal");}).catch(function(err){toast("Fehler","error");});
-    });
+    document.getElementById("galleryModalSave").addEventListener("click",function(){var items=document.getElementById("galleryModalBody").querySelectorAll(".gallery-block");var imgs=[];items.forEach(function(el){var u=el.querySelector(".g-url").value.trim();if(u)imgs.push({url:u,caption:el.querySelector(".g-cap").value.trim()});});db.collection("content").doc("gallery").set({images:imgs}).then(function(){toast("Gespeichert ✓");closeModal("galleryModal");});});
 
     // ============================================================
     //  DASHBOARD
     // ============================================================
     function updateDashboard(){
-        var rev=0,items=0;
-        for(var i=0;i<allOrders.length;i++){rev+=allOrders[i].total||0;if(allOrders[i].items)for(var j=0;j<allOrders[i].items.length;j++)items+=allOrders[i].items[j].qty||0;}
+        var rev=0,items=0;for(var i=0;i<allOrders.length;i++){rev+=allOrders[i].total||0;if(allOrders[i].items)for(var j=0;j<allOrders[i].items.length;j++)items+=allOrders[i].items[j].qty||0;}
         document.getElementById("statOrders").textContent=allOrders.length;
-        document.getElementById("statRevenue").textContent=rev.toFixed(2).replace(".",",");
-        document.getElementById("statItems").textContent=items;
+        document.getElementById("statRevenue").textContent=rev.toFixed(0);
         document.getElementById("statMessages").textContent=allMessages.length;
         document.getElementById("statEvents").textContent=allEvents.length;
+        document.getElementById("statGames").textContent=allStats.length;
+        document.getElementById("statPayments").textContent=allPayments.length;
     }
 
     function renderBestsellers(){
-        var counts={};
-        for(var i=0;i<allOrders.length;i++){if(!allOrders[i].items)continue;for(var j=0;j<allOrders[i].items.length;j++){var it=allOrders[i].items[j],id=it.id||it.title;if(!counts[id])counts[id]={title:it.title,emoji:it.emoji||"",qty:0,rev:0};counts[id].qty+=it.qty||0;counts[id].rev+=(it.price||0)*(it.qty||0);}}
+        var counts={};for(var i=0;i<allOrders.length;i++){if(!allOrders[i].items)continue;for(var j=0;j<allOrders[i].items.length;j++){var it=allOrders[i].items[j],id=it.id||it.title;if(!counts[id])counts[id]={title:it.title,emoji:it.emoji||"",qty:0,rev:0};counts[id].qty+=it.qty||0;counts[id].rev+=(it.price||0)*(it.qty||0);}}
         var sorted=Object.keys(counts).map(function(k){return counts[k];}).sort(function(a,b){return b.qty-a.qty;});
         var c=document.getElementById("bestsellerList");
-        if(!sorted.length){c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📊</div><p>Noch keine Daten.</p></div>';return;}
-        var h="";
-        for(var i=0;i<Math.min(sorted.length,5);i++){
-            var s=sorted[i],medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":String(i+1)+".";
-            h+='<div class="best-row"><div class="best-rank">'+medal+'</div><div class="best-emoji">'+s.emoji+'</div><div><div class="best-title">'+esc(s.title)+'</div></div><div class="best-qty">'+s.qty+'x<div class="best-sub">Verkauft</div></div><div class="best-rev">'+s.rev.toFixed(2).replace(".",",")+' €<div class="best-sub">Umsatz</div></div></div>';
-        }
-        c.innerHTML=h;
+        if(!sorted.length){c.innerHTML='<div class="empty-state"><p>Noch keine Daten.</p></div>';return;}
+        var h="";for(var i=0;i<Math.min(sorted.length,5);i++){var s=sorted[i],medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1)+".";
+            h+='<div class="best-row"><div class="best-rank">'+medal+'</div><div class="best-emoji">'+s.emoji+'</div><div class="best-info"><div class="best-title">'+esc(s.title)+'</div></div><div class="best-qty">'+s.qty+'x<div class="best-sub">Verkauft</div></div><div class="best-rev">'+s.rev.toFixed(2).replace(".",",")+' €<div class="best-sub">Umsatz</div></div></div>';
+        }c.innerHTML=h;
     }
 
     // ============================================================
     //  INIT
     // ============================================================
-    loadOrders();loadEvents();loadPlayers();loadMessages();loadMembers();loadTexts();loadSocials();loadGallery();
-
+    loadOrders();loadEvents();loadMessages();loadStats();loadSuggestions();loadPayments();loadSignups();loadMembers();loadTexts();loadSocials();loadGallery();
 })();
 </script>
 </body>
