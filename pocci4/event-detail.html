@@ -402,20 +402,25 @@
     loadEvent();
 
     function loadEvent(){
-        db.collection("events").doc(eventId).get().then(function(doc){
-            if(!doc.exists){ showError(); return; }
-            currentEvent = doc.data();
-            currentEvent.id = doc.id;
-            if(!currentEvent.attendees) currentEvent.attendees = [];
-            document.title = "pocci4 - " + currentEvent.title;
-            if(currentEvent.category === "games" && currentEvent.game){
-                loadGameStats(currentEvent.game, function(stats){ currentStats = stats; renderPage(); });
-            } else if(currentEvent.category === "games"){
-                loadGameStatsByTitle(currentEvent.title, function(stats){ currentStats = stats; renderPage(); });
-            } else {
-                renderPage();
-            }
-        }).catch(function(err){ console.error("Error:", err); showError(); });
+db.collection("events").doc(eventId).update({
+            attendees: attendees, attending: newAttending
+        }).then(function(){
+            // Auch in event_signups speichern fuer Konsistenz
+            return db.collection("event_signups").add({
+                eventId: eventId,
+                name: name,
+                persons: persons,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        }).then(function(){
+            markJoined(eventId, name);
+            document.getElementById("joinOverlay").classList.remove("active");
+            document.body.style.overflow = "";
+            launchConfetti();
+            loadEvent();
+        }).catch(function(err){
+            errEl.textContent = "Fehler!"; errEl.style.display = "block";
+        });
     }
 
     function loadGameStats(gameName, cb){
