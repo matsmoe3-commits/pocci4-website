@@ -353,14 +353,18 @@
         if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
         // ===== TELEGRAM =====
-var TELEGRAM_BOT_TOKEN = "7866727707:AAEkLGOuSUGIGNjSmJmGLSCG7VU0mSi04IU";
-var TELEGRAM_CHAT_ID = "-4930026015";
 function sendTelegram(message) {
-    fetch("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage", {
+    fetch("/api/telegram", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: "Markdown" })
-    }).then(function(r){console.log("TG:",r.ok);}).catch(function(e){console.warn("TG fail:",e);});
+        body: JSON.stringify({ text: message })
+    }).then(function(r) {
+        return r.json();
+    }).then(function(d) {
+        console.log("TG sent:", d.ok);
+    }).catch(function(e) {
+        console.warn("TG fail:", e);
+    });
 }
 
         // NAV
