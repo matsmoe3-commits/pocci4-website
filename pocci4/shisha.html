@@ -18,18 +18,17 @@
             --color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;
             --color-sand:#C4A882;--color-border:#E0D6CC;
             --font-main:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-            --nav-height:80px;--section-padding:100px;--container-width:1240px;
+            --nav-height:80px;--section-padding:80px;--container-width:1240px;
             --transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);
             --transition-smooth:0.4s cubic-bezier(0.4,0,0.2,1);
-            --shisha-accent:#8B5CF6;--shisha-accent-light:#A78BFA;--shisha-accent-dark:#7C3AED;
+            --sh:#8B5CF6;--sh-light:#A78BFA;--sh-dark:#7C3AED;
         }
         html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
         body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden}
         a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
         img{max-width:100%;height:auto;display:block}
-
         .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
-        .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
+        .bg-shape{position:absolute;filter:blur(100px);opacity:.4}
         .bg-shape-1{width:700px;height:500px;background:#D4C0E0;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
         .bg-shape-2{width:550px;height:650px;background:#E0D0C0;bottom:-20%;right:-10%;animation:m2 25s ease-in-out infinite}
         .bg-shape-3{width:450px;height:400px;background:#C9B8D5;top:35%;left:45%;animation:m3 22s ease-in-out infinite}
@@ -37,11 +36,11 @@
         @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
         @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
 
+        /* NAV */
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
         .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
         .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
-        .nav-logo{display:flex;align-items:center;z-index:1001}
-        .nav-logo img{height:56px}
+        .nav-logo{display:flex;align-items:center;z-index:1001}.nav-logo img{height:56px}
         .nav-right{display:flex;align-items:center;gap:.5rem}
         .nav-links{display:flex;align-items:center;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
         .nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}
@@ -69,10 +68,9 @@
         .mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}
         .mobile-menu.active .mobile-link:nth-child(6){transition-delay:.35s}
         .mobile-menu.active .mobile-link:nth-child(7){transition-delay:.4s}
-        .mobile-link:hover,.mobile-link.active{color:var(--shisha-accent)}
+        .mobile-link:hover,.mobile-link.active{color:var(--sh)}
         .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
-
-        .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
+        .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4}
         .admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
         .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
         .admin-modal-overlay.active{display:flex}
@@ -80,196 +78,202 @@
         .admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
         .admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
         .admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
-        .admin-modal input:focus{border-color:var(--shisha-accent)}
+        .admin-modal input:focus{border-color:var(--sh)}
         .admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
         .admin-modal-btns .btn-modal{flex:1;padding:10px 16px;font-size:.85rem;border-radius:50px;font-family:var(--font-main);font-weight:700;cursor:pointer;transition:var(--transition-fast);border:none}
         .admin-modal-btns .btn-modal-cancel{background:var(--color-bg);color:var(--color-text)}
-        .admin-modal-btns .btn-modal-submit{background:var(--shisha-accent);color:#fff}
+        .admin-modal-btns .btn-modal-submit{background:var(--sh);color:#fff}
         .admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
+        .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--sh);text-transform:uppercase;margin-bottom:1rem}
+        .section-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.03em}
 
-        /* ===== SMOKE EFFECTS ===== */
+        /* SMOKE FX */
         .smoke-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2500;overflow:hidden}
-        .smoke-puff{position:absolute;border-radius:50%;pointer-events:none;filter:blur(8px);animation:smokePuff var(--dur,3s) ease-out forwards}
-        @keyframes smokePuff{
-            0%{transform:translate(0,0) scale(.3);opacity:.7}
-            30%{opacity:.5}
-            100%{transform:translate(var(--dx,-30px),var(--dy,-200px)) scale(2.5);opacity:0}
-        }
-        .smoke-ring{position:absolute;border:3px solid rgba(255,255,255,.3);border-radius:50%;pointer-events:none;animation:smokeRing 2s ease-out forwards}
-        @keyframes smokeRing{
-            0%{transform:scale(.2);opacity:.6}
-            100%{transform:scale(3);opacity:0}
-        }
-        .flavor-burst{position:absolute;pointer-events:none;font-size:1.5rem;animation:flavorBurst 1.5s ease-out forwards}
-        @keyframes flavorBurst{
-            0%{transform:translate(0,0) scale(0) rotate(0);opacity:1}
-            50%{transform:translate(var(--bx,20px),var(--by,-80px)) scale(1.2) rotate(180deg);opacity:.8}
-            100%{transform:translate(var(--bx2,40px),var(--by2,-160px)) scale(.5) rotate(360deg);opacity:0}
-        }
+        .smoke-puff{position:absolute;border-radius:50%;pointer-events:none;filter:blur(10px);animation:smokePuff var(--dur,3s) ease-out forwards}
+        @keyframes smokePuff{0%{transform:translate(0,0) scale(.3);opacity:.6}100%{transform:translate(var(--dx,0),var(--dy,-200px)) scale(3);opacity:0}}
+        .smoke-ring{position:absolute;border:3px solid rgba(139,92,246,.25);border-radius:50%;pointer-events:none;animation:smokeRing 2.5s ease-out forwards}
+        @keyframes smokeRing{0%{transform:scale(.2);opacity:.5}100%{transform:scale(4);opacity:0}}
+        .flavor-burst{position:absolute;pointer-events:none;animation:flavorBurst 1.5s ease-out forwards}
+        @keyframes flavorBurst{0%{transform:translate(0,0) scale(0) rotate(0);opacity:1}50%{transform:translate(var(--bx,20px),var(--by,-80px)) scale(1.3) rotate(180deg);opacity:.8}100%{transform:translate(var(--bx2,40px),var(--by2,-160px)) scale(.4) rotate(360deg);opacity:0}}
+        .smoke-trail{position:absolute;width:3px;border-radius:3px;pointer-events:none;animation:smokeTrail var(--dur,1.5s) ease-out forwards}
+        @keyframes smokeTrail{0%{height:0;opacity:.5}50%{height:var(--h,60px);opacity:.3}100%{height:0;opacity:0;transform:translateY(var(--dy,-100px))}}
 
-        /* HERO */
-        .shisha-hero{padding:calc(var(--nav-height) + 4rem) 1.25rem 3rem;max-width:var(--container-width);margin:0 auto;text-align:center;position:relative}
-        .shisha-hero-smoke{font-size:6rem;margin-bottom:1rem;animation:smokeFloat 4s ease-in-out infinite;position:relative;display:inline-block}
-        .hero-smoke-bg{position:absolute;top:50%;left:50%;width:200px;height:200px;background:radial-gradient(circle,rgba(139,92,246,.15) 0%,transparent 70%);transform:translate(-50%,-50%);border-radius:50%;animation:heroGlow 3s ease-in-out infinite alternate;pointer-events:none}
-        @keyframes heroGlow{0%{opacity:.3;transform:translate(-50%,-50%) scale(1)}100%{opacity:.6;transform:translate(-50%,-50%) scale(1.3)}}
-        @keyframes smokeFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-15px) scale(1.05)}}
-        .shisha-hero-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--shisha-accent);text-transform:uppercase;margin-bottom:1rem}
-        .shisha-hero-title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem}
-        .shisha-hero-title span{background:linear-gradient(135deg,var(--shisha-accent),var(--color-primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .shisha-hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--color-text-light);max-width:550px;margin:0 auto 2rem}
-        .andrei-badge{display:inline-flex;align-items:center;gap:.6rem;padding:10px 20px;border-radius:50px;background:var(--color-white);box-shadow:0 2px 15px rgba(0,0,0,.06);border:1px solid var(--color-border)}
-        .andrei-badge-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--shisha-accent),var(--color-primary));display:flex;align-items:center;justify-content:center;font-size:1.1rem}
-        .andrei-badge-text{text-align:left}
-        .andrei-badge-name{font-size:.85rem;font-weight:800}
-        .andrei-badge-role{font-size:.7rem;color:var(--shisha-accent);font-weight:600}
+        /* ===== HERO ===== */
+        .sh-hero{padding:calc(var(--nav-height) + 3rem) 1.5rem 2rem;max-width:var(--container-width);margin:0 auto;text-align:center;position:relative}
+        .sh-hero-smoke-wrap{position:relative;display:inline-block;margin-bottom:1.5rem}
+        .sh-hero-glow{position:absolute;top:50%;left:50%;width:250px;height:250px;background:radial-gradient(circle,rgba(139,92,246,.2) 0%,transparent 70%);transform:translate(-50%,-50%);border-radius:50%;animation:heroGlow 3s ease-in-out infinite alternate;pointer-events:none}
+        @keyframes heroGlow{0%{opacity:.2;transform:translate(-50%,-50%) scale(.8)}100%{opacity:.5;transform:translate(-50%,-50%) scale(1.4)}}
+        .sh-hero-emoji{font-size:5rem;animation:heroFloat 4s ease-in-out infinite;position:relative;z-index:1;cursor:pointer;transition:transform .2s ease}
+        .sh-hero-emoji:hover{transform:scale(1.15)}
+        @keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+        .sh-hero-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--sh);text-transform:uppercase;margin-bottom:.75rem}
+        .sh-hero-title{font-size:clamp(2.2rem,6vw,4rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem}
+        .sh-hero-title span{background:linear-gradient(135deg,var(--sh),var(--color-primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .sh-hero-sub{font-size:clamp(.95rem,2vw,1.1rem);color:var(--color-text-light);max-width:480px;margin:0 auto 2rem;line-height:1.6}
+        .sh-hero-cta{display:inline-flex;align-items:center;gap:.5rem;padding:14px 32px;border-radius:50px;background:linear-gradient(135deg,var(--sh),var(--color-primary));color:#fff;font-weight:800;font-size:.95rem;cursor:pointer;border:none;font-family:var(--font-main);transition:var(--transition-smooth);box-shadow:0 6px 20px rgba(139,92,246,.3)}
+        .sh-hero-cta:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(139,92,246,.4)}
 
-        .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--shisha-accent);text-transform:uppercase;margin-bottom:1rem}
-        .section-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.03em}
+        /* ===== ANDREI SECTION ===== */
+        .andrei-section{padding:0 1.5rem 4rem;max-width:800px;margin:0 auto}
+        .andrei-card{display:grid;grid-template-columns:200px 1fr;gap:2rem;background:var(--color-white);border-radius:24px;padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.04);border:1px solid var(--color-border);align-items:center}
+        .andrei-img{width:200px;height:200px;border-radius:20px;overflow:hidden;position:relative;background:var(--color-bg-warm)}
+        .andrei-img img{width:100%;height:100%;object-fit:cover}
+        .andrei-img-badge{position:absolute;bottom:10px;left:10px;background:var(--sh);color:#fff;padding:4px 12px;border-radius:50px;font-size:.65rem;font-weight:800}
+        .andrei-content h3{font-size:1.5rem;font-weight:900;margin-bottom:.25rem}
+        .andrei-content .andrei-role{font-size:.85rem;color:var(--sh);font-weight:700;margin-bottom:.75rem}
+        .andrei-content p{font-size:.9rem;color:var(--color-text-light);line-height:1.6;margin-bottom:1rem}
+        .andrei-quote{font-style:italic;padding:.75rem 1rem;border-left:3px solid var(--sh);background:rgba(139,92,246,.04);border-radius:0 12px 12px 0;font-size:.85rem;color:var(--color-text-light)}
+        .andrei-insta{display:inline-flex;align-items:center;gap:.4rem;padding:8px 16px;border-radius:50px;background:var(--color-bg);font-size:.8rem;font-weight:700;color:var(--sh);margin-top:.75rem;transition:var(--transition-fast)}
+        .andrei-insta:hover{background:rgba(139,92,246,.1)}
 
-        /* TYPE SELECTION (Kohle vs E-Shisha) */
-        .type-section{padding:0 1.25rem 3rem;max-width:700px;margin:0 auto}
-        .type-header{text-align:center;margin-bottom:1.5rem}
-        .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-        .type-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:20px;padding:2rem 1.5rem;text-align:center;border:3px solid transparent;cursor:pointer;transition:var(--transition-smooth);position:relative;overflow:hidden}
-        .type-card:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,.08);border-color:var(--color-border)}
-        .type-card.selected{border-color:var(--shisha-accent);box-shadow:0 10px 30px rgba(139,92,246,.2)}
-        .type-card.selected::after{content:'✓';position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:var(--shisha-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800}
-        .type-emoji{font-size:3.5rem;margin-bottom:.75rem}
-        .type-name{font-size:1.2rem;font-weight:800;margin-bottom:.25rem}
-        .type-desc{font-size:.8rem;color:var(--color-text-light);line-height:1.4}
-        .type-features{display:flex;flex-direction:column;gap:.3rem;margin-top:.75rem;font-size:.72rem;color:var(--color-gray)}
-        .type-feature{display:flex;align-items:center;gap:.3rem;justify-content:center}
-        .type-required{text-align:center;margin-top:1rem;font-size:.78rem;color:var(--color-primary);font-weight:600;display:none}
-        .type-required.show{display:block}
-
-        /* CATEGORY TABS */
-        .menu-section{padding:0 1.25rem var(--section-padding);max-width:var(--container-width);margin:0 auto}
-        .menu-header{text-align:center;margin-bottom:3rem}
-        .cat-tabs{display:flex;gap:.5rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap}
-        .cat-tab{padding:8px 18px;border-radius:50px;font-size:.8rem;font-weight:600;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:none;background:var(--color-white);font-family:var(--font-main);box-shadow:0 1px 5px rgba(0,0,0,.04)}
-        .cat-tab:hover{color:var(--color-text);background:var(--color-bg-warm)}
-        .cat-tab.active{background:var(--shisha-accent);color:#fff;box-shadow:0 4px 15px rgba(139,92,246,.3)}
-
-        /* FLAVOR GRID */
-        .flavor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:.75rem;margin-bottom:3rem}
-        .flavor-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:16px;padding:1.1rem .9rem;text-align:center;border:2px solid transparent;cursor:pointer;transition:var(--transition-smooth);position:relative;overflow:hidden}
-        .flavor-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--glow-color,transparent) 0%,transparent 70%);opacity:0;transition:opacity .4s ease;pointer-events:none}
-        .flavor-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.08);border-color:var(--color-border)}
-        .flavor-card:hover::before{opacity:.15}
-        .flavor-card.selected{border-color:var(--shisha-accent);background:rgba(139,92,246,.06);box-shadow:0 8px 25px rgba(139,92,246,.15)}
-        .flavor-card.selected::before{opacity:.2}
-        .flavor-card.selected::after{content:'✓';position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:var(--shisha-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;animation:checkPop .3s ease}
+        /* ===== TYPE CHOICE ===== */
+        .type-section{padding:0 1.5rem 4rem;max-width:700px;margin:0 auto;text-align:center}
+        .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:2rem}
+        .type-card{background:var(--color-white);border-radius:22px;padding:2.5rem 1.5rem;text-align:center;border:3px solid transparent;cursor:pointer;transition:var(--transition-smooth);position:relative;overflow:hidden}
+        .type-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s ease;pointer-events:none}
+        .type-card[data-type="kohle"]::before{background:radial-gradient(circle at 50% 30%,rgba(255,107,107,.1),transparent 70%)}
+        .type-card[data-type="eshisha"]::before{background:radial-gradient(circle at 50% 30%,rgba(69,123,157,.1),transparent 70%)}
+        .type-card:hover{transform:translateY(-6px);box-shadow:0 15px 40px rgba(0,0,0,.08);border-color:var(--color-border)}
+        .type-card:hover::before{opacity:1}
+        .type-card.selected{border-color:var(--sh);box-shadow:0 12px 35px rgba(139,92,246,.2)}
+        .type-card.selected::after{content:'✓';position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:var(--sh);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;animation:checkPop .3s ease}
         @keyframes checkPop{0%{transform:scale(0)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
-        .flavor-emoji{font-size:2.2rem;margin-bottom:.4rem;transition:transform .3s ease}
-        .flavor-card:hover .flavor-emoji{transform:scale(1.15) rotate(5deg)}
-        .flavor-card.selected .flavor-emoji{animation:selectedBounce .5s ease}
-        @keyframes selectedBounce{0%{transform:scale(1)}30%{transform:scale(1.3) rotate(-10deg)}60%{transform:scale(.9) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
-        .flavor-name{font-size:.8rem;font-weight:700;margin-bottom:.15rem}
-        .flavor-brand{font-size:.6rem;color:var(--shisha-accent);font-weight:600;margin-bottom:.15rem}
-        .flavor-desc{font-size:.65rem;color:var(--color-gray);line-height:1.3}
-        .flavor-tag{display:inline-block;padding:2px 7px;border-radius:50px;font-size:.55rem;font-weight:700;margin-top:.35rem;text-transform:uppercase}
-        .flavor-tag.fruity{background:rgba(255,107,107,.12);color:#FF6B6B}
-        .flavor-tag.fresh{background:rgba(69,123,157,.12);color:#457B9D}
-        .flavor-tag.sweet{background:rgba(255,217,61,.15);color:#C9960C}
-        .flavor-tag.exotic{background:rgba(139,92,246,.12);color:var(--shisha-accent)}
-        .flavor-tag.classic{background:rgba(26,26,26,.08);color:var(--color-text)}
-        .flavor-tag.spicy{background:rgba(192,58,43,.1);color:var(--color-primary)}
-        .flavor-tag.creamy{background:rgba(196,168,130,.15);color:#8B6914}
-        .flavor-tag.berry{background:rgba(155,89,182,.12);color:#9B59B6}
-        .flavor-tag.sour{background:rgba(46,204,113,.12);color:#27AE60}
-        .flavor-count{position:fixed;bottom:2rem;right:2rem;background:var(--shisha-accent);color:#fff;border-radius:50px;padding:12px 24px;font-size:.85rem;font-weight:800;box-shadow:0 8px 25px rgba(139,92,246,.4);z-index:100;display:none;align-items:center;gap:.5rem;cursor:pointer;transition:var(--transition-smooth);animation:countSlideIn .4s ease}
-        .flavor-count.visible{display:flex}
-        .flavor-count:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(139,92,246,.5)}
-        @keyframes countSlideIn{from{transform:translateY(100px);opacity:0}to{transform:translateY(0);opacity:1}}
+        .type-emoji{font-size:3.5rem;margin-bottom:.75rem;transition:transform .3s ease}
+        .type-card:hover .type-emoji{transform:scale(1.1)}
+        .type-name{font-size:1.2rem;font-weight:800;margin-bottom:.25rem}
+        .type-desc{font-size:.8rem;color:var(--color-text-light)}
 
-        /* BUILDER */
-        .builder-section{padding:0 1.25rem var(--section-padding);max-width:900px;margin:0 auto}
-        .builder-card{background:var(--color-text);border-radius:28px;padding:3rem 2.5rem;color:#fff;position:relative;overflow:hidden}
-        .builder-card::before{content:'';position:absolute;top:-50%;right:-30%;width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,.15) 0%,transparent 70%);pointer-events:none}
-        .builder-card::after{content:'';position:absolute;bottom:-30%;left:-20%;width:350px;height:350px;background:radial-gradient(circle,rgba(192,58,43,.1) 0%,transparent 70%);pointer-events:none}
-        .builder-header{text-align:center;margin-bottom:2.5rem;position:relative;z-index:1}
-        .builder-header .section-overline{color:var(--shisha-accent-light)}
-        .builder-header .section-title{color:#fff;font-size:clamp(1.5rem,4vw,2.2rem)}
-        .builder-header p{color:var(--color-gray);font-size:.9rem;margin-top:.5rem}
-        .builder-step{margin-bottom:2rem;position:relative;z-index:1}
-        .step-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--shisha-accent-light);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
-        .step-number{width:24px;height:24px;border-radius:50%;background:var(--shisha-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800}
-        .step-number.done{background:#2D6A4F}
-        .selected-flavors{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;min-height:40px}
-        .selected-chip{display:inline-flex;align-items:center;gap:.3rem;padding:6px 14px;border-radius:50px;background:rgba(139,92,246,.2);color:var(--shisha-accent-light);font-size:.8rem;font-weight:600;animation:chipIn .3s ease}
-        @keyframes chipIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-        .selected-chip button{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:1rem;padding:0 0 0 4px;transition:var(--transition-fast)}
-        .selected-chip button:hover{color:#fff}
-        .no-selection{color:rgba(255,255,255,.3);font-size:.85rem;padding:.5rem 0}
-        .type-display{display:inline-flex;align-items:center;gap:.4rem;padding:8px 16px;border-radius:50px;font-size:.85rem;font-weight:700;margin-bottom:.5rem}
-        .type-display.kohle{background:rgba(255,107,107,.15);color:#FF6B6B}
-        .type-display.eshisha{background:rgba(69,123,157,.15);color:#457B9D}
-        .mix-options{display:flex;gap:.75rem;flex-wrap:wrap}
-        .mix-option{padding:8px 16px;border-radius:50px;border:1.5px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.7);font-family:var(--font-main);font-size:.8rem;font-weight:600;cursor:pointer;transition:var(--transition-fast)}
-        .mix-option:hover{border-color:var(--shisha-accent);color:#fff}
-        .mix-option.active{background:var(--shisha-accent);border-color:var(--shisha-accent);color:#fff}
-        .builder-extras{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.5rem}
-        .extra-card{padding:1rem;border-radius:14px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;transition:var(--transition-fast);text-align:center}
-        .extra-card:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08)}
-        .extra-card.selected{border-color:var(--shisha-accent);background:rgba(139,92,246,.15)}
-        .extra-emoji{font-size:1.5rem;margin-bottom:.25rem}
-        .extra-name{font-size:.8rem;font-weight:700}
-        .extra-price{font-size:.7rem;color:var(--shisha-accent-light)}
-        .builder-note{width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:var(--font-main);font-size:.85rem;resize:vertical;min-height:70px;transition:var(--transition-fast)}
-        .builder-note::placeholder{color:rgba(255,255,255,.3)}
-        .builder-note:focus{outline:none;border-color:var(--shisha-accent)}
-        .builder-name{width:100%;padding:14px 18px;border-radius:14px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:var(--font-main);font-size:.95rem;font-weight:600;transition:var(--transition-fast)}
-        .builder-name::placeholder{color:rgba(255,255,255,.3)}
-        .builder-name:focus{outline:none;border-color:var(--shisha-accent)}
-        .builder-summary{background:rgba(255,255,255,.08);border-radius:16px;padding:1.5rem;margin:1.5rem 0;border:1px solid rgba(255,255,255,.1)}
-        .summary-row{display:flex;justify-content:space-between;padding:.35rem 0;font-size:.85rem;gap:.5rem}
-        .summary-label{color:var(--color-gray);flex-shrink:0}
-        .summary-value{font-weight:700;text-align:right;word-break:break-word}
-        .summary-total{border-top:1px solid rgba(255,255,255,.15);margin-top:.5rem;padding-top:.5rem;font-size:1.1rem}
-        .summary-total .summary-value{color:var(--shisha-accent-light);font-size:1.2rem}
-        .builder-submit{width:100%;padding:18px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--shisha-accent),var(--color-primary));color:#fff;font-family:var(--font-main);font-size:1rem;font-weight:800;cursor:pointer;transition:var(--transition-smooth);position:relative;z-index:1}
-        .builder-submit:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(139,92,246,.35)}
-        .builder-submit:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-        .builder-error{color:#FF6B6B;font-size:.8rem;font-weight:600;text-align:center;margin-top:.75rem;display:none}
-        .builder-error.show{display:block;animation:shake .4s ease}
-        @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-        .builder-success{display:none;text-align:center;padding:2.5rem 1rem;position:relative;z-index:1}
-        .builder-success.show{display:block}
-        .builder-success-icon{font-size:4rem;margin-bottom:1rem;animation:successPop .5s ease}
+        /* ===== PATH CHOICE ===== */
+        .path-section{padding:0 1.5rem 4rem;max-width:800px;margin:0 auto;text-align:center;display:none}
+        .path-section.show{display:block}
+        .path-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+        .path-card{background:var(--color-white);border-radius:22px;padding:2.5rem 1.5rem;border:3px solid transparent;cursor:pointer;transition:var(--transition-smooth);position:relative;overflow:hidden}
+        .path-card:hover{transform:translateY(-6px);box-shadow:0 15px 40px rgba(0,0,0,.08);border-color:var(--color-border)}
+        .path-card.selected{border-color:var(--sh);box-shadow:0 12px 35px rgba(139,92,246,.2)}
+        .path-emoji{font-size:3rem;margin-bottom:.75rem}
+        .path-name{font-size:1.15rem;font-weight:800;margin-bottom:.25rem}
+        .path-desc{font-size:.8rem;color:var(--color-text-light);line-height:1.4}
+
+        /* ===== SIGNATURE MIXES ===== */
+        .sigs-section{padding:0 1.5rem 4rem;max-width:var(--container-width);margin:0 auto;display:none}
+        .sigs-section.show{display:block}
+        .sigs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-top:2rem}
+        .sig-card{background:var(--color-white);border-radius:22px;padding:1.75rem;border:2px solid transparent;cursor:pointer;transition:var(--transition-smooth);position:relative;overflow:hidden}
+        .sig-card:hover{transform:translateY(-6px);box-shadow:0 15px 40px rgba(0,0,0,.08);border-color:var(--color-border)}
+        .sig-card.selected{border-color:var(--sh);background:rgba(139,92,246,.04)}
+        .sig-card.selected::after{content:'✓ Ausgewaehlt';position:absolute;top:14px;right:14px;background:var(--sh);color:#fff;padding:4px 12px;border-radius:50px;font-size:.65rem;font-weight:800}
+        .sig-person{display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem}
+        .sig-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;background:var(--color-bg-warm);flex-shrink:0}
+        .sig-avatar img{width:100%;height:100%;object-fit:cover}
+        .sig-person-name{font-size:.75rem;font-weight:700;color:var(--sh)}
+        .sig-emojis{font-size:2.5rem;margin-bottom:.5rem}
+        .sig-name{font-size:1.15rem;font-weight:800;margin-bottom:.15rem}
+        .sig-flavors{font-size:.78rem;color:var(--sh);font-weight:600;margin-bottom:.35rem}
+        .sig-desc{font-size:.78rem;color:var(--color-text-light);line-height:1.4}
+
+        /* ===== CUSTOM PICKER ===== */
+        .custom-section{padding:0 1.5rem 4rem;max-width:var(--container-width);margin:0 auto;display:none}
+        .custom-section.show{display:block}
+        .cat-tabs{display:flex;gap:.4rem;justify-content:center;margin:1.5rem 0;flex-wrap:wrap}
+        .cat-tab{padding:7px 16px;border-radius:50px;font-size:.78rem;font-weight:600;color:var(--color-text-light);cursor:pointer;transition:var(--transition-fast);border:none;background:var(--color-white);font-family:var(--font-main);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+        .cat-tab:hover{color:var(--color-text);background:var(--color-bg-warm)}
+        .cat-tab.active{background:var(--sh);color:#fff;box-shadow:0 4px 12px rgba(139,92,246,.25)}
+        .flavor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.65rem}
+        .flv{background:var(--color-white);border-radius:14px;padding:.85rem .7rem;text-align:center;border:2px solid transparent;cursor:pointer;transition:var(--transition-smooth);position:relative;overflow:hidden}
+        .flv::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--glow,rgba(139,92,246,.1)),transparent 70%);opacity:0;transition:opacity .3s ease;pointer-events:none}
+        .flv:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.06);border-color:var(--color-border)}
+        .flv:hover::before{opacity:1}
+        .flv.sel{border-color:var(--sh);background:rgba(139,92,246,.04)}
+        .flv.sel::after{content:'✓';position:absolute;top:5px;right:5px;width:20px;height:20px;border-radius:50%;background:var(--sh);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;animation:checkPop .3s ease}
+        .flv-emoji{font-size:2rem;margin-bottom:.3rem;transition:transform .3s ease}
+        .flv:hover .flv-emoji{transform:scale(1.15) rotate(5deg)}
+        .flv.sel .flv-emoji{animation:selectedBounce .5s ease}
+        @keyframes selectedBounce{0%{transform:scale(1)}30%{transform:scale(1.3) rotate(-10deg)}60%{transform:scale(.9)}100%{transform:scale(1)}}
+        .flv-name{font-size:.75rem;font-weight:700}
+        .flv-brand{font-size:.58rem;color:var(--sh);font-weight:600}
+        .flv-tag{display:inline-block;padding:2px 6px;border-radius:50px;font-size:.5rem;font-weight:700;margin-top:.25rem;text-transform:uppercase}
+        .flv-tag.fruity{background:rgba(255,107,107,.1);color:#FF6B6B}
+        .flv-tag.fresh{background:rgba(69,123,157,.1);color:#457B9D}
+        .flv-tag.sweet{background:rgba(255,217,61,.12);color:#C9960C}
+        .flv-tag.exotic{background:rgba(139,92,246,.1);color:var(--sh)}
+        .flv-tag.classic{background:rgba(26,26,26,.06);color:var(--color-text)}
+        .flv-tag.berry{background:rgba(155,89,182,.1);color:#9B59B6}
+        .flv-tag.sour{background:rgba(46,204,113,.1);color:#27AE60}
+        .flv-tag.creamy{background:rgba(196,168,130,.12);color:#8B6914}
+        .flv-tag.spicy{background:rgba(192,58,43,.08);color:var(--color-primary)}
+
+        /* FLOATING */
+        .float-bar{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--sh);color:#fff;border-radius:50px;padding:12px 28px;font-size:.85rem;font-weight:800;box-shadow:0 8px 30px rgba(139,92,246,.4);z-index:100;display:flex;align-items:center;gap:.6rem;cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1)}
+        .float-bar.show{transform:translateX(-50%) translateY(0)}
+        .float-bar:hover{box-shadow:0 12px 40px rgba(139,92,246,.5);transform:translateX(-50%) translateY(-3px)}
+
+        /* ===== ORDER SECTION ===== */
+        .order-section{padding:0 1.5rem var(--section-padding);max-width:900px;margin:0 auto;display:none}
+        .order-section.show{display:block}
+        .order-card{background:var(--color-text);border-radius:28px;padding:2.5rem 2rem;color:#fff;position:relative;overflow:hidden}
+        .order-card::before{content:'';position:absolute;top:-40%;right:-25%;width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,.12) 0%,transparent 70%);pointer-events:none}
+        .order-header{text-align:center;margin-bottom:2rem;position:relative;z-index:1}
+        .order-header .section-overline{color:var(--sh-light)}
+        .order-header .section-title{color:#fff}
+        .order-step{margin-bottom:1.75rem;position:relative;z-index:1}
+        .order-step-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sh-light);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+        .order-step-num{width:22px;height:22px;border-radius:50%;background:rgba(139,92,246,.3);color:var(--sh-light);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800}
+        .order-step-num.done{background:var(--sh);color:#fff}
+        .order-chips{display:flex;gap:.4rem;flex-wrap:wrap;min-height:36px}
+        .order-chip{display:inline-flex;align-items:center;gap:.3rem;padding:5px 12px;border-radius:50px;background:rgba(139,92,246,.15);color:var(--sh-light);font-size:.78rem;font-weight:600}
+        .order-chip button{background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:.9rem;padding:0 0 0 3px}
+        .order-chip button:hover{color:#fff}
+        .order-empty{color:rgba(255,255,255,.25);font-size:.82rem}
+        .order-type-badge{display:inline-flex;align-items:center;gap:.3rem;padding:6px 14px;border-radius:50px;font-size:.82rem;font-weight:700}
+        .order-type-badge.kohle{background:rgba(255,107,107,.12);color:#FF6B6B}
+        .order-type-badge.eshisha{background:rgba(69,123,157,.12);color:#74b9ff}
+        .mix-opts{display:flex;gap:.5rem;flex-wrap:wrap}
+        .mix-opt{padding:7px 14px;border-radius:50px;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.6);font-family:var(--font-main);font-size:.78rem;font-weight:600;cursor:pointer;transition:var(--transition-fast)}
+        .mix-opt:hover{border-color:var(--sh);color:#fff}
+        .mix-opt.active{background:var(--sh);border-color:var(--sh);color:#fff}
+        .order-note{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--font-main);font-size:.85rem;resize:vertical;min-height:60px}
+        .order-note::placeholder{color:rgba(255,255,255,.25)}
+        .order-note:focus{outline:none;border-color:var(--sh)}
+        .order-name{width:100%;padding:14px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:var(--font-main);font-size:.95rem;font-weight:600}
+        .order-name::placeholder{color:rgba(255,255,255,.25)}
+        .order-name:focus{outline:none;border-color:var(--sh)}
+        .order-summary{background:rgba(255,255,255,.06);border-radius:14px;padding:1.25rem;margin:1.5rem 0;border:1px solid rgba(255,255,255,.08)}
+        .sum-row{display:flex;justify-content:space-between;padding:.3rem 0;font-size:.82rem}
+        .sum-label{color:var(--color-gray)}
+        .sum-value{font-weight:700}
+        .order-submit{width:100%;padding:18px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--sh),var(--color-primary));color:#fff;font-family:var(--font-main);font-size:1rem;font-weight:800;cursor:pointer;transition:var(--transition-smooth);position:relative;z-index:1}
+        .order-submit:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(139,92,246,.35)}
+        .order-submit:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+        .order-error{color:#FF6B6B;font-size:.8rem;font-weight:600;text-align:center;margin-top:.75rem;display:none}
+        .order-error.show{display:block}
+        .order-success{display:none;text-align:center;padding:2.5rem 1rem;position:relative;z-index:1}
+        .order-success.show{display:block}
+        .order-success-icon{font-size:4rem;margin-bottom:1rem;animation:successPop .5s ease}
         @keyframes successPop{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
-        .builder-success-title{font-size:1.5rem;font-weight:900;margin-bottom:.5rem}
-        .builder-success-text{color:var(--color-gray);font-size:.9rem;line-height:1.5;margin-bottom:1.5rem}
-        .builder-success-btn{padding:14px 32px;border-radius:50px;border:none;background:var(--shisha-accent);color:#fff;font-family:var(--font-main);font-size:.9rem;font-weight:700;cursor:pointer;transition:var(--transition-fast)}
-        .builder-success-btn:hover{background:var(--shisha-accent-dark)}
+        .order-success-title{font-size:1.5rem;font-weight:900;margin-bottom:.5rem}
+        .order-success-text{color:var(--color-gray);font-size:.9rem;line-height:1.5;margin-bottom:1.5rem}
+        .order-success-btn{padding:14px 32px;border-radius:50px;border:none;background:var(--sh);color:#fff;font-family:var(--font-main);font-size:.9rem;font-weight:700;cursor:pointer}
 
-        /* COMBOS */
-        .combos-section{padding:0 1.25rem var(--section-padding);max-width:var(--container-width);margin:0 auto}
-        .combos-header{text-align:center;margin-bottom:2.5rem}
-        .combos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem}
-        .combo-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:20px;padding:1.5rem;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 15px rgba(0,0,0,.03);transition:var(--transition-smooth);cursor:pointer}
-        .combo-card:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,.08)}
-        .combo-emojis{font-size:2rem;margin-bottom:.75rem;display:flex;gap:.3rem}
-        .combo-name{font-size:1.05rem;font-weight:800;margin-bottom:.25rem}
-        .combo-flavors{font-size:.78rem;color:var(--shisha-accent);font-weight:600;margin-bottom:.5rem}
-        .combo-desc{font-size:.78rem;color:var(--color-text-light);line-height:1.4;margin-bottom:.75rem}
-        .combo-order-btn{padding:8px 18px;border-radius:50px;border:none;background:var(--shisha-accent);color:#fff;font-family:var(--font-main);font-size:.75rem;font-weight:700;cursor:pointer;transition:var(--transition-fast)}
-        .combo-order-btn:hover{background:var(--shisha-accent-dark);transform:translateY(-1px)}
-        .combo-badge{display:inline-flex;align-items:center;gap:.3rem;padding:3px 10px;border-radius:50px;font-size:.6rem;font-weight:700;margin-bottom:.75rem}
-        .combo-badge.popular{background:rgba(255,217,61,.15);color:#C9960C}
-        .combo-badge.new{background:rgba(139,92,246,.12);color:var(--shisha-accent)}
-        .combo-badge.andrei{background:rgba(192,58,43,.1);color:var(--color-primary)}
+        /* ===== DONATE ===== */
+        .donate-section{padding:0 1.5rem var(--section-padding);max-width:600px;margin:0 auto;text-align:center}
+        .donate-card{background:var(--color-white);border-radius:24px;padding:2.5rem 2rem;box-shadow:0 4px 20px rgba(0,0,0,.04);border:1px solid var(--color-border)}
+        .donate-emoji{font-size:3rem;margin-bottom:.75rem}
+        .donate-title{font-size:1.3rem;font-weight:800;margin-bottom:.25rem}
+        .donate-text{font-size:.88rem;color:var(--color-text-light);margin-bottom:1.5rem;line-height:1.5}
+        .donate-amounts{display:flex;gap:.5rem;justify-content:center;margin-bottom:1.25rem;flex-wrap:wrap}
+        .donate-amt{padding:8px 18px;border-radius:50px;border:2px solid var(--color-border);background:transparent;font-family:var(--font-main);font-size:.85rem;font-weight:700;cursor:pointer;transition:var(--transition-fast);color:var(--color-text)}
+        .donate-amt:hover{border-color:var(--sh);color:var(--sh)}
+        .donate-amt.active{background:var(--sh);border-color:var(--sh);color:#fff}
+        .donate-custom{display:flex;gap:.5rem;margin-bottom:1.25rem;max-width:250px;margin-left:auto;margin-right:auto}
+        .donate-custom input{flex:1;padding:10px 14px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:1rem;font-weight:700;text-align:center;outline:none}
+        .donate-custom input:focus{border-color:var(--sh)}
+        .donate-custom span{display:flex;align-items:center;font-weight:800;color:var(--color-gray)}
+        .donate-btn{display:inline-flex;align-items:center;gap:.5rem;padding:14px 32px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--sh),var(--color-primary));color:#fff;font-family:var(--font-main);font-size:.95rem;font-weight:800;cursor:pointer;transition:var(--transition-smooth)}
+        .donate-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(139,92,246,.3)}
+        .donate-note{font-size:.72rem;color:var(--color-gray);margin-top:1rem}
 
-        /* RULES */
-        .rules-section{padding:0 1.25rem var(--section-padding);max-width:700px;margin:0 auto}
-        .rules-card{background:rgba(255,255,255,.85);backdrop-filter:blur(15px);border-radius:24px;padding:2.5rem;border:1px solid rgba(255,255,255,.5)}
-        .rules-header{text-align:center;margin-bottom:2rem}
-        .rule-row{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--color-border);align-items:flex-start}
-        .rule-row:last-child{border-bottom:none}
-        .rule-emoji{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
-        .rule-text{font-size:.9rem;color:var(--color-text-light);line-height:1.5}
-        .rule-text strong{color:var(--color-text)}
-
-        .footer{background:var(--color-text);color:#fff;padding:4rem 1.25rem 2rem}
+        /* FOOTER */
+        .footer{background:var(--color-text);color:#fff;padding:4rem 1.5rem 2rem}
         .footer-container{max-width:var(--container-width);margin:0 auto}
         .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
         .footer-logo{height:44px;filter:brightness(0) invert(1);margin-bottom:.75rem}
@@ -280,51 +284,43 @@
         .footer-col a:hover{color:#fff}
         .footer-bottom{padding-top:2rem;text-align:center}
         .footer-bottom p{font-size:.8rem;color:var(--color-gray)}
-
         .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
         .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
         .reveal.visible{opacity:1;transform:translateY(0)}
 
         @media(max-width:1024px){.footer-top{grid-template-columns:1fr;gap:3rem}}
         @media(max-width:768px){
-            :root{--nav-height:68px;--section-padding:60px}
+            :root{--nav-height:68px;--section-padding:50px}
             .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
-            .flavor-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.6rem}
-            .builder-card{padding:2rem 1.5rem;border-radius:20px}
-            .builder-extras{grid-template-columns:1fr 1fr}
-            .combos-grid{grid-template-columns:1fr}
-            .type-grid{gap:.75rem}
-            .type-card{padding:1.5rem 1rem}
-            .type-emoji{font-size:2.5rem}
+            .andrei-card{grid-template-columns:1fr;text-align:center}
+            .andrei-img{width:160px;height:160px;margin:0 auto}
+            .type-grid,.path-grid{gap:1rem}
+            .sigs-grid{grid-template-columns:1fr}
+            .flavor-grid{grid-template-columns:repeat(3,1fr)}
+            .order-card{padding:2rem 1.5rem}
             .footer-links-grid{grid-template-columns:1fr 1fr}
             .nav-dropdown{display:none!important}
-            .flavor-count{bottom:1.5rem;right:1.5rem;padding:10px 20px;font-size:.8rem}
         }
         @media(max-width:480px){
             .nav-logo img{height:38px}
+            .type-grid,.path-grid{grid-template-columns:1fr}
             .flavor-grid{grid-template-columns:repeat(2,1fr)}
-            .builder-extras{grid-template-columns:1fr}
             .footer-links-grid{grid-template-columns:1fr}
-            .shisha-hero-smoke{font-size:4rem}
-            .type-grid{grid-template-columns:1fr}
+            .sh-hero-emoji{font-size:4rem}
+            .andrei-img{width:130px;height:130px}
         }
     </style>
 </head>
 <body>
     <div class="animated-bg"><div class="bg-shape bg-shape-1"></div><div class="bg-shape bg-shape-2"></div><div class="bg-shape bg-shape-3"></div></div>
-    <div class="confetti-container" id="confettiContainer"></div>
-    <div class="smoke-container" id="smokeContainer"></div>
+    <div class="confetti-container" id="confettiC"></div>
+    <div class="smoke-container" id="smokeC"></div>
 
     <nav class="navbar" id="navbar"><div class="nav-container">
         <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
         <div class="nav-right">
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link active">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a><a href="shisha.html" class="nav-dropdown-item"><span>💨</span> Shisha Lounge</a></div></div>
-                <a href="shop.html" class="nav-link">Shop</a>
-                <a href="kontakt.html" class="nav-link">Kontakt</a>
-            </div>
-            <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
+            <div class="nav-links"><a href="index.html" class="nav-link">Home</a><div class="nav-link-dropdown" id="eventsDropdown"><a href="events.html" class="nav-link active">Events</a><div class="nav-dropdown"><a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a><a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a><a href="shisha.html" class="nav-dropdown-item"><span>💨</span> Shisha Lounge</a></div></div><a href="shop.html" class="nav-link">Shop</a><a href="kontakt.html" class="nav-link">Kontakt</a></div>
+            <button class="admin-trigger" id="adminTrigger">🔒</button>
             <button class="hamburger" id="hamburger"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button>
         </div>
     </div></nav>
@@ -341,94 +337,101 @@
     <div class="admin-modal-overlay" id="adminOverlay"><div class="admin-modal"><h3>🔐 Admin Zugang</h3><p>Passwort eingeben.</p><input type="password" id="adminPwInput" placeholder="Passwort"><div class="admin-modal-btns"><button class="btn-modal btn-modal-cancel" id="adminCancel">Abbrechen</button><button class="btn-modal btn-modal-submit" id="adminSubmit">Login</button></div><div class="admin-error" id="adminError">Falsches Passwort!</div></div></div>
 
     <!-- HERO -->
-    <section class="shisha-hero reveal">
-        <div style="position:relative;display:inline-block"><div class="hero-smoke-bg"></div><div class="shisha-hero-smoke">💨</div></div>
-        <p class="shisha-hero-overline">SHISHA LOUNGE</p>
-        <h1 class="shisha-hero-title">Bestell dir deine <span>Shisha.</span></h1>
-        <p class="shisha-hero-sub">Waehle deine Lieblingsgeschmaecker, mix sie zusammen und Andrei baut sie dir.</p>
-        <div class="andrei-badge"><div class="andrei-badge-avatar">🫅</div><div class="andrei-badge-text"><div class="andrei-badge-name">Andrei</div><div class="andrei-badge-role">Shisha-Meister</div></div></div>
+    <section class="sh-hero reveal">
+        <div class="sh-hero-smoke-wrap"><div class="sh-hero-glow"></div><div class="sh-hero-emoji" id="heroEmoji">💨</div></div>
+        <p class="sh-hero-overline">SHISHA LOUNGE</p>
+        <h1 class="sh-hero-title">Bau dir deine <span>Shisha.</span></h1>
+        <p class="sh-hero-sub">Waehle deine Geschmaecker, mix sie zusammen und Andrei baut dir den perfekten Kopf. Kein Stress, nur Smoke.</p>
+        <button class="sh-hero-cta" id="heroCta">💨 Jetzt zusammenstellen</button>
     </section>
 
-    <!-- TYPE SELECTION -->
+    <!-- ANDREI -->
+    <section class="andrei-section reveal" id="andreiSection">
+        <div class="andrei-card">
+            <div class="andrei-img"><img src="assets/andrei.jpeg" alt="Andrei"><div class="andrei-img-badge">🫅 Shisha-Meister</div></div>
+            <div class="andrei-content">
+                <h3>Andrei</h3>
+                <div class="andrei-role">Chief Smoke Officer</div>
+                <p>Seit Jahren baut Andrei die besten Koepfe in ganz Muenchen. Egal ob Klassiker oder Experiment – er weiss was er tut.</p>
+                <div class="andrei-quote">"Vertrau mir, ich weiss was gut schmeckt. Und wenn nicht – du kriegst nen neuen Kopf. Deal?" 💨</div>
+                <a href="https://instagram.com/andrei.ncu" target="_blank" class="andrei-insta">📸 @andrei.ncu</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TYPE -->
     <section class="type-section reveal" id="typeSection">
-        <div class="type-header">
-            <p class="section-overline">SCHRITT 1</p>
-            <h2 class="section-title">Kohle oder E-Shisha?</h2>
-        </div>
+        <p class="section-overline">SCHRITT 1</p>
+        <h2 class="section-title">Kohle oder E-Shisha?</h2>
         <div class="type-grid" id="typeGrid">
-            <div class="type-card" data-type="kohle">
-                <div class="type-emoji">🔥</div>
-                <div class="type-name">Klassische Kohle</div>
-                <div class="type-desc">Traditionelle Shisha mit Naturkohle</div>
-                <div class="type-features">
-                    <span class="type-feature">🌿 Authentischer Geschmack</span>
-                    <span class="type-feature">💨 Dichter Rauch</span>
-                    <span class="type-feature">⏱️ ~60-90 Min Session</span>
-                </div>
-            </div>
-            <div class="type-card" data-type="eshisha">
-                <div class="type-emoji">⚡</div>
-                <div class="type-name">E-Shisha</div>
-                <div class="type-desc">Elektrisch, kein Kohle-Aufwand</div>
-                <div class="type-features">
-                    <span class="type-feature">🔌 Sofort bereit</span>
-                    <span class="type-feature">🌬️ Smoothe Clouds</span>
-                    <span class="type-feature">♻️ Wiederverwendbar</span>
-                </div>
-            </div>
-        </div>
-        <div class="type-required" id="typeRequired">⚠️ Bitte waehle zuerst eine Art!</div>
-    </section>
-
-    <!-- POPULAR COMBOS -->
-    <section class="combos-section reveal">
-        <div class="combos-header"><p class="section-overline">BELIEBT</p><h2 class="section-title">Top Kombinationen.</h2></div>
-        <div class="combos-grid" id="combosGrid"></div>
-    </section>
-
-    <!-- FLAVORS -->
-    <section class="menu-section" id="menuSection">
-        <div class="menu-header reveal"><p class="section-overline">GESCHMAECKER</p><h2 class="section-title">Waehle deine Sorten.</h2></div>
-        <div class="cat-tabs reveal" id="catTabs"></div>
-        <div class="flavor-grid reveal" id="flavorGrid"></div>
-    </section>
-
-    <!-- FLOATING COUNT -->
-    <div class="flavor-count" id="flavorCount"><span id="flavorCountText">0 ausgewaehlt</span> → Bestellen</div>
-
-    <!-- BUILDER -->
-    <section class="builder-section" id="builderSection">
-        <div class="builder-card reveal">
-            <div class="builder-header"><p class="section-overline">DEINE BESTELLUNG</p><h2 class="section-title">Shisha zusammenstellen.</h2><p>Alles gewaehlt? Dann ab dafuer!</p></div>
-            <div id="builderFormWrap">
-                <div class="builder-step"><div class="step-label"><span class="step-number" id="stepType">1</span> Shisha-Typ</div><div id="typeDisplay"><div class="no-selection">Oben auswaehlen...</div></div></div>
-                <div class="builder-step"><div class="step-label"><span class="step-number" id="stepFlavors">2</span> Deine Geschmaecker</div><div class="selected-flavors" id="selectedFlavors"><div class="no-selection">Waehle oben deine Geschmaecker aus...</div></div></div>
-                <div class="builder-step"><div class="step-label"><span class="step-number">3</span> Mix-Staerke</div><div class="mix-options" id="mixOptions"><button class="mix-option active" data-mix="normal">Normal</button><button class="mix-option" data-mix="stark">💪 Stark</button><button class="mix-option" data-mix="leicht">🌿 Leicht</button><button class="mix-option" data-mix="doppelt">🔥 Doppelkopf</button></div></div>
-                <div class="builder-step"><div class="step-label"><span class="step-number">4</span> Extras</div><div class="builder-extras" id="extrasGrid"></div></div>
-                <div class="builder-step"><div class="step-label"><span class="step-number">5</span> Sonderwuensche</div><textarea class="builder-note" id="orderNote" placeholder="z.B. Extra viel Minze, kein Eis, bestimmter Kopf..."></textarea></div>
-                <div class="builder-step"><div class="step-label"><span class="step-number">6</span> Dein Name</div><input type="text" class="builder-name" id="orderName" placeholder="Wer bestellt?"></div>
-                <div class="builder-summary" id="orderSummary"></div>
-                <button class="builder-submit" id="orderSubmit" disabled>💨 Bestellung aufgeben</button>
-                <div class="builder-error" id="builderError"></div>
-            </div>
-            <div class="builder-success" id="orderSuccess"><div class="builder-success-icon">💨</div><div class="builder-success-title">Bestellung aufgegeben!</div><div class="builder-success-text" id="orderSuccessText"></div><button class="builder-success-btn" id="orderNewBtn">🔄 Neue Bestellung</button></div>
+            <div class="type-card" data-type="kohle"><div class="type-emoji">🔥</div><div class="type-name">Klassische Kohle</div><div class="type-desc">Traditionell, authentischer Geschmack, dichter Rauch.</div></div>
+            <div class="type-card" data-type="eshisha"><div class="type-emoji">⚡</div><div class="type-name">E-Shisha</div><div class="type-desc">Elektrisch, sofort bereit, smooth Clouds.</div></div>
         </div>
     </section>
 
-    <!-- RULES -->
-    <section class="rules-section reveal">
-        <div class="rules-card">
-            <div class="rules-header"><p class="section-overline">HAUSREGELN</p><h2 class="section-title" style="font-size:1.5rem">Shisha Etikette.</h2></div>
-            <div class="rule-row"><span class="rule-emoji">🫅</span><div class="rule-text"><strong>Andrei ist der Chef.</strong> Er entscheidet ueber Kopf, Mix und Kohle.</div></div>
-            <div class="rule-row"><span class="rule-emoji">💰</span><div class="rule-text"><strong>Faire Kasse.</strong> Kohle und Tabak kosten. Wirf was in die Shisha-Kasse.</div></div>
-            <div class="rule-row"><span class="rule-emoji">🔄</span><div class="rule-text"><strong>Kohle wechseln.</strong> Sag Bescheid, nicht selbst rumbasteln!</div></div>
-            <div class="rule-row"><span class="rule-emoji">🚫</span><div class="rule-text"><strong>Kein Schlauch-Hogging.</strong> Immer weiterreichen.</div></div>
-            <div class="rule-row"><span class="rule-emoji">💧</span><div class="rule-text"><strong>Wasser trinken.</strong> Shisha dehydriert. Andrei sagt: Wer nicht trinkt, raucht nicht.</div></div>
-            <div class="rule-row"><span class="rule-emoji">🪟</span><div class="rule-text"><strong>Fenster auf.</strong> Wir rauchen mit Durchzug.</div></div>
+    <!-- PATH -->
+    <section class="path-section reveal" id="pathSection">
+        <p class="section-overline">SCHRITT 2</p>
+        <h2 class="section-title">Wie willst du bestellen?</h2>
+        <div class="path-grid">
+            <div class="path-card" data-path="signature"><div class="path-emoji">🫅</div><div class="path-name">Signature Mixes</div><div class="path-desc">Vorgefertigte Koepfe von Andrei, Mats & Georgie. Einfach auswaehlen und fertig.</div></div>
+            <div class="path-card" data-path="custom"><div class="path-emoji">🎨</div><div class="path-name">Custom Mix</div><div class="path-desc">Stelle dir deinen eigenen Kopf zusammen. 70+ Geschmaecker warten auf dich.</div></div>
         </div>
     </section>
 
-    <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shisha.html">Shisha</a><a href="shop.html">Shop</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 - Mit Liebe aus der Poccistrasse.</p></div></div></footer>
+    <!-- SIGNATURES -->
+    <section class="sigs-section reveal" id="sigsSection">
+        <div style="text-align:center"><p class="section-overline">SIGNATURE MIXES</p><h2 class="section-title">Die Hausmischungen.</h2></div>
+        <div class="sigs-grid" id="sigsGrid"></div>
+    </section>
+
+    <!-- CUSTOM -->
+    <section class="custom-section reveal" id="customSection">
+        <div style="text-align:center"><p class="section-overline">CUSTOM MIX</p><h2 class="section-title">Deine Geschmaecker.</h2><p style="font-size:.88rem;color:var(--color-text-light);margin-top:.5rem">Waehle bis zu 4 Sorten. Klick = Rauch. 💨</p></div>
+        <div class="cat-tabs" id="catTabs"></div>
+        <div class="flavor-grid" id="flavorGrid"></div>
+    </section>
+
+    <!-- FLOATING BAR -->
+    <div class="float-bar" id="floatBar"><span id="floatText">0 ausgewaehlt</span> → Weiter 💨</div>
+
+    <!-- ORDER -->
+    <section class="order-section" id="orderSection">
+        <div class="order-card">
+            <div class="order-header"><p class="section-overline">BESTELLUNG</p><h2 class="section-title">Fast fertig!</h2></div>
+            <div id="orderFormWrap">
+                <div class="order-step"><div class="order-step-label"><span class="order-step-num done">✓</span> Typ</div><div id="orderType"></div></div>
+                <div class="order-step"><div class="order-step-label"><span class="order-step-num done">✓</span> Geschmaecker</div><div class="order-chips" id="orderChips"></div></div>
+                <div class="order-step"><div class="order-step-label"><span class="order-step-num">3</span> Mix-Staerke</div><div class="mix-opts"><button class="mix-opt active" data-mix="normal">Normal</button><button class="mix-opt" data-mix="stark">💪 Stark</button><button class="mix-opt" data-mix="leicht">🌿 Leicht</button></div></div>
+                <div class="order-step"><div class="order-step-label"><span class="order-step-num">4</span> Sonderwuensche</div><textarea class="order-note" id="orderNote" placeholder="z.B. Extra Minze, kein Eis..."></textarea></div>
+                <div class="order-step"><div class="order-step-label"><span class="order-step-num">5</span> Dein Name</div><input type="text" class="order-name" id="orderName" placeholder="Wer bestellt?"></div>
+                <div class="order-summary" id="orderSummary"></div>
+                <button class="order-submit" id="orderSubmit">💨 Bestellung aufgeben</button>
+                <div class="order-error" id="orderError"></div>
+            </div>
+            <div class="order-success" id="orderSuccess"><div class="order-success-icon">💨</div><div class="order-success-title">Bestellung aufgegeben!</div><div class="order-success-text" id="orderSuccessText"></div><button class="order-success-btn" id="orderNewBtn">🔄 Neue Bestellung</button></div>
+        </div>
+    </section>
+
+    <!-- DONATE -->
+    <section class="donate-section reveal" id="donateSection">
+        <div class="donate-card">
+            <div class="donate-emoji">💜</div>
+            <div class="donate-title">Spende fuer die Shisha-Kasse</div>
+            <div class="donate-text">Kohle, Tabak und Zubehoer kosten was. Wenn dir der Abend gefaellt, lass was da. Andrei freut sich ueber jeden Beitrag!</div>
+            <div class="donate-amounts" id="donateAmounts">
+                <button class="donate-amt" data-amt="2">2€</button>
+                <button class="donate-amt" data-amt="5">5€</button>
+                <button class="donate-amt active" data-amt="10">10€</button>
+                <button class="donate-amt" data-amt="20">20€</button>
+            </div>
+            <div class="donate-custom"><input type="number" id="donateInput" value="10" min="1" step="1"><span>EUR</span></div>
+            <button class="donate-btn" id="donateBtn">💜 Spende an Andrei senden</button>
+            <div class="donate-note">Du wirst zu PayPal weitergeleitet. 100% gehen an Andrei fuer Kohle & Tabak.</div>
+        </div>
+    </section>
+
+    <footer class="footer"><div class="footer-container"><div class="footer-top"><div class="footer-brand"><img src="assets/logo.svg" alt="pocci4" class="footer-logo"><p class="footer-tagline">Poccistrasse, Muenchen</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Navigation</h4><a href="index.html">Home</a><a href="events.html">Events</a><a href="shisha.html">Shisha</a><a href="shop.html">Shop</a></div><div class="footer-col"><h4>Events</h4><a href="events.html">Kommende Events</a><a href="stats.html">Game Statistik</a><a href="shisha.html">Shisha Lounge</a></div><div class="footer-col"><h4>Connect</h4><a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a><a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a><a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a></div></div></div><div class="footer-bottom"><p>2025 pocci4 – Mit Liebe aus der Poccistrasse.</p></div></div></footer>
 
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -438,371 +441,199 @@
     if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
     var db=firebase.firestore();
 
-    // ===== MASSIVE FLAVOR DATABASE =====
-    var FLAVORS = [
-        // FRUITY
-        {id:"watermelon",name:"Wassermelone",emoji:"🍉",cat:"fruity",desc:"Saftig & suess",tag:"fruity",brand:"Al Fakher",glow:"#ff6b6b"},
-        {id:"grape",name:"Traube",emoji:"🍇",cat:"fruity",desc:"Klassisch fruchtig",tag:"fruity",brand:"Al Fakher",glow:"#9b59b6"},
-        {id:"blueberry",name:"Blaubeere",emoji:"🫐",cat:"fruity",desc:"Beerig intensiv",tag:"berry",brand:"Adalya",glow:"#5b6abf"},
-        {id:"peach",name:"Pfirsich",emoji:"🍑",cat:"fruity",desc:"Suess & weich",tag:"fruity",brand:"Social Smoke",glow:"#ffb347"},
-        {id:"mango",name:"Mango",emoji:"🥭",cat:"fruity",desc:"Tropisch suess",tag:"exotic",brand:"Adalya",glow:"#f39c12"},
-        {id:"apple-green",name:"Gruener Apfel",emoji:"🍏",cat:"fruity",desc:"Sauer & frisch",tag:"sour",brand:"Al Fakher",glow:"#2ecc71"},
-        {id:"apple-red",name:"Roter Apfel",emoji:"🍎",cat:"fruity",desc:"Suess & mild",tag:"fruity",brand:"Al Fakher",glow:"#e74c3c"},
-        {id:"cherry",name:"Kirsche",emoji:"🍒",cat:"fruity",desc:"Suess-sauer",tag:"fruity",brand:"Starbuzz",glow:"#c0392b"},
-        {id:"lemon",name:"Zitrone",emoji:"🍋",cat:"fruity",desc:"Sauer & erfrischend",tag:"sour",brand:"Al Fakher",glow:"#f1c40f"},
-        {id:"orange",name:"Orange",emoji:"🍊",cat:"fruity",desc:"Citrus pur",tag:"fruity",brand:"Al Fakher",glow:"#e67e22"},
-        {id:"raspberry",name:"Himbeere",emoji:"🫐",cat:"fruity",desc:"Beerig suess",tag:"berry",brand:"Fumari",glow:"#e84393"},
-        {id:"strawberry",name:"Erdbeere",emoji:"🍓",cat:"fruity",desc:"Der Klassiker",tag:"fruity",brand:"Al Fakher",glow:"#ff6b6b"},
-        {id:"banana",name:"Banane",emoji:"🍌",cat:"fruity",desc:"Cremig suess",tag:"creamy",brand:"Adalya",glow:"#f9ca24"},
-        {id:"pineapple",name:"Ananas",emoji:"🍍",cat:"fruity",desc:"Tropisch frisch",tag:"exotic",brand:"Fumari",glow:"#f1c40f"},
-        {id:"passion",name:"Maracuja",emoji:"🌺",cat:"fruity",desc:"Exotisch sauer",tag:"exotic",brand:"Adalya",glow:"#e056a0"},
-        {id:"pomegranate",name:"Granatapfel",emoji:"🍎",cat:"fruity",desc:"Herb suess",tag:"fruity",brand:"Al Fakher",glow:"#c0392b"},
-        {id:"kiwi",name:"Kiwi",emoji:"🥝",cat:"fruity",desc:"Sauer fruchtig",tag:"sour",brand:"Social Smoke",glow:"#6ab04c"},
-        {id:"grapefruit",name:"Grapefruit",emoji:"🍊",cat:"fruity",desc:"Bitter-suess",tag:"sour",brand:"Fumari",glow:"#ff7979"},
-        {id:"plum",name:"Pflaume",emoji:"🫐",cat:"fruity",desc:"Dunkel & suess",tag:"fruity",brand:"Starbuzz",glow:"#6c5ce7"},
-        {id:"melon",name:"Honigmelone",emoji:"🍈",cat:"fruity",desc:"Mild & suess",tag:"sweet",brand:"Al Fakher",glow:"#badc58"},
-        {id:"lime",name:"Limette",emoji:"🍋",cat:"fruity",desc:"Sauer-herb",tag:"sour",brand:"Adalya",glow:"#2ecc71"},
-        {id:"cranberry",name:"Cranberry",emoji:"🫐",cat:"fruity",desc:"Herb fruchtig",tag:"berry",brand:"Social Smoke",glow:"#eb4d4b"},
-        {id:"blackberry",name:"Brombeere",emoji:"🫐",cat:"fruity",desc:"Dunkel beerig",tag:"berry",brand:"Fumari",glow:"#2d3436"},
-        {id:"fig",name:"Feige",emoji:"🫐",cat:"fruity",desc:"Suess oriental",tag:"exotic",brand:"Starbuzz",glow:"#6c5ce7"},
-        // FRESH
-        {id:"mint",name:"Minze",emoji:"🌿",cat:"fresh",desc:"Eiskalt frisch",tag:"fresh",brand:"Al Fakher",glow:"#00cec9"},
-        {id:"ice",name:"Ice / Kalt",emoji:"🧊",cat:"fresh",desc:"Purer Ice Kick",tag:"fresh",brand:"XRacher",glow:"#74b9ff"},
-        {id:"menthol",name:"Menthol",emoji:"❄️",cat:"fresh",desc:"Extra frisch",tag:"fresh",brand:"Al Fakher",glow:"#81ecec"},
-        {id:"spearmint",name:"Spearmint",emoji:"🌿",cat:"fresh",desc:"Milde Minze",tag:"fresh",brand:"Fumari",glow:"#55efc4"},
-        {id:"peppermint",name:"Pfefferminz",emoji:"🌿",cat:"fresh",desc:"Starke Minze",tag:"fresh",brand:"Al Fakher",glow:"#00b894"},
-        {id:"cucumber",name:"Gurke",emoji:"🥒",cat:"fresh",desc:"Leicht & kuehl",tag:"fresh",brand:"Social Smoke",glow:"#badc58"},
-        {id:"eucalyptus",name:"Eukalyptus",emoji:"🌲",cat:"fresh",desc:"Frei durchatmen",tag:"fresh",brand:"Adalya",glow:"#00cec9"},
-        {id:"ice-bonbon",name:"Eisbonbon",emoji:"🍬",cat:"fresh",desc:"Suess & eisig",tag:"fresh",brand:"XRacher",glow:"#a29bfe"},
-        {id:"cold-limo",name:"Kalte Limo",emoji:"🥤",cat:"fresh",desc:"Limonaden-Fresh",tag:"fresh",brand:"Adalya",glow:"#ffeaa7"},
-        // SWEET
-        {id:"vanilla",name:"Vanille",emoji:"🍦",cat:"sweet",desc:"Cremig warm",tag:"creamy",brand:"Fumari",glow:"#ffeaa7"},
-        {id:"caramel",name:"Karamell",emoji:"🍮",cat:"sweet",desc:"Suess & warm",tag:"creamy",brand:"Starbuzz",glow:"#d4a259"},
-        {id:"chocolate",name:"Schokolade",emoji:"🍫",cat:"sweet",desc:"Dunkel & intensiv",tag:"sweet",brand:"Al Fakher",glow:"#6F4E37"},
-        {id:"honey",name:"Honig",emoji:"🍯",cat:"sweet",desc:"Natuerlich suess",tag:"sweet",brand:"Adalya",glow:"#f9ca24"},
-        {id:"bubblegum",name:"Kaugummi",emoji:"🫧",cat:"sweet",desc:"Suess & fun",tag:"sweet",brand:"XRacher",glow:"#fd79a8"},
-        {id:"cotton-candy",name:"Zuckerwatte",emoji:"🍭",cat:"sweet",desc:"Jahrmarkt vibes",tag:"sweet",brand:"Adalya",glow:"#fab1a0"},
-        {id:"cookie",name:"Cookie",emoji:"🍪",cat:"sweet",desc:"Keksig suess",tag:"creamy",brand:"Fumari",glow:"#d4a259"},
-        {id:"tiramisu",name:"Tiramisu",emoji:"🍰",cat:"sweet",desc:"Kaffee meets Creme",tag:"creamy",brand:"Starbuzz",glow:"#a0522d"},
-        {id:"milkshake",name:"Milkshake",emoji:"🥛",cat:"sweet",desc:"Cremig smooth",tag:"creamy",brand:"Adalya",glow:"#dfe6e9"},
-        {id:"waffle",name:"Waffel",emoji:"🧇",cat:"sweet",desc:"Warm suess",tag:"sweet",brand:"XRacher",glow:"#d4a259"},
-        {id:"cinnamon",name:"Zimt",emoji:"🫙",cat:"sweet",desc:"Wuerzige Waerme",tag:"spicy",brand:"Al Fakher",glow:"#d35400"},
-        {id:"nutella",name:"Nutella",emoji:"🍫",cat:"sweet",desc:"Haselnuss-Schoko",tag:"creamy",brand:"Adalya",glow:"#6F4E37"},
-        {id:"popcorn",name:"Popcorn",emoji:"🍿",cat:"sweet",desc:"Suess-salzig",tag:"sweet",brand:"XRacher",glow:"#f9ca24"},
-        // EXOTIC
-        {id:"coconut",name:"Kokos",emoji:"🥥",cat:"exotic",desc:"Tropical vibes",tag:"exotic",brand:"Fumari",glow:"#dfe6e9"},
-        {id:"lychee",name:"Litschi",emoji:"🌸",cat:"exotic",desc:"Blumig suess",tag:"exotic",brand:"Adalya",glow:"#fd79a8"},
-        {id:"guava",name:"Guave",emoji:"🍈",cat:"exotic",desc:"Tropisch herb",tag:"exotic",brand:"Fumari",glow:"#55efc4"},
-        {id:"dragon",name:"Drachenfrucht",emoji:"🐉",cat:"exotic",desc:"Exotisch mild",tag:"exotic",brand:"Social Smoke",glow:"#e056a0"},
-        {id:"rose",name:"Rose",emoji:"🌹",cat:"exotic",desc:"Blumig elegant",tag:"exotic",brand:"Al Fakher",glow:"#e84393"},
-        {id:"jasmine",name:"Jasmin",emoji:"🌼",cat:"exotic",desc:"Blumig zart",tag:"exotic",brand:"Al Fakher",glow:"#ffeaa7"},
-        {id:"papaya",name:"Papaya",emoji:"🍈",cat:"exotic",desc:"Tropical suess",tag:"exotic",brand:"Starbuzz",glow:"#f39c12"},
-        {id:"starfruit",name:"Sternfrucht",emoji:"⭐",cat:"exotic",desc:"Mild exotisch",tag:"exotic",brand:"Fumari",glow:"#fdcb6e"},
-        {id:"hibiscus",name:"Hibiskus",emoji:"🌺",cat:"exotic",desc:"Blumig herb",tag:"exotic",brand:"Social Smoke",glow:"#e056a0"},
-        {id:"cardamom",name:"Kardamom",emoji:"🫙",cat:"exotic",desc:"Orientalisch",tag:"spicy",brand:"Al Fakher",glow:"#6c5ce7"},
-        {id:"chai",name:"Chai",emoji:"🍵",cat:"exotic",desc:"Gewuerz-Tee",tag:"spicy",brand:"Starbuzz",glow:"#d35400"},
-        {id:"turkish-coffee",name:"Tuerkischer Kaffee",emoji:"☕",cat:"exotic",desc:"Stark & aromatisch",tag:"classic",brand:"Al Fakher",glow:"#6F4E37"},
-        // CLASSIC
-        {id:"doppelapfel",name:"Doppelapfel",emoji:"🍎",cat:"classic",desc:"DER Klassiker",tag:"classic",brand:"Al Fakher",glow:"#c0392b"},
-        {id:"traube-minze",name:"Traube-Minze",emoji:"🍇",cat:"classic",desc:"Beliebteste Kombi",tag:"classic",brand:"Al Fakher",glow:"#9b59b6"},
-        {id:"love66",name:"Love 66",emoji:"💜",cat:"classic",desc:"Legende",tag:"classic",brand:"Adalya",glow:"#6c5ce7"},
-        {id:"blue-mist",name:"Blue Mist",emoji:"💙",cat:"classic",desc:"Blaubeere + Minze",tag:"classic",brand:"Starbuzz",glow:"#74b9ff"},
-        {id:"code69",name:"Code 69",emoji:"🔢",cat:"classic",desc:"Maracuja Mix",tag:"classic",brand:"Starbuzz",glow:"#e056a0"},
-        {id:"lady-killer",name:"Lady Killer",emoji:"💋",cat:"classic",desc:"Frucht-Bombe",tag:"classic",brand:"Adalya",glow:"#ff6b6b"},
-        {id:"fresh-lemon",name:"Frische Zitrone",emoji:"🍋",cat:"classic",desc:"Ewig gut",tag:"classic",brand:"Al Fakher",glow:"#f1c40f"},
-        {id:"pirate",name:"Pirates Cave",emoji:"🏴‍☠️",cat:"classic",desc:"Mysterioes fruchtig",tag:"classic",brand:"Starbuzz",glow:"#2d3436"},
-        // DRINKS
-        {id:"cola",name:"Cola",emoji:"🥤",cat:"drinks",desc:"Cola Geschmack",tag:"sweet",brand:"XRacher",glow:"#6F4E37"},
-        {id:"energy",name:"Energy Drink",emoji:"⚡",cat:"drinks",desc:"Red Bull Vibes",tag:"sweet",brand:"Adalya",glow:"#00b894"},
-        {id:"mojito",name:"Mojito",emoji:"🍹",cat:"drinks",desc:"Limette + Minze",tag:"fresh",brand:"Social Smoke",glow:"#55efc4"},
-        {id:"pina-colada",name:"Pina Colada",emoji:"🍹",cat:"drinks",desc:"Kokos + Ananas",tag:"exotic",brand:"Starbuzz",glow:"#ffeaa7"},
-        {id:"sex-beach",name:"Sex on the Beach",emoji:"🏖️",cat:"drinks",desc:"Cocktail Klassiker",tag:"fruity",brand:"Adalya",glow:"#ff7979"},
-        {id:"ice-tea",name:"Eistee",emoji:"🧊",cat:"drinks",desc:"Pfirsich Eistee",tag:"fresh",brand:"XRacher",glow:"#fdcb6e"},
-        {id:"lemonade",name:"Limonade",emoji:"🍋",cat:"drinks",desc:"Hausgemacht",tag:"sour",brand:"Fumari",glow:"#f1c40f"},
-        {id:"champagne",name:"Champagner",emoji:"🍾",cat:"drinks",desc:"Prickelnd suess",tag:"exotic",brand:"Starbuzz",glow:"#ffeaa7"},
+    // ===== FLAVORS =====
+    var FL=[
+        {id:"watermelon",n:"Wassermelone",e:"🍉",c:"fruity",t:"fruity",b:"Al Fakher",g:"#ff6b6b"},
+        {id:"grape",n:"Traube",e:"🍇",c:"fruity",t:"fruity",b:"Al Fakher",g:"#9b59b6"},
+        {id:"blueberry",n:"Blaubeere",e:"🫐",c:"fruity",t:"berry",b:"Adalya",g:"#5b6abf"},
+        {id:"peach",n:"Pfirsich",e:"🍑",c:"fruity",t:"fruity",b:"Social Smoke",g:"#ffb347"},
+        {id:"mango",n:"Mango",e:"🥭",c:"fruity",t:"exotic",b:"Adalya",g:"#f39c12"},
+        {id:"apple-green",n:"Gruener Apfel",e:"🍏",c:"fruity",t:"sour",b:"Al Fakher",g:"#2ecc71"},
+        {id:"apple-red",n:"Roter Apfel",e:"🍎",c:"fruity",t:"fruity",b:"Al Fakher",g:"#e74c3c"},
+        {id:"cherry",n:"Kirsche",e:"🍒",c:"fruity",t:"fruity",b:"Starbuzz",g:"#c0392b"},
+        {id:"lemon",n:"Zitrone",e:"🍋",c:"fruity",t:"sour",b:"Al Fakher",g:"#f1c40f"},
+        {id:"orange",n:"Orange",e:"🍊",c:"fruity",t:"fruity",b:"Al Fakher",g:"#e67e22"},
+        {id:"raspberry",n:"Himbeere",e:"🫐",c:"fruity",t:"berry",b:"Fumari",g:"#e84393"},
+        {id:"strawberry",n:"Erdbeere",e:"🍓",c:"fruity",t:"fruity",b:"Al Fakher",g:"#ff6b6b"},
+        {id:"banana",n:"Banane",e:"🍌",c:"fruity",t:"creamy",b:"Adalya",g:"#f9ca24"},
+        {id:"pineapple",n:"Ananas",e:"🍍",c:"fruity",t:"exotic",b:"Fumari",g:"#f1c40f"},
+        {id:"passion",n:"Maracuja",e:"🌺",c:"fruity",t:"exotic",b:"Adalya",g:"#e056a0"},
+        {id:"pomegranate",n:"Granatapfel",e:"🍎",c:"fruity",t:"fruity",b:"Al Fakher",g:"#c0392b"},
+        {id:"kiwi",n:"Kiwi",e:"🥝",c:"fruity",t:"sour",b:"Social Smoke",g:"#6ab04c"},
+        {id:"melon",n:"Honigmelone",e:"🍈",c:"fruity",t:"sweet",b:"Al Fakher",g:"#badc58"},
+        {id:"lime",n:"Limette",e:"🍋",c:"fruity",t:"sour",b:"Adalya",g:"#2ecc71"},
+        {id:"mint",n:"Minze",e:"🌿",c:"fresh",t:"fresh",b:"Al Fakher",g:"#00cec9"},
+        {id:"ice",n:"Ice / Kalt",e:"🧊",c:"fresh",t:"fresh",b:"XRacher",g:"#74b9ff"},
+        {id:"menthol",n:"Menthol",e:"❄️",c:"fresh",t:"fresh",b:"Al Fakher",g:"#81ecec"},
+        {id:"spearmint",n:"Spearmint",e:"🌿",c:"fresh",t:"fresh",b:"Fumari",g:"#55efc4"},
+        {id:"cucumber",n:"Gurke",e:"🥒",c:"fresh",t:"fresh",b:"Social Smoke",g:"#badc58"},
+        {id:"eucalyptus",n:"Eukalyptus",e:"🌲",c:"fresh",t:"fresh",b:"Adalya",g:"#00cec9"},
+        {id:"ice-bonbon",n:"Eisbonbon",e:"🍬",c:"fresh",t:"fresh",b:"XRacher",g:"#a29bfe"},
+        {id:"vanilla",n:"Vanille",e:"🍦",c:"sweet",t:"creamy",b:"Fumari",g:"#ffeaa7"},
+        {id:"caramel",n:"Karamell",e:"🍮",c:"sweet",t:"creamy",b:"Starbuzz",g:"#d4a259"},
+        {id:"chocolate",n:"Schokolade",e:"🍫",c:"sweet",t:"sweet",b:"Al Fakher",g:"#6F4E37"},
+        {id:"honey",n:"Honig",e:"🍯",c:"sweet",t:"sweet",b:"Adalya",g:"#f9ca24"},
+        {id:"bubblegum",n:"Kaugummi",e:"🫧",c:"sweet",t:"sweet",b:"XRacher",g:"#fd79a8"},
+        {id:"cotton-candy",n:"Zuckerwatte",e:"🍭",c:"sweet",t:"sweet",b:"Adalya",g:"#fab1a0"},
+        {id:"cinnamon",n:"Zimt",e:"🫙",c:"sweet",t:"spicy",b:"Al Fakher",g:"#d35400"},
+        {id:"coconut",n:"Kokos",e:"🥥",c:"exotic",t:"exotic",b:"Fumari",g:"#dfe6e9"},
+        {id:"lychee",n:"Litschi",e:"🌸",c:"exotic",t:"exotic",b:"Adalya",g:"#fd79a8"},
+        {id:"guava",n:"Guave",e:"🍈",c:"exotic",t:"exotic",b:"Fumari",g:"#55efc4"},
+        {id:"dragon",n:"Drachenfrucht",e:"🐉",c:"exotic",t:"exotic",b:"Social Smoke",g:"#e056a0"},
+        {id:"rose",n:"Rose",e:"🌹",c:"exotic",t:"exotic",b:"Al Fakher",g:"#e84393"},
+        {id:"cardamom",n:"Kardamom",e:"🫙",c:"exotic",t:"spicy",b:"Al Fakher",g:"#6c5ce7"},
+        {id:"chai",n:"Chai",e:"🍵",c:"exotic",t:"spicy",b:"Starbuzz",g:"#d35400"},
+        {id:"doppelapfel",n:"Doppelapfel",e:"🍎",c:"classic",t:"classic",b:"Al Fakher",g:"#c0392b"},
+        {id:"traube-minze",n:"Traube-Minze",e:"🍇",c:"classic",t:"classic",b:"Al Fakher",g:"#9b59b6"},
+        {id:"love66",n:"Love 66",e:"💜",c:"classic",t:"classic",b:"Adalya",g:"#6c5ce7"},
+        {id:"blue-mist",n:"Blue Mist",e:"💙",c:"classic",t:"classic",b:"Starbuzz",g:"#74b9ff"},
+        {id:"code69",n:"Code 69",e:"🔢",c:"classic",t:"classic",b:"Starbuzz",g:"#e056a0"},
+        {id:"lady-killer",n:"Lady Killer",e:"💋",c:"classic",t:"classic",b:"Adalya",g:"#ff6b6b"},
+        {id:"cola",n:"Cola",e:"🥤",c:"drinks",t:"sweet",b:"XRacher",g:"#6F4E37"},
+        {id:"energy",n:"Energy Drink",e:"⚡",c:"drinks",t:"sweet",b:"Adalya",g:"#00b894"},
+        {id:"mojito",n:"Mojito",e:"🍹",c:"drinks",t:"fresh",b:"Social Smoke",g:"#55efc4"},
+        {id:"pina-colada",n:"Pina Colada",e:"🍹",c:"drinks",t:"exotic",b:"Starbuzz",g:"#ffeaa7"},
+        {id:"ice-tea",n:"Eistee",e:"🧊",c:"drinks",t:"fresh",b:"XRacher",g:"#fdcb6e"},
     ];
 
-    var EXTRAS = [
-        {id:"ice-hose",name:"Ice-Schlauch",emoji:"🧊",price:0},
-        {id:"double-coal",name:"Extra Kohle",emoji:"🔥",price:0},
-        {id:"fruit-bowl",name:"Obst-Kopf",emoji:"🍎",price:2},
-        {id:"led",name:"LED Base",emoji:"💡",price:0},
-        {id:"milk",name:"Milch statt Wasser",emoji:"🥛",price:0},
-        {id:"molasses",name:"Extra Molasse",emoji:"🍯",price:1},
-        {id:"ice-cubes",name:"Eiswuerfel im Glas",emoji:"🧊",price:0},
-        {id:"diffuser",name:"Diffusor",emoji:"🫧",price:0},
+    // ===== SIGNATURES =====
+    var SIGS=[
+        {name:"Andreis Anmachender Apfel",person:"andrei",img:"assets/andrei.jpeg",emoji:"🍎🔥",flavors:["doppelapfel","cinnamon","ice"],desc:"Doppelapfel mit Zimt und Ice. Klingt wild, schmeckt wilder. Andrei schwört drauf."},
+        {name:"Andreis Midnight Smoke",person:"andrei",img:"assets/andrei.jpeg",emoji:"🌙💨",flavors:["grape","mint","blueberry"],desc:"Traube, Minze, Blaubeere. Der Kopf fuer die spaeten Stunden."},
+        {name:"Andreis Tropical Drip",person:"andrei",img:"assets/andrei.jpeg",emoji:"🌴💧",flavors:["mango","coconut","pineapple"],desc:"Karibik-Feeling. Als waerst du am Strand und nicht in der Pocci."},
+        {name:"Mats' Chill Pill",person:"mats",img:"assets/mats.jpeg",emoji:"😮‍💨💊",flavors:["watermelon","mint","ice"],desc:"Wassermelone Minze Ice. Simple, clean, effective. Wie Mats selbst."},
+        {name:"Mats' Berry Protocol",person:"mats",img:"assets/mats.jpeg",emoji:"🫐⚡",flavors:["blueberry","raspberry","menthol"],desc:"Doppel-Beere mit Menthol. Der Tech-Bro unter den Koepfen."},
+        {name:"Georgies Pink Cloud",person:"georgie",img:"assets/georgie.jpeg",emoji:"☁️💖",flavors:["strawberry","vanilla","rose"],desc:"Erdbeere, Vanille, Rose. Soft, suess, aesthetic. So wie Georgies Insta-Feed."},
+        {name:"Georgies Sunset Vibes",person:"georgie",img:"assets/georgie.jpeg",emoji:"🌅✨",flavors:["peach","passion","lychee"],desc:"Pfirsich, Maracuja, Litschi. Schmeckt nach Sonnenuntergang auf dem Balkon."},
+        {name:"Georgies Sweet Escape",person:"georgie",img:"assets/georgie.jpeg",emoji:"🍭🏃‍♀️",flavors:["bubblegum","cotton-candy","ice"],desc:"Kaugummi, Zuckerwatte, Ice. Jahrmarkt im Mund. Guilty pleasure."},
     ];
 
-    var COMBOS = [
-        {name:"Andrei's Special",emoji:"🫅🔥",flavors:["watermelon","mint","ice"],desc:"Wassermelone Minze Ice – Signature Mix.",badge:"andrei"},
-        {name:"Tropical Paradise",emoji:"🌴🥥",flavors:["mango","coconut","pineapple"],desc:"Karibik-Feeling. Suess & exotisch.",badge:"popular"},
-        {name:"Berry Blast",emoji:"🫐💥",flavors:["blueberry","raspberry","ice"],desc:"Beerenbombe mit Ice Kick.",badge:"popular"},
-        {name:"Classic OG",emoji:"🍇🌿",flavors:["grape","mint"],desc:"Traube-Minze. Die Nummer 1.",badge:"popular"},
-        {name:"Love Clouds",emoji:"💜☁️",flavors:["love66","vanilla"],desc:"Love 66 meets Vanille.",badge:"new"},
-        {name:"Winter Spice",emoji:"🫙❄️",flavors:["cinnamon","apple-green","ice"],desc:"Wie Gluehwein zum Rauchen.",badge:"new"},
-        {name:"Citrus Storm",emoji:"🍋🍊",flavors:["lemon","orange","menthol"],desc:"Zitrus-Explosion.",badge:"popular"},
-        {name:"Double Apple OG",emoji:"🍎🍏",flavors:["doppelapfel","mint"],desc:"Doppelapfel mit Minze.",badge:"popular"},
-        {name:"Cocktail Hour",emoji:"🍹🏖️",flavors:["pina-colada","sex-beach"],desc:"Cocktails zum Rauchen.",badge:"new"},
-        {name:"Dark Berry",emoji:"🫐🍫",flavors:["blackberry","cherry","chocolate"],desc:"Dunkle Beerenschoko.",badge:"new"},
-    ];
+    var CATS=[{id:"all",n:"Alle"},{id:"fruity",n:"🍉 Fruchtig"},{id:"fresh",n:"🧊 Frisch"},{id:"sweet",n:"🍯 Suess"},{id:"exotic",n:"🌴 Exotisch"},{id:"classic",n:"⭐ Klassiker"},{id:"drinks",n:"🍹 Drinks"}];
 
-    var CATS=[{id:"all",name:"Alle"},{id:"fruity",name:"🍉 Fruchtig"},{id:"fresh",name:"🧊 Frisch"},{id:"sweet",name:"🍯 Suess"},{id:"exotic",name:"🌴 Exotisch"},{id:"classic",name:"⭐ Klassiker"},{id:"drinks",name:"🍹 Drinks"}];
+    var selFlavors=[];var selType=null;var selPath=null;var selMix="normal";var selSig=null;var activeCat="all";
+    var smokeC=document.getElementById("smokeC");
 
-    var selectedFlavors=[];var selectedExtras=[];var currentMix="normal";var activeCat="all";var selectedType=null;
-
-    // ===== NAV =====
-    var navbar=document.getElementById("navbar");
-    window.addEventListener("scroll",function(){navbar.classList.toggle("scrolled",window.scrollY>50);});
+    // NAV
+    var navbar=document.getElementById("navbar");window.addEventListener("scroll",function(){navbar.classList.toggle("scrolled",window.scrollY>50);});
     var hamburger=document.getElementById("hamburger"),mobileMenu=document.getElementById("mobileMenu");
     hamburger.addEventListener("click",function(){hamburger.classList.toggle("active");mobileMenu.classList.toggle("active");document.body.style.overflow=mobileMenu.classList.contains("active")?"hidden":"";});
     document.querySelectorAll(".mobile-link").forEach(function(ml){ml.addEventListener("click",function(){hamburger.classList.remove("active");mobileMenu.classList.remove("active");document.body.style.overflow="";});});
     var dd=document.getElementById("eventsDropdown"),ddT=null;
     if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},200);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
 
-    // ===== ADMIN =====
-    (function(){var PW="pocci4admin";var t=document.getElementById("adminTrigger");var o=document.getElementById("adminOverlay");var i=document.getElementById("adminPwInput");var c=document.getElementById("adminCancel");var s=document.getElementById("adminSubmit");var e=document.getElementById("adminError");t.addEventListener("click",function(){if(sessionStorage.getItem("pocci4admin")==="true"){window.location.href="admin.html";return;}o.classList.add("active");setTimeout(function(){i.focus();},100);});c.addEventListener("click",function(){o.classList.remove("active");i.value="";e.style.display="none";});o.addEventListener("click",function(ev){if(ev.target===o){o.classList.remove("active");i.value="";e.style.display="none";}});function tryLogin(){if(i.value===PW){sessionStorage.setItem("pocci4admin","true");window.location.href="admin.html";}else{e.style.display="block";i.value="";i.focus();}}s.addEventListener("click",tryLogin);i.addEventListener("keydown",function(ev){if(ev.key==="Enter")tryLogin();});})();
+    // ADMIN
+    (function(){var PW="pocci4admin";var t=document.getElementById("adminTrigger"),o=document.getElementById("adminOverlay"),i=document.getElementById("adminPwInput"),c=document.getElementById("adminCancel"),s=document.getElementById("adminSubmit"),e=document.getElementById("adminError");t.addEventListener("click",function(){if(sessionStorage.getItem("pocci4admin")==="true"){window.location.href="admin.html";return;}o.classList.add("active");setTimeout(function(){i.focus();},100);});c.addEventListener("click",function(){o.classList.remove("active");i.value="";e.style.display="none";});o.addEventListener("click",function(ev){if(ev.target===o){o.classList.remove("active");i.value="";e.style.display="none";}});function tryLogin(){if(i.value===PW){sessionStorage.setItem("pocci4admin","true");window.location.href="admin.html";}else{e.style.display="block";i.value="";i.focus();}}s.addEventListener("click",tryLogin);i.addEventListener("keydown",function(ev){if(ev.key==="Enter")tryLogin();});})();
 
-    // ===== SMOKE EFFECTS =====
-    var smokeC=document.getElementById("smokeContainer");
+    // SMOKE FX
+    function smoke(x,y,col){for(var i=0;i<5;i++){var p=document.createElement("div");p.className="smoke-puff";var sz=Math.random()*25+12;var dx=(Math.random()-.5)*100;var dy=-(Math.random()*180+60);var dur=Math.random()*1.5+2;p.style.cssText="left:"+(x-sz/2)+"px;top:"+(y-sz/2)+"px;width:"+sz+"px;height:"+sz+"px;background:"+(col||"rgba(139,92,246,.35)")+";--dx:"+dx+"px;--dy:"+dy+"px;--dur:"+dur+"s;";smokeC.appendChild(p);(function(el,d){setTimeout(function(){el.remove();},d*1000+200);})(p,dur);}
+    var r=document.createElement("div");r.className="smoke-ring";r.style.cssText="left:"+(x-18)+"px;top:"+(y-18)+"px;width:36px;height:36px;";smokeC.appendChild(r);setTimeout(function(){r.remove();},2500);}
+    function burst(x,y,emoji){for(var i=0;i<3;i++){var el=document.createElement("div");el.className="flavor-burst";el.textContent=emoji;var bx=(Math.random()-.5)*80;var by=-(Math.random()*100+30);el.style.cssText="left:"+x+"px;top:"+y+"px;--bx:"+bx+"px;--by:"+by+"px;--bx2:"+(bx*1.4)+"px;--by2:"+(by*1.4)+"px;font-size:"+(Math.random()*.8+.8)+"rem;";smokeC.appendChild(el);(function(e){setTimeout(function(){e.remove();},1500);})(el);}}
+    function bigSmoke(){var cx=window.innerWidth/2,cy=window.innerHeight/2;for(var i=0;i<12;i++){(function(j){setTimeout(function(){smoke(cx+(Math.random()-.5)*300,cy+(Math.random()-.5)*200,"rgba(139,92,246,.25)");},j*80);})(i);}}
 
-    function spawnSmoke(x,y,color){
-        for(var i=0;i<6;i++){
-            var p=document.createElement("div");p.className="smoke-puff";
-            var size=Math.random()*30+15;
-            var dx=(Math.random()-0.5)*120;
-            var dy=-(Math.random()*200+80);
-            var dur=Math.random()*1.5+2;
-            p.style.cssText="left:"+(x-size/2)+"px;top:"+(y-size/2)+"px;width:"+size+"px;height:"+size+"px;background:"+color+";opacity:.5;--dx:"+dx+"px;--dy:"+dy+"px;--dur:"+dur+"s;";
-            smokeC.appendChild(p);
-            (function(el){setTimeout(function(){el.remove();},dur*1000+100);})(p);
-        }
-        // Smoke ring
-        var ring=document.createElement("div");ring.className="smoke-ring";
-        ring.style.cssText="left:"+(x-20)+"px;top:"+(y-20)+"px;width:40px;height:40px;border-color:"+color+";";
-        smokeC.appendChild(ring);
-        setTimeout(function(){ring.remove();},2000);
-    }
+    // Hero click smoke
+    document.getElementById("heroEmoji").addEventListener("click",function(){var r=this.getBoundingClientRect();smoke(r.left+r.width/2,r.top+r.height/2,"rgba(139,92,246,.4)");burst(r.left+r.width/2,r.top+r.height/2,"💨");});
 
-    function spawnFlavorBurst(x,y,emoji){
-        for(var i=0;i<4;i++){
-            var el=document.createElement("div");el.className="flavor-burst";el.textContent=emoji;
-            var bx=(Math.random()-0.5)*100;
-            var by=-(Math.random()*120+40);
-            el.style.cssText="left:"+x+"px;top:"+y+"px;--bx:"+bx+"px;--by:"+by+"px;--bx2:"+(bx*1.5)+"px;--by2:"+(by*1.5)+"px;font-size:"+(Math.random()*1+1)+"rem;";
-            smokeC.appendChild(el);
-            (function(e){setTimeout(function(){e.remove();},1500);})(el);
-        }
-    }
+    // Hero CTA
+    document.getElementById("heroCta").addEventListener("click",function(){document.getElementById("typeSection").scrollIntoView({behavior:"smooth",block:"center"});});
 
-    function spawnBigSmoke(){
-        var cx=window.innerWidth/2;var cy=window.innerHeight/2;
-        for(var i=0;i<15;i++){
-            setTimeout(function(){
-                var p=document.createElement("div");p.className="smoke-puff";
-                var size=Math.random()*60+30;
-                var x=cx+(Math.random()-0.5)*300;
-                var y=cy+(Math.random()-0.5)*200;
-                var dx=(Math.random()-0.5)*200;
-                var dy=-(Math.random()*300+100);
-                var dur=Math.random()*2+2.5;
-                p.style.cssText="left:"+x+"px;top:"+y+"px;width:"+size+"px;height:"+size+"px;background:rgba(139,92,246,.3);--dx:"+dx+"px;--dy:"+dy+"px;--dur:"+dur+"s;filter:blur(15px);";
-                smokeC.appendChild(p);
-                (function(el){setTimeout(function(){el.remove();},dur*1000+100);})(p);
-            },i*100);
-        }
-    }
+    // TYPE
+    document.querySelectorAll(".type-card").forEach(function(c){c.addEventListener("click",function(){document.querySelectorAll(".type-card").forEach(function(x){x.classList.remove("selected");});this.classList.add("selected");selType=this.getAttribute("data-type");var r=this.getBoundingClientRect();smoke(r.left+r.width/2,r.top+r.height/2,selType==="kohle"?"rgba(255,107,107,.35)":"rgba(69,123,157,.35)");document.getElementById("pathSection").classList.add("show");setTimeout(function(){document.getElementById("pathSection").scrollIntoView({behavior:"smooth",block:"center"});},300);});});
 
-    // ===== TYPE SELECTION =====
-    document.querySelectorAll(".type-card").forEach(function(card){
-        card.addEventListener("click",function(){
-            document.querySelectorAll(".type-card").forEach(function(c){c.classList.remove("selected");});
-            this.classList.add("selected");
-            selectedType=this.getAttribute("data-type");
-            document.getElementById("typeRequired").classList.remove("show");
-            var rect=this.getBoundingClientRect();
-            spawnSmoke(rect.left+rect.width/2,rect.top+rect.height/2,selectedType==="kohle"?"rgba(255,107,107,.4)":"rgba(69,123,157,.4)");
-            updateBuilder();
-        });
-    });
+    // PATH
+    document.querySelectorAll(".path-card").forEach(function(c){c.addEventListener("click",function(){document.querySelectorAll(".path-card").forEach(function(x){x.classList.remove("selected");});this.classList.add("selected");selPath=this.getAttribute("data-path");selFlavors=[];selSig=null;if(selPath==="signature"){document.getElementById("sigsSection").classList.add("show");document.getElementById("customSection").classList.remove("show");setTimeout(function(){document.getElementById("sigsSection").scrollIntoView({behavior:"smooth",block:"center"});},300);}else{document.getElementById("customSection").classList.add("show");document.getElementById("sigsSection").classList.remove("show");setTimeout(function(){document.getElementById("customSection").scrollIntoView({behavior:"smooth",block:"center"});},300);}updateFloat();});});
 
-    // ===== CATEGORY TABS =====
-    function renderCatTabs(){
-        var html="";for(var i=0;i<CATS.length;i++){html+='<button class="cat-tab'+(CATS[i].id===activeCat?' active':'')+'" data-cat="'+CATS[i].id+'">'+CATS[i].name+'</button>';}
-        document.getElementById("catTabs").innerHTML=html;
-        document.querySelectorAll(".cat-tab").forEach(function(tab){tab.addEventListener("click",function(){activeCat=this.getAttribute("data-cat");document.querySelectorAll(".cat-tab").forEach(function(t){t.classList.remove("active");});this.classList.add("active");renderFlavorGrid();});});
-    }
+    // SIGNATURES
+    function renderSigs(){var h="";for(var i=0;i<SIGS.length;i++){var s=SIGS[i];var flN=[];for(var j=0;j<s.flavors.length;j++){var f=findFL(s.flavors[j]);if(f)flN.push(f.e+" "+f.n);}h+='<div class="sig-card" data-sig="'+i+'"><div class="sig-person"><div class="sig-avatar"><img src="'+s.img+'" alt="'+s.person+'"></div><span class="sig-person-name">'+esc(s.person.charAt(0).toUpperCase()+s.person.slice(1))+"'s Mix</span></div><div class=\"sig-emojis\">"+s.emoji+'</div><div class="sig-name">'+esc(s.name)+'</div><div class="sig-flavors">'+flN.join(" + ")+'</div><div class="sig-desc">'+esc(s.desc)+'</div></div>';}
+    document.getElementById("sigsGrid").innerHTML=h;
+    document.querySelectorAll(".sig-card").forEach(function(c){c.addEventListener("click",function(){document.querySelectorAll(".sig-card").forEach(function(x){x.classList.remove("selected");});this.classList.add("selected");var idx=parseInt(this.getAttribute("data-sig"));selSig=SIGS[idx];selFlavors=selSig.flavors.slice();var r=this.getBoundingClientRect();smoke(r.left+r.width/2,r.top+r.height/2,"rgba(139,92,246,.35)");for(var i=0;i<selSig.flavors.length;i++){var f=findFL(selSig.flavors[i]);if(f)(function(fl,delay){setTimeout(function(){burst(r.left+r.width/2+(Math.random()-.5)*60,r.top+r.height/2,fl.e);},delay);})(f,i*150);}updateFloat();showOrder();});});}
 
-    // ===== FLAVOR GRID =====
-    function renderFlavorGrid(){
-        var filtered=activeCat==="all"?FLAVORS:FLAVORS.filter(function(f){return f.cat===activeCat;});
-        var html="";
-        for(var i=0;i<filtered.length;i++){
-            var f=filtered[i];var isSel=selectedFlavors.indexOf(f.id)!==-1;
-            html+='<div class="flavor-card'+(isSel?' selected':'')+'" data-id="'+f.id+'" style="--glow-color:'+(f.glow||'#8B5CF6')+'">';
-            html+='<div class="flavor-emoji">'+f.emoji+'</div>';
-            html+='<div class="flavor-name">'+f.name+'</div>';
-            if(f.brand)html+='<div class="flavor-brand">'+f.brand+'</div>';
-            html+='<div class="flavor-desc">'+f.desc+'</div>';
-            html+='<span class="flavor-tag '+f.tag+'">'+f.tag+'</span>';
-            html+='</div>';
-        }
-        document.getElementById("flavorGrid").innerHTML=html;
-        document.querySelectorAll(".flavor-card").forEach(function(card){
-            card.addEventListener("click",function(e){
-                var id=this.getAttribute("data-id");var idx=selectedFlavors.indexOf(id);var f=findFlavor(id);
-                var rect=this.getBoundingClientRect();var cx=rect.left+rect.width/2;var cy=rect.top+rect.height/2;
-                if(idx!==-1){
-                    selectedFlavors.splice(idx,1);this.classList.remove("selected");
-                } else {
-                    if(selectedFlavors.length>=5){alert("Maximal 5 Geschmaecker!");return;}
-                    selectedFlavors.push(id);this.classList.add("selected");
-                    // SMOKE + BURST EFFECT
-                    if(f){
-                        spawnSmoke(cx,cy,f.glow||"rgba(139,92,246,.4)");
-                        spawnFlavorBurst(cx,cy,f.emoji);
-                    }
-                }
-                updateFloatingCount();
-                updateBuilder();
-            });
-        });
-    }
+    // CUSTOM FLAVORS
+    function renderCatTabs(){var h="";for(var i=0;i<CATS.length;i++)h+='<button class="cat-tab'+(CATS[i].id===activeCat?' active':'')+'" data-cat="'+CATS[i].id+'">'+CATS[i].n+'</button>';document.getElementById("catTabs").innerHTML=h;document.querySelectorAll(".cat-tab").forEach(function(t){t.addEventListener("click",function(){activeCat=this.getAttribute("data-cat");document.querySelectorAll(".cat-tab").forEach(function(x){x.classList.remove("active");});this.classList.add("active");renderFlavors();});});}
 
-    // ===== FLOATING COUNT =====
-    function updateFloatingCount(){
-        var el=document.getElementById("flavorCount");
-        if(selectedFlavors.length>0){
-            el.classList.add("visible");
-            document.getElementById("flavorCountText").textContent=selectedFlavors.length+" ausgewaehlt";
-        } else {
-            el.classList.remove("visible");
-        }
-    }
-    document.getElementById("flavorCount").addEventListener("click",function(){
-        document.getElementById("builderSection").scrollIntoView({behavior:"smooth",block:"start"});
-    });
+    function renderFlavors(){var filtered=activeCat==="all"?FL:FL.filter(function(f){return f.c===activeCat;});var h="";for(var i=0;i<filtered.length;i++){var f=filtered[i];var isSel=selFlavors.indexOf(f.id)!==-1;h+='<div class="flv'+(isSel?' sel':'')+'" data-id="'+f.id+'" style="--glow:'+f.g+'"><div class="flv-emoji">'+f.e+'</div><div class="flv-name">'+f.n+'</div><div class="flv-brand">'+f.b+'</div><span class="flv-tag '+f.t+'">'+f.t+'</span></div>';}
+    document.getElementById("flavorGrid").innerHTML=h;
+    document.querySelectorAll(".flv").forEach(function(c){c.addEventListener("click",function(){var id=this.getAttribute("data-id");var idx=selFlavors.indexOf(id);var f=findFL(id);var r=this.getBoundingClientRect();var cx=r.left+r.width/2,cy=r.top+r.height/2;if(idx!==-1){selFlavors.splice(idx,1);this.classList.remove("sel");}else{if(selFlavors.length>=4){showToast("Max 4 Geschmaecker!");return;}selFlavors.push(id);this.classList.add("sel");if(f){smoke(cx,cy,f.g||"rgba(139,92,246,.3)");burst(cx,cy,f.e);}}selSig=null;updateFloat();});});}
 
-    // ===== EXTRAS =====
-    function renderExtras(){
-        var html="";for(var i=0;i<EXTRAS.length;i++){var ex=EXTRAS[i];html+='<div class="extra-card" data-id="'+ex.id+'"><div class="extra-emoji">'+ex.emoji+'</div><div class="extra-name">'+ex.name+'</div><div class="extra-price">'+(ex.price>0?'+'+ex.price+' EUR':'Kostenlos')+'</div></div>';}
-        document.getElementById("extrasGrid").innerHTML=html;
-        document.querySelectorAll(".extra-card").forEach(function(card){card.addEventListener("click",function(){var id=this.getAttribute("data-id");var idx=selectedExtras.indexOf(id);if(idx!==-1){selectedExtras.splice(idx,1);this.classList.remove("selected");}else{selectedExtras.push(id);this.classList.add("selected");}updateBuilder();});});
-    }
+    // FLOAT BAR
+    function updateFloat(){var el=document.getElementById("floatBar");if(selFlavors.length>0){el.classList.add("show");document.getElementById("floatText").textContent=selFlavors.length+" ausgewaehlt";}else{el.classList.remove("show");}}
+    document.getElementById("floatBar").addEventListener("click",function(){showOrder();document.getElementById("orderSection").scrollIntoView({behavior:"smooth",block:"start"});});
 
-    // ===== MIX =====
-    document.querySelectorAll(".mix-option").forEach(function(btn){btn.addEventListener("click",function(){document.querySelectorAll(".mix-option").forEach(function(b){b.classList.remove("active");});this.classList.add("active");currentMix=this.getAttribute("data-mix");updateBuilder();});});
-
-    // ===== UPDATE BUILDER =====
-    function updateBuilder(){
-        // Type display
-        var typeHtml="";
-        if(selectedType){
-            var typeName=selectedType==="kohle"?"🔥 Klassische Kohle":"⚡ E-Shisha";
-            typeHtml='<div class="type-display '+(selectedType)+'">'+typeName+'</div>';
-            document.getElementById("stepType").classList.add("done");document.getElementById("stepType").textContent="✓";
-        } else {
-            typeHtml='<div class="no-selection">Oben auswaehlen...</div>';
-            document.getElementById("stepType").classList.remove("done");document.getElementById("stepType").textContent="1";
-        }
-        document.getElementById("typeDisplay").innerHTML=typeHtml;
-
-        // Flavor chips
-        var chipHtml="";
-        if(selectedFlavors.length===0){chipHtml='<div class="no-selection">Waehle oben deine Geschmaecker aus...</div>';document.getElementById("stepFlavors").classList.remove("done");document.getElementById("stepFlavors").textContent="2";}
-        else{
-            for(var i=0;i<selectedFlavors.length;i++){var f=findFlavor(selectedFlavors[i]);if(f)chipHtml+='<span class="selected-chip">'+f.emoji+' '+f.name+'<button data-remove="'+f.id+'">✕</button></span>';}
-            document.getElementById("stepFlavors").classList.add("done");document.getElementById("stepFlavors").textContent="✓";
-        }
-        document.getElementById("selectedFlavors").innerHTML=chipHtml;
-        document.querySelectorAll(".selected-chip button").forEach(function(btn){btn.addEventListener("click",function(e){e.stopPropagation();var id=this.getAttribute("data-remove");var idx=selectedFlavors.indexOf(id);if(idx!==-1)selectedFlavors.splice(idx,1);renderFlavorGrid();updateFloatingCount();updateBuilder();});});
-
-        // Summary
-        var extrasTotal=0;var extraNames=[];
-        for(var i=0;i<selectedExtras.length;i++){var ex=findExtra(selectedExtras[i]);if(ex){extrasTotal+=ex.price;extraNames.push(ex.emoji+" "+ex.name);}}
-        var flavorNames=[];for(var i=0;i<selectedFlavors.length;i++){var f=findFlavor(selectedFlavors[i]);if(f)flavorNames.push(f.emoji+" "+f.name);}
-        var mixNames={normal:"Normal",stark:"💪 Stark",leicht:"🌿 Leicht",doppelt:"🔥 Doppelkopf"};
-        var basePrice=currentMix==="doppelt"?2:0;var total=basePrice+extrasTotal;
-
-        var sh='<div class="summary-row"><span class="summary-label">Typ</span><span class="summary-value">'+(selectedType==="kohle"?"🔥 Kohle":selectedType==="eshisha"?"⚡ E-Shisha":"–")+'</span></div>';
-        sh+='<div class="summary-row"><span class="summary-label">Geschmaecker</span><span class="summary-value">'+(flavorNames.length?flavorNames.join(", "):"–")+'</span></div>';
-        sh+='<div class="summary-row"><span class="summary-label">Mix</span><span class="summary-value">'+(mixNames[currentMix]||"Normal")+'</span></div>';
-        if(extraNames.length)sh+='<div class="summary-row"><span class="summary-label">Extras</span><span class="summary-value">'+extraNames.join(", ")+'</span></div>';
-        sh+='<div class="summary-row summary-total"><span class="summary-label">Shisha-Kasse</span><span class="summary-value">'+(total>0?total.toFixed(2).replace(".",",")+" EUR":"Kasse / Free")+'</span></div>';
+    // ORDER
+    function showOrder(){document.getElementById("orderSection").classList.add("show");updateOrder();}
+    function updateOrder(){
+        document.getElementById("orderType").innerHTML='<span class="order-type-badge '+(selType||"")+'">'+(selType==="kohle"?"🔥 Kohle":selType==="eshisha"?"⚡ E-Shisha":"–")+'</span>';
+        var ch="";if(selFlavors.length===0)ch='<span class="order-empty">Keine Geschmaecker...</span>';else{for(var i=0;i<selFlavors.length;i++){var f=findFL(selFlavors[i]);if(f)ch+='<span class="order-chip">'+f.e+' '+f.n+'<button data-rm="'+f.id+'">✕</button></span>';}}
+        document.getElementById("orderChips").innerHTML=ch;
+        document.querySelectorAll(".order-chip button").forEach(function(b){b.addEventListener("click",function(){var id=this.getAttribute("data-rm");var idx=selFlavors.indexOf(id);if(idx!==-1)selFlavors.splice(idx,1);renderFlavors();updateFloat();updateOrder();});});
+        var flNames=[];for(var i=0;i<selFlavors.length;i++){var f=findFL(selFlavors[i]);if(f)flNames.push(f.e+" "+f.n);}
+        var mixN={normal:"Normal",stark:"💪 Stark",leicht:"🌿 Leicht"};
+        var sh='<div class="sum-row"><span class="sum-label">Typ</span><span class="sum-value">'+(selType==="kohle"?"🔥 Kohle":"⚡ E-Shisha")+'</span></div>';
+        sh+='<div class="sum-row"><span class="sum-label">Geschmaecker</span><span class="sum-value">'+(flNames.length?flNames.join(", "):"–")+'</span></div>';
+        sh+='<div class="sum-row"><span class="sum-label">Mix</span><span class="sum-value">'+(mixN[selMix]||"Normal")+'</span></div>';
+        if(selSig)sh+='<div class="sum-row"><span class="sum-label">Signature</span><span class="sum-value">'+esc(selSig.name)+'</span></div>';
         document.getElementById("orderSummary").innerHTML=sh;
-
-        document.getElementById("orderSubmit").disabled=selectedFlavors.length===0;
+        document.getElementById("orderSubmit").disabled=selFlavors.length===0;
     }
 
-    // ===== COMBOS =====
-    function renderCombos(){
-        var html="";for(var i=0;i<COMBOS.length;i++){var c=COMBOS[i];var fl=[];for(var j=0;j<c.flavors.length;j++){var f=findFlavor(c.flavors[j]);if(f)fl.push(f.name);}
-        var badge=c.badge==="popular"?'<span class="combo-badge popular">🔥 Beliebt</span>':c.badge==="new"?'<span class="combo-badge new">✨ Neu</span>':c.badge==="andrei"?'<span class="combo-badge andrei">🫅 Andrei</span>':"";
-        html+='<div class="combo-card" data-combo="'+i+'">'+badge+'<div class="combo-emojis">'+c.emoji+'</div><div class="combo-name">'+c.name+'</div><div class="combo-flavors">'+fl.join(" + ")+'</div><div class="combo-desc">'+c.desc+'</div><button class="combo-order-btn" data-combo="'+i+'">💨 Bestellen</button></div>';}
-        document.getElementById("combosGrid").innerHTML=html;
-        document.querySelectorAll(".combo-order-btn").forEach(function(btn){btn.addEventListener("click",function(e){e.stopPropagation();var idx=parseInt(this.getAttribute("data-combo"));selectedFlavors=COMBOS[idx].flavors.slice();renderFlavorGrid();updateFloatingCount();updateBuilder();
-        var rect=this.getBoundingClientRect();spawnSmoke(rect.left+rect.width/2,rect.top,"rgba(139,92,246,.4)");
-        document.getElementById("builderSection").scrollIntoView({behavior:"smooth",block:"start"});});});
-    }
+    // MIX
+    document.addEventListener("click",function(e){if(e.target.classList.contains("mix-opt")){document.querySelectorAll(".mix-opt").forEach(function(b){b.classList.remove("active");});e.target.classList.add("active");selMix=e.target.getAttribute("data-mix");updateOrder();}});
 
-    // ===== SUBMIT =====
+    // SUBMIT
     document.getElementById("orderSubmit").addEventListener("click",function(){
-        var name=document.getElementById("orderName").value.trim();
-        var errEl=document.getElementById("builderError");
-        errEl.classList.remove("show");
-
-        if(!selectedType){
-            errEl.textContent="⚠️ Bitte waehle zuerst Kohle oder E-Shisha!";errEl.classList.add("show");
-            document.getElementById("typeRequired").classList.add("show");
-            document.getElementById("typeSection").scrollIntoView({behavior:"smooth",block:"center"});return;
-        }
-        if(selectedFlavors.length===0){errEl.textContent="⚠️ Waehle mindestens einen Geschmack!";errEl.classList.add("show");return;}
-        if(!name){errEl.textContent="⚠️ Bitte gib deinen Namen ein!";errEl.classList.add("show");document.getElementById("orderName").focus();return;}
-
-        var flavorNames=[];for(var i=0;i<selectedFlavors.length;i++){var f=findFlavor(selectedFlavors[i]);if(f)flavorNames.push(f.name);}
-        var extraNames=[];var extrasTotal=0;for(var i=0;i<selectedExtras.length;i++){var ex=findExtra(selectedExtras[i]);if(ex){extraNames.push(ex.name);extrasTotal+=ex.price;}}
-        var basePrice=currentMix==="doppelt"?2:0;
-
+        var name=document.getElementById("orderName").value.trim();var err=document.getElementById("orderError");err.classList.remove("show");
+        if(!selType){err.textContent="Bitte Typ waehlen!";err.classList.add("show");return;}
+        if(selFlavors.length===0){err.textContent="Bitte Geschmaecker waehlen!";err.classList.add("show");return;}
+        if(!name){err.textContent="Bitte Namen eingeben!";err.classList.add("show");document.getElementById("orderName").focus();return;}
+        var flNames=[];for(var i=0;i<selFlavors.length;i++){var f=findFL(selFlavors[i]);if(f)flNames.push(f.n);}
         db.collection("shisha_orders").add({
-            name:name,type:selectedType,flavors:flavorNames,flavorIds:selectedFlavors.slice(),
-            mix:currentMix,extras:extraNames,extraIds:selectedExtras.slice(),
+            name:name,type:selType,flavors:flNames,flavorIds:selFlavors.slice(),
+            mix:selMix,signature:selSig?selSig.name:"",
             note:document.getElementById("orderNote").value.trim(),
-            total:basePrice+extrasTotal,status:"neu",
-            createdAt:firebase.firestore.FieldValue.serverTimestamp()
+            status:"neu",createdAt:firebase.firestore.FieldValue.serverTimestamp()
         }).then(function(){
-            document.getElementById("builderFormWrap").style.display="none";
+            document.getElementById("orderFormWrap").style.display="none";
             var s=document.getElementById("orderSuccess");s.classList.add("show");s.style.display="";
-            document.getElementById("orderSuccessText").innerHTML="<strong>"+esc(name)+"</strong>, deine "+(selectedType==="kohle"?"🔥 Kohle":"⚡ E")+"−Shisha wird gebaut!<br>"+flavorNames.join(" + ")+" ("+currentMix+")<br>Andrei kuemmert sich drum. 🫅💨";
-            spawnBigSmoke();launchConfetti();
-        }).catch(function(err){console.error(err);alert("Fehler!");});
+            document.getElementById("orderSuccessText").innerHTML="<strong>"+esc(name)+"</strong>, deine "+(selType==="kohle"?"🔥 Kohle":"⚡ E")+"-Shisha wird gebaut!<br>"+flNames.join(" + ")+"<br>Andrei kuemmert sich drum. 🫅💨";
+            bigSmoke();confetti();
+        }).catch(function(e){console.error(e);err.textContent="Fehler!";err.classList.add("show");});
     });
 
     document.getElementById("orderNewBtn").addEventListener("click",function(){
-        selectedFlavors=[];selectedExtras=[];currentMix="normal";selectedType=null;
+        selFlavors=[];selType=null;selPath=null;selMix="normal";selSig=null;activeCat="all";
+        document.getElementById("orderFormWrap").style.display="block";
+        document.getElementById("orderSuccess").classList.remove("show");
+        document.getElementById("orderSection").classList.remove("show");
+        document.getElementById("pathSection").classList.remove("show");
+        document.getElementById("sigsSection").classList.remove("show");
+        document.getElementById("customSection").classList.remove("show");
+        document.querySelectorAll(".type-card,.path-card,.sig-card").forEach(function(c){c.classList.remove("selected");});
+        document.querySelectorAll(".mix-opt").forEach(function(b){b.classList.remove("active");});
+        document.querySelector('.mix-opt[data-mix="normal"]').classList.add("active");
         document.getElementById("orderName").value="";document.getElementById("orderNote").value="";
-        document.getElementById("builderFormWrap").style.display="block";
-        document.getElementById("orderSuccess").classList.remove("show");document.getElementById("orderSuccess").style.display="none";
-        document.querySelectorAll(".mix-option").forEach(function(b){b.classList.remove("active");});
-        document.querySelector('.mix-option[data-mix="normal"]').classList.add("active");
-        document.querySelectorAll(".type-card").forEach(function(c){c.classList.remove("selected");});
-        document.getElementById("builderError").classList.remove("show");
-        document.getElementById("flavorCount").classList.remove("visible");
-        renderFlavorGrid();renderExtras();updateBuilder();window.scrollTo({top:0,behavior:"smooth"});
+        document.getElementById("floatBar").classList.remove("show");
+        renderFlavors();window.scrollTo({top:0,behavior:"smooth"});
     });
 
-    // ===== HELPERS =====
-    function findFlavor(id){for(var i=0;i<FLAVORS.length;i++){if(FLAVORS[i].id===id)return FLAVORS[i];}return null;}
-    function findExtra(id){for(var i=0;i<EXTRAS.length;i++){if(EXTRAS[i].id===id)return EXTRAS[i];}return null;}
+    // DONATE
+    var donateAmt=10;
+    document.querySelectorAll(".donate-amt").forEach(function(b){b.addEventListener("click",function(){document.querySelectorAll(".donate-amt").forEach(function(x){x.classList.remove("active");});this.classList.add("active");donateAmt=parseInt(this.getAttribute("data-amt"));document.getElementById("donateInput").value=donateAmt;});});
+    document.getElementById("donateInput").addEventListener("input",function(){donateAmt=parseFloat(this.value)||0;document.querySelectorAll(".donate-amt").forEach(function(b){b.classList.toggle("active",parseInt(b.getAttribute("data-amt"))===donateAmt);});});
+    document.getElementById("donateBtn").addEventListener("click",function(){if(donateAmt<1){alert("Mindestens 1 EUR!");return;}window.open("https://www.paypal.me/andrei2610/"+donateAmt,"_blank");confetti();});
+
+    // HELPERS
+    function findFL(id){for(var i=0;i<FL.length;i++)if(FL[i].id===id)return FL[i];return null;}
     function esc(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+    function showToast(msg){var t=document.createElement("div");t.style.cssText="position:fixed;top:"+((parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'))||80)+10)+"px;left:50%;transform:translateX(-50%);background:var(--color-text);color:#fff;padding:10px 24px;border-radius:50px;font-size:.82rem;font-weight:700;z-index:2000;animation:fadeUp .3s ease;";t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.remove();},2000);}
+    function confetti(){var c=document.getElementById("confettiC");var colors=["#8B5CF6","#A78BFA","#C03A2B","#E8501E","#C4A882","#FF6B6B","#FFD93D"];for(var i=0;i<50;i++){var p=document.createElement("div");var sz=Math.random()*8+4;var isCir=Math.random()>.5;p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"2px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.3)+"s;pointer-events:none;";c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4000);})(p);}}
+    var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}@keyframes fadeUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}";document.head.appendChild(cs);
 
-    function launchConfetti(){var c=document.getElementById("confettiContainer");var colors=["#8B5CF6","#A78BFA","#C03A2B","#E8501E","#C4A882","#FF6B6B","#FFD93D"];for(var i=0;i<50;i++){var p=document.createElement("div");var sz=Math.random()*8+5;var isCir=Math.random()>.5;p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"3px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.3)+"s;pointer-events:none;";c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4000);})(p);}}
-    var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}";document.head.appendChild(cs);
-
-    var ro=new IntersectionObserver(function(entries){for(var i=0;i<entries.length;i++){if(entries[i].isIntersecting){(function(el,idx){setTimeout(function(){el.classList.add("visible");},idx*80);})(entries[i].target,i);ro.unobserve(entries[i].target);}}},{threshold:.1});
+    // REVEAL
+    var ro=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add("visible");ro.unobserve(en.target);}});},{threshold:.1});
     document.querySelectorAll(".reveal").forEach(function(el){ro.observe(el);});
 
-    window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++){shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px) rotate("+(window.scrollY*.01*(i%2===0?1:-1))+"deg)";}});
+    window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++)shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px)";});
 
-    renderCatTabs();renderFlavorGrid();renderExtras();renderCombos();updateBuilder();
+    renderSigs();renderCatTabs();renderFlavors();
 })();
     </script>
 </body>
