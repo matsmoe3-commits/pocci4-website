@@ -35,8 +35,6 @@
         @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
         @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
         @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
-
-        /* NAV */
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
         .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
         .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
@@ -86,8 +84,6 @@
         .admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
         .section-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--sh);text-transform:uppercase;margin-bottom:1rem}
         .section-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.03em}
-
-        /* SMOKE FX */
         .smoke-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2500;overflow:hidden}
         .smoke-puff{position:absolute;border-radius:50%;pointer-events:none;filter:blur(10px);animation:smokePuff var(--dur,3s) ease-out forwards}
         @keyframes smokePuff{0%{transform:translate(0,0) scale(.3);opacity:.6}100%{transform:translate(var(--dx,0),var(--dy,-200px)) scale(3);opacity:0}}
@@ -95,10 +91,6 @@
         @keyframes smokeRing{0%{transform:scale(.2);opacity:.5}100%{transform:scale(4);opacity:0}}
         .flavor-burst{position:absolute;pointer-events:none;animation:flavorBurst 1.5s ease-out forwards}
         @keyframes flavorBurst{0%{transform:translate(0,0) scale(0) rotate(0);opacity:1}50%{transform:translate(var(--bx,20px),var(--by,-80px)) scale(1.3) rotate(180deg);opacity:.8}100%{transform:translate(var(--bx2,40px),var(--by2,-160px)) scale(.4) rotate(360deg);opacity:0}}
-        .smoke-trail{position:absolute;width:3px;border-radius:3px;pointer-events:none;animation:smokeTrail var(--dur,1.5s) ease-out forwards}
-        @keyframes smokeTrail{0%{height:0;opacity:.5}50%{height:var(--h,60px);opacity:.3}100%{height:0;opacity:0;transform:translateY(var(--dy,-100px))}}
-
-        /* ===== HERO ===== */
         .sh-hero{padding:calc(var(--nav-height) + 3rem) 1.5rem 2rem;max-width:var(--container-width);margin:0 auto;text-align:center;position:relative}
         .sh-hero-smoke-wrap{position:relative;display:inline-block;margin-bottom:1.5rem}
         .sh-hero-glow{position:absolute;top:50%;left:50%;width:250px;height:250px;background:radial-gradient(circle,rgba(139,92,246,.2) 0%,transparent 70%);transform:translate(-50%,-50%);border-radius:50%;animation:heroGlow 3s ease-in-out infinite alternate;pointer-events:none}
@@ -112,8 +104,6 @@
         .sh-hero-sub{font-size:clamp(.95rem,2vw,1.1rem);color:var(--color-text-light);max-width:480px;margin:0 auto 2rem;line-height:1.6}
         .sh-hero-cta{display:inline-flex;align-items:center;gap:.5rem;padding:14px 32px;border-radius:50px;background:linear-gradient(135deg,var(--sh),var(--color-primary));color:#fff;font-weight:800;font-size:.95rem;cursor:pointer;border:none;font-family:var(--font-main);transition:var(--transition-smooth);box-shadow:0 6px 20px rgba(139,92,246,.3)}
         .sh-hero-cta:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(139,92,246,.4)}
-
-        /* ===== ANDREI SECTION ===== */
         .andrei-section{padding:0 1.5rem 4rem;max-width:800px;margin:0 auto}
         .andrei-card{display:grid;grid-template-columns:200px 1fr;gap:2rem;background:var(--color-white);border-radius:24px;padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.04);border:1px solid var(--color-border);align-items:center}
         .andrei-img{width:200px;height:200px;border-radius:20px;overflow:hidden;position:relative;background:var(--color-bg-warm)}
@@ -125,8 +115,6 @@
         .andrei-quote{font-style:italic;padding:.75rem 1rem;border-left:3px solid var(--sh);background:rgba(139,92,246,.04);border-radius:0 12px 12px 0;font-size:.85rem;color:var(--color-text-light)}
         .andrei-insta{display:inline-flex;align-items:center;gap:.4rem;padding:8px 16px;border-radius:50px;background:var(--color-bg);font-size:.8rem;font-weight:700;color:var(--sh);margin-top:.75rem;transition:var(--transition-fast)}
         .andrei-insta:hover{background:rgba(139,92,246,.1)}
-
-        /* ===== TYPE CHOICE ===== */
         .type-section{padding:0 1.5rem 4rem;max-width:700px;margin:0 auto;text-align:center}
         .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:2rem}
         .type-card{background:var(--color-white);border-radius:22px;padding:2.5rem 1.5rem;text-align:center;border:3px solid transparent;cursor:pointer;transition:var(--transition-smooth);position:relative;overflow:hidden}
@@ -142,8 +130,6 @@
         .type-card:hover .type-emoji{transform:scale(1.1)}
         .type-name{font-size:1.2rem;font-weight:800;margin-bottom:.25rem}
         .type-desc{font-size:.8rem;color:var(--color-text-light)}
-
-        /* ===== PATH CHOICE ===== */
         .path-section{padding:0 1.5rem 4rem;max-width:800px;margin:0 auto;text-align:center;display:none}
         .path-section.show{display:block}
         .path-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
@@ -153,8 +139,6 @@
         .path-emoji{font-size:3rem;margin-bottom:.75rem}
         .path-name{font-size:1.15rem;font-weight:800;margin-bottom:.25rem}
         .path-desc{font-size:.8rem;color:var(--color-text-light);line-height:1.4}
-
-        /* ===== SIGNATURE MIXES ===== */
         .sigs-section{padding:0 1.5rem 4rem;max-width:var(--container-width);margin:0 auto;display:none}
         .sigs-section.show{display:block}
         .sigs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-top:2rem}
@@ -170,8 +154,6 @@
         .sig-name{font-size:1.15rem;font-weight:800;margin-bottom:.15rem}
         .sig-flavors{font-size:.78rem;color:var(--sh);font-weight:600;margin-bottom:.35rem}
         .sig-desc{font-size:.78rem;color:var(--color-text-light);line-height:1.4}
-
-        /* ===== CUSTOM PICKER ===== */
         .custom-section{padding:0 1.5rem 4rem;max-width:var(--container-width);margin:0 auto;display:none}
         .custom-section.show{display:block}
         .cat-tabs{display:flex;gap:.4rem;justify-content:center;margin:1.5rem 0;flex-wrap:wrap}
@@ -201,13 +183,9 @@
         .flv-tag.sour{background:rgba(46,204,113,.1);color:#27AE60}
         .flv-tag.creamy{background:rgba(196,168,130,.12);color:#8B6914}
         .flv-tag.spicy{background:rgba(192,58,43,.08);color:var(--color-primary)}
-
-        /* FLOATING */
         .float-bar{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--sh);color:#fff;border-radius:50px;padding:12px 28px;font-size:.85rem;font-weight:800;box-shadow:0 8px 30px rgba(139,92,246,.4);z-index:100;display:flex;align-items:center;gap:.6rem;cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1)}
         .float-bar.show{transform:translateX(-50%) translateY(0)}
         .float-bar:hover{box-shadow:0 12px 40px rgba(139,92,246,.5);transform:translateX(-50%) translateY(-3px)}
-
-        /* ===== ORDER SECTION ===== */
         .order-section{padding:0 1.5rem var(--section-padding);max-width:900px;margin:0 auto;display:none}
         .order-section.show{display:block}
         .order-card{background:var(--color-text);border-radius:28px;padding:2.5rem 2rem;color:#fff;position:relative;overflow:hidden}
@@ -253,8 +231,6 @@
         .order-success-title{font-size:1.5rem;font-weight:900;margin-bottom:.5rem}
         .order-success-text{color:var(--color-gray);font-size:.9rem;line-height:1.5;margin-bottom:1.5rem}
         .order-success-btn{padding:14px 32px;border-radius:50px;border:none;background:var(--sh);color:#fff;font-family:var(--font-main);font-size:.9rem;font-weight:700;cursor:pointer}
-
-        /* ===== DONATE ===== */
         .donate-section{padding:0 1.5rem var(--section-padding);max-width:600px;margin:0 auto;text-align:center}
         .donate-card{background:var(--color-white);border-radius:24px;padding:2.5rem 2rem;box-shadow:0 4px 20px rgba(0,0,0,.04);border:1px solid var(--color-border)}
         .donate-emoji{font-size:3rem;margin-bottom:.75rem}
@@ -271,8 +247,6 @@
         .donate-btn{display:inline-flex;align-items:center;gap:.5rem;padding:14px 32px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--sh),var(--color-primary));color:#fff;font-family:var(--font-main);font-size:.95rem;font-weight:800;cursor:pointer;transition:var(--transition-smooth)}
         .donate-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(139,92,246,.3)}
         .donate-note{font-size:.72rem;color:var(--color-gray);margin-top:1rem}
-
-        /* FOOTER */
         .footer{background:var(--color-text);color:#fff;padding:4rem 1.5rem 2rem}
         .footer-container{max-width:var(--container-width);margin:0 auto}
         .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
@@ -287,7 +261,9 @@
         .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden}
         .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
         .reveal.visible{opacity:1;transform:translateY(0)}
-
+        .toast{position:fixed;top:calc(var(--nav-height) + 10px);left:50%;transform:translateX(-50%);background:var(--color-text);color:#fff;padding:10px 24px;border-radius:50px;font-size:.82rem;font-weight:700;z-index:2000;animation:fadeUp .3s ease}
+        @keyframes fadeUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+        @keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
         @media(max-width:1024px){.footer-top{grid-template-columns:1fr;gap:3rem}}
         @media(max-width:768px){
             :root{--nav-height:68px;--section-padding:50px}
@@ -437,26 +413,41 @@
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
     <script>
 (function(){
-    var firebaseConfig={apiKey:"AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",authDomain:"pocci4-a24e5.firebaseapp.com",projectId:"pocci4-a24e5",storageBucket:"pocci4-a24e5.firebasestorage.app",messagingSenderId:"518621760671",appId:"1:518621760671:web:90ad7c1bae464f313066aa"};
-    if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
-    var db=firebase.firestore();
+    // ===== FIREBASE INIT =====
+    var firebaseConfig = {
+        apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
+        authDomain: "pocci4-a24e5.firebaseapp.com",
+        projectId: "pocci4-a24e5",
+        storageBucket: "pocci4-a24e5.firebasestorage.app",
+        messagingSenderId: "518621760671",
+        appId: "1:518621760671:web:90ad7c1bae464f313066aa"
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
 
-    function sendTelegram(message) {
-    fetch("/api/telegram", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: message })
-    }).then(function(r) {
-        return r.json();
-    }).then(function(d) {
-        console.log("TG sent:", d.ok);
-    }).catch(function(e) {
-        console.warn("TG fail:", e);
-    });
-}
+    // ===== TELEGRAM NOTIFICATION (via Vercel API) =====
+    function sendTelegramNotification(orderData) {
+        var msg = "🔔 NEUE SHISHA BESTELLUNG!\n\n";
+        msg += "👤 Name: " + orderData.name + "\n";
+        msg += "🔥 Typ: " + (orderData.type === "kohle" ? "Kohle" : "E-Shisha") + "\n";
+        msg += "🎨 Geschmaecker: " + orderData.flavors.join(", ") + "\n";
+        msg += "💪 Mix: " + orderData.mix + "\n";
+        if (orderData.signature) msg += "⭐ Signature: " + orderData.signature + "\n";
+        if (orderData.note) msg += "📝 Notiz: " + orderData.note + "\n";
+        msg += "\n⏰ " + new Date().toLocaleString("de-DE");
 
-    // ===== FLAVORS =====
-    var FL=[
+        fetch("/api/telegram", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: msg })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(d) { console.log("Telegram sent:", d); })
+        .catch(function(e) { console.warn("Telegram fail:", e); });
+    }
+
+    // ===== FLAVOR DATA =====
+    var FL = [
         {id:"watermelon",n:"Wassermelone",e:"🍉",c:"fruity",t:"fruity",b:"Al Fakher",g:"#ff6b6b"},
         {id:"grape",n:"Traube",e:"🍇",c:"fruity",t:"fruity",b:"Al Fakher",g:"#9b59b6"},
         {id:"blueberry",n:"Blaubeere",e:"🫐",c:"fruity",t:"berry",b:"Adalya",g:"#5b6abf"},
@@ -507,11 +498,11 @@
         {id:"energy",n:"Energy Drink",e:"⚡",c:"drinks",t:"sweet",b:"Adalya",g:"#00b894"},
         {id:"mojito",n:"Mojito",e:"🍹",c:"drinks",t:"fresh",b:"Social Smoke",g:"#55efc4"},
         {id:"pina-colada",n:"Pina Colada",e:"🍹",c:"drinks",t:"exotic",b:"Starbuzz",g:"#ffeaa7"},
-        {id:"ice-tea",n:"Eistee",e:"🧊",c:"drinks",t:"fresh",b:"XRacher",g:"#fdcb6e"},
+        {id:"ice-tea",n:"Eistee",e:"🧊",c:"drinks",t:"fresh",b:"XRacher",g:"#fdcb6e"}
     ];
 
-    // ===== SIGNATURES =====
-    var SIGS=[
+    // ===== SIGNATURE MIXES =====
+    var SIGS = [
         {name:"Andreis Anmachender Apfel",person:"andrei",img:"assets/andrei.jpeg",emoji:"🍎🔥",flavors:["doppelapfel","cinnamon","ice"],desc:"Doppelapfel mit Zimt und Ice. Klingt wild, schmeckt wilder. Andrei schwört drauf."},
         {name:"Andreis Midnight Smoke",person:"andrei",img:"assets/andrei.jpeg",emoji:"🌙💨",flavors:["grape","mint","blueberry"],desc:"Traube, Minze, Blaubeere. Der Kopf fuer die spaeten Stunden."},
         {name:"Andreis Tropical Drip",person:"andrei",img:"assets/andrei.jpeg",emoji:"🌴💧",flavors:["mango","coconut","pineapple"],desc:"Karibik-Feeling. Als waerst du am Strand und nicht in der Pocci."},
@@ -519,177 +510,513 @@
         {name:"Mats' Berry Protocol",person:"mats",img:"assets/mats.jpeg",emoji:"🫐⚡",flavors:["blueberry","raspberry","menthol"],desc:"Doppel-Beere mit Menthol. Der Tech-Bro unter den Koepfen."},
         {name:"Georgies Pink Cloud",person:"georgie",img:"assets/georgie.jpeg",emoji:"☁️💖",flavors:["strawberry","vanilla","rose"],desc:"Erdbeere, Vanille, Rose. Soft, suess, aesthetic. So wie Georgies Insta-Feed."},
         {name:"Georgies Sunset Vibes",person:"georgie",img:"assets/georgie.jpeg",emoji:"🌅✨",flavors:["peach","passion","lychee"],desc:"Pfirsich, Maracuja, Litschi. Schmeckt nach Sonnenuntergang auf dem Balkon."},
-        {name:"Georgies Sweet Escape",person:"georgie",img:"assets/georgie.jpeg",emoji:"🍭🏃‍♀️",flavors:["bubblegum","cotton-candy","ice"],desc:"Kaugummi, Zuckerwatte, Ice. Jahrmarkt im Mund. Guilty pleasure."},
+        {name:"Georgies Sweet Escape",person:"georgie",img:"assets/georgie.jpeg",emoji:"🍭🏃‍♀️",flavors:["bubblegum","cotton-candy","ice"],desc:"Kaugummi, Zuckerwatte, Ice. Jahrmarkt im Mund. Guilty pleasure."}
     ];
 
-    var CATS=[{id:"all",n:"Alle"},{id:"fruity",n:"🍉 Fruchtig"},{id:"fresh",n:"🧊 Frisch"},{id:"sweet",n:"🍯 Suess"},{id:"exotic",n:"🌴 Exotisch"},{id:"classic",n:"⭐ Klassiker"},{id:"drinks",n:"🍹 Drinks"}];
+    var CATS = [{id:"all",n:"Alle"},{id:"fruity",n:"🍉 Fruchtig"},{id:"fresh",n:"🧊 Frisch"},{id:"sweet",n:"🍯 Suess"},{id:"exotic",n:"🌴 Exotisch"},{id:"classic",n:"⭐ Klassiker"},{id:"drinks",n:"🍹 Drinks"}];
 
-    var selFlavors=[];var selType=null;var selPath=null;var selMix="normal";var selSig=null;var activeCat="all";
-    var smokeC=document.getElementById("smokeC");
+    // ===== STATE =====
+    var selFlavors = [];
+    var selType = null;
+    var selPath = null;
+    var selMix = "normal";
+    var selSig = null;
+    var activeCat = "all";
+    var smokeC = document.getElementById("smokeC");
 
-    // NAV
-    var navbar=document.getElementById("navbar");window.addEventListener("scroll",function(){navbar.classList.toggle("scrolled",window.scrollY>50);});
-    var hamburger=document.getElementById("hamburger"),mobileMenu=document.getElementById("mobileMenu");
-    hamburger.addEventListener("click",function(){hamburger.classList.toggle("active");mobileMenu.classList.toggle("active");document.body.style.overflow=mobileMenu.classList.contains("active")?"hidden":"";});
-    document.querySelectorAll(".mobile-link").forEach(function(ml){ml.addEventListener("click",function(){hamburger.classList.remove("active");mobileMenu.classList.remove("active");document.body.style.overflow="";});});
-    var dd=document.getElementById("eventsDropdown"),ddT=null;
-    if(dd){dd.addEventListener("mouseenter",function(){ddT=setTimeout(function(){dd.classList.add("dropdown-visible");},200);});dd.addEventListener("mouseleave",function(){clearTimeout(ddT);setTimeout(function(){dd.classList.remove("dropdown-visible");},300);});}
+    // ===== NAVBAR =====
+    var navbar = document.getElementById("navbar");
+    window.addEventListener("scroll", function() {
+        navbar.classList.toggle("scrolled", window.scrollY > 50);
+    });
 
-    // ADMIN
-    (function(){var PW="pocci4admin";var t=document.getElementById("adminTrigger"),o=document.getElementById("adminOverlay"),i=document.getElementById("adminPwInput"),c=document.getElementById("adminCancel"),s=document.getElementById("adminSubmit"),e=document.getElementById("adminError");t.addEventListener("click",function(){if(sessionStorage.getItem("pocci4admin")==="true"){window.location.href="admin.html";return;}o.classList.add("active");setTimeout(function(){i.focus();},100);});c.addEventListener("click",function(){o.classList.remove("active");i.value="";e.style.display="none";});o.addEventListener("click",function(ev){if(ev.target===o){o.classList.remove("active");i.value="";e.style.display="none";}});function tryLogin(){if(i.value===PW){sessionStorage.setItem("pocci4admin","true");window.location.href="admin.html";}else{e.style.display="block";i.value="";i.focus();}}s.addEventListener("click",tryLogin);i.addEventListener("keydown",function(ev){if(ev.key==="Enter")tryLogin();});})();
+    var hamburger = document.getElementById("hamburger");
+    var mobileMenu = document.getElementById("mobileMenu");
+    hamburger.addEventListener("click", function() {
+        hamburger.classList.toggle("active");
+        mobileMenu.classList.toggle("active");
+        document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
+    });
+    document.querySelectorAll(".mobile-link").forEach(function(ml) {
+        ml.addEventListener("click", function() {
+            hamburger.classList.remove("active");
+            mobileMenu.classList.remove("active");
+            document.body.style.overflow = "";
+        });
+    });
 
-    // SMOKE FX
-    function smoke(x,y,col){for(var i=0;i<5;i++){var p=document.createElement("div");p.className="smoke-puff";var sz=Math.random()*25+12;var dx=(Math.random()-.5)*100;var dy=-(Math.random()*180+60);var dur=Math.random()*1.5+2;p.style.cssText="left:"+(x-sz/2)+"px;top:"+(y-sz/2)+"px;width:"+sz+"px;height:"+sz+"px;background:"+(col||"rgba(139,92,246,.35)")+";--dx:"+dx+"px;--dy:"+dy+"px;--dur:"+dur+"s;";smokeC.appendChild(p);(function(el,d){setTimeout(function(){el.remove();},d*1000+200);})(p,dur);}
-    var r=document.createElement("div");r.className="smoke-ring";r.style.cssText="left:"+(x-18)+"px;top:"+(y-18)+"px;width:36px;height:36px;";smokeC.appendChild(r);setTimeout(function(){r.remove();},2500);}
-    function burst(x,y,emoji){for(var i=0;i<3;i++){var el=document.createElement("div");el.className="flavor-burst";el.textContent=emoji;var bx=(Math.random()-.5)*80;var by=-(Math.random()*100+30);el.style.cssText="left:"+x+"px;top:"+y+"px;--bx:"+bx+"px;--by:"+by+"px;--bx2:"+(bx*1.4)+"px;--by2:"+(by*1.4)+"px;font-size:"+(Math.random()*.8+.8)+"rem;";smokeC.appendChild(el);(function(e){setTimeout(function(){e.remove();},1500);})(el);}}
-    function bigSmoke(){var cx=window.innerWidth/2,cy=window.innerHeight/2;for(var i=0;i<12;i++){(function(j){setTimeout(function(){smoke(cx+(Math.random()-.5)*300,cy+(Math.random()-.5)*200,"rgba(139,92,246,.25)");},j*80);})(i);}}
-
-    // Hero click smoke
-    document.getElementById("heroEmoji").addEventListener("click",function(){var r=this.getBoundingClientRect();smoke(r.left+r.width/2,r.top+r.height/2,"rgba(139,92,246,.4)");burst(r.left+r.width/2,r.top+r.height/2,"💨");});
-
-    // Hero CTA
-    document.getElementById("heroCta").addEventListener("click",function(){document.getElementById("typeSection").scrollIntoView({behavior:"smooth",block:"center"});});
-
-    // TYPE
-    document.querySelectorAll(".type-card").forEach(function(c){c.addEventListener("click",function(){document.querySelectorAll(".type-card").forEach(function(x){x.classList.remove("selected");});this.classList.add("selected");selType=this.getAttribute("data-type");var r=this.getBoundingClientRect();smoke(r.left+r.width/2,r.top+r.height/2,selType==="kohle"?"rgba(255,107,107,.35)":"rgba(69,123,157,.35)");document.getElementById("pathSection").classList.add("show");setTimeout(function(){document.getElementById("pathSection").scrollIntoView({behavior:"smooth",block:"center"});},300);});});
-
-    // PATH
-    document.querySelectorAll(".path-card").forEach(function(c){c.addEventListener("click",function(){document.querySelectorAll(".path-card").forEach(function(x){x.classList.remove("selected");});this.classList.add("selected");selPath=this.getAttribute("data-path");selFlavors=[];selSig=null;if(selPath==="signature"){document.getElementById("sigsSection").classList.add("show");document.getElementById("customSection").classList.remove("show");setTimeout(function(){document.getElementById("sigsSection").scrollIntoView({behavior:"smooth",block:"center"});},300);}else{document.getElementById("customSection").classList.add("show");document.getElementById("sigsSection").classList.remove("show");setTimeout(function(){document.getElementById("customSection").scrollIntoView({behavior:"smooth",block:"center"});},300);}updateFloat();});});
-
-    // SIGNATURES
-    function renderSigs(){var h="";for(var i=0;i<SIGS.length;i++){var s=SIGS[i];var flN=[];for(var j=0;j<s.flavors.length;j++){var f=findFL(s.flavors[j]);if(f)flN.push(f.e+" "+f.n);}h+='<div class="sig-card" data-sig="'+i+'"><div class="sig-person"><div class="sig-avatar"><img src="'+s.img+'" alt="'+s.person+'"></div><span class="sig-person-name">'+esc(s.person.charAt(0).toUpperCase()+s.person.slice(1))+"'s Mix</span></div><div class=\"sig-emojis\">"+s.emoji+'</div><div class="sig-name">'+esc(s.name)+'</div><div class="sig-flavors">'+flN.join(" + ")+'</div><div class="sig-desc">'+esc(s.desc)+'</div></div>';}
-    document.getElementById("sigsGrid").innerHTML=h;
-    document.querySelectorAll(".sig-card").forEach(function(c){c.addEventListener("click",function(){document.querySelectorAll(".sig-card").forEach(function(x){x.classList.remove("selected");});this.classList.add("selected");var idx=parseInt(this.getAttribute("data-sig"));selSig=SIGS[idx];selFlavors=selSig.flavors.slice();var r=this.getBoundingClientRect();smoke(r.left+r.width/2,r.top+r.height/2,"rgba(139,92,246,.35)");for(var i=0;i<selSig.flavors.length;i++){var f=findFL(selSig.flavors[i]);if(f)(function(fl,delay){setTimeout(function(){burst(r.left+r.width/2+(Math.random()-.5)*60,r.top+r.height/2,fl.e);},delay);})(f,i*150);}updateFloat();showOrder();});});}
-
-    // CUSTOM FLAVORS
-    function renderCatTabs(){var h="";for(var i=0;i<CATS.length;i++)h+='<button class="cat-tab'+(CATS[i].id===activeCat?' active':'')+'" data-cat="'+CATS[i].id+'">'+CATS[i].n+'</button>';document.getElementById("catTabs").innerHTML=h;document.querySelectorAll(".cat-tab").forEach(function(t){t.addEventListener("click",function(){activeCat=this.getAttribute("data-cat");document.querySelectorAll(".cat-tab").forEach(function(x){x.classList.remove("active");});this.classList.add("active");renderFlavors();});});}
-
-    function renderFlavors(){var filtered=activeCat==="all"?FL:FL.filter(function(f){return f.c===activeCat;});var h="";for(var i=0;i<filtered.length;i++){var f=filtered[i];var isSel=selFlavors.indexOf(f.id)!==-1;h+='<div class="flv'+(isSel?' sel':'')+'" data-id="'+f.id+'" style="--glow:'+f.g+'"><div class="flv-emoji">'+f.e+'</div><div class="flv-name">'+f.n+'</div><div class="flv-brand">'+f.b+'</div><span class="flv-tag '+f.t+'">'+f.t+'</span></div>';}
-    document.getElementById("flavorGrid").innerHTML=h;
-    document.querySelectorAll(".flv").forEach(function(c){c.addEventListener("click",function(){var id=this.getAttribute("data-id");var idx=selFlavors.indexOf(id);var f=findFL(id);var r=this.getBoundingClientRect();var cx=r.left+r.width/2,cy=r.top+r.height/2;if(idx!==-1){selFlavors.splice(idx,1);this.classList.remove("sel");}else{if(selFlavors.length>=4){showToast("Max 4 Geschmaecker!");return;}selFlavors.push(id);this.classList.add("sel");if(f){smoke(cx,cy,f.g||"rgba(139,92,246,.3)");burst(cx,cy,f.e);}}selSig=null;updateFloat();});});}
-
-    // FLOAT BAR
-    function updateFloat(){var el=document.getElementById("floatBar");if(selFlavors.length>0){el.classList.add("show");document.getElementById("floatText").textContent=selFlavors.length+" ausgewaehlt";}else{el.classList.remove("show");}}
-    document.getElementById("floatBar").addEventListener("click",function(){showOrder();document.getElementById("orderSection").scrollIntoView({behavior:"smooth",block:"start"});});
-
-    // ORDER
-    function showOrder(){document.getElementById("orderSection").classList.add("show");updateOrder();}
-    function updateOrder(){
-        document.getElementById("orderType").innerHTML='<span class="order-type-badge '+(selType||"")+'">'+(selType==="kohle"?"🔥 Kohle":selType==="eshisha"?"⚡ E-Shisha":"–")+'</span>';
-        var ch="";if(selFlavors.length===0)ch='<span class="order-empty">Keine Geschmaecker...</span>';else{for(var i=0;i<selFlavors.length;i++){var f=findFL(selFlavors[i]);if(f)ch+='<span class="order-chip">'+f.e+' '+f.n+'<button data-rm="'+f.id+'">✕</button></span>';}}
-        document.getElementById("orderChips").innerHTML=ch;
-        document.querySelectorAll(".order-chip button").forEach(function(b){b.addEventListener("click",function(){var id=this.getAttribute("data-rm");var idx=selFlavors.indexOf(id);if(idx!==-1)selFlavors.splice(idx,1);renderFlavors();updateFloat();updateOrder();});});
-        var flNames=[];for(var i=0;i<selFlavors.length;i++){var f=findFL(selFlavors[i]);if(f)flNames.push(f.e+" "+f.n);}
-        var mixN={normal:"Normal",stark:"💪 Stark",leicht:"🌿 Leicht"};
-        var sh='<div class="sum-row"><span class="sum-label">Typ</span><span class="sum-value">'+(selType==="kohle"?"🔥 Kohle":"⚡ E-Shisha")+'</span></div>';
-        sh+='<div class="sum-row"><span class="sum-label">Geschmaecker</span><span class="sum-value">'+(flNames.length?flNames.join(", "):"–")+'</span></div>';
-        sh+='<div class="sum-row"><span class="sum-label">Mix</span><span class="sum-value">'+(mixN[selMix]||"Normal")+'</span></div>';
-        if(selSig)sh+='<div class="sum-row"><span class="sum-label">Signature</span><span class="sum-value">'+esc(selSig.name)+'</span></div>';
-        document.getElementById("orderSummary").innerHTML=sh;
-        document.getElementById("orderSubmit").disabled=selFlavors.length===0;
+    var dd = document.getElementById("eventsDropdown");
+    var ddT = null;
+    if (dd) {
+        dd.addEventListener("mouseenter", function() {
+            ddT = setTimeout(function() { dd.classList.add("dropdown-visible"); }, 200);
+        });
+        dd.addEventListener("mouseleave", function() {
+            clearTimeout(ddT);
+            setTimeout(function() { dd.classList.remove("dropdown-visible"); }, 300);
+        });
     }
 
-    // MIX
-    document.addEventListener("click",function(e){if(e.target.classList.contains("mix-opt")){document.querySelectorAll(".mix-opt").forEach(function(b){b.classList.remove("active");});e.target.classList.add("active");selMix=e.target.getAttribute("data-mix");updateOrder();}});
+    // ===== ADMIN MODAL =====
+    (function() {
+        var PW = "pocci4admin";
+        var t = document.getElementById("adminTrigger");
+        var o = document.getElementById("adminOverlay");
+        var i = document.getElementById("adminPwInput");
+        var c = document.getElementById("adminCancel");
+        var s = document.getElementById("adminSubmit");
+        var e = document.getElementById("adminError");
 
-// ===== TELEGRAM NOTIFICATION =====
-function sendTelegramNotification(message) {
-    fetch("/api/telegram", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: message })
-    }).then(function(r) {
-        return r.json();
-    }).then(function(d) {
-        console.log("TG sent:", d.ok);
-    }).catch(function(e) {
-        console.warn("TG fail:", e);
-    });
-}
-// ===== ORDER SUBMIT (mit Telegram) =====
-document.getElementById("orderSubmit").addEventListener("click",function(){
-    var name=document.getElementById("orderName").value.trim();
-    var err=document.getElementById("orderError");
-    err.classList.remove("show");
-    
-    if(!selType){err.textContent="Bitte Typ waehlen!";err.classList.add("show");return;}
-    if(selFlavors.length===0){err.textContent="Bitte Geschmaecker waehlen!";err.classList.add("show");return;}
-    if(!name){err.textContent="Bitte Namen eingeben!";err.classList.add("show");document.getElementById("orderName").focus();return;}
-    
-    var flNames=[];
-    for(var i=0;i<selFlavors.length;i++){
-        var f=findFL(selFlavors[i]);
-        if(f)flNames.push(f.n);
+        t.addEventListener("click", function() {
+            if (sessionStorage.getItem("pocci4admin") === "true") {
+                window.location.href = "admin.html";
+                return;
+            }
+            o.classList.add("active");
+            setTimeout(function() { i.focus(); }, 100);
+        });
+        c.addEventListener("click", function() {
+            o.classList.remove("active"); i.value = ""; e.style.display = "none";
+        });
+        o.addEventListener("click", function(ev) {
+            if (ev.target === o) { o.classList.remove("active"); i.value = ""; e.style.display = "none"; }
+        });
+        function tryLogin() {
+            if (i.value === PW) {
+                sessionStorage.setItem("pocci4admin", "true");
+                window.location.href = "admin.html";
+            } else {
+                e.style.display = "block"; i.value = ""; i.focus();
+            }
+        }
+        s.addEventListener("click", tryLogin);
+        i.addEventListener("keydown", function(ev) { if (ev.key === "Enter") tryLogin(); });
+    })();
+
+    // ===== SMOKE FX =====
+    function smoke(x, y, col) {
+        for (var i = 0; i < 5; i++) {
+            var p = document.createElement("div");
+            p.className = "smoke-puff";
+            var sz = Math.random() * 25 + 12;
+            var dx = (Math.random() - .5) * 100;
+            var dy = -(Math.random() * 180 + 60);
+            var dur = Math.random() * 1.5 + 2;
+            p.style.cssText = "left:" + (x - sz / 2) + "px;top:" + (y - sz / 2) + "px;width:" + sz + "px;height:" + sz + "px;background:" + (col || "rgba(139,92,246,.35)") + ";--dx:" + dx + "px;--dy:" + dy + "px;--dur:" + dur + "s;";
+            smokeC.appendChild(p);
+            (function(el, d) { setTimeout(function() { el.remove(); }, d * 1000 + 200); })(p, dur);
+        }
+        var r = document.createElement("div");
+        r.className = "smoke-ring";
+        r.style.cssText = "left:" + (x - 18) + "px;top:" + (y - 18) + "px;width:36px;height:36px;";
+        smokeC.appendChild(r);
+        setTimeout(function() { r.remove(); }, 2500);
     }
-    
-    var orderData = {
-        name: name,
-        type: selType,
-        flavors: flNames,
-        flavorIds: selFlavors.slice(),
-        mix: selMix,
-        signature: selSig ? selSig.name : "",
-        note: document.getElementById("orderNote").value.trim(),
-        status: "neu",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
-    
-    db.collection("shisha_orders").add(orderData).then(function(){
-        // ✅ TELEGRAM BENACHRICHTIGUNG SOFORT SENDEN
-        sendTelegramNotification(orderData);
-        
-        document.getElementById("orderFormWrap").style.display="none";
-        var s=document.getElementById("orderSuccess");
-        s.classList.add("show");
-        s.style.display="";
-        document.getElementById("orderSuccessText").innerHTML=
-            "<strong>"+esc(name)+"</strong>, deine "+(selType==="kohle"?"🔥 Kohle":"⚡ E")+"-Shisha wird gebaut!<br>"+
-            flNames.join(" + ")+"<br>Andrei kuemmert sich drum. 🫅💨";
-        bigSmoke();
-        confetti();
-    }).catch(function(e){
-        console.error(e);
-        err.textContent="Fehler!";
-        err.classList.add("show");
-    });
-});
 
-    document.getElementById("orderNewBtn").addEventListener("click",function(){
-        selFlavors=[];selType=null;selPath=null;selMix="normal";selSig=null;activeCat="all";
-        document.getElementById("orderFormWrap").style.display="block";
+    function burst(x, y, emoji) {
+        for (var i = 0; i < 3; i++) {
+            var el = document.createElement("div");
+            el.className = "flavor-burst";
+            el.textContent = emoji;
+            var bx = (Math.random() - .5) * 80;
+            var by = -(Math.random() * 100 + 30);
+            el.style.cssText = "left:" + x + "px;top:" + y + "px;--bx:" + bx + "px;--by:" + by + "px;--bx2:" + (bx * 1.4) + "px;--by2:" + (by * 1.4) + "px;font-size:" + (Math.random() * .8 + .8) + "rem;";
+            smokeC.appendChild(el);
+            (function(e) { setTimeout(function() { e.remove(); }, 1500); })(el);
+        }
+    }
+
+    function bigSmoke() {
+        var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+        for (var i = 0; i < 12; i++) {
+            (function(j) {
+                setTimeout(function() {
+                    smoke(cx + (Math.random() - .5) * 300, cy + (Math.random() - .5) * 200, "rgba(139,92,246,.25)");
+                }, j * 80);
+            })(i);
+        }
+    }
+
+    // ===== HERO =====
+    document.getElementById("heroEmoji").addEventListener("click", function() {
+        var r = this.getBoundingClientRect();
+        smoke(r.left + r.width / 2, r.top + r.height / 2, "rgba(139,92,246,.4)");
+        burst(r.left + r.width / 2, r.top + r.height / 2, "💨");
+    });
+
+    document.getElementById("heroCta").addEventListener("click", function() {
+        document.getElementById("typeSection").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    // ===== TYPE SELECTION =====
+    document.querySelectorAll(".type-card").forEach(function(c) {
+        c.addEventListener("click", function() {
+            document.querySelectorAll(".type-card").forEach(function(x) { x.classList.remove("selected"); });
+            this.classList.add("selected");
+            selType = this.getAttribute("data-type");
+            var r = this.getBoundingClientRect();
+            smoke(r.left + r.width / 2, r.top + r.height / 2, selType === "kohle" ? "rgba(255,107,107,.35)" : "rgba(69,123,157,.35)");
+            document.getElementById("pathSection").classList.add("show");
+            setTimeout(function() {
+                document.getElementById("pathSection").scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 300);
+        });
+    });
+
+    // ===== PATH SELECTION =====
+    document.querySelectorAll(".path-card").forEach(function(c) {
+        c.addEventListener("click", function() {
+            document.querySelectorAll(".path-card").forEach(function(x) { x.classList.remove("selected"); });
+            this.classList.add("selected");
+            selPath = this.getAttribute("data-path");
+            selFlavors = [];
+            selSig = null;
+
+            if (selPath === "signature") {
+                document.getElementById("sigsSection").classList.add("show");
+                document.getElementById("customSection").classList.remove("show");
+                setTimeout(function() {
+                    document.getElementById("sigsSection").scrollIntoView({ behavior: "smooth", block: "center" });
+                }, 300);
+            } else {
+                document.getElementById("customSection").classList.add("show");
+                document.getElementById("sigsSection").classList.remove("show");
+                setTimeout(function() {
+                    document.getElementById("customSection").scrollIntoView({ behavior: "smooth", block: "center" });
+                }, 300);
+            }
+            updateFloat();
+        });
+    });
+
+    // ===== RENDER SIGNATURES =====
+    function renderSigs() {
+        var h = "";
+        for (var i = 0; i < SIGS.length; i++) {
+            var s = SIGS[i];
+            var flN = [];
+            for (var j = 0; j < s.flavors.length; j++) {
+                var f = findFL(s.flavors[j]);
+                if (f) flN.push(f.e + " " + f.n);
+            }
+            h += '<div class="sig-card" data-sig="' + i + '">';
+            h += '<div class="sig-person"><div class="sig-avatar"><img src="' + s.img + '" alt="' + s.person + '"></div>';
+            h += '<span class="sig-person-name">' + esc(s.person.charAt(0).toUpperCase() + s.person.slice(1)) + "'s Mix</span></div>";
+            h += '<div class="sig-emojis">' + s.emoji + '</div>';
+            h += '<div class="sig-name">' + esc(s.name) + '</div>';
+            h += '<div class="sig-flavors">' + flN.join(" + ") + '</div>';
+            h += '<div class="sig-desc">' + esc(s.desc) + '</div></div>';
+        }
+        document.getElementById("sigsGrid").innerHTML = h;
+
+        document.querySelectorAll(".sig-card").forEach(function(c) {
+            c.addEventListener("click", function() {
+                document.querySelectorAll(".sig-card").forEach(function(x) { x.classList.remove("selected"); });
+                this.classList.add("selected");
+                var idx = parseInt(this.getAttribute("data-sig"));
+                selSig = SIGS[idx];
+                selFlavors = selSig.flavors.slice();
+                var r = this.getBoundingClientRect();
+                smoke(r.left + r.width / 2, r.top + r.height / 2, "rgba(139,92,246,.35)");
+                for (var i = 0; i < selSig.flavors.length; i++) {
+                    var f = findFL(selSig.flavors[i]);
+                    if (f)(function(fl, delay) {
+                        setTimeout(function() {
+                            burst(r.left + r.width / 2 + (Math.random() - .5) * 60, r.top + r.height / 2, fl.e);
+                        }, delay);
+                    })(f, i * 150);
+                }
+                updateFloat();
+                showOrder();
+            });
+        });
+    }
+
+    // ===== RENDER CATEGORY TABS =====
+    function renderCatTabs() {
+        var h = "";
+        for (var i = 0; i < CATS.length; i++) {
+            h += '<button class="cat-tab' + (CATS[i].id === activeCat ? ' active' : '') + '" data-cat="' + CATS[i].id + '">' + CATS[i].n + '</button>';
+        }
+        document.getElementById("catTabs").innerHTML = h;
+
+        document.querySelectorAll(".cat-tab").forEach(function(t) {
+            t.addEventListener("click", function() {
+                activeCat = this.getAttribute("data-cat");
+                document.querySelectorAll(".cat-tab").forEach(function(x) { x.classList.remove("active"); });
+                this.classList.add("active");
+                renderFlavors();
+            });
+        });
+    }
+
+    // ===== RENDER FLAVORS =====
+    function renderFlavors() {
+        var filtered = activeCat === "all" ? FL : FL.filter(function(f) { return f.c === activeCat; });
+        var h = "";
+        for (var i = 0; i < filtered.length; i++) {
+            var f = filtered[i];
+            var isSel = selFlavors.indexOf(f.id) !== -1;
+            h += '<div class="flv' + (isSel ? ' sel' : '') + '" data-id="' + f.id + '" style="--glow:' + f.g + '">';
+            h += '<div class="flv-emoji">' + f.e + '</div>';
+            h += '<div class="flv-name">' + f.n + '</div>';
+            h += '<div class="flv-brand">' + f.b + '</div>';
+            h += '<span class="flv-tag ' + f.t + '">' + f.t + '</span></div>';
+        }
+        document.getElementById("flavorGrid").innerHTML = h;
+
+        document.querySelectorAll(".flv").forEach(function(c) {
+            c.addEventListener("click", function() {
+                var id = this.getAttribute("data-id");
+                var idx = selFlavors.indexOf(id);
+                var f = findFL(id);
+                var r = this.getBoundingClientRect();
+                var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+
+                if (idx !== -1) {
+                    selFlavors.splice(idx, 1);
+                    this.classList.remove("sel");
+                } else {
+                    if (selFlavors.length >= 4) {
+                        showToast("Max 4 Geschmaecker!");
+                        return;
+                    }
+                    selFlavors.push(id);
+                    this.classList.add("sel");
+                    if (f) {
+                        smoke(cx, cy, f.g || "rgba(139,92,246,.3)");
+                        burst(cx, cy, f.e);
+                    }
+                }
+                selSig = null;
+                updateFloat();
+            });
+        });
+    }
+
+    // ===== FLOATING BAR =====
+    function updateFloat() {
+        var el = document.getElementById("floatBar");
+        if (selFlavors.length > 0) {
+            el.classList.add("show");
+            document.getElementById("floatText").textContent = selFlavors.length + " ausgewaehlt";
+        } else {
+            el.classList.remove("show");
+        }
+    }
+
+    document.getElementById("floatBar").addEventListener("click", function() {
+        showOrder();
+        document.getElementById("orderSection").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    // ===== ORDER =====
+    function showOrder() {
+        document.getElementById("orderSection").classList.add("show");
+        updateOrder();
+    }
+
+    function updateOrder() {
+        // Type badge
+        document.getElementById("orderType").innerHTML = '<span class="order-type-badge ' + (selType || "") + '">' + (selType === "kohle" ? "🔥 Kohle" : selType === "eshisha" ? "⚡ E-Shisha" : "–") + '</span>';
+
+        // Chips
+        var ch = "";
+        if (selFlavors.length === 0) {
+            ch = '<span class="order-empty">Keine Geschmaecker...</span>';
+        } else {
+            for (var i = 0; i < selFlavors.length; i++) {
+                var f = findFL(selFlavors[i]);
+                if (f) ch += '<span class="order-chip">' + f.e + ' ' + f.n + '<button data-rm="' + f.id + '">✕</button></span>';
+            }
+        }
+        document.getElementById("orderChips").innerHTML = ch;
+
+        // Remove chips
+        document.querySelectorAll(".order-chip button").forEach(function(b) {
+            b.addEventListener("click", function() {
+                var id = this.getAttribute("data-rm");
+                var idx = selFlavors.indexOf(id);
+                if (idx !== -1) selFlavors.splice(idx, 1);
+                renderFlavors();
+                updateFloat();
+                updateOrder();
+            });
+        });
+
+        // Summary
+        var flNames = [];
+        for (var i = 0; i < selFlavors.length; i++) {
+            var f = findFL(selFlavors[i]);
+            if (f) flNames.push(f.e + " " + f.n);
+        }
+        var mixN = { normal: "Normal", stark: "💪 Stark", leicht: "🌿 Leicht" };
+        var sh = '<div class="sum-row"><span class="sum-label">Typ</span><span class="sum-value">' + (selType === "kohle" ? "🔥 Kohle" : "⚡ E-Shisha") + '</span></div>';
+        sh += '<div class="sum-row"><span class="sum-label">Geschmaecker</span><span class="sum-value">' + (flNames.length ? flNames.join(", ") : "–") + '</span></div>';
+        sh += '<div class="sum-row"><span class="sum-label">Mix</span><span class="sum-value">' + (mixN[selMix] || "Normal") + '</span></div>';
+        if (selSig) sh += '<div class="sum-row"><span class="sum-label">Signature</span><span class="sum-value">' + esc(selSig.name) + '</span></div>';
+        document.getElementById("orderSummary").innerHTML = sh;
+
+        document.getElementById("orderSubmit").disabled = selFlavors.length === 0;
+    }
+
+    // ===== MIX OPTION =====
+    document.addEventListener("click", function(e) {
+        if (e.target.classList.contains("mix-opt")) {
+            document.querySelectorAll(".mix-opt").forEach(function(b) { b.classList.remove("active"); });
+            e.target.classList.add("active");
+            selMix = e.target.getAttribute("data-mix");
+            updateOrder();
+        }
+    });
+
+    // ===== ORDER SUBMIT =====
+    document.getElementById("orderSubmit").addEventListener("click", function() {
+        var name = document.getElementById("orderName").value.trim();
+        var err = document.getElementById("orderError");
+        err.classList.remove("show");
+
+        if (!selType) { err.textContent = "Bitte Typ waehlen!"; err.classList.add("show"); return; }
+        if (selFlavors.length === 0) { err.textContent = "Bitte Geschmaecker waehlen!"; err.classList.add("show"); return; }
+        if (!name) { err.textContent = "Bitte Namen eingeben!"; err.classList.add("show"); document.getElementById("orderName").focus(); return; }
+
+        var flNames = [];
+        for (var i = 0; i < selFlavors.length; i++) {
+            var f = findFL(selFlavors[i]);
+            if (f) flNames.push(f.n);
+        }
+
+        var orderData = {
+            name: name,
+            type: selType,
+            flavors: flNames,
+            flavorIds: selFlavors.slice(),
+            mix: selMix,
+            signature: selSig ? selSig.name : "",
+            note: document.getElementById("orderNote").value.trim(),
+            status: "neu",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        db.collection("shisha_orders").add(orderData).then(function() {
+            // Telegram Benachrichtigung senden
+            sendTelegramNotification(orderData);
+
+            // Success anzeigen
+            document.getElementById("orderFormWrap").style.display = "none";
+            var s = document.getElementById("orderSuccess");
+            s.classList.add("show");
+            document.getElementById("orderSuccessText").innerHTML =
+                "<strong>" + esc(name) + "</strong>, deine " + (selType === "kohle" ? "🔥 Kohle" : "⚡ E") + "-Shisha wird gebaut!<br>" +
+                flNames.join(" + ") + "<br>Andrei kuemmert sich drum. 🫅💨";
+            bigSmoke();
+            confetti();
+        }).catch(function(e) {
+            console.error(e);
+            err.textContent = "Fehler beim Bestellen!";
+            err.classList.add("show");
+        });
+    });
+
+    // ===== NEW ORDER =====
+    document.getElementById("orderNewBtn").addEventListener("click", function() {
+        selFlavors = []; selType = null; selPath = null; selMix = "normal"; selSig = null; activeCat = "all";
+        document.getElementById("orderFormWrap").style.display = "block";
         document.getElementById("orderSuccess").classList.remove("show");
         document.getElementById("orderSection").classList.remove("show");
         document.getElementById("pathSection").classList.remove("show");
         document.getElementById("sigsSection").classList.remove("show");
         document.getElementById("customSection").classList.remove("show");
-        document.querySelectorAll(".type-card,.path-card,.sig-card").forEach(function(c){c.classList.remove("selected");});
-        document.querySelectorAll(".mix-opt").forEach(function(b){b.classList.remove("active");});
+        document.querySelectorAll(".type-card,.path-card,.sig-card").forEach(function(c) { c.classList.remove("selected"); });
+        document.querySelectorAll(".mix-opt").forEach(function(b) { b.classList.remove("active"); });
         document.querySelector('.mix-opt[data-mix="normal"]').classList.add("active");
-        document.getElementById("orderName").value="";document.getElementById("orderNote").value="";
+        document.getElementById("orderName").value = "";
+        document.getElementById("orderNote").value = "";
         document.getElementById("floatBar").classList.remove("show");
-        renderFlavors();window.scrollTo({top:0,behavior:"smooth"});
+        renderCatTabs();
+        renderFlavors();
+        window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-    // DONATE
-    var donateAmt=10;
-    document.querySelectorAll(".donate-amt").forEach(function(b){b.addEventListener("click",function(){document.querySelectorAll(".donate-amt").forEach(function(x){x.classList.remove("active");});this.classList.add("active");donateAmt=parseInt(this.getAttribute("data-amt"));document.getElementById("donateInput").value=donateAmt;});});
-    document.getElementById("donateInput").addEventListener("input",function(){donateAmt=parseFloat(this.value)||0;document.querySelectorAll(".donate-amt").forEach(function(b){b.classList.toggle("active",parseInt(b.getAttribute("data-amt"))===donateAmt);});});
-    document.getElementById("donateBtn").addEventListener("click",function(){if(donateAmt<1){alert("Mindestens 1 EUR!");return;}window.open("https://www.paypal.me/andrei2610/"+donateAmt,"_blank");confetti();});
+    // ===== DONATE =====
+    var donateAmt = 10;
+    document.querySelectorAll(".donate-amt").forEach(function(b) {
+        b.addEventListener("click", function() {
+            document.querySelectorAll(".donate-amt").forEach(function(x) { x.classList.remove("active"); });
+            this.classList.add("active");
+            donateAmt = parseInt(this.getAttribute("data-amt"));
+            document.getElementById("donateInput").value = donateAmt;
+        });
+    });
+    document.getElementById("donateInput").addEventListener("input", function() {
+        donateAmt = parseFloat(this.value) || 0;
+        document.querySelectorAll(".donate-amt").forEach(function(b) {
+            b.classList.toggle("active", parseInt(b.getAttribute("data-amt")) === donateAmt);
+        });
+    });
+    document.getElementById("donateBtn").addEventListener("click", function() {
+        if (donateAmt < 1) { alert("Mindestens 1 EUR!"); return; }
+        window.open("https://www.paypal.me/andrei2610/" + donateAmt, "_blank");
+        confetti();
+    });
 
-    // HELPERS
-    function findFL(id){for(var i=0;i<FL.length;i++)if(FL[i].id===id)return FL[i];return null;}
-    function esc(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-    function showToast(msg){var t=document.createElement("div");t.style.cssText="position:fixed;top:"+((parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'))||80)+10)+"px;left:50%;transform:translateX(-50%);background:var(--color-text);color:#fff;padding:10px 24px;border-radius:50px;font-size:.82rem;font-weight:700;z-index:2000;animation:fadeUp .3s ease;";t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.remove();},2000);}
-    function confetti(){var c=document.getElementById("confettiC");var colors=["#8B5CF6","#A78BFA","#C03A2B","#E8501E","#C4A882","#FF6B6B","#FFD93D"];for(var i=0;i<50;i++){var p=document.createElement("div");var sz=Math.random()*8+4;var isCir=Math.random()>.5;p.style.cssText="position:absolute;left:"+(Math.random()*100)+"%;top:-20px;width:"+sz+"px;height:"+(isCir?sz:sz*2.5)+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(isCir?"50%":"2px")+";opacity:1;animation:cFall "+(Math.random()*2+2)+"s ease-out forwards;animation-delay:"+(Math.random()*.3)+"s;pointer-events:none;";c.appendChild(p);(function(el){setTimeout(function(){el.remove();},4000);})(p);}}
-    var cs=document.createElement("style");cs.textContent="@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}@keyframes fadeUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}";document.head.appendChild(cs);
+    // ===== HELPER FUNCTIONS =====
+    function findFL(id) {
+        for (var i = 0; i < FL.length; i++) {
+            if (FL[i].id === id) return FL[i];
+        }
+        return null;
+    }
 
-    // REVEAL
-    var ro=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add("visible");ro.unobserve(en.target);}});},{threshold:.1});
-    document.querySelectorAll(".reveal").forEach(function(el){ro.observe(el);});
+    function esc(s) {
+        return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
 
-    window.addEventListener("scroll",function(){var shapes=document.querySelectorAll(".bg-shape");for(var i=0;i<shapes.length;i++)shapes[i].style.transform="translateY("+(window.scrollY*(i+1)*.015)+"px)";});
+    function showToast(msg) {
+        var t = document.createElement("div");
+        t.className = "toast";
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(function() { t.remove(); }, 2000);
+    }
 
-    renderSigs();renderCatTabs();renderFlavors();
+    function confetti() {
+        var c = document.getElementById("confettiC");
+        var colors = ["#8B5CF6", "#A78BFA", "#C03A2B", "#E8501E", "#C4A882", "#FF6B6B", "#FFD93D"];
+        for (var i = 0; i < 50; i++) {
+            var p = document.createElement("div");
+            var sz = Math.random() * 8 + 4;
+            var isCir = Math.random() > .5;
+            p.style.cssText = "position:absolute;left:" + (Math.random() * 100) + "%;top:-20px;width:" + sz + "px;height:" + (isCir ? sz : sz * 2.5) + "px;background:" + colors[Math.floor(Math.random() * colors.length)] + ";border-radius:" + (isCir ? "50%" : "2px") + ";opacity:1;animation:cFall " + (Math.random() * 2 + 2) + "s ease-out forwards;animation-delay:" + (Math.random() * .3) + "s;pointer-events:none;";
+            c.appendChild(p);
+            (function(el) { setTimeout(function() { el.remove(); }, 4000); })(p);
+        }
+    }
+
+    // ===== REVEAL ANIMATIONS =====
+    var ro = new IntersectionObserver(function(entries) {
+        entries.forEach(function(en) {
+            if (en.isIntersecting) {
+                en.target.classList.add("visible");
+                ro.unobserve(en.target);
+            }
+        });
+    }, { threshold: .1 });
+    document.querySelectorAll(".reveal").forEach(function(el) { ro.observe(el); });
+
+    // ===== PARALLAX =====
+    window.addEventListener("scroll", function() {
+        var shapes = document.querySelectorAll(".bg-shape");
+        for (var i = 0; i < shapes.length; i++) {
+            shapes[i].style.transform = "translateY(" + (window.scrollY * (i + 1) * .015) + "px)";
+        }
+    });
+
+    // ===== INIT =====
+    renderSigs();
+    renderCatTabs();
+    renderFlavors();
+
 })();
     </script>
 </body>
