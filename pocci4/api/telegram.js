@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     }
 
     var BOT_TOKEN = "7866727707:AAEkLGOuSUGIGNjSmJmGLSCG7VU0mSi04IU";
-    var CHAT_ID = "DEINE_CHAT_ID_HIER";
+    var CHAT_ID = "-5286954734";
 
     try {
         // Akzeptiert sowohl "message" als auch "text"
