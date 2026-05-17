@@ -2,49 +2,127 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Gallery - pocci4</title>
     <link rel="icon" type="image/svg+xml" href="assets/p.svg">
+    <link rel="apple-touch-icon" href="assets/p-180.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#F5F0EB">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
         :root{
-            --color-primary:#C03A2B;--color-primary-hover:#A83225;
-            --color-bg:#F5F0EB;--color-white:#FFFFFF;
+            --color-primary:#C03A2B;--color-primary-light:#E8501E;--color-primary-hover:#A83225;
+            --color-bg:#F5F0EB;--color-bg-warm:#EDE5DB;--color-white:#FFFFFF;
             --color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;
-            --color-border:#E0D6CC;
-            --font-main:'Inter',sans-serif;
+            --color-sand:#C4A882;--color-border:#E0D6CC;
+            --font-main:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            --nav-height:80px;--section-padding:100px;--container-width:1240px;
+            --transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);
+            --transition-smooth:0.4s cubic-bezier(0.4,0,0.2,1);
         }
-        body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);min-height:100vh;padding:2rem;line-height:1.6}
-        .container{max-width:1240px;margin:0 auto}
-        .back-link{display:inline-flex;align-items:center;gap:.5rem;color:var(--color-text-light);font-size:.9rem;font-weight:600;margin-bottom:2rem}
-        .back-link:hover{color:var(--color-primary)}
-        .header{text-align:center;margin-bottom:3rem}
-        .overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
-        .title{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.03em;margin-bottom:.5rem}
-        .subtitle{color:var(--color-text-light)}
+        html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+        body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);line-height:1.6;overflow-x:hidden}
+        a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
+        img{max-width:100%;height:auto;display:block}
+
+        /* ANIMATED BG */
+        .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
+        .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
+        .bg-shape-1{width:700px;height:500px;background:#E0CEBB;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
+        .bg-shape-2{width:550px;height:650px;background:#D4C0AD;bottom:-20%;right:-10%;animation:m2 25s ease-in-out infinite}
+        .bg-shape-3{width:450px;height:400px;background:#C9B8A5;top:35%;left:45%;animation:m3 22s ease-in-out infinite}
+        @keyframes m1{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-30px,30px) rotate(-3deg) scale(.95)}}
+        @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
+        @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
+
+        /* NAVBAR */
+        .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
+        .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
+        .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
+        .nav-logo{display:flex;align-items:center;z-index:1001}
+        .nav-logo img{height:56px}
+        .nav-right{display:flex;align-items:center;gap:1rem}
+        .nav-links{display:flex;align-items:center;gap:.5rem;background:var(--color-white);padding:6px;border-radius:50px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+        .nav-link{padding:8px 20px;border-radius:50px;font-size:.875rem;font-weight:500;color:var(--color-text-light);transition:var(--transition-fast)}
+        .nav-link:hover{color:var(--color-text);background:var(--color-bg)}
+        .nav-link.active{background:var(--color-text);color:var(--color-white)}
+        .nav-link-dropdown{position:relative}
+        .nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-5px);background:var(--color-white);border-radius:16px;padding:8px;box-shadow:0 10px 40px rgba(0,0,0,.1);border:1px solid var(--color-border);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;min-width:180px;z-index:100}
+        .nav-link-dropdown.dropdown-visible .nav-dropdown{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+        .nav-dropdown-item{display:flex;align-items:center;gap:.6rem;padding:10px 14px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);white-space:nowrap}
+        .nav-dropdown-item:hover{background:var(--color-bg);color:var(--color-primary)}
+        .nav-dropdown-item span{font-size:1rem}
+        .admin-trigger{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:6px 10px;border-radius:50%;transition:var(--transition-fast);opacity:.4;margin-right:.5rem}
+        .admin-trigger:hover{opacity:1;background:var(--color-bg-warm);transform:scale(1.1)}
+        .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
+        .hamburger-line{width:24px;height:2px;background:var(--color-text);border-radius:2px;transition:var(--transition-smooth);transform-origin:center}
+        .hamburger.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+        .hamburger.active .hamburger-line:nth-child(2){opacity:0}
+        .hamburger.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+        .mobile-menu{position:fixed;inset:0;background:rgba(245,240,235,.98);z-index:999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--transition-smooth)}
+        .mobile-menu.active{opacity:1;pointer-events:all}
+        .mobile-menu-content{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+        .mobile-link{font-size:2rem;font-weight:600;color:var(--color-text);transition:var(--transition-fast);transform:translateY(20px);opacity:0}
+        .mobile-menu.active .mobile-link{transform:translateY(0);opacity:1}
+        .mobile-menu.active .mobile-link:nth-child(1){transition-delay:.1s}
+        .mobile-menu.active .mobile-link:nth-child(2){transition-delay:.15s}
+        .mobile-menu.active .mobile-link:nth-child(3){transition-delay:.2s}
+        .mobile-menu.active .mobile-link:nth-child(4){transition-delay:.25s}
+        .mobile-menu.active .mobile-link:nth-child(5){transition-delay:.3s}
+        .mobile-menu.active .mobile-link:nth-child(6){transition-delay:.35s}
+        .mobile-menu.active .mobile-link:nth-child(7){transition-delay:.4s}
+        .mobile-link:hover,.mobile-link.active{color:var(--color-primary)}
+        .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
+
+        /* ADMIN MODAL */
+        .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+        .admin-modal-overlay.active{display:flex}
+        .admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+        .admin-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+        .admin-modal p{font-size:.85rem;color:var(--color-gray);margin-bottom:1.5rem}
+        .admin-modal input{width:100%;padding:12px 16px;border:2px solid var(--color-border);border-radius:12px;font-family:var(--font-main);font-size:.9rem;outline:none;transition:var(--transition-fast);text-align:center;letter-spacing:.1em}
+        .admin-modal input:focus{border-color:var(--color-primary)}
+        .admin-modal-btns{display:flex;gap:.75rem;margin-top:1.25rem}
+        .admin-modal-btns .btn{flex:1;padding:10px 16px;font-size:.85rem}
+        .admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
+
+        /* PAGE HERO */
+        .page-hero{padding:calc(var(--nav-height) + 4rem) 2rem 2rem;text-align:center;max-width:var(--container-width);margin:0 auto}
+        .page-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
+        .page-title{font-size:clamp(2.5rem,6vw,4rem);font-weight:900;line-height:1;letter-spacing:-.04em;margin-bottom:1rem}
+        .page-subtitle{font-size:clamp(1rem,2vw,1.15rem);color:var(--color-text-light);max-width:600px;margin:0 auto}
+
+        /* BUTTONS */
+        .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;border-radius:50px;font-family:var(--font-main);font-size:.9rem;font-weight:600;cursor:pointer;transition:var(--transition-smooth);border:2px solid transparent;gap:.5rem}
+        .btn-primary{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
+        .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
+        .btn-outline{background:transparent;color:var(--color-text);border-color:var(--color-text)}
+        .btn-outline:hover{background:var(--color-text);color:#fff;transform:translateY(-2px)}
+        .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+        .btn-full{width:100%}
+
+        /* CONTAINER */
+        .page-container{max-width:var(--container-width);margin:0 auto;padding:2rem}
 
         /* UPLOAD CARD */
-        .upload-card{background:var(--color-white);border-radius:24px;padding:2.5rem;box-shadow:0 10px 40px rgba(0,0,0,.06);margin-bottom:3rem;max-width:600px;margin-left:auto;margin-right:auto}
+        .upload-card{background:rgba(255,255,255,.7);backdrop-filter:blur(20px);border-radius:24px;padding:2.5rem;box-shadow:0 10px 40px rgba(0,0,0,.06);margin-bottom:3rem;max-width:640px;margin-left:auto;margin-right:auto;border:1px solid rgba(255,255,255,.5)}
         .upload-card h3{font-size:1.3rem;font-weight:800;margin-bottom:.5rem}
         .upload-card p{color:var(--color-text-light);font-size:.9rem;margin-bottom:1.5rem}
         .form-group{margin-bottom:1.25rem}
-        .form-group label{display:block;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-light);margin-bottom:.5rem}
-        .form-group input,.form-group select{width:100%;padding:14px 16px;border:2px solid var(--color-border);border-radius:14px;font-family:var(--font-main);font-size:.95rem;outline:none;transition:.2s;background:var(--color-bg)}
-        .form-group input:focus,.form-group select:focus{border-color:var(--color-primary);background:#fff}
-        .file-drop{border:2px dashed var(--color-border);border-radius:16px;padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:.3s;background:var(--color-bg)}
-        .file-drop:hover,.file-drop.dragover{border-color:var(--color-primary);background:rgba(192,58,43,.05)}
+        .form-group label{display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-light);margin-bottom:.5rem}
+        .form-group input,.form-group select{width:100%;padding:14px 16px;border:2px solid var(--color-border);border-radius:14px;font-family:var(--font-main);font-size:.95rem;outline:none;transition:.2s;background:var(--color-white)}
+        .form-group input:focus,.form-group select:focus{border-color:var(--color-primary)}
+        .file-drop{border:2px dashed var(--color-border);border-radius:16px;padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:.3s;background:var(--color-white)}
+        .file-drop:hover,.file-drop.dragover{border-color:var(--color-primary);background:rgba(192,58,43,.03)}
         .file-drop p{margin:0;font-size:.9rem}
         .file-drop .icon{font-size:2.5rem;margin-bottom:.5rem;display:block}
         .file-drop input{display:none}
         .preview{margin-top:1rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:.5rem}
-        .preview-item{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden}
+        .preview-item{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
         .preview-item img{width:100%;height:100%;object-fit:cover}
-        .preview-item button{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);color:#fff;border:none;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:.7rem}
-        .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;border-radius:50px;font-family:var(--font-main);font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:.3s;width:100%;gap:.5rem}
-        .btn-primary{background:var(--color-primary);color:#fff}
-        .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px)}
-        .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+        .preview-item button{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);color:#fff;border:none;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center}
         .progress{margin-top:1rem;height:6px;background:var(--color-border);border-radius:10px;overflow:hidden;display:none}
         .progress.active{display:block}
         .progress-bar{height:100%;background:var(--color-primary);width:0%;transition:width .3s}
@@ -52,9 +130,11 @@
         .status-msg.success{background:#D4F4DD;color:#1F7A3A;display:block}
         .status-msg.error{background:#FCE4E0;color:var(--color-primary);display:block}
 
-        /* GALLERY GRID */
-        .gallery-tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;padding:6px;background:var(--color-white);border-radius:50px;max-width:fit-content;margin-left:auto;margin-right:auto;box-shadow:0 2px 10px rgba(0,0,0,.04)}
-        .gallery-tab{padding:8px 18px;border-radius:50px;font-size:.85rem;font-weight:600;color:var(--color-text-light);cursor:pointer;border:none;background:transparent;font-family:inherit;transition:.2s}
+        /* GALLERY */
+        .gallery-section{padding:2rem;max-width:var(--container-width);margin:0 auto}
+        .gallery-tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;padding:6px;background:var(--color-white);border-radius:50px;max-width:fit-content;margin-left:auto;margin-right:auto;box-shadow:0 2px 10px rgba(0,0,0,.04);overflow-x:auto}
+        .gallery-tab{padding:8px 18px;border-radius:50px;font-size:.85rem;font-weight:600;color:var(--color-text-light);cursor:pointer;border:none;background:transparent;font-family:inherit;transition:.2s;white-space:nowrap}
+        .gallery-tab:hover{color:var(--color-text)}
         .gallery-tab.active{background:var(--color-text);color:#fff}
         .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
         .photo-card{aspect-ratio:1;border-radius:18px;overflow:hidden;cursor:pointer;position:relative;background:var(--color-white);box-shadow:0 4px 15px rgba(0,0,0,.06);transition:.3s}
@@ -62,27 +142,119 @@
         .photo-card img{width:100%;height:100%;object-fit:cover}
         .photo-card-info{position:absolute;bottom:0;left:0;right:0;padding:1rem;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);color:#fff;font-size:.75rem;font-weight:600;opacity:0;transition:.3s}
         .photo-card:hover .photo-card-info{opacity:1}
-        .empty-state{text-align:center;padding:4rem 2rem;color:var(--color-gray)}
+        .empty-state{text-align:center;padding:4rem 2rem;color:var(--color-gray);grid-column:1/-1}
         .empty-state p:first-child{font-size:4rem;margin-bottom:1rem}
 
         /* LIGHTBOX */
-        .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;display:none;align-items:center;justify-content:center;padding:2rem;cursor:pointer}
+        .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2500;display:none;align-items:center;justify-content:center;padding:2rem;cursor:pointer}
         .lightbox.active{display:flex}
-        .lightbox img{max-width:90%;max-height:90vh;border-radius:16px;cursor:default}
-        .lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:1.3rem;cursor:pointer;backdrop-filter:blur(10px)}
+        .lightbox img{max-width:90%;max-height:90vh;border-radius:16px;cursor:default;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+        .lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:1.3rem;cursor:pointer;backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center}
+        .lightbox-close:hover{background:rgba(255,255,255,.25)}
+
+        /* FOOTER */
+        .footer{background:var(--color-text);color:#fff;padding:4rem 2rem 2rem;margin-top:4rem}
+        .footer-container{max-width:var(--container-width);margin:0 auto}
+        .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
+        .footer-logo{height:44px;filter:brightness(0) invert(1);margin-bottom:.75rem}
+        .footer-tagline{font-size:.85rem;color:var(--color-gray)}
+        .footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+        .footer-col h4{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--color-gray);margin-bottom:1rem}
+        .footer-col a{display:block;font-size:.9rem;color:rgba(255,255,255,.7);padding:.3rem 0}
+        .footer-col a:hover{color:#fff}
+        .footer-bottom{padding-top:2rem;text-align:center}
+        .footer-bottom p{font-size:.8rem;color:var(--color-gray)}
+
+        /* RESPONSIVE */
+        @media(max-width:1024px){
+            .footer-top{grid-template-columns:1fr;gap:3rem}
+        }
+        @media(max-width:768px){
+            :root{--nav-height:68px;--section-padding:60px}
+            .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
+            .upload-card{padding:1.75rem}
+            .footer-links-grid{grid-template-columns:1fr 1fr}
+            .nav-dropdown{display:none!important}
+        }
+        @media(max-width:480px){
+            .nav-logo img{height:38px}
+            .footer-links-grid{grid-template-columns:1fr}
+            .gallery-grid{grid-template-columns:repeat(2,1fr);gap:.5rem}
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back-link">← Zurück</a>
+    <div class="animated-bg">
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+        <div class="bg-shape bg-shape-3"></div>
+    </div>
 
-        <div class="header">
-            <p class="overline">MEMORIES</p>
-            <h1 class="title">Event Gallery</h1>
-            <p class="subtitle">Lad deine Bilder hoch und sieh die Memories aller Events</p>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <div class="nav-link-dropdown" id="eventsDropdown">
+                        <a href="events.html" class="nav-link">Events</a>
+                        <div class="nav-dropdown">
+                            <a href="events.html" class="nav-dropdown-item"><span>📅</span> Events</a>
+                            <a href="stats.html" class="nav-dropdown-item"><span>🏆</span> Game Statistik</a>
+                            <a href="shisha.html" class="nav-dropdown-item"><span>💨</span> Shisha Lounge</a>
+                            <a href="gallery.html" class="nav-dropdown-item"><span>📸</span> Gallery</a>
+                        </div>
+                    </div>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="kontakt.html" class="nav-link">Kontakt</a>
+                </div>
+                <button class="admin-trigger" id="adminTrigger" title="Admin">🔒</button>
+                <button class="hamburger" id="hamburger">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
         </div>
+    </nav>
 
-        <!-- UPLOAD -->
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="events.html" class="mobile-link">Events</a>
+            <a href="stats.html" class="mobile-link mobile-link-sub">🏆 Game Statistik</a>
+            <a href="shisha.html" class="mobile-link mobile-link-sub">💨 Shisha Lounge</a>
+            <a href="gallery.html" class="mobile-link mobile-link-sub active">📸 Gallery</a>
+            <a href="shop.html" class="mobile-link">Shop</a>
+            <a href="kontakt.html" class="mobile-link">Kontakt</a>
+        </div>
+    </div>
+
+    <!-- ADMIN MODAL -->
+    <div class="admin-modal-overlay" id="adminOverlay">
+        <div class="admin-modal">
+            <h3>🔐 Admin Zugang</h3>
+            <p>Passwort eingeben um zum Admin Panel zu gelangen.</p>
+            <input type="password" id="adminPwInput" placeholder="Passwort">
+            <div class="admin-modal-btns">
+                <button class="btn btn-outline" id="adminCancel">Abbrechen</button>
+                <button class="btn btn-primary" id="adminSubmit">Login</button>
+            </div>
+            <div class="admin-error" id="adminError">Falsches Passwort!</div>
+        </div>
+    </div>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <p class="page-overline">MEMORIES</p>
+        <h1 class="page-title">Event Gallery</h1>
+        <p class="page-subtitle">Lad deine Bilder hoch und sieh die Memories aller Events.</p>
+    </section>
+
+    <!-- UPLOAD -->
+    <section class="page-container">
         <div class="upload-card">
             <h3>📤 Bilder hochladen</h3>
             <p>Teile deine besten Momente mit dem Rest der Crew. Max 10MB pro Bild.</p>
@@ -110,22 +282,62 @@
                 <div class="preview" id="preview"></div>
             </div>
 
-            <button class="btn btn-primary" id="uploadBtn" disabled>Hochladen</button>
+            <button class="btn btn-primary btn-full" id="uploadBtn" disabled>Hochladen</button>
             <div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
             <div class="status-msg" id="statusMsg"></div>
         </div>
+    </section>
 
-        <!-- GALLERY -->
+    <!-- GALLERY -->
+    <section class="gallery-section">
         <div class="gallery-tabs" id="galleryTabs">
             <button class="gallery-tab active" data-event="all">Alle Bilder</button>
         </div>
         <div class="gallery-grid" id="galleryGrid"></div>
-    </div>
+    </section>
 
+    <!-- LIGHTBOX -->
     <div class="lightbox" id="lightbox">
         <button class="lightbox-close" id="lightboxClose">✕</button>
         <img id="lightboxImg" src="" alt="">
     </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="assets/logo.svg" alt="pocci4" class="footer-logo">
+                    <p class="footer-tagline">Poccistrasse 4, Muenchen</p>
+                </div>
+                <div class="footer-links-grid">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <a href="index.html">Home</a>
+                        <a href="events.html">Events</a>
+                        <a href="shisha.html">Shisha</a>
+                        <a href="shop.html">Shop</a>
+                        <a href="kontakt.html">Kontakt</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Events</h4>
+                        <a href="events.html">Kommende Events</a>
+                        <a href="stats.html">Game Statistik</a>
+                        <a href="gallery.html">Gallery</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <a href="https://instagram.com/mats.lm" target="_blank">@mats.lm</a>
+                        <a href="https://instagram.com/georginaamarie" target="_blank">@georginaamarie</a>
+                        <a href="https://instagram.com/andrei.ncu" target="_blank">@andrei.ncu</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>2025 pocci4 – Mit Liebe aus der Poccistrasse.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -144,11 +356,75 @@
         var db = firebase.firestore();
         var storage = firebase.storage();
 
+        // ===== NAV =====
+        var navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", function(){
+            navbar.classList.toggle("scrolled", window.scrollY > 50);
+        });
+
+        var hamburger = document.getElementById("hamburger");
+        var mobileMenu = document.getElementById("mobileMenu");
+        hamburger.addEventListener("click", function(){
+            hamburger.classList.toggle("active");
+            mobileMenu.classList.toggle("active");
+            document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
+        });
+        document.querySelectorAll(".mobile-link").forEach(function(ml){
+            ml.addEventListener("click", function(){
+                hamburger.classList.remove("active");
+                mobileMenu.classList.remove("active");
+                document.body.style.overflow = "";
+            });
+        });
+
+        // Dropdown
+        var dd = document.getElementById("eventsDropdown"), ddT = null;
+        if(dd){
+            dd.addEventListener("mouseenter", function(){ ddT = setTimeout(function(){ dd.classList.add("dropdown-visible"); }, 200); });
+            dd.addEventListener("mouseleave", function(){ clearTimeout(ddT); setTimeout(function(){ dd.classList.remove("dropdown-visible"); }, 300); });
+        }
+
+        // ===== ADMIN MODAL =====
+        (function(){
+            var ADMIN_PW = "pocci4admin";
+            var trigger = document.getElementById("adminTrigger");
+            var overlay = document.getElementById("adminOverlay");
+            var input = document.getElementById("adminPwInput");
+            var cancel = document.getElementById("adminCancel");
+            var submit = document.getElementById("adminSubmit");
+            var error = document.getElementById("adminError");
+
+            trigger.addEventListener("click", function(){
+                if(sessionStorage.getItem("pocci4admin") === "true"){
+                    window.location.href = "admin.html"; return;
+                }
+                overlay.classList.add("active");
+                setTimeout(function(){ input.focus(); }, 100);
+            });
+            cancel.addEventListener("click", function(){
+                overlay.classList.remove("active"); input.value = ""; error.style.display = "none";
+            });
+            overlay.addEventListener("click", function(e){
+                if(e.target === overlay){ overlay.classList.remove("active"); input.value = ""; error.style.display = "none"; }
+            });
+            function tryLogin(){
+                if(input.value === ADMIN_PW){
+                    sessionStorage.setItem("pocci4admin", "true");
+                    window.location.href = "admin.html";
+                } else {
+                    error.style.display = "block"; input.value = ""; input.focus();
+                }
+            }
+            submit.addEventListener("click", tryLogin);
+            input.addEventListener("keydown", function(e){ if(e.key === "Enter") tryLogin(); });
+        })();
+
+        // ===== GALLERY LOGIC =====
         var selectedFiles = [];
         var allPhotos = [];
 
-        // Load events for dropdown
-        db.collection("events").orderBy("date","desc").limit(20).get().then(function(snap){
+        // Load events for dropdown + tabs
+        db.collection("events").orderBy("date","desc").limit(30).get().then(function(snap){
             var sel = document.getElementById("eventSelect");
             var tabs = document.getElementById("galleryTabs");
             snap.forEach(function(doc){
@@ -167,7 +443,6 @@
             });
         });
 
-        // Tab "Alle"
         document.querySelector('.gallery-tab[data-event="all"]').addEventListener("click", function(){
             filterGallery("all", this);
         });
@@ -292,7 +567,7 @@
             var grid = document.getElementById("galleryGrid");
             var filtered = eventId === "all" ? allPhotos : allPhotos.filter(function(p){ return p.eventId === eventId; });
             if(filtered.length === 0){
-                grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><p>📸</p><p style="font-size:1.1rem;font-weight:700">Noch keine Bilder</p><p style="font-size:.85rem;margin-top:.5rem">Sei der erste!</p></div>';
+                grid.innerHTML = '<div class="empty-state"><p>📸</p><p style="font-size:1.1rem;font-weight:700">Noch keine Bilder</p><p style="font-size:.85rem;margin-top:.5rem">Sei der erste!</p></div>';
                 return;
             }
             var html = "";
@@ -314,7 +589,9 @@
             document.getElementById("lightboxImg").src = url;
             lightbox.classList.add("active");
         }
-        lightbox.addEventListener("click", function(){ lightbox.classList.remove("active"); });
+        lightbox.addEventListener("click", function(e){ 
+            if(e.target === lightbox) lightbox.classList.remove("active"); 
+        });
         document.getElementById("lightboxClose").addEventListener("click", function(){ lightbox.classList.remove("active"); });
 
         loadGallery();
