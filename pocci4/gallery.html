@@ -11,6 +11,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        /* DOWNLOAD MODE */
+.gallery-toolbar{display:flex;justify-content:center;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
+.toolbar-btn{display:inline-flex;align-items:center;gap:.5rem;padding:10px 20px;border-radius:50px;font-family:var(--font-main);font-size:.85rem;font-weight:600;cursor:pointer;border:2px solid var(--color-border);background:var(--color-white);color:var(--color-text);transition:.2s}
+.toolbar-btn:hover{border-color:var(--color-text);transform:translateY(-1px)}
+.toolbar-btn.active{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
+.toolbar-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.toolbar-btn .count{background:rgba(255,255,255,.25);padding:2px 8px;border-radius:50px;font-size:.75rem;font-weight:700}
+
+.photo-card.selectable{cursor:pointer}
+.photo-card .check-circle{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:1rem;color:transparent;transition:.2s;opacity:0;transform:scale(0.8);z-index:5;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.photo-card.selectable .check-circle{opacity:1;transform:scale(1)}
+.photo-card.selected .check-circle{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
+.photo-card.selected{transform:scale(0.95)}
+.photo-card.selected img{filter:brightness(0.85)}
+.photo-card.selected::after{content:'';position:absolute;inset:0;border:3px solid var(--color-primary);border-radius:18px;pointer-events:none;z-index:4}
+
+.download-bar{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);background:var(--color-text);color:#fff;padding:14px 24px;border-radius:50px;display:flex;align-items:center;gap:1rem;box-shadow:0 10px 40px rgba(0,0,0,.2);transition:bottom .4s cubic-bezier(.34,1.56,.64,1);z-index:1500}
+.download-bar.active{bottom:24px}
+.download-bar-text{font-size:.9rem;font-weight:600}
+.download-bar-actions{display:flex;gap:.5rem}
+.download-bar button{padding:8px 16px;border-radius:50px;font-family:var(--font-main);font-size:.8rem;font-weight:600;cursor:pointer;border:none;transition:.2s}
+.download-btn{background:var(--color-primary);color:#fff}
+.download-btn:hover{background:var(--color-primary-hover)}
+.download-btn:disabled{opacity:.5;cursor:wait}
+.download-cancel{background:rgba(255,255,255,.15);color:#fff}
+.download-cancel:hover{background:rgba(255,255,255,.25)}
+
+@media(max-width:480px){
+    .download-bar{flex-direction:column;gap:.5rem;padding:14px 20px;bottom:-150px;left:1rem;right:1rem;transform:none;border-radius:20px}
+    .download-bar.active{bottom:1rem}
+}
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
         :root{
             --color-primary:#C03A2B;--color-primary-light:#E8501E;--color-primary-hover:#A83225;
@@ -270,12 +301,28 @@
         </div>
     </section>
 
-    <section class="gallery-section">
-        <div class="gallery-tabs" id="galleryTabs">
-            <button class="gallery-tab active" data-event="all">Alle Bilder</button>
-        </div>
-        <div class="gallery-grid" id="galleryGrid"></div>
-    </section>
+<section class="gallery-section">
+    <div class="gallery-toolbar">
+        <button class="toolbar-btn" id="selectModeBtn">
+            <span>☑️</span> <span id="selectModeLabel">Auswahl-Modus</span>
+        </button>
+        <button class="toolbar-btn" id="selectAllBtn" style="display:none">
+            <span>✨</span> Alle auswählen
+        </button>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+</section>
+
+<!-- DOWNLOAD BAR -->
+<div class="download-bar" id="downloadBar">
+    <span class="download-bar-text">
+        <span id="selectedCount">0</span> Bild(er) ausgewählt
+    </span>
+    <div class="download-bar-actions">
+        <button class="download-cancel" id="cancelSelectBtn">Abbrechen</button>
+        <button class="download-btn" id="downloadBtn">⬇️ Herunterladen</button>
+    </div>
+</div>
 
     <div class="lightbox" id="lightbox">
         <button class="lightbox-close" id="lightboxClose">✕</button>
@@ -400,35 +447,17 @@
         var selectedFiles = [];
         var allPhotos = [];
 
-        // Load events for dropdown + tabs
-        db.collection("events").orderBy("date","desc").limit(30).get().then(function(snap){
-            var sel = document.getElementById("eventSelect");
-            var tabs = document.getElementById("galleryTabs");
-            snap.forEach(function(doc){
-                var d = doc.data();
-                var name = (d.emoji||"🎉") + " " + (d.title || d.name || "Event");
-                var opt = document.createElement("option");
-                opt.value = doc.id; opt.textContent = name;
-                sel.appendChild(opt);
-
-                var tab = document.createElement("button");
-                tab.className = "gallery-tab";
-                tab.setAttribute("data-event", doc.id);
-                tab.textContent = name;
-                tab.addEventListener("click", function(){ filterGallery(doc.id, this); });
-                tabs.appendChild(tab);
-            });
-        });
-
-        document.querySelector('.gallery-tab[data-event="all"]').addEventListener("click", function(){
-            filterGallery("all", this);
-        });
-
-        function filterGallery(eventId, tabEl){
-            document.querySelectorAll(".gallery-tab").forEach(function(t){ t.classList.remove("active"); });
-            tabEl.classList.add("active");
-            renderGallery(eventId);
-        }
+// Load events for upload dropdown ONLY
+db.collection("events").orderBy("date","desc").limit(30).get().then(function(snap){
+    var sel = document.getElementById("eventSelect");
+    snap.forEach(function(doc){
+        var d = doc.data();
+        var name = (d.emoji||"🎉") + " " + (d.title || d.name || "Event");
+        var opt = document.createElement("option");
+        opt.value = doc.id; opt.textContent = name;
+        sel.appendChild(opt);
+    });
+});
 
         // FILE DROP
         var fileDrop = document.getElementById("fileDrop");
@@ -566,40 +595,50 @@
         }
 
         // LOAD GALLERY
-        function loadGallery(){
-            db.collection("eventPhotos").orderBy("uploadedAt","desc").limit(200).get().then(function(snap){
-                allPhotos = [];
-                snap.forEach(function(doc){
-                    var d = doc.data(); d._id = doc.id; allPhotos.push(d);
-                });
-                renderGallery("all");
-            }).catch(function(err){
-                console.error("Gallery load error:", err);
-                document.getElementById("galleryGrid").innerHTML = '<div class="empty-state"><p>⚠️</p><p>Bilder konnten nicht geladen werden.</p></div>';
-            });
-        }
+function loadGallery(){
+    db.collection("eventPhotos").orderBy("uploadedAt","desc").limit(200).get().then(function(snap){
+        allPhotos = [];
+        snap.forEach(function(doc){
+            var d = doc.data(); d._id = doc.id; allPhotos.push(d);
+        });
+        renderGallery();
+    }).catch(function(err){
+        console.error("Gallery load error:", err);
+        document.getElementById("galleryGrid").innerHTML = '<div class="empty-state"><p>⚠️</p><p>Bilder konnten nicht geladen werden.</p></div>';
+    });
+}
 
-        function renderGallery(eventId){
-            var grid = document.getElementById("galleryGrid");
-            var filtered = eventId === "all" ? allPhotos : allPhotos.filter(function(p){ return p.eventId === eventId; });
-            if(filtered.length === 0){
-                grid.innerHTML = '<div class="empty-state"><p>📸</p><p style="font-size:1.1rem;font-weight:700">Noch keine Bilder</p><p style="font-size:.85rem;margin-top:.5rem">Sei der erste!</p></div>';
-                return;
+  function renderGallery(){
+    var grid = document.getElementById("galleryGrid");
+    if(allPhotos.length === 0){
+        grid.innerHTML = '<div class="empty-state"><p>📸</p><p style="font-size:1.1rem;font-weight:700">Noch keine Bilder</p><p style="font-size:.85rem;margin-top:.5rem">Sei der erste!</p></div>';
+        return;
+    }
+    var html = "";
+    allPhotos.forEach(function(p, idx){
+        var thumbUrl = p.url.replace("/upload/", "/upload/w_400,h_400,c_fill,q_auto,f_auto/");
+        html += '<div class="photo-card'+(selectMode?' selectable':'')+'" data-url="'+p.url+'" data-idx="'+idx+'" data-filename="'+(p.publicId||'pocci4-'+idx)+'">';
+        html += '<img src="'+thumbUrl+'" loading="lazy" alt="">';
+        html += '<div class="check-circle">✓</div>';
+        html += '<div class="photo-card-info">📸 '+(p.uploader||"Anonym")+'</div>';
+        html += '</div>';
+    });
+    grid.innerHTML = html;
+    bindCardClicks();
+}
+
+function bindCardClicks(){
+    document.querySelectorAll(".photo-card").forEach(function(c){
+        c.addEventListener("click", function(){
+            if(selectMode){
+                this.classList.toggle("selected");
+                updateDownloadBar();
+            } else {
+                openLightbox(this.getAttribute("data-url"));
             }
-            var html = "";
-            filtered.forEach(function(p){
-                // Cloudinary auto-optimization für Thumbnails
-                var thumbUrl = p.url.replace("/upload/", "/upload/w_400,h_400,c_fill,q_auto,f_auto/");
-                html += '<div class="photo-card" data-url="'+p.url+'">';
-                html += '<img src="'+thumbUrl+'" loading="lazy" alt="">';
-                html += '<div class="photo-card-info">📸 '+(p.uploader||"Anonym")+'</div>';
-                html += '</div>';
-            });
-            grid.innerHTML = html;
-            document.querySelectorAll(".photo-card").forEach(function(c){
-                c.addEventListener("click", function(){ openLightbox(this.getAttribute("data-url")); });
-            });
-        }
+        });
+    });
+}
 
         // LIGHTBOX
         var lightbox = document.getElementById("lightbox");
@@ -611,7 +650,109 @@
             if(e.target === lightbox) lightbox.classList.remove("active"); 
         });
         document.getElementById("lightboxClose").addEventListener("click", function(){ lightbox.classList.remove("active"); });
+// ===== SELECT MODE & DOWNLOAD =====
+var selectMode = false;
 
+var selectModeBtn = document.getElementById("selectModeBtn");
+var selectAllBtn = document.getElementById("selectAllBtn");
+var downloadBar = document.getElementById("downloadBar");
+var downloadBtn = document.getElementById("downloadBtn");
+var cancelSelectBtn = document.getElementById("cancelSelectBtn");
+
+selectModeBtn.addEventListener("click", function(){
+    selectMode = !selectMode;
+    selectModeBtn.classList.toggle("active", selectMode);
+    document.getElementById("selectModeLabel").textContent = selectMode ? "Modus aktiv" : "Auswahl-Modus";
+    selectAllBtn.style.display = selectMode ? "inline-flex" : "none";
+    if(!selectMode){
+        document.querySelectorAll(".photo-card.selected").forEach(function(c){ c.classList.remove("selected"); });
+    }
+    renderGallery();
+    updateDownloadBar();
+});
+
+cancelSelectBtn.addEventListener("click", function(){
+    selectMode = false;
+    selectModeBtn.classList.remove("active");
+    document.getElementById("selectModeLabel").textContent = "Auswahl-Modus";
+    selectAllBtn.style.display = "none";
+    renderGallery();
+    updateDownloadBar();
+});
+
+selectAllBtn.addEventListener("click", function(){
+    var cards = document.querySelectorAll(".photo-card");
+    var allSelected = document.querySelectorAll(".photo-card.selected").length === cards.length;
+    cards.forEach(function(c){
+        c.classList.toggle("selected", !allSelected);
+    });
+    updateDownloadBar();
+});
+
+function updateDownloadBar(){
+    var selected = document.querySelectorAll(".photo-card.selected");
+    document.getElementById("selectedCount").textContent = selected.length;
+    downloadBar.classList.toggle("active", selected.length > 0);
+}
+
+downloadBtn.addEventListener("click", function(){
+    var selected = document.querySelectorAll(".photo-card.selected");
+    if(selected.length === 0) return;
+
+    downloadBtn.disabled = true;
+    downloadBtn.textContent = "⏳ Lade...";
+
+    var promises = [];
+    selected.forEach(function(card, idx){
+        var url = card.getAttribute("data-url");
+        var filename = (card.getAttribute("data-filename") || "pocci4-"+idx).replace(/[\/\\]/g,"_") + ".jpg";
+        promises.push(downloadImage(url, filename, idx));
+    });
+
+    Promise.all(promises).then(function(){
+        downloadBtn.disabled = false;
+        downloadBtn.textContent = "⬇️ Herunterladen";
+        // Reset
+        selectMode = false;
+        selectModeBtn.classList.remove("active");
+        document.getElementById("selectModeLabel").textContent = "Auswahl-Modus";
+        selectAllBtn.style.display = "none";
+        renderGallery();
+        updateDownloadBar();
+    }).catch(function(err){
+        console.error("Download error:", err);
+        downloadBtn.disabled = false;
+        downloadBtn.textContent = "⬇️ Herunterladen";
+        alert("Fehler beim Download: " + err.message);
+    });
+});
+
+function downloadImage(url, filename, delay){
+    return new Promise(function(resolve, reject){
+        // Cloudinary fl_attachment Trick: fügt Content-Disposition: attachment Header hinzu
+        var downloadUrl = url.replace("/upload/", "/upload/fl_attachment/");
+        
+        setTimeout(function(){
+            fetch(downloadUrl)
+                .then(function(res){
+                    if(!res.ok) throw new Error("HTTP " + res.status);
+                    return res.blob();
+                })
+                .then(function(blob){
+                    var blobUrl = URL.createObjectURL(blob);
+                    var a = document.createElement("a");
+                    a.href = blobUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    setTimeout(function(){ URL.revokeObjectURL(blobUrl); }, 1000);
+                    resolve();
+                })
+                .catch(reject);
+        }, delay * 200); // 200ms zwischen Downloads damit Browser nicht blockt
+    });
+}
         loadGallery();
     })();
     </script>
