@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - pocci4</title>
+    <link rel="icon" type="image/svg+xml" href="assets/p.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --color-primary:#C03A2B;--color-primary-hover:#A83225;
+            --color-bg:#F5F0EB;--color-white:#FFFFFF;
+            --color-text:#1A1A1A;--color-text-light:#6B6B6B;--color-gray:#9C9C9C;
+            --color-border:#E0D6CC;
+            --font-main:'Inter',sans-serif;
+        }
+        body{font-family:var(--font-main);background:var(--color-bg);color:var(--color-text);min-height:100vh;padding:2rem;line-height:1.6}
+        .container{max-width:1240px;margin:0 auto}
+        .back-link{display:inline-flex;align-items:center;gap:.5rem;color:var(--color-text-light);font-size:.9rem;font-weight:600;margin-bottom:2rem}
+        .back-link:hover{color:var(--color-primary)}
+        .header{text-align:center;margin-bottom:3rem}
+        .overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
+        .title{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.03em;margin-bottom:.5rem}
+        .subtitle{color:var(--color-text-light)}
+
+        /* UPLOAD CARD */
+        .upload-card{background:var(--color-white);border-radius:24px;padding:2.5rem;box-shadow:0 10px 40px rgba(0,0,0,.06);margin-bottom:3rem;max-width:600px;margin-left:auto;margin-right:auto}
+        .upload-card h3{font-size:1.3rem;font-weight:800;margin-bottom:.5rem}
+        .upload-card p{color:var(--color-text-light);font-size:.9rem;margin-bottom:1.5rem}
+        .form-group{margin-bottom:1.25rem}
+        .form-group label{display:block;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-light);margin-bottom:.5rem}
+        .form-group input,.form-group select{width:100%;padding:14px 16px;border:2px solid var(--color-border);border-radius:14px;font-family:var(--font-main);font-size:.95rem;outline:none;transition:.2s;background:var(--color-bg)}
+        .form-group input:focus,.form-group select:focus{border-color:var(--color-primary);background:#fff}
+        .file-drop{border:2px dashed var(--color-border);border-radius:16px;padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:.3s;background:var(--color-bg)}
+        .file-drop:hover,.file-drop.dragover{border-color:var(--color-primary);background:rgba(192,58,43,.05)}
+        .file-drop p{margin:0;font-size:.9rem}
+        .file-drop .icon{font-size:2.5rem;margin-bottom:.5rem;display:block}
+        .file-drop input{display:none}
+        .preview{margin-top:1rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:.5rem}
+        .preview-item{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden}
+        .preview-item img{width:100%;height:100%;object-fit:cover}
+        .preview-item button{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);color:#fff;border:none;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:.7rem}
+        .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;border-radius:50px;font-family:var(--font-main);font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:.3s;width:100%;gap:.5rem}
+        .btn-primary{background:var(--color-primary);color:#fff}
+        .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px)}
+        .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+        .progress{margin-top:1rem;height:6px;background:var(--color-border);border-radius:10px;overflow:hidden;display:none}
+        .progress.active{display:block}
+        .progress-bar{height:100%;background:var(--color-primary);width:0%;transition:width .3s}
+        .status-msg{margin-top:1rem;padding:.75rem;border-radius:10px;font-size:.85rem;font-weight:600;text-align:center;display:none}
+        .status-msg.success{background:#D4F4DD;color:#1F7A3A;display:block}
+        .status-msg.error{background:#FCE4E0;color:var(--color-primary);display:block}
+
+        /* GALLERY GRID */
+        .gallery-tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;padding:6px;background:var(--color-white);border-radius:50px;max-width:fit-content;margin-left:auto;margin-right:auto;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+        .gallery-tab{padding:8px 18px;border-radius:50px;font-size:.85rem;font-weight:600;color:var(--color-text-light);cursor:pointer;border:none;background:transparent;font-family:inherit;transition:.2s}
+        .gallery-tab.active{background:var(--color-text);color:#fff}
+        .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+        .photo-card{aspect-ratio:1;border-radius:18px;overflow:hidden;cursor:pointer;position:relative;background:var(--color-white);box-shadow:0 4px 15px rgba(0,0,0,.06);transition:.3s}
+        .photo-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.12)}
+        .photo-card img{width:100%;height:100%;object-fit:cover}
+        .photo-card-info{position:absolute;bottom:0;left:0;right:0;padding:1rem;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);color:#fff;font-size:.75rem;font-weight:600;opacity:0;transition:.3s}
+        .photo-card:hover .photo-card-info{opacity:1}
+        .empty-state{text-align:center;padding:4rem 2rem;color:var(--color-gray)}
+        .empty-state p:first-child{font-size:4rem;margin-bottom:1rem}
+
+        /* LIGHTBOX */
+        .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;display:none;align-items:center;justify-content:center;padding:2rem;cursor:pointer}
+        .lightbox.active{display:flex}
+        .lightbox img{max-width:90%;max-height:90vh;border-radius:16px;cursor:default}
+        .lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:1.3rem;cursor:pointer;backdrop-filter:blur(10px)}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Zurück</a>
+
+        <div class="header">
+            <p class="overline">MEMORIES</p>
+            <h1 class="title">Event Gallery</h1>
+            <p class="subtitle">Lad deine Bilder hoch und sieh die Memories aller Events</p>
+        </div>
+
+        <!-- UPLOAD -->
+        <div class="upload-card">
+            <h3>📤 Bilder hochladen</h3>
+            <p>Teile deine besten Momente mit dem Rest der Crew. Max 10MB pro Bild.</p>
+
+            <div class="form-group">
+                <label>Dein Name (optional)</label>
+                <input type="text" id="uploaderName" placeholder="z.B. Max">
+            </div>
+
+            <div class="form-group">
+                <label>Event</label>
+                <select id="eventSelect">
+                    <option value="general">🎉 Allgemein / kein spezifisches Event</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Bilder auswählen</label>
+                <div class="file-drop" id="fileDrop">
+                    <span class="icon">📷</span>
+                    <p><strong>Klicken oder Bilder hier rein ziehen</strong></p>
+                    <p style="font-size:.8rem;color:var(--color-gray);margin-top:.3rem">JPG, PNG, WEBP – max 10MB</p>
+                    <input type="file" id="fileInput" accept="image/*" multiple>
+                </div>
+                <div class="preview" id="preview"></div>
+            </div>
+
+            <button class="btn btn-primary" id="uploadBtn" disabled>Hochladen</button>
+            <div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
+            <div class="status-msg" id="statusMsg"></div>
+        </div>
+
+        <!-- GALLERY -->
+        <div class="gallery-tabs" id="galleryTabs">
+            <button class="gallery-tab active" data-event="all">Alle Bilder</button>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">✕</button>
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+    <script>
+    (function(){
+        var firebaseConfig = {
+            apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
+            authDomain: "pocci4-a24e5.firebaseapp.com",
+            projectId: "pocci4-a24e5",
+            storageBucket: "pocci4-a24e5.firebasestorage.app",
+            messagingSenderId: "518621760671",
+            appId: "1:518621760671:web:90ad7c1bae464f313066aa"
+        };
+        if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+        var storage = firebase.storage();
+
+        var selectedFiles = [];
+        var allPhotos = [];
+
+        // Load events for dropdown
+        db.collection("events").orderBy("date","desc").limit(20).get().then(function(snap){
+            var sel = document.getElementById("eventSelect");
+            var tabs = document.getElementById("galleryTabs");
+            snap.forEach(function(doc){
+                var d = doc.data();
+                var name = (d.emoji||"🎉") + " " + (d.title || d.name || "Event");
+                var opt = document.createElement("option");
+                opt.value = doc.id; opt.textContent = name;
+                sel.appendChild(opt);
+
+                var tab = document.createElement("button");
+                tab.className = "gallery-tab";
+                tab.setAttribute("data-event", doc.id);
+                tab.textContent = name;
+                tab.addEventListener("click", function(){ filterGallery(doc.id, this); });
+                tabs.appendChild(tab);
+            });
+        });
+
+        // Tab "Alle"
+        document.querySelector('.gallery-tab[data-event="all"]').addEventListener("click", function(){
+            filterGallery("all", this);
+        });
+
+        function filterGallery(eventId, tabEl){
+            document.querySelectorAll(".gallery-tab").forEach(function(t){ t.classList.remove("active"); });
+            tabEl.classList.add("active");
+            renderGallery(eventId);
+        }
+
+        // FILE DROP
+        var fileDrop = document.getElementById("fileDrop");
+        var fileInput = document.getElementById("fileInput");
+        var preview = document.getElementById("preview");
+        var uploadBtn = document.getElementById("uploadBtn");
+
+        fileDrop.addEventListener("click", function(){ fileInput.click(); });
+        fileDrop.addEventListener("dragover", function(e){ e.preventDefault(); fileDrop.classList.add("dragover"); });
+        fileDrop.addEventListener("dragleave", function(){ fileDrop.classList.remove("dragover"); });
+        fileDrop.addEventListener("drop", function(e){
+            e.preventDefault(); fileDrop.classList.remove("dragover");
+            handleFiles(e.dataTransfer.files);
+        });
+        fileInput.addEventListener("change", function(e){ handleFiles(e.target.files); });
+
+        function handleFiles(files){
+            for(var i = 0; i < files.length; i++){
+                var f = files[i];
+                if(!f.type.startsWith("image/")) continue;
+                if(f.size > 10*1024*1024){ alert(f.name + " ist zu groß (max 10MB)"); continue; }
+                selectedFiles.push(f);
+            }
+            renderPreview();
+        }
+
+        function renderPreview(){
+            preview.innerHTML = "";
+            selectedFiles.forEach(function(f, idx){
+                var item = document.createElement("div");
+                item.className = "preview-item";
+                var img = document.createElement("img");
+                img.src = URL.createObjectURL(f);
+                var btn = document.createElement("button");
+                btn.textContent = "✕";
+                btn.addEventListener("click", function(){
+                    selectedFiles.splice(idx, 1);
+                    renderPreview();
+                });
+                item.appendChild(img); item.appendChild(btn);
+                preview.appendChild(item);
+            });
+            uploadBtn.disabled = selectedFiles.length === 0;
+            uploadBtn.textContent = selectedFiles.length > 0 ? ("Hochladen ("+selectedFiles.length+")") : "Hochladen";
+        }
+
+        // UPLOAD
+        uploadBtn.addEventListener("click", function(){
+            if(selectedFiles.length === 0) return;
+            var eventId = document.getElementById("eventSelect").value;
+            var uploader = document.getElementById("uploaderName").value || "Anonym";
+            uploadBtn.disabled = true;
+            document.getElementById("progress").classList.add("active");
+
+            var done = 0;
+            var total = selectedFiles.length;
+
+            selectedFiles.forEach(function(file){
+                var fileName = Date.now() + "-" + Math.random().toString(36).substr(2,9) + "-" + file.name.replace(/[^a-zA-Z0-9.]/g,"_");
+                var ref = storage.ref("event-photos/" + fileName);
+                var task = ref.put(file);
+
+                task.on("state_changed", function(snap){
+                    var pct = (snap.bytesTransferred / snap.totalBytes) * 100;
+                    document.getElementById("progressBar").style.width = ((done + pct/100) / total * 100) + "%";
+                }, function(err){
+                    showStatus("Fehler: " + err.message, "error");
+                    uploadBtn.disabled = false;
+                }, function(){
+                    task.snapshot.ref.getDownloadURL().then(function(url){
+                        db.collection("eventPhotos").add({
+                            url: url,
+                            eventId: eventId,
+                            uploader: uploader,
+                            uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            fileName: fileName
+                        }).then(function(){
+                            done++;
+                            if(done === total){
+                                showStatus("✅ " + total + " Bild(er) erfolgreich hochgeladen!", "success");
+                                selectedFiles = [];
+                                renderPreview();
+                                document.getElementById("progress").classList.remove("active");
+                                document.getElementById("progressBar").style.width = "0%";
+                                uploadBtn.disabled = true;
+                                loadGallery();
+                            }
+                        });
+                    });
+                });
+            });
+        });
+
+        function showStatus(msg, type){
+            var el = document.getElementById("statusMsg");
+            el.textContent = msg;
+            el.className = "status-msg " + type;
+            setTimeout(function(){ el.className = "status-msg"; }, 5000);
+        }
+
+        // LOAD GALLERY
+        function loadGallery(){
+            db.collection("eventPhotos").orderBy("uploadedAt","desc").limit(200).get().then(function(snap){
+                allPhotos = [];
+                snap.forEach(function(doc){
+                    var d = doc.data(); d._id = doc.id; allPhotos.push(d);
+                });
+                renderGallery("all");
+            });
+        }
+
+        function renderGallery(eventId){
+            var grid = document.getElementById("galleryGrid");
+            var filtered = eventId === "all" ? allPhotos : allPhotos.filter(function(p){ return p.eventId === eventId; });
+            if(filtered.length === 0){
+                grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><p>📸</p><p style="font-size:1.1rem;font-weight:700">Noch keine Bilder</p><p style="font-size:.85rem;margin-top:.5rem">Sei der erste!</p></div>';
+                return;
+            }
+            var html = "";
+            filtered.forEach(function(p){
+                html += '<div class="photo-card" data-url="'+p.url+'">';
+                html += '<img src="'+p.url+'" loading="lazy" alt="">';
+                html += '<div class="photo-card-info">📸 '+(p.uploader||"Anonym")+'</div>';
+                html += '</div>';
+            });
+            grid.innerHTML = html;
+            document.querySelectorAll(".photo-card").forEach(function(c){
+                c.addEventListener("click", function(){ openLightbox(this.getAttribute("data-url")); });
+            });
+        }
+
+        // LIGHTBOX
+        var lightbox = document.getElementById("lightbox");
+        function openLightbox(url){
+            document.getElementById("lightboxImg").src = url;
+            lightbox.classList.add("active");
+        }
+        lightbox.addEventListener("click", function(){ lightbox.classList.remove("active"); });
+        document.getElementById("lightboxClose").addEventListener("click", function(){ lightbox.classList.remove("active"); });
+
+        loadGallery();
+    })();
+    </script>
+</body>
+</html>
