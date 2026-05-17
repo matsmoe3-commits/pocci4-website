@@ -229,7 +229,44 @@
     .ticket-top{padding:1.25rem 1.25rem 1rem}
     .ticket-bottom{padding:1rem 1.25rem 1.25rem}
 }
+    /* PHOTO MEMORIES - APPLE STYLE */
+.memories-section{padding:var(--section-padding) 2rem;max-width:var(--container-width);margin:0 auto;position:relative;overflow:hidden}
+.memories-header{text-align:center;margin-bottom:3rem}
+.memories-stage{position:relative;width:100%;height:600px;display:flex;align-items:center;justify-content:center}
+.memories-stage::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(192,58,43,.08) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
 
+.memory-bubble{position:absolute;border-radius:50%;overflow:hidden;background:var(--color-white);box-shadow:0 20px 60px rgba(0,0,0,.15),0 8px 25px rgba(0,0,0,.08),inset 0 0 0 4px rgba(255,255,255,.9);transition:opacity 1.2s ease,transform .8s cubic-bezier(.4,0,.2,1);cursor:pointer;will-change:transform}
+.memory-bubble img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.memory-bubble:hover{z-index:50;transform:scale(1.15) !important;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+.memory-bubble.fade-out{opacity:0;transform:scale(0.7) !important}
+.memory-bubble.fade-in{animation:bubbleIn 1s cubic-bezier(.34,1.56,.64,1) forwards}
+
+@keyframes bubbleIn{0%{opacity:0;transform:scale(0.3) rotate(-30deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+
+/* Floating animation - jede Bubble hat eigene Bewegung */
+.memory-bubble.float-1{animation:float1 12s ease-in-out infinite}
+.memory-bubble.float-2{animation:float2 14s ease-in-out infinite}
+.memory-bubble.float-3{animation:float3 16s ease-in-out infinite}
+.memory-bubble.float-4{animation:float4 13s ease-in-out infinite}
+.memory-bubble.float-5{animation:float5 15s ease-in-out infinite}
+
+@keyframes float1{0%,100%{transform:translate(0,0) rotate(0)}33%{transform:translate(15px,-20px) rotate(3deg)}66%{transform:translate(-10px,15px) rotate(-2deg)}}
+@keyframes float2{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(-20px,-15px) rotate(-4deg)}}
+@keyframes float3{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(18px,12px) rotate(2deg)}75%{transform:translate(-15px,-18px) rotate(-3deg)}}
+@keyframes float4{0%,100%{transform:translate(0,0) rotate(0)}40%{transform:translate(-12px,20px) rotate(4deg)}80%{transform:translate(20px,-10px) rotate(-2deg)}}
+@keyframes float5{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(15px,18px) rotate(3deg)}}
+
+.memories-empty{text-align:center;padding:4rem 2rem;color:var(--color-gray)}
+.memories-empty p:first-child{font-size:4rem;margin-bottom:1rem}
+.memories-cta{margin-top:3rem;text-align:center}
+
+@media(max-width:768px){
+    .memories-stage{height:480px}
+}
+@media(max-width:480px){
+    .memories-stage{height:400px}
+}
+        
         /* CREW */
         .crew-section{padding:var(--section-padding) 2rem;max-width:var(--container-width);margin:0 auto;text-align:center}
         .crew-header{margin-bottom:3rem}
@@ -424,6 +461,21 @@
         </div>
     </div>
     <div class="ticket-scroll-hint" id="ticketDots"></div>
+</section>
+
+    <!-- PHOTO MEMORIES -->
+<section class="memories-section reveal" id="memoriesSection">
+    <div class="memories-header">
+        <p class="section-overline">MEMORIES</p>
+        <h2 class="section-title">Eure Momente.</h2>
+        <p class="ticket-hint" style="margin-top:1rem">✨ Bilder von unseren Events – hochgeladen von euch</p>
+    </div>
+    <div class="memories-stage" id="memoriesStage">
+        <!-- Bubbles werden via JS rendered -->
+    </div>
+    <div class="memories-cta">
+        <a href="gallery.html" class="btn btn-primary">📸 Bilder hochladen & ansehen</a>
+    </div>
 </section>
 
     <!-- CREW -->
@@ -923,7 +975,107 @@ var capacity = e.capacity || e.maxGuests || 20;
                 shapes[i].style.transform = "translateY(" + (window.scrollY * (i+1) * 0.015) + "px) rotate(" + (window.scrollY * 0.01 * (i%2===0?1:-1)) + "deg)";
             }
         });
+// ===== PHOTO MEMORIES BUBBLES =====
+(function(){
+    var stage = document.getElementById("memoriesStage");
+    if(!stage) return;
 
+    // Bubble Positionen (Apple iCloud Style - eine zentrale große, drumherum kleinere)
+    var positions = [
+        {x:50, y:50, size:200, float:1},   // center BIG
+        {x:20, y:30, size:130, float:2},   // top-left
+        {x:80, y:25, size:120, float:3},   // top-right
+        {x:15, y:70, size:110, float:4},   // bottom-left
+        {x:85, y:72, size:115, float:5},   // bottom-right
+        {x:50, y:15, size:90,  float:2},   // top-center
+        {x:50, y:88, size:95,  float:3},   // bottom-center
+        {x:30, y:50, size:80,  float:4},   // mid-left small
+        {x:70, y:50, size:85,  float:1},   // mid-right small
+        {x:35, y:85, size:75,  float:5}    // extra
+    ];
+
+    var allPhotos = [];
+    var currentIndices = [];
+
+    function loadPhotos(){
+        db.collection("eventPhotos").orderBy("uploadedAt","desc").limit(50).get().then(function(snap){
+            if(snap.empty){
+                stage.innerHTML = '<div class="memories-empty"><p>📷</p><p style="font-size:1.1rem;font-weight:700">Noch keine Bilder</p><p style="font-size:.85rem;margin-top:.5rem">Sei der erste – lad ein Bild hoch!</p></div>';
+                return;
+            }
+            snap.forEach(function(doc){
+                allPhotos.push(doc.data().url);
+            });
+            renderBubbles();
+            // Bilder rotieren alle 5 Sekunden
+            if(allPhotos.length > positions.length){
+                setInterval(swapRandomBubble, 5000);
+            }
+        }).catch(function(err){
+            console.error("Photo load error:", err);
+            stage.innerHTML = '<div class="memories-empty"><p>⚠️</p><p>Bilder konnten nicht geladen werden.</p></div>';
+        });
+    }
+
+    function renderBubbles(){
+        stage.innerHTML = "";
+        var count = Math.min(positions.length, allPhotos.length);
+        currentIndices = [];
+        for(var i = 0; i < count; i++){
+            currentIndices.push(i);
+            createBubble(i, i, true);
+        }
+    }
+
+    function createBubble(posIdx, photoIdx, animate){
+        var pos = positions[posIdx];
+        var bubble = document.createElement("div");
+        bubble.className = "memory-bubble float-" + pos.float + (animate ? " fade-in" : "");
+        bubble.style.left = "calc(" + pos.x + "% - " + (pos.size/2) + "px)";
+        bubble.style.top = "calc(" + pos.y + "% - " + (pos.size/2) + "px)";
+        bubble.style.width = pos.size + "px";
+        bubble.style.height = pos.size + "px";
+        bubble.style.animationDelay = (posIdx * 0.1) + "s";
+        bubble.setAttribute("data-pos", posIdx);
+
+        var img = document.createElement("img");
+        img.src = allPhotos[photoIdx];
+        img.loading = "lazy";
+        img.alt = "Event Memory";
+        bubble.appendChild(img);
+
+        bubble.addEventListener("click", function(){
+            window.location.href = "gallery.html";
+        });
+
+        stage.appendChild(bubble);
+    }
+
+    function swapRandomBubble(){
+        if(allPhotos.length <= positions.length) return;
+        var posIdx = Math.floor(Math.random() * positions.length);
+        var bubble = stage.querySelector('[data-pos="'+posIdx+'"]');
+        if(!bubble) return;
+
+        // Find unused photo
+        var availableIndices = [];
+        for(var i = 0; i < allPhotos.length; i++){
+            if(currentIndices.indexOf(i) === -1) availableIndices.push(i);
+        }
+        if(availableIndices.length === 0) return;
+
+        var newPhotoIdx = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+
+        bubble.classList.add("fade-out");
+        setTimeout(function(){
+            currentIndices[posIdx] = newPhotoIdx;
+            bubble.querySelector("img").src = allPhotos[newPhotoIdx];
+            bubble.classList.remove("fade-out");
+        }, 1200);
+    }
+
+    loadPhotos();
+})();
     })();
     </script>
 </body>
