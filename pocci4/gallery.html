@@ -27,7 +27,6 @@
         a{text-decoration:none;color:inherit;transition:var(--transition-fast)}
         img{max-width:100%;height:auto;display:block}
 
-        /* ANIMATED BG */
         .animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
         .bg-shape{position:absolute;filter:blur(100px);opacity:.45}
         .bg-shape-1{width:700px;height:500px;background:#E0CEBB;top:-15%;left:-10%;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:m1 20s ease-in-out infinite}
@@ -37,7 +36,6 @@
         @keyframes m2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px) rotate(5deg) scale(.92)}}
         @keyframes m3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px) rotate(-5deg)}}
 
-        /* NAVBAR */
         .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(245,240,235,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:1000;border-bottom:1px solid transparent;transition:var(--transition-smooth)}
         .navbar.scrolled{border-bottom:1px solid var(--color-border);background:rgba(245,240,235,.9)}
         .nav-container{max-width:var(--container-width);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
@@ -76,7 +74,6 @@
         .mobile-link:hover,.mobile-link.active{color:var(--color-primary)}
         .mobile-link-sub{font-size:1.2rem;color:var(--color-gray)}
 
-        /* ADMIN MODAL */
         .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
         .admin-modal-overlay.active{display:flex}
         .admin-modal{background:var(--color-white);border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
@@ -88,13 +85,11 @@
         .admin-modal-btns .btn{flex:1;padding:10px 16px;font-size:.85rem}
         .admin-modal .admin-error{color:var(--color-primary);font-size:.8rem;font-weight:600;margin-top:.75rem;display:none}
 
-        /* PAGE HERO */
         .page-hero{padding:calc(var(--nav-height) + 4rem) 2rem 2rem;text-align:center;max-width:var(--container-width);margin:0 auto}
         .page-overline{font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--color-primary);text-transform:uppercase;margin-bottom:1rem}
         .page-title{font-size:clamp(2.5rem,6vw,4rem);font-weight:900;line-height:1;letter-spacing:-.04em;margin-bottom:1rem}
         .page-subtitle{font-size:clamp(1rem,2vw,1.15rem);color:var(--color-text-light);max-width:600px;margin:0 auto}
 
-        /* BUTTONS */
         .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;border-radius:50px;font-family:var(--font-main);font-size:.9rem;font-weight:600;cursor:pointer;transition:var(--transition-smooth);border:2px solid transparent;gap:.5rem}
         .btn-primary{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
         .btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,58,43,.25)}
@@ -103,10 +98,8 @@
         .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
         .btn-full{width:100%}
 
-        /* CONTAINER */
         .page-container{max-width:var(--container-width);margin:0 auto;padding:2rem}
 
-        /* UPLOAD CARD */
         .upload-card{background:rgba(255,255,255,.7);backdrop-filter:blur(20px);border-radius:24px;padding:2.5rem;box-shadow:0 10px 40px rgba(0,0,0,.06);margin-bottom:3rem;max-width:640px;margin-left:auto;margin-right:auto;border:1px solid rgba(255,255,255,.5)}
         .upload-card h3{font-size:1.3rem;font-weight:800;margin-bottom:.5rem}
         .upload-card p{color:var(--color-text-light);font-size:.9rem;margin-bottom:1.5rem}
@@ -130,7 +123,6 @@
         .status-msg.success{background:#D4F4DD;color:#1F7A3A;display:block}
         .status-msg.error{background:#FCE4E0;color:var(--color-primary);display:block}
 
-        /* GALLERY */
         .gallery-section{padding:2rem;max-width:var(--container-width);margin:0 auto}
         .gallery-tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;padding:6px;background:var(--color-white);border-radius:50px;max-width:fit-content;margin-left:auto;margin-right:auto;box-shadow:0 2px 10px rgba(0,0,0,.04);overflow-x:auto}
         .gallery-tab{padding:8px 18px;border-radius:50px;font-size:.85rem;font-weight:600;color:var(--color-text-light);cursor:pointer;border:none;background:transparent;font-family:inherit;transition:.2s;white-space:nowrap}
@@ -145,14 +137,12 @@
         .empty-state{text-align:center;padding:4rem 2rem;color:var(--color-gray);grid-column:1/-1}
         .empty-state p:first-child{font-size:4rem;margin-bottom:1rem}
 
-        /* LIGHTBOX */
         .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2500;display:none;align-items:center;justify-content:center;padding:2rem;cursor:pointer}
         .lightbox.active{display:flex}
         .lightbox img{max-width:90%;max-height:90vh;border-radius:16px;cursor:default;box-shadow:0 20px 60px rgba(0,0,0,.5)}
         .lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:1.3rem;cursor:pointer;backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center}
         .lightbox-close:hover{background:rgba(255,255,255,.25)}
 
-        /* FOOTER */
         .footer{background:var(--color-text);color:#fff;padding:4rem 2rem 2rem;margin-top:4rem}
         .footer-container{max-width:var(--container-width);margin:0 auto}
         .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
@@ -165,10 +155,7 @@
         .footer-bottom{padding-top:2rem;text-align:center}
         .footer-bottom p{font-size:.8rem;color:var(--color-gray)}
 
-        /* RESPONSIVE */
-        @media(max-width:1024px){
-            .footer-top{grid-template-columns:1fr;gap:3rem}
-        }
+        @media(max-width:1024px){.footer-top{grid-template-columns:1fr;gap:3rem}}
         @media(max-width:768px){
             :root{--nav-height:68px;--section-padding:60px}
             .nav-links{display:none}.hamburger{display:flex}.nav-logo img{height:44px}
@@ -190,7 +177,6 @@
         <div class="bg-shape bg-shape-3"></div>
     </div>
 
-    <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo"><img src="assets/logo.svg" alt="pocci4"></a>
@@ -219,7 +205,6 @@
         </div>
     </nav>
 
-    <!-- MOBILE MENU -->
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-content">
             <a href="index.html" class="mobile-link">Home</a>
@@ -232,7 +217,6 @@
         </div>
     </div>
 
-    <!-- ADMIN MODAL -->
     <div class="admin-modal-overlay" id="adminOverlay">
         <div class="admin-modal">
             <h3>🔐 Admin Zugang</h3>
@@ -246,14 +230,12 @@
         </div>
     </div>
 
-    <!-- PAGE HERO -->
     <section class="page-hero">
         <p class="page-overline">MEMORIES</p>
         <h1 class="page-title">Event Gallery</h1>
         <p class="page-subtitle">Lad deine Bilder hoch und sieh die Memories aller Events.</p>
     </section>
 
-    <!-- UPLOAD -->
     <section class="page-container">
         <div class="upload-card">
             <h3>📤 Bilder hochladen</h3>
@@ -288,7 +270,6 @@
         </div>
     </section>
 
-    <!-- GALLERY -->
     <section class="gallery-section">
         <div class="gallery-tabs" id="galleryTabs">
             <button class="gallery-tab active" data-event="all">Alle Bilder</button>
@@ -296,13 +277,11 @@
         <div class="gallery-grid" id="galleryGrid"></div>
     </section>
 
-    <!-- LIGHTBOX -->
     <div class="lightbox" id="lightbox">
         <button class="lightbox-close" id="lightboxClose">✕</button>
         <img id="lightboxImg" src="" alt="">
     </div>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-top">
@@ -341,9 +320,14 @@
 
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
     <script>
     (function(){
+        // ===== CLOUDINARY CONFIG =====
+        var CLOUDINARY_CLOUD = "dcmcpcmy5";
+        var CLOUDINARY_PRESET = "pocci4_unasigned";
+        var CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/" + CLOUDINARY_CLOUD + "/image/upload";
+
+        // ===== FIREBASE =====
         var firebaseConfig = {
             apiKey: "AIzaSyDbMzuzWPtrxYnJyHnYTCShnCyt_gGqIYk",
             authDomain: "pocci4-a24e5.firebaseapp.com",
@@ -354,14 +338,12 @@
         };
         if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
-        var storage = firebase.storage();
 
-        // ===== NAV =====
+        // NAV
         var navbar = document.getElementById("navbar");
         window.addEventListener("scroll", function(){
             navbar.classList.toggle("scrolled", window.scrollY > 50);
         });
-
         var hamburger = document.getElementById("hamburger");
         var mobileMenu = document.getElementById("mobileMenu");
         hamburger.addEventListener("click", function(){
@@ -376,15 +358,13 @@
                 document.body.style.overflow = "";
             });
         });
-
-        // Dropdown
         var dd = document.getElementById("eventsDropdown"), ddT = null;
         if(dd){
             dd.addEventListener("mouseenter", function(){ ddT = setTimeout(function(){ dd.classList.add("dropdown-visible"); }, 200); });
             dd.addEventListener("mouseleave", function(){ clearTimeout(ddT); setTimeout(function(){ dd.classList.remove("dropdown-visible"); }, 300); });
         }
 
-        // ===== ADMIN MODAL =====
+        // ADMIN MODAL
         (function(){
             var ADMIN_PW = "pocci4admin";
             var trigger = document.getElementById("adminTrigger");
@@ -393,7 +373,6 @@
             var cancel = document.getElementById("adminCancel");
             var submit = document.getElementById("adminSubmit");
             var error = document.getElementById("adminError");
-
             trigger.addEventListener("click", function(){
                 if(sessionStorage.getItem("pocci4admin") === "true"){
                     window.location.href = "admin.html"; return;
@@ -401,9 +380,7 @@
                 overlay.classList.add("active");
                 setTimeout(function(){ input.focus(); }, 100);
             });
-            cancel.addEventListener("click", function(){
-                overlay.classList.remove("active"); input.value = ""; error.style.display = "none";
-            });
+            cancel.addEventListener("click", function(){ overlay.classList.remove("active"); input.value = ""; error.style.display = "none"; });
             overlay.addEventListener("click", function(e){
                 if(e.target === overlay){ overlay.classList.remove("active"); input.value = ""; error.style.display = "none"; }
             });
@@ -498,7 +475,36 @@
             uploadBtn.textContent = selectedFiles.length > 0 ? ("Hochladen ("+selectedFiles.length+")") : "Hochladen";
         }
 
-        // UPLOAD
+        // ===== CLOUDINARY UPLOAD =====
+        function uploadToCloudinary(file, onProgress){
+            return new Promise(function(resolve, reject){
+                var formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", CLOUDINARY_PRESET);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", CLOUDINARY_URL);
+
+                xhr.upload.addEventListener("progress", function(e){
+                    if(e.lengthComputable && onProgress){
+                        onProgress((e.loaded / e.total) * 100);
+                    }
+                });
+
+                xhr.onload = function(){
+                    if(xhr.status >= 200 && xhr.status < 300){
+                        var res = JSON.parse(xhr.responseText);
+                        resolve(res);
+                    } else {
+                        reject(new Error("Upload fehlgeschlagen: " + xhr.responseText));
+                    }
+                };
+                xhr.onerror = function(){ reject(new Error("Netzwerk-Fehler")); };
+                xhr.send(formData);
+            });
+        }
+
+        // UPLOAD HANDLER
         uploadBtn.addEventListener("click", function(){
             if(selectedFiles.length === 0) return;
             var eventId = document.getElementById("eventSelect").value;
@@ -508,41 +514,48 @@
 
             var done = 0;
             var total = selectedFiles.length;
+            var errors = 0;
 
-            selectedFiles.forEach(function(file){
-                var fileName = Date.now() + "-" + Math.random().toString(36).substr(2,9) + "-" + file.name.replace(/[^a-zA-Z0-9.]/g,"_");
-                var ref = storage.ref("event-photos/" + fileName);
-                var task = ref.put(file);
+            function uploadNext(idx){
+                if(idx >= total){
+                    if(errors === 0){
+                        showStatus("✅ " + total + " Bild(er) erfolgreich hochgeladen!", "success");
+                    } else {
+                        showStatus("⚠️ " + (total-errors) + " hochgeladen, " + errors + " fehlgeschlagen.", "error");
+                    }
+                    selectedFiles = [];
+                    renderPreview();
+                    document.getElementById("progress").classList.remove("active");
+                    document.getElementById("progressBar").style.width = "0%";
+                    uploadBtn.disabled = true;
+                    loadGallery();
+                    return;
+                }
 
-                task.on("state_changed", function(snap){
-                    var pct = (snap.bytesTransferred / snap.totalBytes) * 100;
-                    document.getElementById("progressBar").style.width = ((done + pct/100) / total * 100) + "%";
-                }, function(err){
-                    showStatus("Fehler: " + err.message, "error");
-                    uploadBtn.disabled = false;
-                }, function(){
-                    task.snapshot.ref.getDownloadURL().then(function(url){
-                        db.collection("eventPhotos").add({
-                            url: url,
-                            eventId: eventId,
-                            uploader: uploader,
-                            uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                            fileName: fileName
-                        }).then(function(){
-                            done++;
-                            if(done === total){
-                                showStatus("✅ " + total + " Bild(er) erfolgreich hochgeladen!", "success");
-                                selectedFiles = [];
-                                renderPreview();
-                                document.getElementById("progress").classList.remove("active");
-                                document.getElementById("progressBar").style.width = "0%";
-                                uploadBtn.disabled = true;
-                                loadGallery();
-                            }
-                        });
+                var file = selectedFiles[idx];
+                uploadToCloudinary(file, function(pct){
+                    document.getElementById("progressBar").style.width = ((idx + pct/100) / total * 100) + "%";
+                }).then(function(res){
+                    return db.collection("eventPhotos").add({
+                        url: res.secure_url,
+                        publicId: res.public_id,
+                        eventId: eventId,
+                        uploader: uploader,
+                        uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        width: res.width,
+                        height: res.height
                     });
+                }).then(function(){
+                    done++;
+                    uploadNext(idx + 1);
+                }).catch(function(err){
+                    console.error("Upload error:", err);
+                    errors++;
+                    uploadNext(idx + 1);
                 });
-            });
+            }
+
+            uploadNext(0);
         });
 
         function showStatus(msg, type){
@@ -560,6 +573,9 @@
                     var d = doc.data(); d._id = doc.id; allPhotos.push(d);
                 });
                 renderGallery("all");
+            }).catch(function(err){
+                console.error("Gallery load error:", err);
+                document.getElementById("galleryGrid").innerHTML = '<div class="empty-state"><p>⚠️</p><p>Bilder konnten nicht geladen werden.</p></div>';
             });
         }
 
@@ -572,8 +588,10 @@
             }
             var html = "";
             filtered.forEach(function(p){
+                // Cloudinary auto-optimization für Thumbnails
+                var thumbUrl = p.url.replace("/upload/", "/upload/w_400,h_400,c_fill,q_auto,f_auto/");
                 html += '<div class="photo-card" data-url="'+p.url+'">';
-                html += '<img src="'+p.url+'" loading="lazy" alt="">';
+                html += '<img src="'+thumbUrl+'" loading="lazy" alt="">';
                 html += '<div class="photo-card-info">📸 '+(p.uploader||"Anonym")+'</div>';
                 html += '</div>';
             });
